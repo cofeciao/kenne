@@ -1,0 +1,71 @@
+{
+    "name": "yiisoft/yii2-app-advanced",
+    "description": "Yii 2 Advanced Project Template",
+    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0.0",
+        "yiisoft/yii2": "@dev",
+        "yiisoft/yii2-bootstrap": "@dev",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-imagine": "~2.2.0",
+        "yiisoft/yii2-authclient": "^2.0.0",
+        "yiisoft/yii2-queue": "~2.0",
+        "yiisoft/yii2-httpclient": "~2.0.0",
+        "yiisoft/yii2-apidoc": "~2.1.0",
+        "yiisoft/yii2-redis": "~2.0.0",
+        "yiisoft/yii2-elasticsearch": "2.1.x-dev",
+        "trntv/cheatsheet": "^0.1@dev",
+        "kartik-v/yii2-export": "dev-master",
+        "kartik-v/yii2-social": "dev-master",
+        "alexandernst/yii2-device-detect": "0.0.12",
+        "cornernote/yii2-linkall": "*",
+        "himiklab/yii2-recaptcha-widget" : "*",
+        "symfony/process": "^3.0",
+        "codemix/yii2-localeurls": "^1.7",
+        "lysenkobv/yii2-geoip": "~1.0",
+        "execut/yii2-robots-txt": "dev-master",
+        "himiklab/yii2-sitemap-module" : "*",
+        "guzzlehttp/guzzle": "^6.3",
+        "skeeks/yii2-assets-auto-compress": "*",
+        "modava/auth": "@dev"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-gii": "~2.1.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/codeception": "^4.0",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-yii2": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/verify": "~0.5.0 || ~1.1.0",
+        "symfony/browser-kit": ">=2.7 <=4.2.4"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "repositories": {
+                "bower-asset/eve": {
+                    "type": "bower-vcs",
+                    "url": "https://github.com/adobe-webplatform/eve.git"
+                }
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
