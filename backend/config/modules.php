@@ -13,6 +13,12 @@ return [
     'contact' => [
         'class' => 'modava\contact\Contact',
     ],
+    'article' => [
+        'class' => 'modava\article\Article',
+    ],
+    'product' => [
+        'class' => 'modava\product\Product',
+    ],
     'user' => [
         'class' => 'backend\modules\user\User',
         'shouldBeActivated' => false,

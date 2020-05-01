@@ -26,6 +26,18 @@ use yii\helpers\Url;
                 <span>UI</span>
             </div>
             <ul class="navbar-nav flex-column">
+                <li class="nav-item<?php if (Yii::$app->controller->module->id == 'product') echo ' active'; ?>">
+                    <a class="nav-link" href="<?= Url::toRoute(['/product']); ?>">
+                        <i class="ion ion-md-cube"></i>
+                        <span class="nav-link-text"><?= Yii::t('backend', 'Product'); ?></span>
+                    </a>
+                </li>
+                <li class="nav-item<?php if (Yii::$app->controller->module->id == 'article') echo ' active'; ?>">
+                    <a class="nav-link" href="<?= Url::toRoute(['/article']); ?>">
+                        <i class="ion ion-ios-book"></i>
+                        <span class="nav-link-text"><?= Yii::t('backend', 'Article'); ?></span>
+                    </a>
+                </li>
                 <li class="nav-item<?php if (Yii::$app->controller->module->id == 'contact') echo ' active'; ?>">
                     <a class="nav-link" href="<?= Url::toRoute(['/contact']); ?>">
                         <i class="ion ion-md-contacts"></i>

@@ -66,3 +66,11 @@ phpunit.phar
 /backend/modules/contact/composer.json
 /backend/modules/contact/README.md
 /backend/modules/contact/.git
+
+/backend/modules/product/composer.json
+/backend/modules/product/README.md
+/backend/modules/product/.git
+
+/backend/modules/article/composer.json
+/backend/modules/article/README.md
+/backend/modules/article/.git
