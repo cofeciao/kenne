@@ -74,3 +74,11 @@ phpunit.phar
 /backend/modules/article/composer.json
 /backend/modules/article/README.md
 /backend/modules/article/.git
+
+/backend/widgets/tiny/composer.json
+/backend/widgets/tiny/README.md
+/backend/widgets/tiny/.git
+
+/backend/widgets/tiny/src/assets/filemanager/.git
+/backend/widgets/tiny/src/assets/filemanager/README.md
+/backend/widgets/tiny/src/assets/filemanager/composer.json

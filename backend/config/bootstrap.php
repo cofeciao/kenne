@@ -8,3 +8,7 @@ Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/../backend/modules/api');
 Yii::setAlias('modava/contact', dirname(dirname(__DIR__)) . '/backend/modules/contact/src');
 Yii::setAlias('modava/article', dirname(dirname(__DIR__)) . '/backend/modules/article/src');
 Yii::setAlias('modava/product', dirname(dirname(__DIR__)) . '/backend/modules/product/src');
+
+//Widget
+Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
+Yii::setAlias('modava/test', dirname(dirname(__DIR__)) . '/backend/widgets/test/src');

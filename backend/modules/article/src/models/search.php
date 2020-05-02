@@ -2,7 +2,6 @@
 
 namespace modava\article\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use modava\article\models\ArticleCategory;
@@ -13,7 +12,7 @@ use modava\article\models\ArticleCategory;
 class search extends ArticleCategory
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -24,7 +23,7 @@ class search extends ArticleCategory
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -47,7 +46,6 @@ class search extends ArticleCategory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
 
         $this->load($params);

@@ -3,11 +3,6 @@
 namespace modava\article\models;
 
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\SluggableBehavior;
-use yii\db\ActiveRecord;
-use common\models\UserProfile;
-use modava\article\models\query\ArticleCategoryQuery;
 
 /**
  * This is the model class for table "article_category".
@@ -15,52 +10,27 @@ use modava\article\models\query\ArticleCategoryQuery;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property int $parent_id
- * @property string $image
- * @property string $description
- * @property int $position
- * @property string $ads_pixel
- * @property string $ads_session
+ * @property int|null $parent_id
+ * @property string|null $image
+ * @property string|null $description
+ * @property int|null $position
+ * @property string|null $ads_pixel
+ * @property string|null $ads_session
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property int|null $created_by
+ * @property int|null $updated_by
  */
 class ArticleCategory extends \yii\db\ActiveRecord
 {
-    const STATUS_DISABLED = 0;
-    const STATUS_PUBLISHED = 1;
-
+    /**
+     * {@inheritdoc}
+     */
     public static function tableName()
     {
         return 'article_category';
     }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'preserveNonEmptyValues' => true,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-            ]
-        ];
-    }
-
-    public static function find()
-    {
-        return new ArticleCategoryQuery(get_called_class());
-    }
-
 
     /**
      * {@inheritdoc}
@@ -98,21 +68,4 @@ class ArticleCategory extends \yii\db\ActiveRecord
             'updated_by' => Yii::t('article', 'Updated By'),
         ];
     }
-
-    public function getUserCreatedBy($id)
-    {
-        if ($id == null && is_integer($id))
-            return null;
-        $user = UserProfile::find()->where(['user_id' => $id])->one();
-        return $user != null ? $user : null;
-    }
-
-    public function getUserUpdatedBy($id)
-    {
-        if ($id == null && is_integer($id))
-            return null;
-        $user = UserProfile::find()->where(['user_id' => $id])->one();
-        return $user != null ? $user : null;
-    }
-
 }

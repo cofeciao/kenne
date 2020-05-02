@@ -9,6 +9,7 @@ use yii\widgets\Breadcrumbs;
 <?php $this->beginContent('@backend/views/layouts/common.php'); ?>
     <!-- HK Wrapper -->
     <div class="hk-wrapper hk-vertical-nav">
+
         <!-- Top Navbar -->
         <?= \backend\widgets\HeaderWidget::widget(); ?>
         <!-- /Top Navbar -->

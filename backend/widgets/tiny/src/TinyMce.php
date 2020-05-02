@@ -8,10 +8,27 @@ use yii\widgets\InputWidget;
 
 class TinyMce extends InputWidget
 {
+    public $type = 'desc';
+    private $clientOptions = [
 
-    private $language = 'vi';
+    ];
 
-    public $clientOptions = [];
+    private $clientOptionsFull = [
+        'plugins' => [
+            "code print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern help"
+        ],
+        'toolbar' => "undo redo | formatselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat | link image | code",
+        'content_css' => [
+            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+            '//www.tinymce.com/css/codepen.min.css'
+        ],
+        'external_filemanager_path' => "filemanager/",
+        'filemanager_title' => "Responsive Filemanager",
+        'external_plugins' => [
+            "responsivefilemanager" => "../../tinymce/plugins/responsivefilemanager/plugin.min.js",
+            "filemanager" => "../../filemanager/plugin.min.js"
+        ]
+    ];
 
     public $triggerSaveOnBeforeValidateForm = true;
 
@@ -25,9 +42,6 @@ class TinyMce extends InputWidget
         $this->registerClientScript();
     }
 
-    /**
-     * Registers tinyMCE js plugin
-     */
     protected function registerClientScript()
     {
         $js = [];
@@ -38,17 +52,14 @@ class TinyMce extends InputWidget
         $id = $this->options['id'];
 
         $this->clientOptions['selector'] = "#$id";
-        // @codeCoverageIgnoreStart
-        if ($this->language !== null && $this->language !== 'en') {
-            $langFile = "langs/{$this->language}.js";
-            $langAssetBundle = TinyMceLangAsset::register($view);
-            $langAssetBundle->js[] = $langFile;
-            $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
-            $this->clientOptions['language'] = "{$this->language}";//Language fix. Without it EN language when add some plugins like codemirror 
-        }
-        // @codeCoverageIgnoreEnd
+        $options = $this->clientOptions;
 
-        $options = Json::encode($this->clientOptions);
+        if ($this->type == 'content') {
+            $this->clientOptionsFull['selector'] = "#$id";
+            $options = $this->clientOptionsFull;
+        }
+
+        $options = Json::encode($options);
 
         $js[] = "tinymce.init($options);";
         if ($this->triggerSaveOnBeforeValidateForm) {

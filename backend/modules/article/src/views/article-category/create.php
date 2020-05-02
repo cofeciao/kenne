@@ -1,54 +1,20 @@
 <?php
 
-use modava\article\Article;
 use yii\helpers\Html;
-
 
 /* @var $this yii\web\View */
 /* @var $model modava\article\models\ArticleCategory */
 
-$this->title = Article::t('article', 'Create');
-$this->params['breadcrumbs'][] = ['label' => Article::t('article', 'Article Categories'), 'url' => ['index']];
+$this->title = Yii::t('article', 'Create Article Category');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('article', 'Article Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<section id="dom">
-    <div class="row">
-        <div class="col-12">
-            <?php
-            if (Yii::$app->session->hasFlash('alert')) {
-                ?>
-                <div class="alert <?=  Yii::$app->session->getFlash('alert')['class']; ?> alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <?=  Yii::$app->session->getFlash('alert')['body']; ?>
-                </div>
-            <?php
-            }
-            ?>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title"><?=  $this->title; ?></h4>
-                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-                    <div class="heading-elements">
-                        <ul class="list-inline mb-0">
-                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                            <li><a class="block-page"
-                                   onclick='window.location="<?=  \Yii::$app->getRequest()->getUrl(); ?>"'><i
-                                            class="ft-rotate-cw"></i></a></li>
-                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                            <li><a data-action="close"><i class="ft-x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-content collapse show">
-                    <div class="card-body card-dashboard">
-                        <?= $this->render('_form', [
-                        'model' => $model,
-                        ]) ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<div class="article-category-create">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
+
+</div>
