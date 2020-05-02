@@ -1,5 +1,7 @@
 <?php
 
+use yii\widgets\Breadcrumbs;
+
 /**
  * @var $this yii\web\View
  */
@@ -18,6 +20,30 @@
         <!-- /Setting Panel -->
         <!-- Main Content -->
         <div class="hk-pg-wrapper">
+            <!-- Breadcrumb -->
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+<!--                <ol class="breadcrumb breadcrumb-light bg-transparent">-->
+<!--                    <li class="breadcrumb-item"><a href="#">Components</a></li>-->
+<!--                    <li class="breadcrumb-item active" aria-current="page">Badge</li>-->
+<!--                </ol>-->
+
+            <?php
+            echo Breadcrumbs::widget([
+                'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
+                'activeItemTemplate' => '<li class="breadcrumb-item active" aria-current="page">{link}</li>',
+                'tag' => 'ol',
+                'homeLink' => [
+                    'label' => Yii::t('yii', 'Home'),
+                    'url' => Yii::$app->homeUrl,
+                ],
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'options' => [
+                    'class' => 'breadcrumb breadcrumb-light bg-transparent'
+                ]
+            ])
+            ?>
+            </nav>
+            <!-- /Breadcrumb -->
             <!-- Container -->
             <?php echo $content ?>
             <!-- /Container -->

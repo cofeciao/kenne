@@ -13,6 +13,6 @@ class VerticalNavWidget extends Widget
 
     public function run()
     {
-        return $this->render('VerticalNavWidget', []);
+        return $this->render('verticalNavWidget', []);
     }
 }

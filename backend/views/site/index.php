@@ -7,7 +7,7 @@
  */
 
 
-$this->title = 'Developer';
+$this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid mt-xl-50 mt-sm-30 mt-15 px-xxl-65 px-xl-20">
