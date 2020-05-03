@@ -69,10 +69,10 @@ return [
             ],
         ],
     'assetManager' => [
-        'appendTimestamp' => true,
         'bundles' => [
             'yii\web\JqueryAsset' => [
                 'js' => [
+                    '/backend/vendors/jquery/dist/jquery.min.js',
                 ],
                 'jsOptions' => [
 

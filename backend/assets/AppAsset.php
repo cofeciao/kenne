@@ -19,7 +19,6 @@ class AppAsset extends AssetBundle
         'dist/css/style.css',
     ];
     public $js = [
-        'vendors/jquery/dist/jquery.min.js',
         'vendors/popper.js/dist/umd/popper.min.js',
         'vendors/bootstrap/dist/js/bootstrap.min.js',
         'dist/js/jquery.slimscroll.js',
@@ -45,7 +44,7 @@ class AppAsset extends AssetBundle
         'position' => \yii\web\View::POS_END
     );
     public $depends = [
-//        'yii\web\YiiAsset',
-//        'yii\bootstrap\BootstrapAsset',
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 }

@@ -58,6 +58,7 @@ return [
         'class' => yii\web\AssetManager::class,
         'linkAssets' => LINK_ASSETS,
         'appendTimestamp' => true,
+        'forceCopy' => true,
         'hashCallback' => function ($path) {
             return hash('md4', $path);
         }
