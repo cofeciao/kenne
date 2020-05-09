@@ -536,7 +536,7 @@ Dropify.prototype.getImageFormat = function()
 * @param {String} errorKey
 */
 Dropify.prototype.pushError = function(errorKey) {
-    var e = $.Event("dropify.error." + errorKey);
+    var e = $.Event("error." + errorKey);
     this.errorsEvent.errors.push(e);
     this.input.trigger(e, [this]);
 };

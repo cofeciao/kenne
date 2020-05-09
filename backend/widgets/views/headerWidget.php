@@ -10,9 +10,8 @@ use yii\helpers\Url;
        href="javascript:void(0);"><span class="feather-icon"><i data-feather="more-vertical"></i></span></a>
     <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
                 class="feather-icon"><i data-feather="menu"></i></span></a>
-    <a class="navbar-brand" href="index.html">
-        <img class="brand-img d-inline-block"
-             src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/logo-dark.png')[1]; ?>" alt="brand"/>
+    <a class="navbar-brand" href="<?=Url::home(); ?>">
+        <?= Yii::t('backend', 'Modava'); ?>
     </a>
     <ul class="navbar-nav hk-navbar-content order-xl-2">
         <li class="nav-item">
@@ -176,7 +175,7 @@ use yii\helpers\Url;
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-0">
             <li class="nav-item">
-                <a href="#" class="nav-link active">Marketing</a>
+                <a href="#" class="nav-link">Marketing</a>
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -192,14 +191,15 @@ use yii\helpers\Url;
             <li class="nav-item">
                 <a href="#" class="nav-link">Help Desk</a>
             </li>
-            <li class="nav-item">
-                <a href="calendar.html" class="nav-link">Calendar</a>
+            <li class="nav-item<?php if (Yii::$app->controller->module->id == 'calendar') echo ' active'; ?>">
+                <a href="<?=Url::toRoute(['/calendar']); ?>" class="nav-link"><?=Yii::t('backend', 'Calendar'); ?></a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">Email</a>
             </li>
-            <li class="nav-item">
-                <a href="file-manager.html" class="nav-link">File Manager</a>
+            <li class="nav-item<?php if (Yii::$app->controller->module->id == 'filemanager') echo ' active'; ?>">
+                <a href="<?= Url::toRoute(['/filemanager']); ?>"
+                   class="nav-link"><?= Yii::t('backend', 'File Manager'); ?></a>
             </li>
         </ul>
     </div>

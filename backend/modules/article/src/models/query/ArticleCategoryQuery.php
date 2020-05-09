@@ -21,21 +21,8 @@ class ArticleCategoryQuery extends \yii\db\ActiveQuery
         return $this->andWhere([ArticleCategory::tableName() . '.status' => ArticleCategory::STATUS_DISABLED]);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return ArticleCategory[]|array
-     */
-    /*public function all($db = null)
+    public function sortDescById()
     {
-        return parent::all($db);
-    }*/
-
-    /**
-     * {@inheritdoc}
-     * @return ArticleCategory|array|null
-     */
-    /*public function one($db = null)
-    {
-        return parent::one($db);
-    }*/
+        return $this->orderBy(['id' => SORT_DESC]);
+    }
 }

@@ -16,6 +16,12 @@ return [
     'article' => [
         'class' => 'modava\article\Article',
     ],
+    'filemanager' => [
+        'class' => 'backend\modules\filemanager\Filemanager',
+    ],
+    'calendar' => [
+        'class' => 'backend\modules\calendar\Calendar',
+    ],
     'product' => [
         'class' => 'modava\product\Product',
     ],

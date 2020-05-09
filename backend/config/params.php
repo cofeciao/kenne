@@ -25,11 +25,6 @@ use backend\modules\clinic\models\PhongKhamUomRang2;
 use backend\modules\clinic\models\UploadAudio;
 
 return [
-    'availableLocales' => [
-        'vi' => 'Tiếng Việt',
-        'en' => 'English',
-    ],
-
     'menu-active' => [
 
     ],

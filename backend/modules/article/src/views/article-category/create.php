@@ -1,20 +1,38 @@
 <?php
 
+use modava\article\Article;
+use modava\article\widgets\NavbarWidgets;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model modava\article\models\ArticleCategory */
 
-$this->title = Yii::t('article', 'Create Article Category');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('article', 'Article Categories'), 'url' => ['index']];
+$this->title = Article::t('article', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Article::t('article', 'Article'), 'url' => ['/article']];
+$this->params['breadcrumbs'][] = ['label' => Article::t('article', 'Article category'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="article-category-create">
+<div class="container-fluid px-xxl-25 px-xl-10">
+    <?= NavbarWidgets::widget(); ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title"><span class="pg-title-icon"><span
+                        class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
+        </h4>
+    </div>
+    <!-- /Title -->
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+
+                <?= $this->render('_form', [
+                    'model' => $model,
+                ]) ?>
+            </section>
+        </div>
+    </div>
 
 </div>

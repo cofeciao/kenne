@@ -23,11 +23,6 @@ use yii\widgets\Breadcrumbs;
         <div class="hk-pg-wrapper">
             <!-- Breadcrumb -->
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
-<!--                <ol class="breadcrumb breadcrumb-light bg-transparent">-->
-<!--                    <li class="breadcrumb-item"><a href="#">Components</a></li>-->
-<!--                    <li class="breadcrumb-item active" aria-current="page">Badge</li>-->
-<!--                </ol>-->
-
             <?php
             echo Breadcrumbs::widget([
                 'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',

@@ -2,9 +2,10 @@
 
 namespace modava\article\controllers;
 
+use modava\article\Article;
 use Yii;
 use modava\article\models\ArticleCategory;
-use modava\article\models\search;
+use modava\article\models\search\ArticleCategorySearch;
 use modava\article\components\MyArticleController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,7 +22,7 @@ class ArticleCategoryController extends MyArticleController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,8 +36,9 @@ class ArticleCategoryController extends MyArticleController
      */
     public function actionIndex()
     {
-        $searchModel = new search();
+        $searchModel = new ArticleCategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $dataProvider->pagination->pageSize = 1;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,10 +68,14 @@ class ArticleCategoryController extends MyArticleController
     {
         $model = new ArticleCategory();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+//            var_dump($model->getErrors());
+//            die;
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -122,6 +128,6 @@ class ArticleCategoryController extends MyArticleController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('article', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Article::t('article', 'The requested page does not exist.'));
     }
 }

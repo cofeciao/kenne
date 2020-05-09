@@ -1,8 +1,8 @@
 <?php
 $domain = ((
-    (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
         (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on')
-) ? "https" : "http") . "://" . @$_SERVER['HTTP_HOST'];
+    ) ? "https" : "http") . "://" . @$_SERVER['HTTP_HOST'];
 define('ISCLI', PHP_SAPI === 'cli');
 
 require __DIR__ . '/_console.php';
@@ -15,6 +15,7 @@ define('DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
 define('WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
 define('MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
 define('YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
+define('NOIMAGE', '/images/no-image.png');
 
 /**
  * Setting path aliases
