@@ -80,11 +80,6 @@ phpunit.phar
 /backend/widgets/tiny/README.md
 /backend/widgets/tiny/.git
 
-/backend/widgets/tiny/src/assets/filemanager/.git
-/backend/widgets/tiny/src/assets/filemanager/README.md
-/backend/widgets/tiny/src/assets/filemanager/composer.json
-
-
 #package
 /package/imagick/.git
 /package/imagick/README.md
