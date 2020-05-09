@@ -84,3 +84,7 @@ phpunit.phar
 /package/imagick/.git
 /package/imagick/README.md
 /package/imagick/composer.json
+
+/package/tiny/.git
+/package/tiny/README.md
+/package/tiny/composer.json
