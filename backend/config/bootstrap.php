@@ -10,5 +10,5 @@ Yii::setAlias('modava/article', dirname(dirname(__DIR__)) . '/backend/modules/ar
 Yii::setAlias('modava/product', dirname(dirname(__DIR__)) . '/backend/modules/product/src');
 
 //Widget
-Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
+Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/package/tiny/src');
 Yii::setAlias('modava/imagick', dirname(dirname(__DIR__)) . '/package/imagick/src');
