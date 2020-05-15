@@ -26,6 +26,12 @@ use yii\helpers\Url;
                 <span>UI</span>
             </div>
             <ul class="navbar-nav flex-column">
+                <li class="nav-item<?php if (Yii::$app->controller->module->id == 'customer') echo ' active'; ?>">
+                    <a class="nav-link" href="<?= Url::toRoute(['/customer']); ?>">
+                        <i class="ion ion-md-contacts"></i>
+                        <span class="nav-link-text"><?= Yii::t('backend', 'Customer'); ?></span>
+                    </a>
+                </li>
                 <li class="nav-item<?php if (Yii::$app->controller->module->id == 'product') echo ' active'; ?>">
                     <a class="nav-link" href="<?= Url::toRoute(['/product']); ?>">
                         <i class="ion ion-md-cube"></i>
@@ -40,7 +46,7 @@ use yii\helpers\Url;
                 </li>
                 <li class="nav-item<?php if (Yii::$app->controller->module->id == 'contact') echo ' active'; ?>">
                     <a class="nav-link" href="<?= Url::toRoute(['/contact']); ?>">
-                        <i class="ion ion-md-contacts"></i>
+                        <i class="ion ion-md-contact"></i>
                         <span class="nav-link-text"><?= Yii::t('backend', 'Contact'); ?></span>
                     </a>
                 </li>

@@ -25,6 +25,11 @@ return [
     'product' => [
         'class' => 'modava\product\Product',
     ],
+    'customer' => [
+        'class' => 'modava\customer\Customer'
+    ],
+
+
     'user' => [
         'class' => 'backend\modules\user\User',
         'shouldBeActivated' => false,
