@@ -33,8 +33,8 @@ class m200507_111020_create_talbe_article extends Migration
             'views' => $this->bigInteger(20)->null(),
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
-            'created_by' => $this->smallInteger()->null(),
-            'updated_by' => $this->smallInteger()->null(),
+            'created_by' => $this->integer(11)->null(),
+            'updated_by' => $this->integer(11)->null(),
         ], $tableOptions);
 
         $this->addForeignKey("fk_article_category", "article", "type_id", "article_type", "id", "RESTRICT", "CASCADE");
@@ -42,8 +42,8 @@ class m200507_111020_create_talbe_article extends Migration
         $this->createIndex('index-slug', 'article', 'slug');
         $this->addColumn('article', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language for yii2' AFTER `views`");
         $this->createIndex('index-language', 'article', 'language');
-        $this->addForeignKey('fk_article_user', 'article', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('fk_article_user', 'article', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('fk_article_created_by_user', 'article', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('fk_article_updated_by_user', 'article', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
     }
 
     /**
