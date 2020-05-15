@@ -1,21 +1,20 @@
 <?php
 
-use modava\article\Article;
-use modava\article\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use modava\product\Product as ModuleProduct;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\article\models\search\ArticleTypeSearch */
+/* @var $searchModel modava\product\models\search\ProductCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->params['breadcrumbs'][] = ['label' => Article::t('article', 'Article'), 'url' => ['/article']];
-$this->title = Article::t('article', 'Article type');
+$this->params['breadcrumbs'][] = ['label' => ModuleProduct::t('product', 'Product'), 'url' => ['/product']];
+$this->title = ModuleProduct::t('product', 'Product category');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-    <?= NavbarWidgets::widget(); ?>
+    <?= \modava\product\widgets\NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
@@ -23,10 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= Article::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= Article::t('article', 'Create'); ?></a>
+           title="<?= ModuleProduct::t('product', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= ModuleProduct::t('product', 'Create'); ?></a>
     </div>
-    <!-- /Title -->
 
     <!-- Row -->
     <div class="row">
@@ -61,10 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 ',
                                     'pager' => [
-                                        'firstPageLabel' => Article::t('article', 'First'),
-                                        'lastPageLabel' => Article::t('article', 'Last'),
-                                        'prevPageLabel' => Article::t('article', 'Previous'),
-                                        'nextPageLabel' => Article::t('article', 'Next'),
+                                        'firstPageLabel' => ModuleProduct::t('article', 'First'),
+                                        'lastPageLabel' => ModuleProduct::t('article', 'Last'),
+                                        'prevPageLabel' => ModuleProduct::t('article', 'Previous'),
+                                        'nextPageLabel' => ModuleProduct::t('article', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -86,10 +84,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                     'columns' => [
                                         [
-                                                'class' => 'yii\grid\SerialColumn',
+                                            'class' => 'yii\grid\SerialColumn',
                                             'header' => 'STT',
+                                            'headerOptions' => [
+                                                'width' => 50,
+                                            ],
                                         ],
+
                                         'title',
+//                                        'image',
                                         'description:html',
                                         //'position',
                                         //'ads_pixel:ntext',
@@ -97,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'attribute' => 'status',
                                             'value' => function ($model) {
-                                                return Yii::$app->getModule('article')->params['status'][$model->status];
+                                                return Yii::$app->module->params['status'][$model->status];
                                             }
                                         ],
                                         'created_at:date',
@@ -110,16 +113,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => Article::t('article', 'Actions'),
+                                            'header' => ModuleProduct::t('product', 'Actions'),
                                         ],
                                     ],
                                 ]); ?>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php Pjax::end(); ?>
 
+                <?php Pjax::end(); ?>
             </section>
         </div>
     </div>
