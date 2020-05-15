@@ -41,4 +41,9 @@ class AppAsset extends AssetBundle
         'dist/js/init.js',
         'dist/js/dashboard-data.js',
     ];
+
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
+    ];
 }

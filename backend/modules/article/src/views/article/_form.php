@@ -3,6 +3,7 @@
 use modava\article\models\table\ArticleTypeTable;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use modava\article\Article;
 
 /* @var $this yii\web\View */
 /* @var $model modava\article\models\Article */
@@ -53,7 +54,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'status')->checkbox() ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('article', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Article::t('article', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

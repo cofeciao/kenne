@@ -23,7 +23,7 @@ class Imagick
      * @var string Opened image name
      */
 
-    private $filename;
+    public $filename = null;
 
     /**
      * @var string Opened image ext
@@ -42,14 +42,19 @@ class Imagick
         }
         try {
             $this->image = new \Imagick($pathImage);
-            $geo = $this->image->getImageGeometry();
-            $this->height = $geo['height'];
-            $this->width = $geo['width'];
-            $pathUrl = $this->image->getImageFilename();
+            $this->height = $this->image->getImageHeight();
+            $this->width = $this->image->getImageWidth();
+            $pathUrl = rtrim(str_replace('\\', '/', $this->image->getImageFilename()), '/\\');
             $arrFile = explode('/', $pathUrl);
             $arrFile = array_pop($arrFile);
+            if($this->filename == null) {
+                $this->filename = explode('.', $arrFile)[0];
+            }
             $this->ext = explode('.', $arrFile)[1];
-            $this->filename = explode('.', $arrFile)[0];
+
+            if($online == true && !file_exists($pathImage)) {
+                unlink($pathImage);
+            }
         } catch (\ImagickException $ex) {
             throw new \Exception($ex);
         }

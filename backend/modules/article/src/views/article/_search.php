@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use modava\article\Article;
 
 /* @var $this yii\web\View */
 /* @var $model modava\article\models\search\ArticleSearch */
@@ -53,8 +54,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('article', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('article', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton(Article::t('article', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Article::t('article', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

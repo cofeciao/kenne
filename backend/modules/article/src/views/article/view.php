@@ -55,13 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'slug',
                         [
                             'attribute' => 'image',
-                            'format' => 'html',
+                            'format' => 'raw',
                             'value' => function ($model) {
                                 return Html::img($model->image, ['height' => 150, 'width' => 150]);
                             }
                         ],
                         'description:html',
-                        'content:html   ',
+                        'content:html',
                         'position',
                         'ads_pixel:html',
                         'ads_session:html',

@@ -14,10 +14,8 @@ class MyImagickController extends MyController
         $path = Url::to('@backend/web/imagick/ToanTam1200px.jpg');
         $pathWtm = Url::to('@backend/web/imagick/favicon.ico');
         $pathSave = Url::to('@backend/web/imagick/result/');
-        $MyImagick = new Imagick($path);
-        $xPosition = 'center';
-        $yPosition = 'center';
-        $a = $MyImagick->borderImage()->saveTo($pathSave);
-        var_dump($a);die;
+        $MyImagick = new Imagick('https://myauris.vn/img/hoang.nguyen/news/tin-tuc/ngoisao-1.jpg', true);
+        $a = $MyImagick->thumbnail(400,400)->saveTo($pathSave);
+        var_dump(explode('backend/web', $a)[1]);die;
     }
 }

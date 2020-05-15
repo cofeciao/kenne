@@ -2,12 +2,14 @@
 
 namespace modava\article\controllers;
 
+use modava\article\components\MyUpload;
 use Yii;
 use modava\article\models\Article;
 use modava\article\models\search\ArticleSearch;
 use modava\article\components\MyArticleController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use modava\article\Article as ModuleArticle;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -21,7 +23,7 @@ class ArticleController extends MyArticleController
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -66,8 +68,19 @@ class ArticleController extends MyArticleController
     {
         $model = new Article();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()) {
+                if ($model->image != "") {
+                    $pathImage = FRONTEND_HOST_INFO . $model->image;
+                    $pathSave = Yii::getAlias('@frontend/web/uploads/article/');
+                    $pathUpload = MyUpload::upload(200, 200, $pathImage, $pathSave);
+                    $model->image = explode('frontend/web', $pathUpload)[1];
+                } else {
+                    $model->image = NOIMAGE;
+                }
+                $model->updateAttributes(['image']);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -86,8 +99,16 @@ class ArticleController extends MyArticleController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->getAttribute('image') != $model->getOldAttribute('image')) {
+                $pathImage = FRONTEND_HOST_INFO . $model->image;
+                $pathSave = Yii::getAlias('@frontend/web/uploads/article/');
+                $pathUpload = MyUpload::upload(200, 200, $pathImage, $pathSave);
+                $model->image = explode('frontend/web', $pathUpload)[1];
+            }
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -122,6 +143,7 @@ class ArticleController extends MyArticleController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('article', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(ModuleArticle::t('article', 'The requested page does not exist.'));
     }
+
 }

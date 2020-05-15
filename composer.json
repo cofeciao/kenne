@@ -43,10 +43,10 @@
     "himiklab/yii2-sitemap-module": "*",
     "guzzlehttp/guzzle": "^6.3",
     "skeeks/yii2-assets-auto-compress": "*",
-    "modava/auth": "@dev",
     "tinymce/tinymce": " 5.2.2",
     "ext-imagick": "*",
-    "ext-curl": "*"
+    "ext-curl": "*",
+    "modava/imagick": "@dev"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

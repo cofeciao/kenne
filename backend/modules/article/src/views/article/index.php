@@ -87,13 +87,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'class' => 'yii\grid\SerialColumn',
                                             'header' => 'STT',
+                                            'headerOptions' => [
+                                                'width' => 50,
+                                            ],
                                         ],
                                         [
                                             'attribute' => 'image',
                                             'format' => 'html',
                                             'value' => function ($model) {
                                                 return Html::img($model->image, ['height' => 50, 'width' => 50]);
-                                            }
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 110,
+                                            ],
                                         ],
                                         'title',
                                         [
@@ -111,12 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         //'position',
                                         //'ads_pixel:ntext',
                                         //'ads_session:ntext',
-                                        [
-                                            'attribute' => 'status',
-                                            'value' => function ($model) {
-                                                return \modava\article\helper\ArticleHelper::GetStatus($model->status);
-                                            }
-                                        ],
+
                                         //'views',
                                         'created_at:date',
                                         //'updated_at',
@@ -124,13 +125,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'attribute' => 'created_by',
                                             'value' => function ($model) {
                                                 return \modava\article\models\ArticleCategory::getUserAsArticleCategory($model->created_by);
-                                            }
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
                                         //'updated_by',
-
+                                        [
+                                            'attribute' => 'status',
+                                            'value' => function ($model) {
+                                                return \modava\article\helper\ArticleHelper::GetStatus($model->status);
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 130,
+                                            ],
+                                        ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => Article::t('article', 'Actions'),
+                                            'headerOptions' => [
+                                                'width' => 130,
+                                            ],
                                         ],
                                     ],
                                 ]); ?>
