@@ -1,6 +1,6 @@
 <?php
 
-namespace modava\product;
+namespace modava\contact;
 
 use yii\base\BootstrapInterface;
 use Yii;
@@ -10,14 +10,14 @@ use yii\web\Application;
 use yii\web\Controller;
 
 /**
- * Product module definition class
+ * Contact module definition class
  */
-class Product extends Module implements BootstrapInterface
+class ContactModule extends Module implements BootstrapInterface
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'modava\product\controllers';
+    public $controllerNamespace = 'modava\contact\controllers';
 
     /**
      * {@inheritdoc}
@@ -26,7 +26,7 @@ class Product extends Module implements BootstrapInterface
     {
         // custom initialization code goes here
         parent::init();
-        Yii::configure($this, require(__DIR__ . '/config/product.php'));
+        Yii::configure($this, require(__DIR__ . '/config/contact.php'));
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
@@ -45,19 +45,19 @@ class Product extends Module implements BootstrapInterface
 
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['product/messages/*'] = [
+        Yii::$app->i18n->translations['contact/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => '@modava/product/messages',
+            'basePath' => '@modava/contact/messages',
             'fileMap' => [
-                'product/messages/product' => 'product.php',
+                'contact/messages/contact' => 'contact.php',
             ],
         ];
     }
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return Yii::t('product/messages/' . $category, $message, $params, $language);
+        return Yii::t('contact/messages/' . $category, $message, $params, $language);
     }
 
 }

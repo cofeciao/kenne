@@ -1,6 +1,6 @@
 <?php
 
-namespace modava\article;
+namespace modava\auth;
 
 use yii\base\BootstrapInterface;
 use Yii;
@@ -10,14 +10,14 @@ use yii\web\Application;
 use yii\web\Controller;
 
 /**
- * Article module definition class
+ * Auth module definition class
  */
-class Article extends Module implements BootstrapInterface
+class AuthModule extends Module implements BootstrapInterface
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'modava\article\controllers';
+    public $controllerNamespace = 'modava\auth\controllers';
 
     /**
      * {@inheritdoc}
@@ -26,11 +26,16 @@ class Article extends Module implements BootstrapInterface
     {
         // custom initialization code goes here
         parent::init();
-        Yii::configure($this, require(__DIR__ . '/config/article.php'));
+        Yii::configure($this, require(__DIR__ . '/config/auth.php'));
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
-        $this->layout = 'article';
+        $this->layout = 'auth';
+        \Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = [
+            'js' => [
+                Yii::$app->getAssetManager()->publish('@authweb/vendors/jquery/dist/jquery.min.js')[1],
+            ]
+        ];
         $this->registerTranslations();
     }
 
@@ -46,19 +51,19 @@ class Article extends Module implements BootstrapInterface
 
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['article/messages/*'] = [
+        Yii::$app->i18n->translations['auth/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => '@modava/article/messages',
+            'basePath' => '@modava/auth/messages',
             'fileMap' => [
-                'article/messages/article' => 'article.php',
+                'auth/messages/auth' => 'auth.php',
             ],
         ];
     }
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return Yii::t('article/messages/' . $category, $message, $params, $language);
+        return Yii::t('auth/messages/' . $category, $message, $params, $language);
     }
 
 }

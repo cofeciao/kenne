@@ -1,6 +1,6 @@
 <?php
 
-namespace modava\customer;
+namespace modava\article;
 
 use yii\base\BootstrapInterface;
 use Yii;
@@ -12,12 +12,12 @@ use yii\web\Controller;
 /**
  * Article module definition class
  */
-class Customer extends Module implements BootstrapInterface
+class ArticleModule extends Module implements BootstrapInterface
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'modava\customer\controllers';
+    public $controllerNamespace = 'modava\article\controllers';
 
     /**
      * {@inheritdoc}
@@ -26,11 +26,11 @@ class Customer extends Module implements BootstrapInterface
     {
         // custom initialization code goes here
         parent::init();
-        Yii::configure($this, require(__DIR__ . '/config/customer.php'));
+        Yii::configure($this, require(__DIR__ . '/config/article.php'));
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
-        $this->layout = 'customer';
+        $this->layout = 'article';
         $this->registerTranslations();
     }
 
@@ -46,19 +46,19 @@ class Customer extends Module implements BootstrapInterface
 
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['customer/messages/*'] = [
+        Yii::$app->i18n->translations['article/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => '@modava/customer/messages',
+            'basePath' => '@modava/article/messages',
             'fileMap' => [
-                'article/messages/customer' => 'customer.php',
+                'article/messages/article' => 'article.php',
             ],
         ];
     }
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return Yii::t('customer/messages/' . $category, $message, $params, $language);
+        return Yii::t('article/messages/' . $category, $message, $params, $language);
     }
 
 }
