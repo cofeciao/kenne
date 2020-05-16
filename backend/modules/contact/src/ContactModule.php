@@ -25,12 +25,12 @@ class ContactModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
+        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/contact.php'));
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
-        $this->registerTranslations();
     }
 
     public function bootstrap($app)
