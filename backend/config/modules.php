@@ -8,25 +8,25 @@
 
 return [
     'auth' => [
-        'class' => 'modava\auth\Auth',
+        'class' => 'modava\auth\AuthModule',
     ],
     'contact' => [
-        'class' => 'modava\contact\Contact',
+        'class' => 'modava\contact\ContactModule',
     ],
     'article' => [
-        'class' => 'modava\article\Article',
+        'class' => 'modava\article\ArticleModule',
     ],
     'filemanager' => [
-        'class' => 'backend\modules\filemanager\Filemanager',
+        'class' => 'backend\modules\filemanager\FilemanagerModule',
     ],
     'calendar' => [
-        'class' => 'backend\modules\calendar\Calendar',
+        'class' => 'backend\modules\calendar\CalendarModule',
     ],
     'product' => [
-        'class' => 'modava\product\Product',
+        'class' => 'modava\product\ProductModule',
     ],
     'customer' => [
-        'class' => 'modava\customer\Customer'
+        'class' => 'modava\customer\CustomerModule'
     ],
 
 

@@ -1,5 +1,5 @@
 <?php
 
-$this->title = \modava\contact\Contact::t('contact', 'Contact');
+$this->title = \modava\contact\ContactModule::t('contact', 'Contact');
 ?>
 Contact backend

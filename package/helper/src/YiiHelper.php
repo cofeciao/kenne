@@ -1,9 +1,16 @@
 <?php
 
-namespace modava\article\helper;
 
-class ArticleHelper
+namespace modava\helper;
+
+
+class YiiHelper
 {
+    /**
+     * Displays status of all.
+     * @param integer $status
+     * @return mixed
+     */
     public static function GetStatus($status)
     {
         switch ($status) {

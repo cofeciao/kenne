@@ -2,7 +2,8 @@
 
 namespace modava\article\models;
 
-use modava\article\Article;
+use common\models\User;
+use modava\article\ArticleModule;
 use modava\article\models\table\ActicleCategoryTable;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -23,6 +24,7 @@ use Yii;
  * @property string|null $ads_pixel
  * @property string|null $ads_session
  * @property int $status
+ * @property string $language Language
  * @property int $created_at
  * @property int $updated_at
  * @property int|null $created_by
@@ -76,9 +78,10 @@ class ArticleCategory extends ActicleCategoryTable
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title', 'language'], 'required'],
             [['parent_id', 'position', 'status',], 'integer'],
-            [['ads_pixel', 'ads_session'], 'string'],
+            [['ads_pixel', 'ads_session', 'language'], 'string'],
+            ['language','in','range'=>['vi','en','jp'],'strict'=>false],
             [['title', 'slug', 'image', 'description'], 'string', 'max' => 255],
         ];
     }
@@ -89,26 +92,41 @@ class ArticleCategory extends ActicleCategoryTable
     public function attributeLabels()
     {
         return [
-            'id' => Article::t('article', 'ID'),
-            'title' => Article::t('article', 'Title'),
-            'slug' => Article::t('article', 'Slug'),
-            'parent_id' => Article::t('article', 'Parent ID'),
-            'image' => Article::t('article', 'Image'),
-            'description' => Article::t('article', 'Description'),
-            'position' => Article::t('article', 'Position'),
-            'ads_pixel' => Article::t('article', 'Ads Pixel'),
-            'ads_session' => Article::t('article', 'Ads Session'),
-            'status' => Article::t('article', 'Status'),
-            'created_at' => Article::t('article', 'Created At'),
-            'updated_at' => Article::t('article', 'Updated At'),
-            'created_by' => Article::t('article', 'Created By'),
-            'updated_by' => Article::t('article', 'Updated By'),
+            'id' => ArticleModule::t('article', 'ID'),
+            'title' => ArticleModule::t('article', 'Title'),
+            'slug' => ArticleModule::t('article', 'Slug'),
+            'parent_id' => ArticleModule::t('article', 'Parent ID'),
+            'image' => ArticleModule::t('article', 'Image'),
+            'description' => ArticleModule::t('article', 'Description'),
+            'position' => ArticleModule::t('article', 'Position'),
+            'ads_pixel' => ArticleModule::t('article', 'Ads Pixel'),
+            'ads_session' => ArticleModule::t('article', 'Ads Session'),
+            'status' => ArticleModule::t('article', 'Status'),
+            'language' => ArticleModule::t('article', 'Language'),
+            'created_at' => ArticleModule::t('article', 'Created At'),
+            'updated_at' => ArticleModule::t('article', 'Updated At'),
+            'created_by' => ArticleModule::t('article', 'Created By'),
+            'updated_by' => ArticleModule::t('article', 'Updated By'),
         ];
     }
 
-
-    public static function getUserAsArticleCategory($UserId)
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCreated()
     {
-        return 'Mong';
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserUpdated()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 }

@@ -6,7 +6,7 @@ use Yii;
 use \yii\base\Module;
 
 
-class Calendar extends Module
+class CalendarModule extends Module
 {
     /**
      * {@inheritdoc}

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use modava\article\Article;
+use modava\article\ArticleModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\article\models\ArticleCategory */
@@ -13,7 +13,14 @@ use modava\article\Article;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-8">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-4">
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('article')->params['availableLocales'])->label(ArticleModule::t('article', 'Ngôn ngữ')) ?>
+        </div>
+    </div>
 
     <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
         'options' => ['rows' => 10],
@@ -26,7 +33,7 @@ use modava\article\Article;
     <?= $form->field($model, 'status')->checkbox() ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Article::t('article', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(ArticleModule::t('article', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

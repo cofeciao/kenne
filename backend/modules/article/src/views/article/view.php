@@ -1,7 +1,7 @@
 <?php
 
 use modava\article\models\Article;
-use modava\article\Article as ArticleModule;
+use modava\article\ArticleModule;
 use modava\article\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -68,29 +68,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return \modava\article\helper\ArticleHelper::GetStatus($model->status);
+                                return Yii::$app->getModule('article')->params['status'][$model->status];
                             }
                         ],
                         'views',
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
-                                return Yii::$app->params['availableLocales'][$model->language];
-                            }
+                                return Yii::$app->getModule('article')->params['availableLocales'][$model->language];
+                            },
                         ],
                         'created_at:datetime',
                         'updated_at:datetime',
                         [
-                            'attribute' => 'created_by',
-                            'value' => function ($model) {
-                                return Article::getUserAsArticle($model->created_by);
-                            }
+                            'attribute' => 'userCreated.userProfile.fullname',
+                            'label' => ArticleModule::t('article', 'Created By')
                         ],
                         [
-                            'attribute' => 'updated_by',
-                            'value' => function ($model) {
-                                return Article::getUserAsArticle($model->updated_by);
-                            }
+                            'attribute' => 'userUpdated.userProfile.fullname',
+                            'label' => ArticleModule::t('article', 'Updated By')
                         ],
                     ],
                 ]) ?>

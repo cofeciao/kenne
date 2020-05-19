@@ -1,6 +1,6 @@
 <?php
 
-use modava\article\Article;
+use modava\article\ArticleModule;
 use modava\article\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -10,8 +10,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\article\models\search\ArticleTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->params['breadcrumbs'][] = ['label' => Article::t('article', 'Article'), 'url' => ['/article']];
-$this->title = Article::t('article', 'Article type');
+$this->params['breadcrumbs'][] = ['label' => ArticleModule::t('article', 'Article'), 'url' => ['/article']];
+$this->title = ArticleModule::t('article', 'Article type');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= Article::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= Article::t('article', 'Create'); ?></a>
+           title="<?= ArticleModule::t('article', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= ArticleModule::t('article', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 
@@ -61,10 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
                                 ',
                                     'pager' => [
-                                        'firstPageLabel' => Article::t('article', 'First'),
-                                        'lastPageLabel' => Article::t('article', 'Last'),
-                                        'prevPageLabel' => Article::t('article', 'Previous'),
-                                        'nextPageLabel' => Article::t('article', 'Next'),
+                                        'firstPageLabel' => ArticleModule::t('article', 'First'),
+                                        'lastPageLabel' => ArticleModule::t('article', 'Last'),
+                                        'prevPageLabel' => ArticleModule::t('article', 'Previous'),
+                                        'nextPageLabel' => ArticleModule::t('article', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -86,8 +86,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                     'columns' => [
                                         [
-                                                'class' => 'yii\grid\SerialColumn',
+                                            'class' => 'yii\grid\SerialColumn',
                                             'header' => 'STT',
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
                                         'title',
                                         'description:html',
@@ -97,22 +100,44 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'attribute' => 'status',
                                             'value' => function ($model) {
-                                                return \modava\article\helper\ArticleHelper::GetStatus($model->status);
-                                            }
+                                                return Yii::$app->getModule('article')->params['status'][$model->status];
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
-                                        'created_at:date',
+                                        [
+                                            'attribute' => 'language',
+                                            'value' => function ($model) {
+                                                return Yii::$app->getModule('article')->params['availableLocales'][$model->language];
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
                                         //'updated_at',
                                         [
                                             'attribute' => 'created_by',
-                                            'value' => function ($model) {
-                                                return \modava\article\models\ArticleType::getUserAsArticleType($model->created_by);
-                                            }
+                                            'value' => 'userCreated.userProfile.fullname',
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
+                                        [
+                                            'attribute' => 'created_at',
+                                            'format' => 'date',
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
                                         //'updated_by',
 
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => Article::t('article', 'Actions'),
+                                            'header' => ArticleModule::t('article', 'Actions'),
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
                                     ],
                                 ]); ?>

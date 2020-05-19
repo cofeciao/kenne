@@ -1,6 +1,6 @@
 <?php
 
-namespace modava\article;
+namespace modava\customer;
 
 use yii\base\BootstrapInterface;
 use Yii;
@@ -12,12 +12,12 @@ use yii\web\Controller;
 /**
  * Article module definition class
  */
-class Article extends Module implements BootstrapInterface
+class CustomerModule extends Module implements BootstrapInterface
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'modava\article\controllers';
+    public $controllerNamespace = 'modava\customer\controllers';
 
     /**
      * {@inheritdoc}
@@ -25,13 +25,13 @@ class Article extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
+        $this->registerTranslations();
         parent::init();
-        Yii::configure($this, require(__DIR__ . '/config/article.php'));
+        Yii::configure($this, require(__DIR__ . '/config/customer.php'));
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
-        $this->layout = 'article';
-        $this->registerTranslations();
+        $this->layout = 'customer';
     }
 
     public function bootstrap($app)
@@ -46,19 +46,19 @@ class Article extends Module implements BootstrapInterface
 
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['article/messages/*'] = [
+        Yii::$app->i18n->translations['customer/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => '@modava/article/messages',
+            'basePath' => '@modava/customer/messages',
             'fileMap' => [
-                'article/messages/article' => 'article.php',
+                'article/messages/customer' => 'customer.php',
             ],
         ];
     }
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return Yii::t('article/messages/' . $category, $message, $params, $language);
+        return Yii::t('customer/messages/' . $category, $message, $params, $language);
     }
 
 }

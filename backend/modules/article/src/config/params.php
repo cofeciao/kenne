@@ -6,7 +6,18 @@
  * Time: 4:42 PM
  */
 
+use modava\article\ArticleModule;
+
 return [
+    'availableLocales' => [
+        'vi' => 'Tiếng Việt',
+        'en' => 'English',
+        'jp' => 'Japan',
+    ],
     'articleName' => 'Article',
-    'articleVersion' => '1.0'
+    'articleVersion' => '1.0',
+    'status' => [
+        '0' => ArticleModule::t('article', 'Tạm ngưng'),
+        '1' => ArticleModule::t('article', 'Hiển thị'),
+    ]
 ];

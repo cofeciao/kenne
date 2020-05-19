@@ -6,7 +6,7 @@ use Yii;
 use \yii\base\Module;
 
 
-class Filemanager extends Module
+class FilemanagerModule extends Module
 {
     /**
      * {@inheritdoc}

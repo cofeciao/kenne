@@ -1,6 +1,6 @@
 <?php
 
-namespace modava\auth;
+namespace modava\product;
 
 use yii\base\BootstrapInterface;
 use Yii;
@@ -10,14 +10,14 @@ use yii\web\Application;
 use yii\web\Controller;
 
 /**
- * Auth module definition class
+ * Product module definition class
  */
-class Auth extends Module implements BootstrapInterface
+class ProductModule extends Module implements BootstrapInterface
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'modava\auth\controllers';
+    public $controllerNamespace = 'modava\product\controllers';
 
     /**
      * {@inheritdoc}
@@ -25,18 +25,13 @@ class Auth extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
+        $this->registerTranslations();
         parent::init();
-        Yii::configure($this, require(__DIR__ . '/config/auth.php'));
+        Yii::configure($this, require(__DIR__ . '/config/product.php'));
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
-        $this->layout = 'auth';
-        \Yii::$app->assetManager->bundles['yii\web\JqueryAsset'] = [
-            'js' => [
-                Yii::$app->getAssetManager()->publish('@authweb/vendors/jquery/dist/jquery.min.js')[1],
-            ]
-        ];
-        $this->registerTranslations();
+        $this->layout = 'product';
     }
 
     public function bootstrap($app)
@@ -51,19 +46,18 @@ class Auth extends Module implements BootstrapInterface
 
     public function registerTranslations()
     {
-        Yii::$app->i18n->translations['auth/messages/*'] = [
+        Yii::$app->i18n->translations['product/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en',
-            'basePath' => '@modava/auth/messages',
+            'basePath' => '@modava/product/messages',
             'fileMap' => [
-                'auth/messages/auth' => 'auth.php',
+                'product/messages/product' => 'product.php',
             ],
         ];
     }
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return Yii::t('auth/messages/' . $category, $message, $params, $language);
+        return Yii::t('product/messages/' . $category, $message, $params, $language);
     }
-
 }
