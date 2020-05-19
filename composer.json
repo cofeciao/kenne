@@ -44,8 +44,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "skeeks/yii2-assets-auto-compress": "*",
     "tinymce/tinymce": " 5.2.2",
-    "ext-imagick": "*",
-    "ext-curl": "*",
+    "modava/tiny": "@dev",
     "modava/imagick": "@dev"
   },
   "require-dev": {
