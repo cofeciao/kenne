@@ -2,6 +2,7 @@
 
 use modava\article\models\table\ArticleTypeTable;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use modava\article\ArticleModule;
 use yii\helpers\ArrayHelper;
@@ -10,8 +11,10 @@ use modava\article\models\table\ActicleCategoryTable;
 /* @var $this yii\web\View */
 /* @var $model modava\article\models\Article */
 /* @var $form yii\widgets\ActiveForm */
-?>
 
+if ($model->language == null) $model->language = Yii::$app->getModule('article')->params['defaultLocales'];
+?>
+<?= \backend\widgets\ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="article-form">
 
         <?php $form = ActiveForm::begin(); ?>
@@ -24,12 +27,16 @@ use modava\article\models\table\ActicleCategoryTable;
             </div>
             <div class="col-4">
                 <?= $form->field($model, 'category_id')
-                    ->dropDownList(ArrayHelper::map(ActicleCategoryTable::getAllArticleCategory(), 'id', 'title'))
+                    ->dropDownList(ArrayHelper::map(ActicleCategoryTable::getAllArticleCategory($model->language), 'id', 'title'), [
+                        'prompt' => ArticleModule::t('article', 'Parent ID')
+                    ])
                     ->label(ArticleModule::t('article', 'Danh mục')) ?>
             </div>
             <div class="col-4">
                 <?= $form->field($model, 'type_id')
-                    ->dropDownList(\yii\helpers\ArrayHelper::map(ArticleTypeTable::getAllArticleType(), 'id', 'title'))
+                    ->dropDownList(\yii\helpers\ArrayHelper::map(ArticleTypeTable::getAllArticleType($model->language), 'id', 'title'), [
+                        'prompt' => ArticleModule::t('article', 'Article type')
+                    ])
                     ->label(ArticleModule::t('article', 'Thể loại')) ?>
             </div>
         </div>
@@ -63,6 +70,8 @@ use modava\article\models\table\ActicleCategoryTable;
 
     </div>
 <?php
+$urlLoadCategories = Url::toRoute(['load-categories-by-lang']);
+$urlLoadTypes = Url::toRoute(['load-types-by-lang']);
 $script = <<< JS
 function loadDataByLang(url, lang){
     return new Promise((resolve) => {
@@ -74,20 +83,32 @@ function loadDataByLang(url, lang){
                 lang: lang
             }
         }).done(res => {
-            if(res.code === 200){
-                resolve(res.data);
-            } else {
-                resolve(null);
-            }
+            resolve(res);
         }).fail(f => {
             resolve(null);
         });
     });
 }
-$('body').on('change', '#article-language', function(){
+$('body').on('change', '#article-language', async function(){
     var v = $(this).val(),
         categories, types;
-    loadDataByLang('', lang).then(res => {})
+    $('#article-category_id, #article-type_id').find('option[value!=""]').remove();
+    await loadDataByLang('$urlLoadCategories', v).then(res => categories = res);
+    await loadDataByLang('$urlLoadTypes', v).then(res => types = res);
+    if(typeof categories === "string"){
+        $('#article-category_id').append(categories);
+    } else if(typeof categories === "object"){
+        Object.keys(categories).forEach(function(k){
+            $('#article-category_id').append('<option value="'+ k +'">'+ categories[k] +'</option>');
+        });
+    }
+    if(typeof types === "string"){
+        $('#article-type_id').append(types);
+    } else if(typeof types === "object"){
+        Object.keys(types).forEach(function(k){
+            $('#article-type_id').append('<option value="'+ k +'">'+ types[k] +'</option>');
+        });
+    }
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);
