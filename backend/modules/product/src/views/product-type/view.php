@@ -1,21 +1,19 @@
 <?php
 
-use modava\article\ArticleModule;
-use modava\article\widgets\NavbarWidgets;
+use modava\product\ProductModule;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model modava\article\models\ArticleType */
+/* @var $model modava\product\models\ProductType */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => ArticleModule::t('article', 'Article'), 'url' => ['/article']];
-$this->params['breadcrumbs'][] = ['label' => ArticleModule::t('article', 'Article type'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => ProductModule::t('product', 'Product Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-    <?= NavbarWidgets::widget(); ?>
+    <?= \modava\product\widgets\NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
@@ -24,13 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= ArticleModule::t('article', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= ArticleModule::t('article', 'Create'); ?></a>
-            <?= Html::a(ArticleModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(ArticleModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= ProductModule::t('product', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= ProductModule::t('product', 'Create'); ?></a>
+            <?= Html::a(ProductModule::t('product', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(ProductModule::t('product', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => ArticleModule::t('article', 'Are you sure you want to delete this item?'),
+                    'confirm' => ProductModule::t('product', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -42,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
-
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
@@ -57,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('article')->params['status'][$model->status];
+                                return Yii::$app->getModule('product')->params['status'][$model->status];
                             }
                         ],
                         [
@@ -70,11 +67,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => ArticleModule::t('article', 'Created By')
+                            'label' => ProductModule::t('product', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => ArticleModule::t('article', 'Updated By')
+                            'label' => ProductModule::t('product', 'Updated By')
                         ],
                     ],
                 ]) ?>
