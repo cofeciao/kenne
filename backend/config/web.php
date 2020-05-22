@@ -20,7 +20,7 @@ if (YII2_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['127.0.0.1', '::1'],
-//        'generators' => [
+        'generators' => [
 //            'module' => [
 //                'class' => \backend\generators\module\Generator::class,
 //                'templates' => ['generators' => '@app/backend/generators/module/Generator']
@@ -29,11 +29,11 @@ if (YII2_ENV_DEV) {
 //                'class' => \backend\generators\model\Generator::class,
 //                'templates' => ['generators' => '@app/backend/generators/model/Generator']
 //            ],
-//            'crud' => [
-//                'class' => \backend\generators\crud\Generator::class,
-//                'templates' => ['generators' => '@app/backend/generators/crud/Generator']
-//            ],
-//        ]
+            'crud' => [
+                'class' => \backend\generators\crud\Generator::class,
+                'templates' => ['generators' => '@app/backend/generators/crud/Generator']
+            ],
+        ]
     ];
 }
 
