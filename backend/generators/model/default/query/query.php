@@ -45,21 +45,8 @@ class <?= $className ?>Query extends <?= '\\' . ltrim($generator->queryBaseClass
     }
 <?php } ?>
 
-    /**
-     * {@inheritdoc}
-     * @return <?= $modelFullClassName ?>[]|array
-     */
-    /*public function all($db = null)
+    public function sortDescById()
     {
-        return parent::all($db);
-    }*/
-
-    /**
-     * {@inheritdoc}
-     * @return <?= $modelFullClassName ?>|array|null
-     */
-    /*public function one($db = null)
-    {
-        return parent::one($db);
-    }*/
+        return $this->orderBy([<?= $modelFullClassName ?>::tableName() . '.id' => SORT_DESC]);
+    }
 }

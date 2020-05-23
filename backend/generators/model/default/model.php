@@ -14,111 +14,104 @@
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
 
-echo "<?php\n";
-?>
+use yii\helpers\StringHelper;
+use yii\helpers\Inflector;
+
+$modelClass = StringHelper::basename($generator->modelClass);
+
+echo "<?php\n"; ?>
 
 namespace <?= $generator->ns ?>;
 
-use Yii;
+use common\models\User;
+use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use modava\<?= $generator->messageCategory ?>\models\table\<?= $modelClass ?>Table;
+<?php if (isset($tableSchema->columns['created_by']) && isset($tableSchema->columns['updated_by'])) { ?>
 use yii\behaviors\BlameableBehavior;
-use yii\behaviors\SluggableBehavior;
-use yii\db\ActiveRecord;
-use common\models\UserProfile;
-<?php if (isset($tableSchema->columns['status'])) { ?>
-use <?= $generator->ns ?>\query\<?= $className ?>Query;
 <?php } ?>
-<?php if (isset($tableSchema->columns['name']) && isset($tableSchema->columns['slug'])) { ?>
+<?php if (isset($tableSchema->columns['slug'])) { ?>
+use yii\behaviors\SluggableBehavior;
+<?php } ?>
+<?php if (isset($tableSchema->columns['title']) && isset($tableSchema->columns['slug'])) { ?>
 use common\helpers\MyHelper;
 <?php } ?>
+use yii\db\ActiveRecord;
+use Yii;
 
 /**
- * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
- *
+* This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
+*
 <?php foreach ($properties as $property => $data): ?>
- * @property <?= "{$data['type']} \${$property}"  . ($data['comment'] ? ' ' . strtr($data['comment'], ["\n" => ' ']) : '') . "\n" ?>
+    * @property <?= "{$data['type']} \${$property}" . ($data['comment'] ? ' ' . strtr($data['comment'], ["\n" => ' ']) : '') . "\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
- *
-<?php foreach ($relations as $name => $relation): ?>
- * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
-<?php endforeach; ?>
+    *
+    <?php foreach ($relations as $name => $relation): ?>
+        * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
+    <?php endforeach; ?>
 <?php endif; ?>
- */
+*/
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
-<?php if (isset($tableSchema->columns['status'])) { ?>
-    const STATUS_DISABLED = 0;
-    const STATUS_PUBLISHED = 1;
-
-<?php } ?>
-    public static function tableName()
-    {
-        return '<?= $generator->generateTableName($tableName) ?>';
-    }
-
+    public $toastr_key = '<?= Inflector::camel2id($className, '-', true) ?>';
     public function behaviors()
     {
-        return [
-<?php if (isset($tableSchema->columns['name']) && isset($tableSchema->columns['slug'])) { ?>
-            'slug' => [
-                'class' => SluggableBehavior::class,
-                // 'attribute' => 'name',
-                // 'slugAttribute' => 'slug',
-                'immutable' => true, //only create 1
-                'ensureUnique' => true, //
-                'value' => function () {
-                    return MyHelper::createAlias($this->name);
-                }
-            ],
+        return array_merge(
+            parent::behaviors(),
+            [
+<?php if (isset($tableSchema->columns['title'])) { ?>
+                'slug' => [
+                    'class' => SluggableBehavior::class,
+                    'immutable' => false,
+                    'ensureUnique' => true,
+                    'value' => function () {
+                        return MyHelper::createAlias($this->title);
+                    }
+                ],
 <?php } ?>
 <?php if (isset($tableSchema->columns['created_by']) && isset($tableSchema->columns['updated_by'])) { ?>
-            [
-                'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
+                [
+                    'class' => BlameableBehavior::class,
+                    'createdByAttribute' => 'created_by',
+                    'updatedByAttribute' => 'updated_by',
+                ],
 <?php } ?>
 <?php if (isset($tableSchema->columns['created_at']) && isset($tableSchema->columns['updated_at'])) { ?>
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'preserveNonEmptyValues' => true,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                'timestamp' => [
+                    'class' => 'yii\behaviors\TimestampBehavior',
+                    'preserveNonEmptyValues' => true,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    ],
                 ],
+<?php } ?>
             ]
-<?php } ?>
-        ];
+        );
     }
 
-<?php if (isset($tableSchema->columns['status'])) { ?>
-    public static function find()
+    public function afterSave($insert, $changedAttributes)
     {
-        return new <?= $className ?>Query(get_called_class());
-    }
+<?php if (isset($tableSchema->columns['position'])) { ?>
+        $this->on(yii\db\BaseActiveRecord::EVENT_AFTER_INSERT, function (yii\db\AfterSaveEvent $e) {
+            $this->position = $this->primaryKey;
+            $this->save();
+        });
 <?php } ?>
-
-<?php if ($generator->db !== 'db'): ?>
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('<?= $generator->db ?>');
+        parent::afterSave($insert, $changedAttributes); // TODO: Change the autogenerated stub
     }
-<?php endif; ?>
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function rules()
     {
-        return [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
+        return [<?= empty($rules) ? '' : ("\n\t\t\t" . implode(",\n\t\t\t", $rules) . ",\n\t\t") ?>];
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function attributeLabels()
     {
         return [
@@ -127,49 +120,28 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php endforeach; ?>
         ];
     }
-<?php foreach ($relations as $name => $relation): ?>
 
+<?php if(isset($tableSchema->columns['created_by'])){ ?>
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function get<?= $name ?>()
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUserCreated()
     {
-        <?= $relation[0] . "\n" ?>
-    }
-<?php endforeach; ?>
-<?php if ($queryClassName): ?>
-<?php
-    $queryClassFullName = ($generator->ns === $generator->queryNs) ? $queryClassName : '\\' . $generator->queryNs . '\\' . $queryClassName;
-    echo "\n";
-?>
-    /**
-     * {@inheritdoc}
-     * @return <?= $queryClassFullName ?> the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new <?= $queryClassFullName ?>(get_called_class());
-    }
-<?php endif; ?>
-
-<?php if (isset($tableSchema->columns['created_by'])) { ?>
-    public function getUserCreatedBy($id)
-    {
-        if ($id == null)
-            return null;
-        $user = UserProfile::find()->where(['user_id' => $id])->one();
-        return $user;
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 <?php } ?>
 
-<?php if (isset($tableSchema->columns['updated_by'])) { ?>
-    public function getUserUpdatedBy($id)
+<?php if(isset($tableSchema->columns['updated_by'])){ ?>
+    /**
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUserUpdated()
     {
-        if ($id == null)
-            return null;
-        $user = UserProfile::find()->where(['user_id' => $id])->one();
-        return $user;
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 <?php } ?>
-
 }
