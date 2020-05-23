@@ -7,7 +7,6 @@ use yii\helpers\StringHelper;
 /* @var $generator yii\gii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
-
 $modelClass = StringHelper::basename($generator->modelClass);
 
 echo "<?php\n";

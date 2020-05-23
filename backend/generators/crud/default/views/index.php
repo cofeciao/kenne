@@ -25,7 +25,7 @@ use backend\widgets\ToastrWidget;
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>');
+$this->title = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <a class="btn btn-outline-light" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
            title="<?= "<?=" ?> ArticleModule::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
-            <i class="fa fa-plus"></i> <?= "<?=" ?> <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
+            <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
     </div>
 
     <!-- Row -->
@@ -76,10 +76,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                     'pager' => [
-                                        'firstPageLabel' => <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', 'First'),
-                                        'lastPageLabel' => <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', 'Last'),
-                                        'prevPageLabel' => <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', 'Previous'),
-                                        'nextPageLabel' => <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', 'Next'),
+                                        'firstPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'First'),
+                                        'lastPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Last'),
+                                        'prevPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Previous'),
+                                        'nextPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $count = 0;
                                         if (($tableSchema = $generator->getTableSchema()) === false) {
                                             foreach ($generator->getColumnNames() as $name) {
-                                                if ($name == 'name' || $name == 'id' || $name == 'status') {
+                                                if(in_array($name, ['name', 'id', 'status'])) {
                                                     continue;
                                                 }
                                                 if (++$count < 6) {
@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             }
                                         } else {
                                             foreach ($tableSchema->columns as $column) {
-                                                if ($column->name == 'name' || $column->name == 'id' || $column->name == 'status' || $column->name == 'slug' || $column->name == 'created_at' || $column->name == 'created_by' || $column->name == 'updated_at' || $column->name == 'updated_by') {
+                                                if(in_array($column->name, ['name', 'id', 'status', 'slug', 'created_at', 'created_by', 'updated_at', 'updated_by'])) {
                                                     continue;
                                                 }
                                                 $format = $generator->generateColumnFormat($column);
@@ -154,7 +154,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => <?= $modelClass ?>Module::t('<?= $generator->messageCategory ?>', 'Actions'),
+                                            'header' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Actions'),
                                             'headerOptions' => [
                                                 'width' => 130,
                                             ],

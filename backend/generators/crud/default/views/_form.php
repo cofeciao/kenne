@@ -17,35 +17,28 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use backend\widgets\ToastrWidget;
+use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
-
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
-    <div class="form-actions">
 <?php foreach ($generator->getColumnNames() as $attribute) {
-    if (in_array($attribute, $safeAttributes)) {
-        echo "        <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
-    }
-} ?>
-<?= "        <?php " ?>if (Yii::$app->controller->action->id == 'create')
-            $model->status = 1;
-        ?>
-<?= "        <?= " ?>$form->field($model, 'status')->checkbox() ?>
-    </div>
-    <div class="form-actions">
-        <?= "<?= " ?>Html::resetButton('<i class="ft-x"></i> Cancel', ['class' =>
-            'btn btn-warning mr-1']) ?>
-        <?= "<?= " ?>Html::submitButton('<i class="fa fa-check-square-o"></i> Save' ,
-            ['class' => 'btn btn-primary']) ?>
-    </div>
+        if (in_array($attribute, $safeAttributes)) {
+            echo "\t\t<?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
+        }
+    } ?>
+<?= "\t\t<?php " ?>if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+<?= "\t\t<?= " ?>$form->field($model, 'status')->checkbox() ?>
+        <div class="form-group">
+            <?= "<?=" ?> Html::submitButton(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
 
-    <?= "<?php " ?>ActiveForm::end(); ?>
-
+    <?= "<?php" ?> ActiveForm::end(); ?>
 </div>
-

@@ -34,6 +34,7 @@ use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use modava\article\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
@@ -109,7 +110,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('toastr-<?= strtolower($modelClass) ?>-view', [
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
                     'text' => 'Tạo mới thành công',
                     'type' => 'success'
@@ -120,7 +121,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-<?= strtolower($modelClass) ?>-form', [
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                     'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
@@ -147,7 +148,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         if ($model->load(Yii::$app->request->post())) {
             if($model->validate()) {
                 if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-<?= strtolower($modelClass) ?>-view', [
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
                         'text' => 'Cập nhật thành công',
                         'type' => 'success'
@@ -159,7 +160,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-<?= strtolower($modelClass) ?>-form', [
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                     'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
@@ -183,7 +184,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         $model = $this->findModel($id);
         if ($model->delete()) {
-            Yii::$app->session->setFlash('toastr-<?= strtolower($modelClass) ?>-index', [
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
                 'title' => 'Thông báo',
                 'text' => 'Xoá thành công',
                 'type' => 'success'
@@ -193,7 +194,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             foreach ($model->getErrors() as $error) {
                 $errors .= Html::tag('p', $error[0]);
             }
-            Yii::$app->session->setFlash('toastr-<?= strtolower($modelClass) ?>-index', [
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
                 'title' => 'Thông báo',
                 'text' => $errors,
                 'type' => 'warning'

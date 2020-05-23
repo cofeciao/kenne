@@ -7,93 +7,120 @@ use yii\helpers\StringHelper;
 /* @var $generator yii\gii\generators\crud\Generator */
 
 $urlParams = $generator->generateUrlParams();
+$modelClass = StringHelper::basename($generator->modelClass);
 
 echo "<?php\n";
 ?>
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\widgets\ToastrWidget;
+use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register($this);
 ?>
-<section id="dom">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title"><?= "<?= " ?> $this->title; ?></h4>
-                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-                    <div class="heading-elements">
-                        <ul class="list-inline mb-0">
-                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                            <li><a class="block-page"
-                                   onclick='window.location="<?= "<?= " ?> \Yii::$app->getRequest()->getUrl(); ?>"'><i
-                                            class="ft-rotate-cw"></i></a></li>
-                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                            <li><a data-action="close"><i class="ft-x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-content collapse show">
-                    <div class="card-body card-dashboard">
+<?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
+<div class="container-fluid px-xxl-25 px-xl-10">
+    <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
-                        <?= "<?= " ?>DetailView::widget([
-                        'model' => $model,
-                        'options' => ['class' => 'detail1-view table table-striped table-bordered detail-view'],
-                        'attributes' => [
-                        <?php
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title"><span class="pg-title-icon"><span
+                        class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) ?>
+        </h4>
+        <p>
+            <a class="btn btn-outline-light" href="<?= "<?=" ?> Url::to(['create']); ?>"
+                title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
+                <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Create'); <?= "?>" ?></a>
+            <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) <?= "?>\n" ?>
+            <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) <?= "?>\n" ?>
+        </p>
+    </div>
+    <!-- /Title -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <?= "<?= " ?>DetailView::widget([
+                    'model' => $model,
+                    'attributes' => [
+<?php
                         if (($tableSchema = $generator->getTableSchema()) === false) {
                             foreach ($generator->getColumnNames() as $name) {
-                                echo "            '" . $name . "',\n";
+                                if(in_array($name, ['created_by', 'updated_by'])) {
+                                    continue;
+                                }
+                                if($name == 'status'){
+                                    echo '[
+                                        \'attribute\' => \'status\',
+                                        \'value\' => function ($model) {
+                                            return Yii::$app->getModule(\''.$generator->messageCategory.'\')->params[\'status\'][$model->status];
+                                        }
+                                    ],';
+                                }
+                                echo "\t\t\t\t\t\t'" . $name . "',\n";
                             }
                         } else {
                             foreach ($generator->getTableSchema()->columns as $column) {
-                                $format = $generator->generateColumnFormat($column);
-                                echo "            '" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+                                $name = $column->name;
+                                if(in_array($name, ['created_by', 'updated_by'])) {
+                                    continue;
+                                }
+                                switch ($name){
+                                    case 'status':
+                                        ?>
+                        [
+                            'attribute' => 'status',
+                            'value' => function ($model) {
+                                return Yii::$app->getModule('<?= $generator->messageCategory ?>')->params['status'][$model->status];
+                            }
+                        ],
+<?php
+                                        break;
+                                    case 'language':
+                        ?>
+                        [
+                            'attribute' => 'language',
+                            'value' => function ($model) {
+                                return Yii::$app->getModule('<?= $generator->messageCategory ?>')->params['availableLocales'][$model->language];
+                            },
+                        ],
+<?php
+                                        break;
+                                    default:
+                                        $format = $generator->generateColumnFormat($column);
+                                        echo "\t\t\t\t\t\t'" . $name . ($format === 'text' ? "" : ":" . $format) . "',\n";
+                                        ;
+                                }
                             }
                         }
                         ?>
-
                         [
-                            'attribute' => 'status',
-                            'format' => 'raw',
-                            'value' => function ($model) {
-                                return $model->status == 1 ? 'Hiển thị' : 'Đang ẩn';
-                            }
-                        ],
-
-                        [
-                            'attribute' => 'created_by',
-                            'value' => function ($model) {
-                                /*$user = new <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "").'()' ?>;*/
-                                $user = new \backend\modules\user\models\User();
-                                $userCreatedBy = $user->getUserCreatedBy($model->created_by);
-                                if($userCreatedBy == null) return null;
-                                return $userCreatedBy->fullname;
-                            }
+                            'attribute' => 'userCreated.userProfile.fullname',
+                            'label' => ArticleModule::t('article', 'Created By')
                         ],
                         [
-                            'attribute' => 'updated_by',
-                            'value' => function ($model) {
-                                /*$user = new <?= ltrim($generator->modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "").'()' ?>;*/
-                                $user = new \backend\modules\user\models\User();
-                                $userCreatedBy = $user->getUserCreatedBy($model->updated_by);
-                                if($userCreatedBy == null) return null;
-                                return $userCreatedBy->fullname;
-                            }
+                            'attribute' => 'userUpdated.userProfile.fullname',
+                            'label' => ArticleModule::t('article', 'Updated By')
                         ],
-
-                        ],
-                        ]) ?>
-                    </div>
-                </div>
-            </div>
+                    ],
+                ]) ?>
+            </section>
         </div>
     </div>
-</section>
-
+</div>
