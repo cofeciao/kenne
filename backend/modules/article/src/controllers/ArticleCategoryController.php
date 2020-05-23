@@ -3,7 +3,6 @@
 namespace modava\article\controllers;
 
 use modava\article\ArticleModule;
-use Mpdf\Tag\P;
 use Yii;
 use modava\article\models\ArticleCategory;
 use modava\article\models\search\ArticleCategorySearch;
