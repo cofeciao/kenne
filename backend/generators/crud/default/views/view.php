@@ -17,7 +17,6 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
 use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
-use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -29,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-    <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
@@ -112,11 +110,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         ?>
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => ArticleModule::t('article', 'Created By')
+                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => ArticleModule::t('article', 'Updated By')
+                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Updated By')
                         ],
                     ],
                 ]) ?>

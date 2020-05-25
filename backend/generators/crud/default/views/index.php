@@ -14,8 +14,7 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use modava\article\<?= ucfirst($generator->messageCategory) ?>Module;
-use modava\article\widgets\NavbarWidgets;
+use modava\<?= ucfirst($generator->messageCategory) ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
@@ -30,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-    <?= "<?=" ?> NavbarWidgets::widget(); <?= "?>\n" ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
@@ -38,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
-           title="<?= "<?=" ?> ArticleModule::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
+           title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
             <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
     </div>
 

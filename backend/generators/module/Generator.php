@@ -113,7 +113,25 @@ EOD;
      */
     public function requiredTemplates()
     {
-        return ['module.php', 'controller.php', 'view.php', 'config/_urlManager.php', 'config/params.php', 'config/option.php'];
+        return [
+            'assets/assets.php',
+            'components/controller.php',
+            'components/errorHandler.php',
+            'components/upload.php',
+            'config/.htaccess',
+            'config/_urlManager.php',
+            'config/option.php',
+            'config/params.php',
+            'controllers/index.html',
+            'messages/en/en.php',
+            'messages/vi/vi.php',
+            'migration/index.html',
+            'views/error/error.php',
+            'views/layouts/layouts.php',
+            'web/index.html',
+            'widgets/views/index.html',
+            'module.php',
+        ];
     }
 
     /**
@@ -124,31 +142,76 @@ EOD;
         $files = [];
         $modulePath = $this->getModulePath();
         $params = [
-            'moduleClass' => StringHelper::basename($this->moduleClass)
+            'moduleClass' => StringHelper::basename($this->moduleClass),
+            'moduleID' => $this->moduleID
         ];
         $files[] = new CodeFile(
-            $modulePath . '/' . StringHelper::basename($this->moduleClass) . '.php',
-            $this->render("module.php")
+            $modulePath . '/assets/' . ucfirst($this->moduleID) . 'Asset.php',
+            $this->render("assets/assets.php", $params)
         );
         $files[] = new CodeFile(
-            $modulePath . '/controllers/DefaultController.php',
-            $this->render("controller.php")
+            $modulePath . '/components/My' . ucfirst($this->moduleID) . 'Controller.php',
+            $this->render("components/controller.php", $params)
         );
         $files[] = new CodeFile(
-            $modulePath . '/views/default/index.php',
-            $this->render("view.php")
+            $modulePath . '/components/MyErrorHandler.php',
+            $this->render("components/errorHandler.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/components/MyUpload.php',
+            $this->render("components/upload.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/config/.htaccess',
+            $this->render("config/.htaccess", $params)
         );
         $files[] = new CodeFile(
             $modulePath . '/config/_urlManager.php',
-            $this->render("config/_urlManager.php")
+            $this->render("config/_urlManager.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/config/' . $this->moduleID . '.php',
+            $this->render("config/option.php", $params)
         );
         $files[] = new CodeFile(
             $modulePath . '/config/params.php',
-            $this->render("config/params.php")
+            $this->render("config/params.php", $params)
         );
         $files[] = new CodeFile(
-            $modulePath . '/config/option.php',
-            $this->render("config/option.php", $params)
+            $modulePath . '/controllers/index.html',
+            $this->render("controllers/index.html", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/messages/en/' . $this->moduleID . '.php',
+            $this->render("messages/en/en.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/messages/vi/' . $this->moduleID . '.php',
+            $this->render("messages/vi/vi.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/migration/index.html',
+            $this->render("migration/index.html", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/views/error/error.php',
+            $this->render("views/error/error.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/views/layouts/' . $this->moduleID . '.php',
+            $this->render("views/layouts/layouts.php", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/web/index.html',
+            $this->render("web/index.html", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/widgets/views/index.html',
+            $this->render("widgets/views/index.html", $params)
+        );
+        $files[] = new CodeFile(
+            $modulePath . '/' . ucfirst($this->moduleID) . 'Module.php',
+            $this->render("module.php", $params)
         );
 
         return $files;

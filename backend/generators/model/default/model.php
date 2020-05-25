@@ -51,7 +51,7 @@ use Yii;
     <?php endforeach; ?>
 <?php endif; ?>
 */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= $className ?>Table
 {
     public $toastr_key = '<?= Inflector::camel2id($className, '-', true) ?>';
     public function behaviors()

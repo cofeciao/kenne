@@ -16,6 +16,9 @@ return [
     'article' => [
         'class' => 'modava\article\ArticleModule',
     ],
+    'article1' => [
+        'class' => 'modava\article1\Article1Module',
+    ],
     'filemanager' => [
         'class' => 'backend\modules\filemanager\FilemanagerModule',
     ],

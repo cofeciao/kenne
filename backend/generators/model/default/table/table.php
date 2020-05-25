@@ -24,7 +24,7 @@ use modava\article\models\query\<?= $className ?>Query;
 use Yii;
 use yii\db\ActiveRecord;
 
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+class <?= $className ?>Table extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
 <?php if (isset($tableSchema->columns['status'])) { ?>
     const STATUS_DISABLED = 0;

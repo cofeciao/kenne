@@ -3,7 +3,7 @@
 ?>
 <?= "<?php" ?>
 
-\modava\<?= $generator->messageCategory ?>\assets\<?= ucfirst($generator->messageCategory) ?>Asset::register($this);
+\modava\<?= $generator->moduleID ?>\assets\<?= ucfirst($generator->moduleID) ?>Asset::register($this);
 ?>
 <?= "<?php" ?> $this->beginContent('@backend/views/layouts/main.php'); ?>
 <?= "<?php" ?> echo $content ?>

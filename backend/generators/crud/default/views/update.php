@@ -12,7 +12,6 @@ $modelClass = StringHelper::basename($generator->modelClass);
 echo "<?php\n";
 ?>
 
-use modava\article\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
@@ -28,7 +27,6 @@ $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttr
 $this->params['breadcrumbs'][] = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-    <?= "<?=" ?> NavbarWidgets::widget(); <?= "?>\n" ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
@@ -36,8 +34,8 @@ $this->params['breadcrumbs'][] = <?= ucfirst($generator->messageCategory) ?>Modu
                         class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= "<?=" ?> Url::to(['create']); <?= "?>" ?>"
-           title="<?= "<?=" ?> ArticleModule::t('article', 'Create'); <?= "?>" ?>">
-            <i class="fa fa-plus"></i> <?= "<?=" ?> ArticleModule::t('article', 'Create'); <?= "?>" ?></a>
+           title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Create'); <?= "?>" ?>">
+            <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('article', 'Create'); <?= "?>" ?></a>
     </div>
     <!-- /Title -->
 
