@@ -16,6 +16,7 @@ use yii\db\TableSchema;
 use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\base\NotSupportedException;
+use yii\helpers\VarDumper;
 
 /**
  * This generator will generate one or multiple ActiveRecord classes for the specified database table.
@@ -174,7 +175,7 @@ class Generator extends \yii\gii\Generator
     public function requiredTemplates()
     {
         // @todo make 'query.php' to be required before 2.1 release
-        return ['model.php', 'query/query.php', 'search/search.php'];
+        return ['table/table.php', 'model.php', 'query/query.php', 'search/search.php'];
     }
 
     /**
@@ -226,6 +227,10 @@ class Generator extends \yii\gii\Generator
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
             ];
+            $files[] = new CodeFile(
+                Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/table/' . $modelClassName . 'Table.php',
+                $this->render('table/table.php', $params)
+            );
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $modelClassName . '.php',
                 $this->render('model.php', $params)
@@ -945,5 +950,39 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
+    }
+
+    /**
+     * Generates a string depending on enableI18N property
+     *
+     * @param string $string the text be generated
+     * @param array $placeholders the placeholders to use by `Yii::t()`
+     * @return string
+     */
+    public function generateString($string = '', $placeholders = [])
+    {
+        $string = addslashes($string);
+        if ($this->enableI18N) {
+            // If there are placeholders, use them
+            if (!empty($placeholders)) {
+                $ph = ', ' . VarDumper::export($placeholders);
+            } else {
+                $ph = '';
+            }
+            $str = ucfirst($this->messageCategory) . "Module::t('" . $this->messageCategory . "', '" . $string . "'" . $ph . ")";
+        } else {
+            // No I18N, replace placeholders by real words, if any
+            if (!empty($placeholders)) {
+                $phKeys = array_map(function($word) {
+                    return '{' . $word . '}';
+                }, array_keys($placeholders));
+                $phValues = array_values($placeholders);
+                $str = "'" . str_replace($phKeys, $phValues, $string) . "'";
+            } else {
+                // No placeholders, just the given string
+                $str = "'" . $string . "'";
+            }
+        }
+        return $str;
     }
 }

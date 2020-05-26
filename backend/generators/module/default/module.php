@@ -16,10 +16,17 @@ echo "<?php\n";
 
 namespace <?= $ns ?>;
 
+use yii\base\BootstrapInterface;
+use Yii;
+use yii\base\Event;
+use \yii\base\Module;
+use yii\web\Application;
+use yii\web\Controller;
+
 /**
  * <?= $generator->moduleID ?> module definition class
  */
-class <?= $className ?> extends \yii\base\Module
+class <?= $className ?> extends Module implements BootstrapInterface
 {
     /**
      * @inheritdoc
@@ -31,9 +38,42 @@ class <?= $className ?> extends \yii\base\Module
      */
     public function init()
     {
-        parent::init();
-
         // custom initialization code goes here
-        \Yii::configure($this, require(__DIR__ . '/config/option.php'));
+        $this->registerTranslations();
+        parent::init();
+        Yii::configure($this, require(__DIR__ . '/config/<?= $generator->moduleID ?>.php'));
+        $handler = $this->get('errorHandler');
+        Yii::$app->set('errorHandler', $handler);
+        $handler->register();
+        $this->layout = '<?= $generator->moduleID ?>';
+    }
+
+
+
+    public function bootstrap($app)
+    {
+        $app->on(Application::EVENT_BEFORE_ACTION, function () {
+
+        });
+        Event::on(Controller::class, Controller::EVENT_BEFORE_ACTION, function (Event $event) {
+            $controller = $event->sender;
+        });
+    }
+
+    public function registerTranslations()
+    {
+        Yii::$app->i18n->translations['<?= $generator->moduleID ?>/messages/*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en',
+            'basePath' => '@modava/<?= $generator->moduleID ?>/messages',
+            'fileMap' => [
+                '<?= $generator->moduleID ?>/messages/<?= $generator->moduleID ?>' => '<?= $generator->moduleID ?>.php',
+            ],
+        ];
+    }
+
+    public static function t($category, $message, $params = [], $language = null)
+    {
+        return Yii::t('<?= $generator->moduleID ?>/messages/' . $category, $message, $params, $language);
     }
 }

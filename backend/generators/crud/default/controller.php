@@ -30,128 +30,142 @@ echo "<?php\n";
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
+use yii\helpers\Html;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
+use modava\article\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
 <?php else: ?>
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
-use <?= ltrim($generator->baseControllerClass, '\\') ?>;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use backend\components\MyComponent;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
+    /**
+    * {@inheritdoc}
+    */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+    * Lists all <?= $modelClass ?> models.
+    * @return mixed
+    */
     public function actionIndex()
     {
-<?php if (!empty($generator->searchModelClass)): ?>
-        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+        <?php if (!empty($generator->searchModelClass)): ?>$searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        if (MyComponent::hasCookies('pageSize')) {
-            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
-        } else {
-            $dataProvider->pagination->pageSize = 10;
-        }
-
-        $pageSize = $dataProvider->pagination->pageSize;
-
-        $totalCount = $dataProvider->totalCount;
-
-        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'totalPage' => $totalPage,
         ]);
-<?php else: ?>
-        $dataProvider = new ActiveDataProvider([
+        <?php else : ?>$dataProvider = new ActiveDataProvider([
             'query' => <?= $modelClass ?>::find(),
         ]);
-
-        $pageSize = $dataProvider->pagination->pageSize;
-
-        $totalCount = $dataProvider->totalCount;
-
-        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
-
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'totalPage' => $totalPage,
         ]);
 <?php endif; ?>
     }
 
-    public function actionPerpage($perpage)
-    {
-        MyComponent::setCookies('pageSize', $perpage);
-    }
 
+
+    /**
+    * Displays a single <?= $modelClass ?> model.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionView(<?= $actionParams ?>)
     {
-        if ($this->findModel($id)) {
-            return $this->render('view', [
-                'model' => $this->findModel(<?= $actionParams ?>),
-            ]);
-        }
-        return $this->redirect(['index']);
+        return $this->render('view', [
+            'model' => $this->findModel(<?= $actionParams ?>),
+        ]);
     }
 
+    /**
+    * Creates a new <?= $modelClass ?> model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
     public function actionCreate()
     {
         $model = new <?= $modelClass ?>();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $model->save();
-                Yii::$app->session->setFlash('alert', [
-                    'body' => Yii::$app->params['create-success'],
-                    'class' => 'bg-success',
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate() && $model->save()) {
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                    'title' => 'Thông báo',
+                    'text' => 'Tạo mới thành công',
+                    'type' => 'success'
                 ]);
-            } catch (\yii\db\Exception $exception) {
-                Yii::$app->session->setFlash('alert', [
-                    'body' => Yii::$app->params['create-danger'],
-                    'class' => 'bg-danger',
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $errors = Html::tag('p', 'Tạo mới thất bại');
+                foreach ($model->getErrors() as $error) {
+                    $errors .= Html::tag('p', $error[0]);
+                }
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
+                    'text' => $errors,
+                    'type' => 'warning'
                 ]);
             }
-            return $this->refresh();
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-    
-    /**
-     * Updates an existing <?= $modelClass ?> model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate(<?= $actionParams ?>)
-    {
-        $model = $this->findModel(<?= $actionParams ?>);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            try {
-                $model->save();
-                Yii::$app->session->setFlash('alert', [
-                    'body' => Yii::$app->params['update-success'],
-                    'class' => 'bg-success',
-                ]);
-            } catch (\yii\db\Exception $exception) {
-                Yii::$app->session->setFlash('alert', [
-                    'body' => $exception->getMessage(),
-                    'class' => 'bg-danger',
+    /**
+    * Updates an existing <?= $modelClass ?> model.
+    * If update is successful, the browser will be redirected to the 'view' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->validate()) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                        'title' => 'Thông báo',
+                        'text' => 'Cập nhật thành công',
+                        'type' => 'success'
+                    ]);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $errors = Html::tag('p', 'Cập nhật thất bại');
+                foreach ($model->getErrors() as $error) {
+                    $errors .= Html::tag('p', $error[0]);
+                }
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
+                    'text' => $errors,
+                    'type' => 'warning'
                 ]);
             }
-            return $this->refresh();
         }
 
         return $this->render('update', [
@@ -159,75 +173,44 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         ]);
     }
 
-    public function actionDelete()
+    /**
+    * Deletes an existing <?= $modelClass ?> model.
+    * If deletion is successful, the browser will be redirected to the 'index' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
+    public function actionDelete($id)
     {
-        if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-            $id = Yii::$app->request->post('id');
-            try {
-                if ($this->findModel($id)->delete()) {
-                    return [
-                        "status" => "success"
-                    ];
-                } else {
-                    return [
-                        "status" => "failure"
-                    ];
-                }
-            } catch (\yii\db\Exception $e) {
-                return [
-                    "status" => "exception"
-                ];
+        $model = $this->findModel($id);
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                'title' => 'Thông báo',
+                'text' => 'Xoá thành công',
+                'type' => 'success'
+            ]);
+        } else {
+            $errors = Html::tag('p', 'Xoá thất bại');
+            foreach ($model->getErrors() as $error) {
+                $errors .= Html::tag('p', $error[0]);
             }
-        }
-
-        return $this->redirect(['index']);
-    }
-
-    public function actionShowHide()
-    {
-        if (Yii::$app->request->isAjax) {
-            $id = Yii::$app->request->post('id');
-
-            $model = $this->findModel($id);
-            try {
-                if ($model->status == 1) {
-                    $model->status = 0;
-                } else {
-                    $model->status = 1;
-                }
-                if ($model->save()) {
-                    echo 1;
-                }
-            } catch (\yii\db\Exception $exception) {
-                echo 0;
-            }
-        }
-
-    }
-    
-    public function actionDeleteMultiple()
-    {
-        try {
-            $action = Yii::$app->request->post('action');
-            $selectCheckbox = Yii::$app->request->post('selection');
-            if ($action === 'c') {
-                if ($selectCheckbox) {
-                    foreach ($selectCheckbox as $id) {
-                        $this->findModel($id)->delete();
-                    }
-                    \Yii::$app->session->setFlash('indexFlash', 'Bạn đã xóa thành công.');
-                }
-            }
-        } catch (\yii\db\Exception $e) {
-            if ($e->errorInfo[1] == 1451) {
-                throw new \yii\web\HttpException(400, 'Failed to delete the object.');
-            } else {
-                throw $e;
-            }
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                'title' => 'Thông báo',
+                'text' => $errors,
+                'type' => 'warning'
+            ]);
         }
         return $this->redirect(['index']);
     }
+
+    /**
+    * Finds the <?= $modelClass ?> model based on its primary key value.
+    * If the model is not found, a 404 HTTP exception will be thrown.
+    * @param integer $id
+    * @return <?= $modelClass ?> the loaded model
+    * @throws NotFoundHttpException if the model cannot be found
+    */
+
 
     protected function findModel(<?= $actionParams ?>)
     {
