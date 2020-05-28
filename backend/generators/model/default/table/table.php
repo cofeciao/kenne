@@ -20,7 +20,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>\table;
 
 use cheatsheet\Time;
-use modava\article\models\query\<?= $className ?>Query;
+use modava\<?= $generator->messageCategory ?>\models\query\<?= $className ?>Query;
 use Yii;
 use yii\db\ActiveRecord;
 
