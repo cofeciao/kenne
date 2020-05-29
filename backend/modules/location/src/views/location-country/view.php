@@ -4,13 +4,13 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
-use modava\app\AppModule;
+use modava\location\LocationModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\location\models\LocationCountry */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => AppModule::t('app', 'Location Countries'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -24,13 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= AppModule::t('app', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= AppModule::t('article', 'Create'); ?></a>
-            <?= Html::a(AppModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(AppModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+                title="<?= LocationModule::t('location', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
+            <?= Html::a(LocationModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(LocationModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => AppModule::t('app', 'Are you sure you want to delete this item?'),
+                    'confirm' => LocationModule::t('location', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -64,13 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('app')->params['status'][$model->status];
+                                return Yii::$app->getModule('location')->params['status'][$model->status];
                             }
                         ],
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('app')->params['availableLocales'][$model->language];
+                                return Yii::$app->getModule('location')->params['availableLocales'][$model->language];
                             },
                         ],
 						'Flags',
@@ -79,11 +79,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => AppModule::t('article', 'Created By')
+                            'label' => LocationModule::t('article', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => AppModule::t('article', 'Updated By')
+                            'label' => LocationModule::t('article', 'Updated By')
                         ],
                     ],
                 ]) ?>

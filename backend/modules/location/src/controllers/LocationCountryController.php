@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\article\AppModule;
+use modava\article\LocationModule;
 use backend\components\MyController;
 use modava\location\models\LocationCountry;
 use modava\location\models\search\LocationCountrySearch;
@@ -180,6 +180,6 @@ class LocationCountryController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('location', 'The requested page does not exist.'));
     }
 }

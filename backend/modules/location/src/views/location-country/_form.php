@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
-use modava\app\AppModule;
+use modava\location\LocationModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\location\models\LocationCountry */
@@ -62,7 +62,7 @@ use modava\app\AppModule;
 		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
 		<?= $form->field($model, 'status')->checkbox() ?>
         <div class="form-group">
-            <?= Html::submitButton(AppModule::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(LocationModule::t('location', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
     <?php ActiveForm::end(); ?>

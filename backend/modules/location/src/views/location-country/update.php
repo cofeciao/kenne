@@ -2,17 +2,17 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use modava\app\AppModule;
+use modava\location\LocationModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\location\models\LocationCountry */
 
-$this->title = AppModule::t('app', 'Update : {name}', [
+$this->title = LocationModule::t('location', 'Update : {name}', [
     'name' => $model->title,
 ]);
-$this->params['breadcrumbs'][] = ['label' => AppModule::t('app', 'Location Countries'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = AppModule::t('app', 'Update');
+$this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
 
@@ -22,8 +22,8 @@ $this->params['breadcrumbs'][] = AppModule::t('app', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= AppModule::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= AppModule::t('article', 'Create'); ?></a>
+           title="<?= LocationModule::t('article', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

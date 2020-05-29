@@ -10,7 +10,7 @@ class LocationAsset extends AssetBundle
 {
     public $sourcePath = '@locationweb';
     public $css = [
-
+        'css/customLocation.css',
     ];
     public $js = [
 

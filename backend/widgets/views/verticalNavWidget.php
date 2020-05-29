@@ -45,8 +45,8 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li class="nav-item<?php if (Yii::$app->controller->module->id == 'location') echo ' active'; ?>">
-                    <a class="nav-link" href="<?= Url::toRoute(['/location']); ?>">
-                        <i class="ion ion-ios-book"></i>
+                    <a class="nav-link" href="<?= Url::toRoute(['/location/location-country']); ?>">
+                        <i class="ion ion-ios-locate"></i>
                         <span class="nav-link-text"><?= Yii::t('backend', 'Location'); ?></span>
                     </a>
                 </li>
