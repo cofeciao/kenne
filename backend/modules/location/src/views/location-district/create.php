@@ -2,18 +2,15 @@
 
 use modava\location\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use modava\location\LocationModule;
 
-/* @var $this yii\web\View */
-/* @var $model modava\location\models\LocationCountry */
 
-$this->title = LocationModule::t('location', 'Update : {name}', [
-    'name' => $model->id,
-]);
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
+/* @var $this yii\web\View */
+/* @var $model modava\location\models\LocationDistrict */
+
+$this->title = LocationModule::t('location', 'Create');
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Districts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -23,9 +20,6 @@ $this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
-        <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= LocationModule::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 
@@ -36,8 +30,8 @@ $this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
                 <?= $this->render('_form', [
                     'model' => $model,
                 ]) ?>
-
             </section>
         </div>
     </div>
+
 </div>

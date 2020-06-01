@@ -16,6 +16,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
+use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 
 /* @var $this yii\web\View */
@@ -28,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
+    <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">

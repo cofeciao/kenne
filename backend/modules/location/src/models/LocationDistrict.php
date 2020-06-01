@@ -2,37 +2,26 @@
 
 namespace modava\location\models;
 
-use common\helpers\MyHelper;
 use common\models\User;
 use modava\location\LocationModule;
-use modava\location\models\table\LocationCountryTable;
+use modava\location\models\table\LocationDistrictTable;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "location_country".
+ * This is the model class for table "location_district".
  *
  * @property int $id
- * @property string $CountryCode
- * @property string $CommonName
+ * @property string $name
  * @property string $slug
- * @property string $FormalName
- * @property string $CountryType
- * @property string $CountrySubType
- * @property string $Sovereignty
- * @property string $Capital
- * @property string $CurrencyCode
- * @property string $CurrencyName
- * @property string $TelephoneCode
- * @property string $CountryCode3
- * @property string $CountryNumber
- * @property string $InternetCountryCode
+ * @property string $Type
+ * @property string $LatiLongTude
+ * @property int $ProvinceId
  * @property int $SortOrder
  * @property int $status
  * @property string $language Language
- * @property string $Flags
  * @property int $IsDeleted
  * @property int $created_at
  * @property int $updated_at
@@ -40,12 +29,14 @@ use Yii;
  * @property int $updated_by
  *
  * @property User $createdBy
+ * @property LocationProvince $province
  * @property User $updatedBy
- * @property LocationProvince[] $locationProvinces
+ * @property LocationWard[] $locationWards
  */
-class LocationCountry extends LocationCountryTable
+class LocationDistrict extends LocationDistrictTable
 {
-    public $toastr_key = 'location-country';
+    public $toastr_key = 'location-district';
+    public $countryId;
 
     public function behaviors()
     {
@@ -56,13 +47,6 @@ class LocationCountry extends LocationCountryTable
                     'class' => BlameableBehavior::class,
                     'createdByAttribute' => 'created_by',
                     'updatedByAttribute' => 'updated_by',
-                ],
-                [
-                    'class' => SluggableBehavior::class,
-                    'ensureUnique' => true,
-                    'value' => function () {
-                        return MyHelper::createAlias($this->CommonName);
-                    }
                 ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
@@ -87,10 +71,11 @@ class LocationCountry extends LocationCountryTable
     public function rules()
     {
         return [
-            [['SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['ProvinceId', 'SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['language'], 'string'],
-            [['CountryCode', 'CommonName', 'slug', 'FormalName', 'CountryType', 'CountrySubType', 'Sovereignty', 'Capital', 'CurrencyCode', 'CurrencyName', 'TelephoneCode', 'CountryCode3', 'CountryNumber', 'InternetCountryCode', 'Flags'], 'string', 'max' => 255],
+            [['name', 'slug', 'Type', 'LatiLongTude'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['ProvinceId'], 'exist', 'skipOnError' => true, 'targetClass' => LocationProvince::class, 'targetAttribute' => ['ProvinceId' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
@@ -102,24 +87,14 @@ class LocationCountry extends LocationCountryTable
     {
         return [
             'id' => LocationModule::t('location', 'ID'),
-            'CountryCode' => LocationModule::t('location', 'Country Code'),
-            'CommonName' => LocationModule::t('location', 'Common Name'),
+            'name' => LocationModule::t('location', 'Name'),
             'slug' => LocationModule::t('location', 'Slug'),
-            'FormalName' => LocationModule::t('location', 'Formal Name'),
-            'CountryType' => LocationModule::t('location', 'Country Type'),
-            'CountrySubType' => LocationModule::t('location', 'Country Sub Type'),
-            'Sovereignty' => LocationModule::t('location', 'Sovereignty'),
-            'Capital' => LocationModule::t('location', 'Capital'),
-            'CurrencyCode' => LocationModule::t('location', 'Currency Code'),
-            'CurrencyName' => LocationModule::t('location', 'Currency Name'),
-            'TelephoneCode' => LocationModule::t('location', 'Telephone Code'),
-            'CountryCode3' => LocationModule::t('location', 'Country Code3'),
-            'CountryNumber' => LocationModule::t('location', 'Country Number'),
-            'InternetCountryCode' => LocationModule::t('location', 'Internet Country Code'),
+            'Type' => LocationModule::t('location', 'Type'),
+            'LatiLongTude' => LocationModule::t('location', 'Lati Long Tude'),
+            'ProvinceId' => LocationModule::t('location', 'Province ID'),
             'SortOrder' => LocationModule::t('location', 'Sort Order'),
             'status' => LocationModule::t('location', 'Status'),
             'language' => LocationModule::t('location', 'Language'),
-            'Flags' => LocationModule::t('location', 'Flags'),
             'IsDeleted' => LocationModule::t('location', 'Is Deleted'),
             'created_at' => LocationModule::t('location', 'Created At'),
             'updated_at' => LocationModule::t('location', 'Updated At'),

@@ -17,8 +17,6 @@ use modava\location\LocationModule;
 
 		<?= $form->field($model, 'CommonName')->textInput(['maxlength' => true]) ?>
 
-		<?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-
 		<?= $form->field($model, 'FormalName')->textInput(['maxlength' => true]) ?>
 
 		<?= $form->field($model, 'CountryType')->textInput(['maxlength' => true]) ?>
@@ -43,21 +41,13 @@ use modava\location\LocationModule;
 
 		<?= $form->field($model, 'SortOrder')->textInput() ?>
 
-		<?= $form->field($model, 'status')->textInput() ?>
-
 		<?= $form->field($model, 'language')->dropDownList([ 'vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp', ], ['prompt' => '']) ?>
 
-		<?= $form->field($model, 'Flags')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'IsDeleted')->textInput() ?>
-
-		<?= $form->field($model, 'created_at')->textInput() ?>
-
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-		<?= $form->field($model, 'created_by')->textInput() ?>
-
-		<?= $form->field($model, 'updated_by')->textInput() ?>
+        <?= \modava\tiny\FileManager::widget([
+            'model' => $model,
+            'attribute' => 'Flags',
+            'label' => LocationModule::t('location', 'Hình ảnh') . ': 150x150px'
+        ]); ?>
 
 		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
 		<?= $form->field($model, 'status')->checkbox() ?>

@@ -7,10 +7,10 @@ use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel modava\location\models\search\LocationCountrySearch */
+/* @var $searchModel modava\location\models\search\LocationProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = LocationModule::t('location', 'Location Countries');
+$this->title = LocationModule::t('location', 'Location Provinces');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -95,22 +95,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
+										'Type',
+										'TelephoneCode',
+										'ZipCode',
+										'CountryId',
 										'CountryCode',
-										'CommonName',
-										'FormalName',
-										'CountryType',
-										'CountrySubType',
-										//'Sovereignty',
-										//'Capital',
-										//'CurrencyCode',
-										//'CurrencyName',
-										//'TelephoneCode',
-										//'CountryCode3',
-										//'CountryNumber',
-										//'InternetCountryCode',
 										//'SortOrder',
 										//'language',
-										//'Flags',
 										//'IsDeleted',
                                         [
                                             'attribute' => 'created_by',

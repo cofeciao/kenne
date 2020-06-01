@@ -1,5 +1,6 @@
 <?php
 
+use modava\location\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use modava\location\LocationModule;
 
@@ -12,6 +13,7 @@ $this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Loca
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
+    <?= NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">

@@ -6,13 +6,13 @@ use yii\helpers\Url;
 use modava\location\LocationModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\location\models\LocationCountry */
+/* @var $model modava\location\models\LocationProvince */
 
 $this->title = LocationModule::t('location', 'Update : {name}', [
-    'name' => $model->id,
+    'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Provinces'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

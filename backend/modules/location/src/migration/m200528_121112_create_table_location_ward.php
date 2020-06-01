@@ -28,11 +28,16 @@ class m200528_121112_create_table_location_ward extends Migration
                 'DistrictID' => $this->integer(11)->notNull(),
                 'SortOrder' => $this->integer(11)->null(),
                 'status' => $this->tinyInteger(1)->defaultValue(1),
-                'IsDeleted' => $this->tinyInteger(1)->defaultValue(0)
+                'IsDeleted' => $this->tinyInteger(1)->defaultValue(0),
+                'created_at' => $this->integer(11)->null(),
+                'updated_at' => $this->integer(11)->null(),
+                'created_by' => $this->integer(11)->null()->defaultValue(1),
+                'updated_by' => $this->integer(11)->null()->defaultValue(1)
             ], $tableOptions);
             $this->addColumn('location_ward', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
             $this->createIndex('index-slug', 'location_ward', 'slug');
             $this->createIndex('index-language', 'location_ward', 'language');
+            $this->addForeignKey('fk_location_ward_district_id_location_district', 'location_ward', 'DistrictId', 'location_district', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_location_ward_created_by_user', 'location_ward', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_location_ward_updated_by_user', 'location_ward', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }
@@ -11171,6 +11176,12 @@ INSERT INTO `location_ward` (`id`, `name`, `Type`, `LatiLongTude`, `DistrictID`,
      */
     public function safeDown()
     {
+            $this->dropForeignKey('fk_location_ward_updated_by_user', 'location_ward');
+            $this->dropForeignKey('fk_location_ward_created_by_user', 'location_ward');
+            $this->dropForeignKey('fk_location_ward_district_id_location_district', 'location_ward');
+            $this->dropIndex('index-language', 'location_ward');
+            $this->dropIndex('index-slug', 'location_ward');
+            $this->dropTable('location_ward');
         echo "m200528_121112_create_table_location_ward cannot be reverted.\n";
 
         return false;

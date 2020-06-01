@@ -14,7 +14,8 @@ $nameAttribute = $generator->getNameAttribute();
 echo "<?php\n";
 ?>
 
-use modava\<?= ucfirst($generator->messageCategory) ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
@@ -29,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
+    <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">

@@ -8,10 +8,10 @@ use modava\location\widgets\NavbarWidgets;
 use modava\location\LocationModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\location\models\LocationCountry */
+/* @var $model modava\location\models\LocationWard */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Wards'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= LocationModule::t('location', 'Create'); ?>">
+               title="<?= LocationModule::t('location', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
             <?= Html::a(LocationModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(LocationModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,22 +47,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'CountryCode',
-						'CommonName',
-						'slug',
-						'FormalName',
-						'CountryType',
-						'CountrySubType',
-						'Sovereignty',
-						'Capital',
-						'CurrencyCode',
-						'CurrencyName',
-						'TelephoneCode',
-						'CountryCode3',
-						'CountryNumber',
-						'InternetCountryCode',
-						'SortOrder',
+                        'id',
+                        'name',
+                        'slug',
+                        'Type',
+                        'LatiLongTude',
+                        'districtHasOne.provinceHasOne.countryHasOne.CommonName',
+                        'districtHasOne.provinceHasOne.name',
+                        'districtHasOne.name',
+                        'SortOrder',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
@@ -75,10 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->getModule('location')->params['availableLocales'][$model->language];
                             },
                         ],
-						'Flags',
-						'IsDeleted',
-						'created_at',
-						'updated_at',
+                        'IsDeleted',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => LocationModule::t('article', 'Created By')

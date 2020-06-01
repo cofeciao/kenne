@@ -8,10 +8,10 @@ use modava\location\widgets\NavbarWidgets;
 use modava\location\LocationModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\location\models\LocationCountry */
+/* @var $model modava\location\models\LocationDistrict */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Districts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -48,20 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
 						'id',
-						'CountryCode',
-						'CommonName',
+						'name',
 						'slug',
-						'FormalName',
-						'CountryType',
-						'CountrySubType',
-						'Sovereignty',
-						'Capital',
-						'CurrencyCode',
-						'CurrencyName',
-						'TelephoneCode',
-						'CountryCode3',
-						'CountryNumber',
-						'InternetCountryCode',
+						'Type',
+						'LatiLongTude',
+						'ProvinceId',
 						'SortOrder',
                         [
                             'attribute' => 'status',
@@ -75,7 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->getModule('location')->params['availableLocales'][$model->language];
                             },
                         ],
-						'Flags',
 						'IsDeleted',
 						'created_at',
 						'updated_at',

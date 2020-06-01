@@ -1,4 +1,5 @@
 <?php
+
 namespace modava\location\assets;
 
 use yii\web\AssetBundle;
@@ -13,7 +14,7 @@ class LocationAsset extends AssetBundle
         'css/customLocation.css',
     ];
     public $js = [
-
+        'js/location.js'
     ];
     public $jsOptions = array(
         'position' => \yii\web\View::POS_END
