@@ -128,7 +128,7 @@ EOD;
             'migration/index.html',
             'views/error/error.php',
             'views/layouts/layouts.php',
-            'web/index.html',
+            'web/css/style.css',
             'widgets/views/index.html',
             'module.php',
         ];
@@ -202,8 +202,8 @@ EOD;
             $this->render("views/layouts/layouts.php", $params)
         );
         $files[] = new CodeFile(
-            $modulePath . '/web/index.html',
-            $this->render("web/index.html", $params)
+            $modulePath . '/web/css/custom' . ucfirst($this->moduleID) . '.css',
+            $this->render("web/css/style.css", $params)
         );
         $files[] = new CodeFile(
             $modulePath . '/widgets/views/index.html',

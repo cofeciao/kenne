@@ -14,7 +14,7 @@ class <?= ucfirst($generator->moduleID) ?>Asset extends AssetBundle
 {
     public $sourcePath = '@<?= $generator->moduleID ?>web';
     public $css = [
-
+        'css/custom<?= ucfirst($generator->moduleID) ?>.css',
     ];
     public $js = [
 

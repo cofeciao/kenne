@@ -432,7 +432,7 @@ sparklineLogin();
 /****Toastr****/
 var loadToastr = function (config) {
     var defaultType = ['success', 'secondary', 'info', 'primary', 'warning', 'danger', 'light', 'dark'],
-        defaultPosition = ['bottom-right', 'top-right', 'top-left', 'bottom-left'];
+        defaultPosition = ['top-right', 'bottom-right', 'top-left', 'bottom-left'];
     config = Object.assign({
         title: null,
         text: null,

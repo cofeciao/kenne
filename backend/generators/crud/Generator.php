@@ -133,7 +133,11 @@ class Generator extends \yii\gii\Generator
      */
     public function requiredTemplates()
     {
-        return ['controller.php'];
+        return [
+            'controller.php',
+            'widget/widget.php',
+            'widget/view.php'
+        ];
     }
 
     /**
@@ -162,6 +166,7 @@ class Generator extends \yii\gii\Generator
      */
     public function generate()
     {
+        $modulePath = $this->getModulePath();
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
 
         $files = [
@@ -183,6 +188,16 @@ class Generator extends \yii\gii\Generator
                 $files[] = new CodeFile("$viewPath/$file", $this->render("views/$file"));
             }
         }
+
+        $files[] = new CodeFile(
+            $modulePath . '/../widgets/NavbarWidgets.php',
+            $this->render('widget/widget.php', [])
+        );
+
+        $files[] = new CodeFile(
+            $modulePath . '/../widgets/views/navbarWidgets.php',
+            $this->render('widget/view.php', [])
+        );
 
         return $files;
     }
@@ -263,7 +278,7 @@ class Generator extends \yii\gii\Generator
                 $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
             }
             return "\$form->field(\$model, '$attribute')->dropDownList("
-                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
+                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
         }
 
         if ($column->phpType !== 'string' || $column->size === null) {
@@ -579,5 +594,13 @@ class Generator extends \yii\gii\Generator
         $class = $this->modelClass;
         $db = $class::getDb();
         return $db instanceof \yii\db\Connection ? $db->driverName : null;
+    }
+
+    /**
+     * @return bool the directory that contains the module class
+     */
+    public function getModulePath()
+    {
+        return Yii::getAlias('@' . str_replace('\\', '/', substr($this->modelClass, 0, strrpos($this->modelClass, '\\'))));
     }
 }

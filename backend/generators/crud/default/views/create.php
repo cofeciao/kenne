@@ -11,6 +11,7 @@ $modelClass = StringHelper::basename($generator->modelClass);
 echo "<?php\n";
 ?>
 
+use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 
@@ -23,6 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => <?= ucfirst($generator->messageCate
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
+    <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">

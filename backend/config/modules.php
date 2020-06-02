@@ -42,7 +42,7 @@ return [
         'class' => 'backend\modules\option\Option',
     ],
     'location' => [
-        'class' => 'backend\modules\location\Location',
+        'class' => 'modava\location\LocationModule',
     ],
     'setting' => [
         'class' => 'backend\modules\setting\Setting',

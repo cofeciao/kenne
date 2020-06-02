@@ -44,6 +44,12 @@ use yii\helpers\Url;
                         <span class="nav-link-text"><?= Yii::t('backend', 'Article'); ?></span>
                     </a>
                 </li>
+                <li class="nav-item<?php if (Yii::$app->controller->module->id == 'location') echo ' active'; ?>">
+                    <a class="nav-link" href="<?= Url::toRoute(['/location/location-country']); ?>">
+                        <i class="ion ion-ios-locate"></i>
+                        <span class="nav-link-text"><?= Yii::t('backend', 'Location'); ?></span>
+                    </a>
+                </li>
                 <li class="nav-item<?php if (Yii::$app->controller->module->id == 'contact') echo ' active'; ?>">
                     <a class="nav-link" href="<?= Url::toRoute(['/contact']); ?>">
                         <i class="ion ion-md-contact"></i>

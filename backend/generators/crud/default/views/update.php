@@ -10,8 +10,10 @@ $urlParams = $generator->generateUrlParams();
 $modelClass = StringHelper::basename($generator->modelClass);
 
 echo "<?php\n";
+$columns = $generator->tableSchema->columns;
 ?>
 
+use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
@@ -20,13 +22,14 @@ use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCat
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $this->title = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update : {name}', [
-    'name' => $model->title,
+    'name' => $model-><?= $generator->getNameAttribute() ?>,
 ]);
 $this->params['breadcrumbs'][] = ['label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
+    <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
