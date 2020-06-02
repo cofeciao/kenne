@@ -15,24 +15,34 @@ use modava\location\models\table\LocationCountryTable;
 <?php ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="location-province-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'Type')->dropDownList([
-        'Thành Phố' => 'Thành Phố',
-        'Tỉnh' => 'Tỉnh',
-    ], []) ?>
-
-    <?= $form->field($model, 'TelephoneCode')->textInput() ?>
-
-    <?= $form->field($model, 'ZipCode')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountryId')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
-        'prompt' => LocationModule::t('location', 'Chọn quốc gia...')
-    ]) ?>
-
-    <?= $form->field($model, 'SortOrder')->textInput() ?>
-
-    <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'Type')->dropDownList([
+                'Thành Phố' => 'Thành Phố',
+                'Tỉnh' => 'Tỉnh',
+            ], []) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'TelephoneCode')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'ZipCode')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CountryId')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
+                'prompt' => LocationModule::t('location', 'Chọn quốc gia...')
+            ])->label('Quốc gia') ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'SortOrder')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+        </div>
+    </div>
 
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>

@@ -11,6 +11,8 @@ class LocationAsset extends AssetBundle
 {
     public $sourcePath = '@locationweb';
     public $css = [
+        'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
+        'vendors/bootstrap/dist/css/bootstrap.min.css',
         'css/customLocation.css',
     ];
     public $js = [

@@ -6,11 +6,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel modava\location\models\search\LocationWardSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = LocationModule::t('location', 'Location Wards');
+$this->title = LocationModule::t('location', 'Ward');
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -95,12 +97,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-										'Type',
-										'LatiLongTude',
-										'DistrictID',
-										'SortOrder',
-										'language',
-										//'IsDeleted',
+                                        'name',
+                                        'Type',
+                                        'LatiLongTude',
+                                        [
+                                            'attribute' => 'districtHasOne.name',
+                                            'label' => 'Quận/Huyện'
+                                        ],
+                                        'SortOrder',
+                                        'language',
+                                        //'IsDeleted',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -124,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                     ],
                                 ]); ?>
-                                                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>

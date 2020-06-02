@@ -22,43 +22,57 @@ if ($model->DistrictID !== null) {
 <?php ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="location-ward-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'Type')->dropDownList([
-        'Phường' => 'Phường',
-        'Xã' => 'Xã',
-        'Thị Trấn' => 'Thị Trấn'
-    ], []) ?>
-
-    <?= $form->field($model, 'LatiLongTude')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'countryId')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
-        'prompt' => LocationModule::t('location', 'Chọn quốc gia...'),
-        'class' => 'form-control load-data',
-        'self-key' => 'country',
-        'url-load-data' => Url::toRoute(['/location/location-province/get-province-by-country']),
-        'element-load-data' => '#select-province',
-        'method-load' => 'GET'
-    ]) ?>
-
-    <?= $form->field($model, 'provinceId')->dropdownList(ArrayHelper::map(LocationProvinceTable::getProvinceByCountry($model->countryId, Yii::$app->language), 'id', 'name'), [
-        'prompt' => LocationModule::t('location', 'Chọn tỉnh/thành phố...'),
-        'id' => 'select-province',
-        'class' => 'form-control load-data',
-        'self-key' => 'province',
-        'url-load-data' => Url::toRoute(['/location/location-district/get-district-by-province']),
-        'element-load-data' => '#select-district',
-        'method-load' => 'GET'
-    ]) ?>
-
-    <?= $form->field($model, 'DistrictID')->dropDownList(ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->provinceId, Yii::$app->language), 'id', 'name'), [
-        'prompt' => LocationModule::t('location', 'Chọn phường/xã...'),
-        'id' => 'select-district'
-    ]) ?>
-
-    <?= $form->field($model, 'SortOrder')->textInput() ?>
-
-    <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'Type')->dropDownList(Yii::$app->getModule('location')->params['ward-type'], []) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'LatiLongTude')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'countryId')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
+                'prompt' => LocationModule::t('location', 'Chọn quốc gia...'),
+                'class' => 'form-control load-data',
+                'self-key' => 'country',
+                'url-load-data' => Url::toRoute(['/location/location-province/get-province-by-country']),
+                'element-load-data' => '#select-province',
+                'method-load' => 'GET'
+            ])->label('Quốc gia') ?></div>
+        <div class="col-6">
+            <?php
+            echo \common\widgets\Select2::widget([
+                'model' => $model,
+                'attribute' => 'provinceId',
+                'data' => ArrayHelper::map(LocationProvinceTable::getProvinceByCountry(), 'id', 'name'),
+                'options' => [
+                    'prompt' => LocationModule::t('location', 'Chọn tỉnh/thành phố...'),
+                    'id' => 'select-province',
+                    'class' => 'form-control load-data',
+                    'self-key' => 'province',
+                    'url-load-data' => Url::toRoute(['/location/location-district/get-district-by-province']),
+                    'element-load-data' => '#select-district',
+                    'method-load' => 'GET'
+                ],
+                'label' => 'Tỉnh/Thành phố'
+            ]);
+            ?>
+            </div>
+        <div class="col-6">
+            <?= $form->field($model, 'DistrictID')->dropDownList(ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->provinceId, Yii::$app->language), 'id', 'name'), [
+                'prompt' => LocationModule::t('location', 'Chọn phường/xã...'),
+                'id' => 'select-district'
+            ])->label('Quận/Huyện') ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'SortOrder')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+        </div>
+    </div>
 
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>

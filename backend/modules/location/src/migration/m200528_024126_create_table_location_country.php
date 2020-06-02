@@ -297,9 +297,7 @@ class m200528_024126_create_table_location_country extends Migration
 (242, 'YT', 'Mayotte', 'Departmental Collectivity of Mayotte', 'Dependency', 'Overseas Collectivity', 'France', 'Mamoudzou', 'EUR', 'Euro', '262', 'MYT', '175', '.yt', 143, 0, 'yt.png', 0, NULL, NULL, 1, 1),
 (243, 'ZA', 'South Africa', 'Republic of South Africa', 'Independent State', NULL, NULL, 'Pretoria (administrative), Cape Town (legislative), and Bloemfontein (judical)', 'ZAR', 'Rand', '27', 'ZAF', '710', '.za', 203, 0, 'za.png', 0, NULL, NULL, 1, 1),
 (244, 'ZM', 'Zambia', 'Republic of Zambia', 'Independent State', NULL, NULL, 'Lusaka', 'ZMK', 'Kwacha', '260', 'ZMB', '894', '.zm', 244, 0, 'zm.png', 0, NULL, NULL, 1, 1),
-(245, 'ZW', 'Zimbabwe', 'Republic of Zimbabwe', 'Independent State', NULL, NULL, 'Harare', 'ZWD', 'Dollar', '263', 'ZWE', '716', '.zw', 245, 0, 'zw.png', 0, NULL, NULL, 1, 1),
-(248, '12312', '213', '213', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', 123, 0, '123', 0, NULL, NULL, 1, 1),
-(249, '123', '123', '213', '213', '213', '213', '123', '213', '123', '123', '123', '123', '123', 246, 0, '123', 0, NULL, NULL, 1, 1)");
+(245, 'ZW', 'Zimbabwe', 'Republic of Zimbabwe', 'Independent State', NULL, NULL, 'Harare', 'ZWD', 'Dollar', '263', 'ZWE', '716', '.zw', 245, 0, 'zw.png', 0, NULL, NULL, 1, 1)");
         }
     }
 
