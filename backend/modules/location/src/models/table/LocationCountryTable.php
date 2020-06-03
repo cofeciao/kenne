@@ -26,7 +26,7 @@ class LocationCountryTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'redis-get-all-country-' . $this->lang
+            'redis-get-all-country-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -38,7 +38,7 @@ class LocationCountryTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'redis-get-all-country-' . $this->lang
+            'redis-get-all-country-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);

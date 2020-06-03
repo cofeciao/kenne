@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel modava\location\models\search\LocationProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -95,14 +96,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-										'Type',
-										'TelephoneCode',
-										'ZipCode',
-										'CountryId',
-										'CountryCode',
-										//'SortOrder',
-										//'language',
-										//'IsDeleted',
+                                        'name',
+                                        'Type',
+                                        'TelephoneCode',
+                                        'ZipCode',
+                                        [
+                                            'attribute' => 'CountryId',
+                                            'value' => 'countryHasOne.CommonName',
+                                        ],
+                                        'CountryCode',
+                                        //'SortOrder',
+                                        //'language',
+                                        //'IsDeleted',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -126,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                     ],
                                 ]); ?>
-                                                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>
