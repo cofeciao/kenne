@@ -9,7 +9,7 @@ use modava\location\LocationModule;
 /* @var $model modava\location\models\LocationCountry */
 
 $this->title = LocationModule::t('location', 'Create');
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

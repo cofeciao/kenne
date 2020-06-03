@@ -10,8 +10,8 @@ use modava\location\LocationModule;
 /* @var $this yii\web\View */
 /* @var $model modava\location\models\LocationCountry */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Countries'), 'url' => ['index']];
+$this->title = $model->CommonName;
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,10 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= LocationModule::t('location', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
-            <?= Html::a(LocationModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(LocationModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= LocationModule::t('location', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
+            <?= Html::a(LocationModule::t('location', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(LocationModule::t('location', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => LocationModule::t('location', 'Are you sure you want to delete this item?'),
@@ -47,22 +47,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'CountryCode',
-						'CommonName',
-						'slug',
-						'FormalName',
-						'CountryType',
-						'CountrySubType',
-						'Sovereignty',
-						'Capital',
-						'CurrencyCode',
-						'CurrencyName',
-						'TelephoneCode',
-						'CountryCode3',
-						'CountryNumber',
-						'InternetCountryCode',
-						'SortOrder',
+                        'id',
+                        'CountryCode',
+                        'CommonName',
+                        'slug',
+                        'FormalName',
+                        'CountryType',
+                        'CountrySubType',
+                        'Sovereignty',
+                        'Capital',
+                        'CurrencyCode',
+                        'CurrencyName',
+                        'TelephoneCode',
+                        'CountryCode3',
+                        'CountryNumber',
+                        'InternetCountryCode',
+                        'SortOrder',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
@@ -75,17 +75,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->getModule('location')->params['availableLocales'][$model->language];
                             },
                         ],
-						'Flags',
-						'IsDeleted',
-						'created_at',
-						'updated_at',
+                        'Flags',
+                        'IsDeleted',
+                        'created_at',
+                        'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => LocationModule::t('article', 'Created By')
+                            'label' => LocationModule::t('location', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => LocationModule::t('article', 'Updated By')
+                            'label' => LocationModule::t('location', 'Updated By')
                         ],
                     ],
                 ]) ?>

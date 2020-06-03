@@ -12,33 +12,34 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "location_province".
-*
-    * @property int $id
-    * @property string $name
-    * @property string $slug
-    * @property string $Type
-    * @property int $TelephoneCode
-    * @property string $ZipCode
-    * @property int $CountryId
-    * @property string $CountryCode
-    * @property int $SortOrder
-    * @property int $status
-    * @property string $language Language
-    * @property int $IsDeleted
-    * @property int $created_at
-    * @property int $updated_at
-    * @property int $created_by
-    * @property int $updated_by
-    *
-            * @property LocationDistrict[] $locationDistricts
-            * @property LocationCountry $country
-            * @property User $createdBy
-            * @property User $updatedBy
-    */
+ * This is the model class for table "location_province".
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string $Type
+ * @property int $TelephoneCode
+ * @property string $ZipCode
+ * @property int $CountryId
+ * @property string $CountryCode
+ * @property int $SortOrder
+ * @property int $status
+ * @property string $language Language
+ * @property int $IsDeleted
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ *
+ * @property LocationDistrict[] $locationDistricts
+ * @property LocationCountry $country
+ * @property User $createdBy
+ * @property User $updatedBy
+ */
 class LocationProvince extends LocationProvinceTable
 {
     public $toastr_key = 'location-province';
+
     public function behaviors()
     {
         return array_merge(
@@ -74,60 +75,43 @@ class LocationProvince extends LocationProvinceTable
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-			[['TelephoneCode', 'CountryId', 'SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-			[['language'], 'string'],
-			[['name', 'slug', 'Type', 'ZipCode', 'CountryCode'], 'string', 'max' => 255],
-			[['CountryId'], 'exist', 'skipOnError' => true, 'targetClass' => LocationCountry::class, 'targetAttribute' => ['CountryId' => 'id']],
-			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-		];
-    }
-
-    /**
-    * {@inheritdoc}
-    */
-    public function attributeLabels()
-    {
-        return [
-            'id' => LocationModule::t('location', 'ID'),
-            'name' => LocationModule::t('location', 'Name'),
-            'slug' => LocationModule::t('location', 'Slug'),
-            'Type' => LocationModule::t('location', 'Type'),
-            'TelephoneCode' => LocationModule::t('location', 'Telephone Code'),
-            'ZipCode' => LocationModule::t('location', 'Zip Code'),
-            'CountryId' => LocationModule::t('location', 'Country ID'),
-            'CountryCode' => LocationModule::t('location', 'Country Code'),
-            'SortOrder' => LocationModule::t('location', 'Sort Order'),
-            'status' => LocationModule::t('location', 'Status'),
-            'language' => LocationModule::t('location', 'Language'),
-            'IsDeleted' => LocationModule::t('location', 'Is Deleted'),
-            'created_at' => LocationModule::t('location', 'Created At'),
-            'updated_at' => LocationModule::t('location', 'Updated At'),
-            'created_by' => LocationModule::t('location', 'Created By'),
-            'updated_by' => LocationModule::t('location', 'Updated By'),
+            [['TelephoneCode', 'CountryId', 'SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['language'], 'string'],
+            [['name', 'slug', 'Type', 'ZipCode', 'CountryCode'], 'string', 'max' => 255],
+            [['CountryId'], 'exist', 'skipOnError' => true, 'targetClass' => LocationCountry::class, 'targetAttribute' => ['CountryId' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), []);;
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);

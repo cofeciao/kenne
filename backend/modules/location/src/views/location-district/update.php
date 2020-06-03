@@ -11,7 +11,8 @@ use modava\location\LocationModule;
 $this->title = LocationModule::t('location', 'Update : {name}', [
     'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Districts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'District'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
 ?>
@@ -24,8 +25,8 @@ $this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= LocationModule::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
+           title="<?= LocationModule::t('location', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

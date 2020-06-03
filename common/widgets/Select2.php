@@ -2,28 +2,50 @@
 
 namespace common\widgets;
 
-use Yii;
+use common\widgets\assets\Select2Asset;
+use kartik\base\InputWidget;
 use yii\helpers\Html;
 use yii\base\Widget;
 
-class Select2 extends Widget
+class Select2 extends InputWidget
 {
-    public $attribute;
-
     public $model;
+
+    public $attribute;
 
     public $data;
 
-    public $prompt = '';
+    public $options = [];
+
+    public $label;
 
     public function run()
     {
         parent::run();
-        $this->renderSelect2();
+        $options = [];
+        foreach ($this->options as $key => $value) {
+            if ($key == 'class') {
+                $options[$key] = $value . ' form-control select2';
+            } else {
+                $options[$key] = $value;
+            }
+        }
+        if (empty($options['class'])) {
+            $options['class'] = 'form-control select2';
+        }
+        echo '<label class="control-label" for="locationdistrict-countryid">' . $this->label . '</label>';
+        echo Html::activeDropDownList($this->model, $this->attribute, $this->data, $options);
+        echo '</label>';
+
+        $view = $this->getView();
+        Select2Asset::register($view);
+
+        $options = $this->renderSelect2();
+        $view->registerJs(implode("\n", $options));
     }
 
     public function renderSelect2()
     {
-        return Html::dropDownList($this->attribute, $this->data, ['class' => 'select2', 'multiple' => 'multiple']);
+        return ["$('.select2').select2();"];
     }
 }

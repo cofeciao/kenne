@@ -1,7 +1,9 @@
 <?php
 
-use yii\helpers\Html;
+use yii\web\View;
 use yii\helpers\Url;
+use yii\helpers\Html;
+use common\widgets\Select2;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\location\LocationModule;
@@ -13,32 +15,66 @@ use modava\location\models\table\LocationCountryTable;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <?php ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
-<div class="location-province-form">
-    <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="location-province-form">
+        <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-6">
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-6">
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'Type',
+                    'data' => [
+                        'Thành Phố' => 'Thành Phố',
+                        'Tỉnh' => 'Tỉnh',
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'TelephoneCode')->textInput() ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'ZipCode')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-6">
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'CountryId',
+                    'data' => ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'),
+                    'options' => [
+                        'prompt' => LocationModule::t('location', 'Chọn quốc gia...'),
+                        'id' => 'select-country'
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'SortOrder')->textInput() ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], [
+                    'class' => 'form-control load-data-on-change',
+                    'load-data-url' => Url::toRoute(['/location/location-country/get-country-by-lang']),
+                    'load-data-element' => '#select-country',
+                    'load-data-key' => 'lang',
+                    'load-data-method' => 'GET',
+                    'load-data-callback' => '$("#select-country").select2();'
+                ]) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'Type')->dropDownList([
-        'Thành Phố' => 'Thành Phố',
-        'Tỉnh' => 'Tỉnh',
-    ], []) ?>
+        <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+        <?= $form->field($model, 'status')->checkbox() ?>
+        <div class="form-group">
+            <?= Html::submitButton(LocationModule::t('location', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
 
-    <?= $form->field($model, 'TelephoneCode')->textInput() ?>
-
-    <?= $form->field($model, 'ZipCode')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountryId')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
-        'prompt' => LocationModule::t('location', 'Chọn quốc gia...')
-    ]) ?>
-
-    <?= $form->field($model, 'SortOrder')->textInput() ?>
-
-    <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
-
-    <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
-    <?= $form->field($model, 'status')->checkbox() ?>
-    <div class="form-group">
-        <?= Html::submitButton(LocationModule::t('location', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?php ActiveForm::end(); ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
-</div>
+<?php
+$script = <<< JS
+$('body').on('change', '#locationprovince-language', function(){
+    
+});
+JS;
+$this->registerJs($script, View::POS_END);

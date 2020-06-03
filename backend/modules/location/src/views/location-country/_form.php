@@ -13,35 +13,53 @@ use modava\location\LocationModule;
 <?php ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="location-country-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'CommonName')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountryCode')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'FormalName')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountryType')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountrySubType')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'Sovereignty')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'Capital')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CurrencyCode')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CurrencyName')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'TelephoneCode')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountryCode3')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CountryNumber')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'InternetCountryCode')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'SortOrder')->textInput() ?>
-
-    <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'CommonName')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CountryCode')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'FormalName')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CountryType')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CountrySubType')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'Sovereignty')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'Capital')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CurrencyCode')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CurrencyName')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'TelephoneCode')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CountryCode3')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'CountryNumber')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'InternetCountryCode')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'SortOrder')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], []) ?>
+        </div>
+    </div>
 
     <?= \modava\tiny\FileManager::widget([
         'model' => $model,

@@ -2,7 +2,7 @@
 use modava\location\components\MyErrorHandler;
 
 $config = [
-    'defaultRoute' => 'location/index',
+    'defaultRoute' => 'location-country/index',
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'aliases' => [
         '@locationweb' => '@modava/location/web',

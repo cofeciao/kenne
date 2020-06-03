@@ -6,11 +6,12 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel modava\location\models\search\LocationCountrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = LocationModule::t('location', 'Location Countries');
+$this->title = LocationModule::t('location', 'Country');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -96,22 +97,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                         ],
                                         'CommonName',
-										'CountryCode',
-										'FormalName',
-										'CountryType',
-										'CountrySubType',
-										//'Sovereignty',
-										//'Capital',
-										//'CurrencyCode',
-										//'CurrencyName',
-										//'TelephoneCode',
-										//'CountryCode3',
-										//'CountryNumber',
-										//'InternetCountryCode',
-										//'SortOrder',
-										//'language',
-										//'Flags',
-										//'IsDeleted',
+                                        'CountryCode',
+                                        'FormalName',
+                                        'CountryType',
+                                        'CountrySubType',
+                                        //'Sovereignty',
+                                        'Capital',
+                                        //'CurrencyCode',
+                                        //'CurrencyName',
+                                        //'TelephoneCode',
+                                        //'CountryCode3',
+                                        //'CountryNumber',
+                                        //'InternetCountryCode',
+                                        //'SortOrder',
+                                        //'language',
+                                        //'Flags',
+                                        //'IsDeleted',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -119,13 +120,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 150,
                                             ],
                                         ],
-                                        [
-                                            'attribute' => 'created_at',
-                                            'format' => 'date',
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                        ],
+//                                        [
+//                                            'attribute' => 'created_at',
+//                                            'format' => 'date',
+//                                            'headerOptions' => [
+//                                                'width' => 150,
+//                                            ],
+//                                        ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => LocationModule::t('location', 'Actions'),
@@ -135,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                     ],
                                 ]); ?>
-                                                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\location\models\search\LocationDistrictSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = LocationModule::t('location', 'Location Districts');
+$this->title = LocationModule::t('location', 'District');
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -101,7 +102,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'LatiLongTude',
                                         [
                                             'attribute' => 'ProvinceId',
-                                            'value' => 'provinceHasOne.name'
+                                            'value' => 'provinceHasOne.name',
+                                            'label' => 'Tỉnh/Thành phố'
                                         ],
                                         'SortOrder',
                                         'language',

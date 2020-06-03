@@ -11,7 +11,8 @@ use modava\location\LocationModule;
 /* @var $model modava\location\models\LocationDistrict */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Location Districts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
+$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'District'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,10 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= LocationModule::t('location', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= LocationModule::t('article', 'Create'); ?></a>
-            <?= Html::a(LocationModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(LocationModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= LocationModule::t('location', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
+            <?= Html::a(LocationModule::t('location', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(LocationModule::t('location', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => LocationModule::t('location', 'Are you sure you want to delete this item?'),
@@ -47,13 +48,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'name',
-						'slug',
-						'Type',
-						'LatiLongTude',
-						'ProvinceId',
-						'SortOrder',
+                        'id',
+                        'name',
+                        'slug',
+                        'Type',
+                        'LatiLongTude',
+                        [
+                            'attribute' => 'provinceHasOne.name',
+                            'label' => 'Tỉnh/Thành phố'
+                        ],
+                        'SortOrder',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
@@ -66,16 +70,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->getModule('location')->params['availableLocales'][$model->language];
                             },
                         ],
-						'IsDeleted',
-						'created_at',
-						'updated_at',
+                        'IsDeleted',
+                        'created_at',
+                        'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => LocationModule::t('article', 'Created By')
+                            'label' => LocationModule::t('location', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => LocationModule::t('article', 'Updated By')
+                            'label' => LocationModule::t('location', 'Updated By')
                         ],
                     ],
                 ]) ?>

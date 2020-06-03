@@ -3,6 +3,7 @@
 namespace modava\location\controllers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -10,6 +11,7 @@ use modava\article\LocationModule;
 use backend\components\MyController;
 use modava\location\models\LocationCountry;
 use modava\location\models\search\LocationCountrySearch;
+use yii\web\Response;
 
 /**
  * LocationCountryController implements the CRUD actions for LocationCountry model.
@@ -17,8 +19,8 @@ use modava\location\models\search\LocationCountrySearch;
 class LocationCountryController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -32,9 +34,9 @@ class LocationCountryController extends MyController
     }
 
     /**
-    * Lists all LocationCountry models.
-    * @return mixed
-    */
+     * Lists all LocationCountry models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new LocationCountrySearch();
@@ -44,16 +46,15 @@ class LocationCountryController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single LocationCountry model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single LocationCountry model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -62,10 +63,10 @@ class LocationCountryController extends MyController
     }
 
     /**
-    * Creates a new LocationCountry model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new LocationCountry model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new LocationCountry();
@@ -97,18 +98,18 @@ class LocationCountryController extends MyController
     }
 
     /**
-    * Updates an existing LocationCountry model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing LocationCountry model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -136,12 +137,12 @@ class LocationCountryController extends MyController
     }
 
     /**
-    * Deletes an existing LocationCountry model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing LocationCountry model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -165,13 +166,24 @@ class LocationCountryController extends MyController
         return $this->redirect(['index']);
     }
 
+    public function actionGetCountryByLang($lang = 'vi')
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'code' => 200,
+                'data' => ArrayHelper::map(LocationCountry::getAllCountry($lang), 'id', 'CommonName')
+            ];
+        }
+    }
+
     /**
-    * Finds the LocationCountry model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return LocationCountry the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the LocationCountry model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return LocationCountry the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
