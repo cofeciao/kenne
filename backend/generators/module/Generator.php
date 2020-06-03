@@ -210,7 +210,7 @@ EOD;
             $this->render("widgets/views/index.html", $params)
         );
         $files[] = new CodeFile(
-            $modulePath . '/' . ucfirst($this->moduleID) . 'Module.php',
+            $modulePath . '/' . ucfirst($this->moduleID) . '.php',
             $this->render("module.php", $params)
         );
 
