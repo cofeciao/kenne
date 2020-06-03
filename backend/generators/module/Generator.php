@@ -210,7 +210,7 @@ EOD;
             $this->render("widgets/views/index.html", $params)
         );
         $files[] = new CodeFile(
-            $modulePath . '/' . ucfirst($this->moduleID) . '.php',
+            $modulePath . '/' . StringHelper::basename($this->moduleClass) . '.php',
             $this->render("module.php", $params)
         );
 
