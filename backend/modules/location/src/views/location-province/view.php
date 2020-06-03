@@ -73,8 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                         ],
                         'IsDeleted',
-                        'created_at',
-                        'updated_at',
+                        'created_at:date',
+                        'updated_at:date',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => LocationModule::t('location', 'Created By')

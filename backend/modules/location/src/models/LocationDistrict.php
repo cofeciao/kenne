@@ -71,6 +71,8 @@ class LocationDistrict extends LocationDistrictTable
     public function rules()
     {
         return [
+            [['name', 'language', 'ProvinceId'], 'required'],
+            [['countryId'], 'required', 'message' => 'Quốc gia không được để trống'],
             [['ProvinceId', 'SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['language'], 'string'],
             [['name', 'slug', 'Type', 'LatiLongTude'], 'string', 'max' => 255],

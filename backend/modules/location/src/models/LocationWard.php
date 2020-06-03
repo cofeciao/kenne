@@ -79,7 +79,10 @@ class LocationWard extends LocationWardTable
     public function rules()
     {
         return [
-            [['name', 'DistrictID'], 'required'],
+            [['name', 'language'], 'required'],
+            [['DistrictID'], 'required', 'message' => 'Quận/Huyện không được để trống'],
+            [['countryId'], 'required', 'message' => 'Quốc gia không được để trống'],
+            [['provinceId'], 'required', 'message' => 'Tỉnh/Thành phố không được để trống'],
             [['DistrictID', 'SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['language'], 'string'],
             [['name', 'slug', 'Type', 'LatiLongTude'], 'string', 'max' => 255],

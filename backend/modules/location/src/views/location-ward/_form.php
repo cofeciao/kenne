@@ -14,7 +14,7 @@ use modava\location\models\table\LocationCountryTable;
 /* @var $model modava\location\models\LocationWard */
 /* @var $form yii\widgets\ActiveForm */
 
-if ($model->DistrictID !== null) {
+if (Yii::$app->controller->action->id == 'update' && $model->DistrictID !== null) {
     $model->provinceId = $model->districtHasOne->provinceHasOne->id;
     $model->countryId = $model->districtHasOne->provinceHasOne->countryHasOne->id;
 }
@@ -59,7 +59,7 @@ if ($model->DistrictID !== null) {
                 'label' => 'Tỉnh/Thành phố'
             ]);
             ?>
-            </div>
+        </div>
         <div class="col-6">
             <?= $form->field($model, 'DistrictID')->dropDownList(ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->provinceId, Yii::$app->language), 'id', 'name'), [
                 'prompt' => LocationModule::t('location', 'Chọn phường/xã...'),
@@ -70,7 +70,7 @@ if ($model->DistrictID !== null) {
             <?= $form->field($model, 'SortOrder')->textInput() ?>
         </div>
         <div class="col-6">
-            <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('location')->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
         </div>
     </div>
 

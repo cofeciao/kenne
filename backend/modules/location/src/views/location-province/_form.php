@@ -62,11 +62,11 @@ use modava\location\models\table\LocationCountryTable;
                 ]) ?>
             </div>
         </div>
-
-        <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
-        <?= $form->field($model, 'status')->checkbox() ?>
-        <div class="form-group">
-            <?= Html::submitButton(LocationModule::t('location', 'Save'), ['class' => 'btn btn-success']) ?>
+        <div class="col-6">
+            <?= $form->field($model, 'SortOrder')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('location')->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

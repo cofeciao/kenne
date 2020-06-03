@@ -80,6 +80,8 @@ class LocationProvince extends LocationProvinceTable
     public function rules()
     {
         return [
+            [['name', 'language'], 'required'],
+            [['CountryId'], 'required', 'message' => 'Quốc gia không được để trống'],
             [['TelephoneCode', 'CountryId', 'SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['language'], 'string'],
             [['name', 'slug', 'Type', 'ZipCode', 'CountryCode'], 'string', 'max' => 255],
