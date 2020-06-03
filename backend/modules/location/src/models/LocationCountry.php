@@ -87,6 +87,7 @@ class LocationCountry extends LocationCountryTable
     public function rules()
     {
         return [
+            [['CommonName', 'language'], 'required'],
             [['SortOrder', 'status', 'IsDeleted', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['language'], 'string'],
             [['CountryCode', 'CommonName', 'slug', 'FormalName', 'CountryType', 'CountrySubType', 'Sovereignty', 'Capital', 'CurrencyCode', 'CurrencyName', 'TelephoneCode', 'CountryCode3', 'CountryNumber', 'InternetCountryCode', 'Flags'], 'string', 'max' => 255],

@@ -17,7 +17,7 @@ class Select2 extends InputWidget
 
     public $options = [];
 
-    public $label;
+    public $label = null;
 
     public function run()
     {
@@ -33,9 +33,15 @@ class Select2 extends InputWidget
         if (empty($options['class'])) {
             $options['class'] = 'form-control select2';
         }
-        echo '<label class="control-label" for="locationdistrict-countryid">' . $this->label . '</label>';
+        echo Html::beginTag('div', ['class' => 'form-group']);
+        if ($this->label == null && $this->label !== false)
+            echo Html::activeLabel($this->model, $this->attribute);
+        else if ($this->label !== false)
+            echo '<label class="control-label" for="locationdistrict-countryid">' . $this->label . '</label>';
+
         echo Html::activeDropDownList($this->model, $this->attribute, $this->data, $options);
-        echo '</label>';
+        echo Html::error($this->model, $this->attribute, ['class' => 'help-block help-block-error']);
+        echo Html::endTag('div');
 
         $view = $this->getView();
         Select2Asset::register($view);
