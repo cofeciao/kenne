@@ -25,5 +25,19 @@ return [
             'width' => 300,
             'height' => 300
         ]
+    ],
+    'product-category' => [
+        '150x150' => [
+            'folder' => '/uploads/product-category/150x150/',
+            'width' => 150,
+            'height' => 150
+        ],
+    ],
+    'product-type' => [
+        '150x150' => [
+            'folder' => '/uploads/product-type/150x150/',
+            'width' => 150,
+            'height' => 150
+        ],
     ]
 ];

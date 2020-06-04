@@ -90,7 +90,7 @@ if ($model->language == null) $model->language = Yii::$app->language;
             </div>
             <div class="col-4">
                 <?php
-                if (Yii::$app->controller->action->id == 'create')
+                if (Yii::$app->controller->action->id == 'create' || $model->image == null)
                     $img = NOIMAGE;
                 else
                     $img = $model->image;
