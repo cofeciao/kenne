@@ -44,6 +44,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "skeeks/yii2-assets-auto-compress": "*",
     "tinymce/tinymce": " 5.2.2",
+    "modava/auth": "@dev",
     "modava/tiny": "@dev",
     "modava/imagick": "@dev",
     "modava/location": "@dev",

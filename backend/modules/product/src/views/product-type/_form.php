@@ -27,18 +27,6 @@ use yii\widgets\ActiveForm;
         'options' => ['rows' => 6]
     ]) ?>
 
-    <?php
-    if (Yii::$app->controller->action->id == 'create' || $model->image == null)
-        $img = NOIMAGE;
-    else
-        $img = $model->image;
-    echo \modava\tiny\FileManager::widget([
-        'model' => $model,
-        'attribute' => 'image',
-        'path' => Yii::$app->params['product-type']['150x150']['folder'] . $img,
-        'label' => ProductModule::t('product', 'Hình ảnh') . ': 150x150px'
-    ]); ?>
-
     <?php if (Yii::$app->controller->action->id == 'create')
         $model->status = 1;
     ?>

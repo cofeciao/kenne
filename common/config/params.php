@@ -14,7 +14,7 @@ return [
     'adminEmail' => ADMIN_EMAIL,
     'robotEmail' => ROBOT_EMAIL,
     'webAdmin' => WEB_ADMIN,
-    'product-size' => [
+    'product' => [
         '150x150' => [
             'folder' => '/uploads/product/150x150/',
             'width' => 150,
@@ -36,6 +36,27 @@ return [
     'product-type' => [
         '150x150' => [
             'folder' => '/uploads/product-type/150x150/',
+            'width' => 150,
+            'height' => 150
+        ],
+    ],
+    'article' => [
+        '150x150' => [
+            'folder' => '/uploads/article/150x150/',
+            'width' => 150,
+            'height' => 150
+        ],
+    ],
+    'article-type' => [
+        '150x150' => [
+            'folder' => '/uploads/article-type/150x150/',
+            'width' => 150,
+            'height' => 150
+        ],
+    ],
+    'article-category' => [
+        '150x150' => [
+            'folder' => '/uploads/article-category/150x150/',
             'width' => 150,
             'height' => 150
         ],
