@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = ['label' => <?= ucfirst($generator->messageCate
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
+<?= "<?=" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
