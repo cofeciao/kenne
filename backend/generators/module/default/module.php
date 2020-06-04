@@ -26,7 +26,7 @@ use yii\web\Controller;
 /**
  * <?= $generator->moduleID ?> module definition class
  */
-class <?= $className ?>Module extends Module implements BootstrapInterface
+class <?= $className ?> extends Module implements BootstrapInterface
 {
     /**
      * @inheritdoc
