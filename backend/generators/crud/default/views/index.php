@@ -28,7 +28,7 @@ use backend\widgets\ToastrWidget;
 $this->title = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
+<?= "<?=" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
@@ -159,6 +159,36 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 130,
                                             ],
                                         ],
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Actions'),
+                                            'template' => '{update} {delete}',
+                                            'buttons' => [
+                                                'update' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                        'title' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update'),
+                                                        'alia-label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-info btn-xs'
+                                                    ]);
+                                                },
+                                                'delete' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                        'title' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Delete'),
+                                                        'class' => 'btn btn-danger btn-xs btn-del',
+                                                        'data-title' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Delete?'),
+                                                        'data-pjax' => 0,
+                                                        'data-url' => $url,
+                                                        'btn-success-class' => 'success-delete',
+                                                        'btn-cancel-class' => 'cancel-delete',
+                                                        'data-placement' => 'top'
+                                                    ]);
+                                                }
+                                            ],
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
                                     ],
                                 ]); ?>
                                 <?php else: ?>
@@ -179,3 +209,15 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?= "<?php\n" ?>
+$script = <<< JS
+$('body').on('click', '.success-delete', function(e){
+    e.preventDefault();
+    var url = $(this).attr('href') || null;
+    if(url !== null){
+        $.post(url);
+    }
+    return false;
+});
+JS;
+$this->registerJs($script, \yii\web\View::POS_END);

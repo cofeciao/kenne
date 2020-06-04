@@ -29,11 +29,12 @@ echo "<?php\n";
 
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
+use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\article\<?= ucfirst($generator->messageCategory) ?>Module;
+use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
@@ -183,20 +184,28 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if ($model->delete()) {
-            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                'title' => 'Thông báo',
-                'text' => 'Xoá thành công',
-                'type' => 'success'
-            ]);
-        } else {
-            $errors = Html::tag('p', 'Xoá thất bại');
-            foreach ($model->getErrors() as $error) {
-                $errors .= Html::tag('p', $error[0]);
+        try {
+            if ($model->delete()) {
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                    'title' => 'Thông báo',
+                    'text' => 'Xoá thành công',
+                    'type' => 'success'
+                ]);
+            } else {
+                $errors = Html::tag('p', 'Xoá thất bại');
+                foreach ($model->getErrors() as $error) {
+                    $errors .= Html::tag('p', $error[0]);
+                }
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                    'title' => 'Thông báo',
+                    'text' => $errors,
+                    'type' => 'warning'
+                ]);
             }
+        } catch (Exception $ex) {
             Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
                 'title' => 'Thông báo',
-                'text' => $errors,
+                'text' => Html::tag('p', 'Xoá thất bại: ' . $ex->getMessage()),
                 'type' => 'warning'
             ]);
         }

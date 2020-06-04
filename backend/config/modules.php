@@ -66,6 +66,6 @@ return [
         'class' => 'backend\modules\helper\Helper',
     ],
     'social' => [
-        'class' => 'backend\modules\social\Social',
+        'class' => 'modava\social\SocialModule',
     ],
 ];

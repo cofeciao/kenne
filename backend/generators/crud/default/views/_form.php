@@ -26,7 +26,7 @@ use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCat
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<?= "<?php" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
+<?= "<?=" ?> ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
 <?php foreach ($generator->getColumnNames() as $attribute) {
