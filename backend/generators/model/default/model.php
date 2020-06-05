@@ -23,6 +23,7 @@ echo "<?php\n"; ?>
 
 namespace <?= $generator->ns ?>;
 
+use common\helpers\MyHelper;
 use common\models\User;
 use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 use modava\<?= $generator->messageCategory ?>\models\table\<?= $modelClass ?>Table;
