@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $count = 0;
                                         if (($tableSchema = $generator->getTableSchema()) === false) {
                                             foreach ($generator->getColumnNames() as $name) {
-                                                if(in_array($name, ['name', 'id', 'status'])) {
+                                                if(in_array($name, ['id', 'status', 'slug', 'created_at', 'created_by', 'updated_at', 'updated_by'])) {
                                                     continue;
                                                 }
                                                 if (++$count < 6) {
@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             }
                                         } else {
                                             foreach ($tableSchema->columns as $column) {
-                                                if(in_array($column->name, ['name', 'id', 'status', 'slug', 'created_at', 'created_by', 'updated_at', 'updated_by'])) {
+                                                if(in_array($column->name, ['id', 'status', 'slug', 'created_at', 'created_by', 'updated_at', 'updated_by'])) {
                                                     continue;
                                                 }
                                                 $format = $generator->generateColumnFormat($column);
@@ -138,6 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             }
                                         }
                                         ?>
+<?php if(in_array('created_by', $generator->getColumnNames())) { ?>
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -145,6 +146,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 150,
                                             ],
                                         ],
+<?php } ?>
+<?php if(in_array('created_by', $generator->getColumnNames())) { ?>
                                         [
                                             'attribute' => 'created_at',
                                             'format' => 'date',
@@ -152,6 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 150,
                                             ],
                                         ],
+<?php } ?>
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Actions'),
