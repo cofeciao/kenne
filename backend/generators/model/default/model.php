@@ -59,13 +59,13 @@ class <?= $className ?> extends <?= $className ?>Table
         return array_merge(
             parent::behaviors(),
             [
-<?php if (isset($tableSchema->columns['title'])) { ?>
+<?php if (isset($tableSchema->columns['slug'])) { ?>
                 'slug' => [
                     'class' => SluggableBehavior::class,
                     'immutable' => false,
                     'ensureUnique' => true,
                     'value' => function () {
-                        return MyHelper::createAlias($this->title);
+                        return MyHelper::createAlias($this-><?= isset($tableSchema->columns['title']) ? 'title' : (isset($tableSchema->columns['name']) ? 'name': 'id') ?>);
                     }
                 ],
 <?php } ?>
