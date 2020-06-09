@@ -14,6 +14,8 @@
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
 
+$columns = $tableSchema->columns;
+
 echo "<?php\n";
 ?>
 
@@ -36,10 +38,12 @@ class <?= $className ?>Table extends <?= '\\' . ltrim($generator->baseClass, '\\
         return '<?= $generator->generateTableName($tableName) ?>';
     }
 
+<?php if(isset($columns['status'])) { ?>
     public static function find()
     {
         return new <?= $className ?>Query(get_called_class());
     }
+<?php } ?>
 
     public function afterDelete()
     {
