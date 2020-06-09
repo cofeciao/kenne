@@ -31,7 +31,9 @@ return [
     'customer' => [
         'class' => 'modava\customer\CustomerModule'
     ],
-
+    'marketing' => [
+        'class' => 'modava\marketing\MarketingModule',
+    ],
 
     'user' => [
         'class' => 'backend\modules\user\User',
