@@ -5,6 +5,12 @@ use modava\customer\CustomerModule;
 ?>
 <ul class="nav nav-tabs nav-sm nav-light mb-25">
     <li class="nav-item mb-5">
+        <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'customer') echo ' active' ?>"
+           href="<?= Url::toRoute(['/customer/customer']); ?>">
+            <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer'); ?>
+        </a>
+    </li>
+    <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'customer-status-fail') echo ' active' ?>"
            href="<?= Url::toRoute(['/customer/customer-status-fail']); ?>">
             <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer Status Fail'); ?>
