@@ -17,17 +17,7 @@ use modava\customer\CustomerModule;
 
 		<?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-		<?= $form->field($model, 'status')->textInput() ?>
-
-		<?= $form->field($model, 'language')->dropDownList([ 'vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp', ], ['prompt' => '']) ?>
-
-		<?= $form->field($model, 'created_at')->textInput() ?>
-
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-		<?= $form->field($model, 'created_by')->textInput() ?>
-
-		<?= $form->field($model, 'updated_by')->textInput() ?>
+		<?= $form->field($model, 'language')->dropDownList([ 'vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp'], []) ?>
 
 		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
 		<?= $form->field($model, 'status')->checkbox() ?>
