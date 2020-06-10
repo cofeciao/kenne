@@ -56,6 +56,12 @@ use yii\helpers\Url;
                         <span class="nav-link-text"><?= Yii::t('backend', 'Contact'); ?></span>
                     </a>
                 </li>
+                <li class="nav-item<?php if (Yii::$app->controller->module->id == 'marketing') echo ' active'; ?>">
+                    <a class="nav-link" href="<?= Url::toRoute(['/marketing']); ?>">
+                        <i class="ion ion-logo-markdown"></i>
+                        <span class="nav-link-text"><?= Yii::t('backend', 'Marketing'); ?></span>
+                    </a>
+                </li>
             </ul>
             <hr class="nav-separator">
             <div class="nav-header">

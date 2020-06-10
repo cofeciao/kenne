@@ -50,7 +50,7 @@ return [
     'DB Type' => 'Loại DB',
     'DB Version' => 'Phiên bản DB',
     'Date' => 'Ngày',
-    'Delete' => 'Xóa',
+    'Delete ' => 'Xóa',
     'Delete a value with the specified key from cache' => 'Xóa giá trị cùng với từ khóa từ bộ nhớ cache',
     'Disabled' => 'Gỡ bỏ',
     'Edit account' => 'Cập nhật tài khoản',
@@ -256,4 +256,10 @@ return [
     'Customer Booking' => 'Khách hàng đặt lịch',
     'Payment' => 'Thanh toán',
     'Order' => 'Đơn hàng',
+    'Product' => 'Sản phẩm',
+    'Article' => 'Bài viết',
+    'Location' => 'Địa danh',
+    'Contact' => 'Liên hệ',
+    'Calendar' => 'Lịch biểu',
+
 ];
