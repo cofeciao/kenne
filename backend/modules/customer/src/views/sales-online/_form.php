@@ -96,13 +96,23 @@ use modava\location\models\table\LocationWardTable;
                         'id' => 'select-district',
                         'class' => 'form-control load-data-on-change',
                         'load-data-element' => '#select-ward',
-                        'load-data-url' => Url::toRoute(['/location/location-ward/'])
+                        'load-data-url' => Url::toRoute(['/location/location-ward/get-ward-by-district']),
+                        'load-data-key' => 'district',
+                        'load-data-method' => 'GET',
+                        'load-data-callback' => '$("select-ward").select2();'
                     ]
                 ]) ?>
-                <?= $form->field($model, 'district')->textInput() ?>
             </div>
             <div class="col-md-6 col-12">
-                <?= $form->field($model, 'ward')->textInput() ?>
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'ward',
+                    'data' => ArrayHelper::map(LocationWardTable::getWardByDistrict($model->district), 'id', 'name'),
+                    'options' => [
+                        'prompt' => CustomerModule::t('customer', 'Ward'),
+                        'id' => 'select-ward',
+                    ]
+                ]) ?>
             </div>
         </div>
         <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>

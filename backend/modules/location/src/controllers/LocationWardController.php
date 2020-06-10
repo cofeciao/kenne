@@ -2,11 +2,13 @@
 
 namespace modava\location\controllers;
 
+use modava\location\models\table\LocationWardTable;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\article\LocationModule;
+use modava\location\LocationModule;
 use backend\components\MyController;
 use modava\location\models\LocationWard;
 use modava\location\models\search\LocationWardSearch;
@@ -46,7 +48,6 @@ class LocationWardController extends MyController
             'dataProvider' => $dataProvider,
         ]);
     }
-
 
     /**
      * Displays a single LocationWard model.
@@ -165,11 +166,16 @@ class LocationWardController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionLoadWardByDistrict()
+    public function actionGetWardByDistrict()
     {
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $district = Yii::$app->request->get('district');
+            $data = ArrayHelper::map(LocationWardTable::getWardByDistrict($district), 'id', 'name');
+            return [
+                'code' => 200,
+                'data' => $data
+            ];
         }
     }
 
