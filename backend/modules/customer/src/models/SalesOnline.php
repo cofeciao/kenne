@@ -13,6 +13,8 @@ class SalesOnline extends Customer
     public $country;
     public $province;
     public $district;
+    public $agency;
+    public $origin;
 
     public function behaviors()
     {
@@ -54,7 +56,8 @@ class SalesOnline extends Customer
             }, 'whenClient' => "function(){
                 console.log(" . json_encode(array_values($status_call_dathen)) . ");
                 return " . json_encode(array_values($status_call_dathen)) . ".includes($('').val());
-            }"]
+            }"],
+            [['country', 'province', 'district', 'agency', 'origin'], 'safe']
         ];
     }
 }

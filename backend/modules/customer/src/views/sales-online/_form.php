@@ -15,6 +15,9 @@ use modava\location\models\table\LocationCountryTable;
 use modava\location\models\table\LocationProvinceTable;
 use modava\location\models\table\LocationDistrictTable;
 use modava\location\models\table\LocationWardTable;
+use modava\customer\models\table\CustomerAgencyTable;
+use modava\customer\models\table\CustomerOriginTable;
+use modava\customer\models\table\CustomerFanpageTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\SalesOnline */
@@ -47,7 +50,9 @@ use modava\location\models\table\LocationWardTable;
                 ]) ?>
             </div>
             <div class="col-md-6 col-12">
-                <?= $form->field($model, 'sex')->dropDownList(CustomerTable::SEX, []) ?>
+                <?= $form->field($model, 'sex')->dropDownList(CustomerTable::SEX, [
+                    'prompt' => CustomerModule::t('customer', 'Sex')
+                ]) ?>
             </div>
         </div>
         <div class="row">
@@ -57,8 +62,9 @@ use modava\location\models\table\LocationWardTable;
                     'attribute' => 'country',
                     'data' => ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'),
                     'options' => [
+                        'id' => 'select-country',
                         'class' => 'form-control load-data-on-change',
-                        'prompt' => CustomerModule::t('customer', 'Country'),
+//                        'prompt' => CustomerModule::t('customer', 'Country'),
                         'load-data-element' => '#select-province',
                         'load-data-url' => Url::toRoute(['/location/location-province/get-province-by-country']),
                         'load-data-key' => 'country',
@@ -117,7 +123,13 @@ use modava\location\models\table\LocationWardTable;
         </div>
         <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
         <div class="row">
-            <div class="col-md-6 col-12"></div>
+            <div class="col-md-6 col-12">
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'agency',
+                    'data' => []
+                ]) ?>
+            </div>
             <div class="col-md-6 col-12"></div>
         </div>
 
@@ -172,6 +184,9 @@ var form = $('#form-sales-online');
 form.on('submit', function(e){
     e.preventDefault();
     return false;
+});
+$(function(){
+    $('#select-country').trigger('change');
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);
