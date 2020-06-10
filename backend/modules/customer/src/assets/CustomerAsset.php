@@ -19,6 +19,10 @@ class CustomerAsset extends AssetBundle
     public $js = [
         "vendors/popper.js/dist/umd/popper.min.js",
         "vendors/bootstrap/dist/js/bootstrap.min.js",
+        "dist/js/jquery.slimscroll.js",
+        "dist/js/dropdown-bootstrap-extended.js",
+        "vendors/jquery-toggles/toggles.min.js",
+        "dist/js/toggle-data.js",
         "vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js",
         'js/customCustomer.js'
     ];

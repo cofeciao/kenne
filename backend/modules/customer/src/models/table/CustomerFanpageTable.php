@@ -22,6 +22,11 @@ class CustomerFanpageTable extends \yii\db\ActiveRecord
         return new CustomerFanpageQuery(get_called_class());
     }
 
+    public function getOriginHasOne()
+    {
+        return $this->hasOne(CustomerOriginTable::class, ['id' => 'origin_id']);
+    }
+
     public function afterDelete()
     {
         $cache = Yii::$app->cache;

@@ -12,6 +12,7 @@ $safeAttributes = $model->safeAttributes();
 if (empty($safeAttributes)) {
     $safeAttributes = $model->attributes();
 }
+$columns = $generator->tableSchema->columns;
 
 echo "<?php\n";
 ?>
@@ -34,8 +35,10 @@ use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCat
             echo "\t\t<?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
         }
     } ?>
+<?php if(isset($columns['status'])){ ?>
 <?= "\t\t<?php " ?>if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
 <?= "\t\t<?= " ?>$form->field($model, 'status')->checkbox() ?>
+<?php } ?>
         <div class="form-group">
             <?= "<?=" ?> Html::submitButton(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
