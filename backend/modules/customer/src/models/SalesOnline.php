@@ -10,6 +10,9 @@ use yii\helpers\ArrayHelper;
 class SalesOnline extends Customer
 {
     public $toastr_key = 'sales-online';
+    public $country;
+    public $province;
+    public $district;
 
     public function behaviors()
     {

@@ -39,9 +39,8 @@ class m200608_112151_create_table_customer_status_call extends Migration
         $check_rows = Yii::$app->db->createCommand('SELECT id FROM customer_status_call')->queryOne();
         if ($check_rows === false) {
             $this->execute("INSERT INTO `customer_status_call`(`id`, `name`, `description`, `accept`) VALUES
-(1, 'KBM', 'Khách hàng không bắt máy', 0),
-(2, 'Fail', 'Khách hàng fail', 0),
-(3, 'Đặt hẹn', 'Khách hàng đặt hẹn', 1);");
+(1, 'Fail', 'Khách hàng fail', 0),
+(2, 'Đặt hẹn', 'Khách hàng đặt hẹn', 1);");
         }
     }
 

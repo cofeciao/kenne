@@ -10,6 +10,11 @@ use yii\helpers\ArrayHelper;
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerStatusFailTable;
 use modava\customer\models\table\CustomerStatusCallTable;
+use dosamigos\datepicker\DatePicker;
+use modava\location\models\table\LocationCountryTable;
+use modava\location\models\table\LocationProvinceTable;
+use modava\location\models\table\LocationDistrictTable;
+use modava\location\models\table\LocationWardTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\SalesOnline */
@@ -23,19 +28,89 @@ use modava\customer\models\table\CustomerStatusCallTable;
             'validationUrl' => Url::toRoute(['validate-sales-online', 'id' => $model->primaryKey]),
             'action' => Url::toRoute([Yii::$app->controller->action->id, 'id' => $model->primaryKey])
         ]); ?>
-        <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'birthday')->textInput() ?>
-
-        <?= $form->field($model, 'sex')->dropDownList(CustomerTable::SEX, []) ?>
-
-        <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'birthday')->widget(DatePicker::class, [
+                    'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
+                    'clientOptions' => [
+                        'format' => 'dd-mm-yyyy',
+                        'todayHighlight' => true
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'sex')->dropDownList(CustomerTable::SEX, []) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'country',
+                    'data' => ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'),
+                    'options' => [
+                        'class' => 'form-control load-data-on-change',
+                        'prompt' => CustomerModule::t('customer', 'Country'),
+                        'load-data-element' => '#select-province',
+                        'load-data-url' => Url::toRoute(['/location/location-province/get-province-by-country']),
+                        'load-data-key' => 'country',
+                        'load-data-method' => 'GET',
+                        'load-data-callback' => '$("#select-province").select2();'
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-md-6 col-12">
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'province',
+                    'data' => ArrayHelper::map(LocationProvinceTable::getProvinceByCountry($model->country, Yii::$app->language), 'id', 'name'),
+                    'options' => [
+                        'id' => 'select-province',
+                        'class' => 'form-control load-data-on-change',
+                        'prompt' => CustomerModule::t('customer', 'Province'),
+                        'load-data-element' => '#select-district',
+                        'load-data-url' => Url::toRoute(['/location/location-district/get-district-by-province']),
+                        'load-data-key' => 'province',
+                        'load-data-method' => 'GET',
+                        'load-data-callback' => '$("#select-district").select2();'
+                    ]
+                ]) ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= Select2::widget([
+                    'model' => $model,
+                    'attribute' => 'district',
+                    'data' => ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->province, Yii::$app->language), 'id', 'name'),
+                    'options' => [
+                        'prompt' => CustomerModule::t('customer', 'District'),
+                        'id' => 'select-district',
+                        'class' => 'form-control load-data-on-change',
+                        'load-data-element' => '#select-ward',
+                        'load-data-url' => Url::toRoute(['/location/location-ward/'])
+                    ]
+                ]) ?>
+                <?= $form->field($model, 'district')->textInput() ?>
+            </div>
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'ward')->textInput() ?>
+            </div>
+        </div>
         <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+        <div class="row">
+            <div class="col-md-6 col-12"></div>
+            <div class="col-md-6 col-12"></div>
+        </div>
 
-        <?= $form->field($model, 'ward')->textInput() ?>
 
         <?= $form->field($model, 'fanpage_id')->textInput() ?>
 
@@ -45,7 +120,9 @@ use modava\customer\models\table\CustomerStatusCallTable;
             'model' => $model,
             'attribute' => 'status_call',
             'data' => ArrayHelper::map(CustomerStatusCallTable::getAllStatysCall(), 'id', 'name'),
-            'options' => []
+            'options' => [
+                'prompt' => 'Trạng thái gọi...'
+            ]
         ]) ?>
 
         <?= Select2::widget([
@@ -53,7 +130,7 @@ use modava\customer\models\table\CustomerStatusCallTable;
             'attribute' => 'status_fail',
             'data' => ArrayHelper::map(CustomerStatusFailTable::getAllStatusFail(), 'id', 'name'),
             'options' => [
-                'prompt' => 'Lý do fail'
+                'prompt' => 'Lý do fail...'
             ]
         ]) ?>
 

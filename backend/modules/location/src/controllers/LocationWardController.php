@@ -10,6 +10,7 @@ use modava\article\LocationModule;
 use backend\components\MyController;
 use modava\location\models\LocationWard;
 use modava\location\models\search\LocationWardSearch;
+use yii\web\Response;
 
 /**
  * LocationWardController implements the CRUD actions for LocationWard model.
@@ -17,8 +18,8 @@ use modava\location\models\search\LocationWardSearch;
 class LocationWardController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -32,9 +33,9 @@ class LocationWardController extends MyController
     }
 
     /**
-    * Lists all LocationWard models.
-    * @return mixed
-    */
+     * Lists all LocationWard models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new LocationWardSearch();
@@ -44,16 +45,15 @@ class LocationWardController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single LocationWard model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single LocationWard model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -62,10 +62,10 @@ class LocationWardController extends MyController
     }
 
     /**
-    * Creates a new LocationWard model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new LocationWard model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new LocationWard();
@@ -97,18 +97,18 @@ class LocationWardController extends MyController
     }
 
     /**
-    * Updates an existing LocationWard model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing LocationWard model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -136,12 +136,12 @@ class LocationWardController extends MyController
     }
 
     /**
-    * Deletes an existing LocationWard model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing LocationWard model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -165,13 +165,21 @@ class LocationWardController extends MyController
         return $this->redirect(['index']);
     }
 
+    public function actionLoadWardByDistrict()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $district = Yii::$app->request->get('district');
+        }
+    }
+
     /**
-    * Finds the LocationWard model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return LocationWard the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the LocationWard model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return LocationWard the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

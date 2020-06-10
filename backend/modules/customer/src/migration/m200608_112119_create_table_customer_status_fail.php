@@ -38,8 +38,9 @@ class m200608_112119_create_table_customer_status_fail extends Migration
         $check_rows = Yii::$app->db->createCommand('SELECT id FROM customer_status_fail')->queryOne();
         if ($check_rows === false) {
             $this->execute("INSERT INTO `customer_status_fail`(`id`, `name`, `description`) VALUES
-(1, 'Ở xa', 'Khách hàng ở xa không tiện đến'),
-(2, 'Có con nhỏ', 'Khách hàng có con nhỏ không đến được');");
+(1, 'KBM', 'Khách hàng không bắt máy'),
+(2, 'Ở xa', 'Khách hàng ở xa không tiện đến'),
+(3, 'Có con nhỏ', 'Khách hàng có con nhỏ không đến được');");
         }
     }
 
