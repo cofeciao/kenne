@@ -2,24 +2,19 @@
 
 namespace modava\customer\models\search;
 
-use Yii;
+use modava\customer\models\SalesOnline;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use modava\customer\models\CustomerType;
 
-/**
- * CustomerTypeSearch represents the model behind the search form of `modava\customer\models\CustomerType`.
- */
-class CustomerTypeSearch extends CustomerType
+class SalesOnlineSearch extends SalesOnline
 {
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'description', 'status', 'language'], 'safe'],
         ];
     }
 
@@ -41,7 +36,7 @@ class CustomerTypeSearch extends CustomerType
      */
     public function search($params)
     {
-        $query = CustomerType::find();
+        $query = SalesOnline::find();
 
         // add conditions that should always apply here
 
@@ -57,20 +52,6 @@ class CustomerTypeSearch extends CustomerType
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-        ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'language', $this->language]);
 
         return $dataProvider;
     }

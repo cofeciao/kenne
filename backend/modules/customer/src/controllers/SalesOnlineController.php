@@ -2,20 +2,18 @@
 
 namespace modava\customer\controllers;
 
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\customer\CustomerModule;
 use backend\components\MyController;
-use modava\customer\models\Customer;
-use modava\customer\models\search\CustomerSearch;
+use modava\customer\models\SalesOnline;
+use modava\customer\models\search\SalesOnlineSearch;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
+use Yii;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
-/**
- * CustomerController implements the CRUD actions for Customer model.
- */
-class CustomerController extends MyController
+class SalesOnlineController extends MyController
 {
     /**
      * {@inheritdoc}
@@ -38,8 +36,8 @@ class CustomerController extends MyController
      */
     public function actionIndex()
     {
-        $searchModel = new CustomerSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new SalesOnlineSearch();
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,7 +66,7 @@ class CustomerController extends MyController
      */
     public function actionCreate()
     {
-        $model = new Customer();
+        $model = new SalesOnline();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -135,6 +133,18 @@ class CustomerController extends MyController
         ]);
     }
 
+    public function actionValidateSalesOnline($id = null)
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model = new SalesOnline();
+            if ($id != null) $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post())) {
+                return ActiveForm::validate($model);
+            }
+        }
+    }
+
     /**
      * Deletes an existing Customer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -177,14 +187,14 @@ class CustomerController extends MyController
      * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Customer the loaded model
+     * @return SalesOnline the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
 
 
     protected function findModel($id)
     {
-        if (($model = Customer::findOne($id)) !== null) {
+        if (($model = SalesOnline::findOne($id)) !== null) {
             return $model;
         }
 

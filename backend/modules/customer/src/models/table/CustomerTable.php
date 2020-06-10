@@ -3,12 +3,26 @@
 namespace modava\customer\models\table;
 
 use cheatsheet\Time;
+use modava\customer\CustomerModule;
 use modava\customer\models\query\CustomerQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
 class CustomerTable extends \yii\db\ActiveRecord
 {
+    const TYPE_ONLINE = 1;
+    const TYPE_DIRECT = 2;
+    const TYPE = [
+        self::TYPE_ONLINE => 'Online',
+        self::TYPE_DIRECT => 'Direct'
+    ];
+    const SEX_WOMEN = 0;
+    const SEX_MEN = 1;
+    const SEX = [
+        self::SEX_WOMEN => 'Nữ',
+        self::SEX_MEN => 'Nam'
+    ];
+
     public static function tableName()
     {
         return 'customer';

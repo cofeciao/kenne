@@ -8,10 +8,10 @@ use modava\customer\widgets\NavbarWidgets;
 use modava\customer\CustomerModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\customer\models\CustomerType */
+/* @var $model modava\customer\models\SalesOnline */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Types'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
+                title="<?= CustomerModule::t('customer', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('article', 'Create'); ?></a>
             <?= Html::a(CustomerModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(CustomerModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,23 +47,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'id',
-                        'name',
-                        'description:ntext',
-                        [
-                            'attribute' => 'status',
-                            'value' => function ($model) {
-                                return Yii::$app->getModule('customer')->params['status'][$model->status];
-                            }
-                        ],
-                        [
-                            'attribute' => 'language',
-                            'value' => function ($model) {
-                                return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
-                            },
-                        ],
-                        'created_at:datetime',
-                        'updated_at:datetime',
+						'id',
+						'code',
+						'name',
+						'birthday',
+						'sex',
+						'phone',
+						'address',
+						'ward',
+						'avatar',
+						'fanpage_id',
+						'permission_user',
+						'type',
+						'status_call',
+						'status_fail',
+						'status_dat_hen',
+						'status_dong_y',
+						'time_lich_hen:datetime',
+						'time_come:datetime',
+						'direct_sale',
+						'co_so',
+						'sale_online_note',
+						'direct_sale_note',
+						'created_at',
+						'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => CustomerModule::t('article', 'Created By')

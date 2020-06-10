@@ -8,10 +8,10 @@ use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\customer\models\search\CustomerTypeSearch */
+/* @var $searchModel modava\customer\models\search\SalesOnlineSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CustomerModule::t('customer', 'Customer Types');
+$this->title = CustomerModule::t('customer', 'Customers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -23,9 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
-            <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+            <div class="mb-0">
+                <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
+                   title="<?= CustomerModule::t('customer', 'Create'); ?> (Sales Online)">
+                    <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+            </div>
         </div>
 
         <!-- Row -->
@@ -96,15 +98,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
+                                            'code',
                                             'name',
-                                            'description:ntext',
-                                            [
-                                                'attribute' => 'language',
-                                                'value' => function ($model) {
-                                                    if (!array_key_exists($model->language, Yii::$app->getModule('customer')->params['availableLocales'])) return null;
-                                                    return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
-                                                }
-                                            ],
+                                            'birthday',
+                                            'sex',
+                                            'phone',
+                                            //'address',
+                                            //'ward',
+                                            //'avatar',
+                                            //'fanpage_id',
+                                            //'permission_user',
+                                            //'type',
+                                            //'status_call',
+                                            //'status_fail',
+                                            //'status_dat_hen',
+                                            //'status_dong_y',
+                                            //'time_lich_hen:datetime',
+                                            //'time_come:datetime',
+                                            //'direct_sale',
+                                            //'co_so',
+                                            //'sale_online_note',
+                                            //'direct_sale_note',
                                             [
                                                 'attribute' => 'created_by',
                                                 'value' => 'userCreated.userProfile.fullname',

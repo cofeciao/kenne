@@ -32,7 +32,7 @@ class m200609_114519_create_table_customer extends Migration
                 'avatar' => $this->string(255)->null(),
                 'fanpage_id' => $this->integer(11)->null(),
                 'permission_user' => $this->integer(11)->notNull()->comment('Quyền thuộc về nhân viên nào'),
-                'type' => $this->integer(11)->notNull()->comment('Khách online - Khách vãng lai'),
+                'type' => $this->integer(11)->notNull()->comment('0: Chưa xác định - 1: Khách online - 2: Khách vãng lai'),
                 'status_call' => $this->integer(11)->null()->comment('KBM - Fail - Đặt hẹn'),
                 'status_fail' => $this->integer(11)->null()->comment('Tiềm năng - Ở xa - Có con nhỏ ...'),
                 'status_dat_hen' => $this->integer(11)->null()->comment('Đặt hẹn đến - Đặt hẹn không đến'),
