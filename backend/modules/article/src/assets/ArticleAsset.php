@@ -11,6 +11,7 @@ class ArticleAsset extends AssetBundle
 {
     public $sourcePath = '@backendWeb';
     public $css = [
+        'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
         'vendors/bootstrap/dist/css/bootstrap.min.css',
         "vendors/jquery-toggles/css/toggles.css",
         "vendors/jquery-toggles/css/themes/toggles-light.css",
