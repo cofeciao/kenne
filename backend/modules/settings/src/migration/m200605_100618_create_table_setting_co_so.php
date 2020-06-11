@@ -17,8 +17,8 @@ class m200605_100618_create_table_setting_co_so extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
-        $check_country = Yii::$app->db->getTableSchema('location_country');
-        if($check_country === null){
+        $check_setting_co_so = Yii::$app->db->getTableSchema('setting_co_so');
+        if($check_setting_co_so === null){
             $this->createTable('setting_co_so', [
                 'id' => $this->primaryKey(),
                 'name' => $this->string(255)->null(),

@@ -73,4 +73,7 @@ return [
     'settings' => [
         'class' => 'modava\settings\SettingsModule',
     ],
+    'report' => [
+        'class' => 'modava\report\ReportModule',
+    ],
 ];
