@@ -10,7 +10,9 @@ Yii::setAlias('modava/article', dirname(dirname(__DIR__)) . '/backend/modules/ar
 Yii::setAlias('modava/product', dirname(dirname(__DIR__)) . '/backend/modules/product/src');
 Yii::setAlias('modava/customer', dirname(dirname(__DIR__)) . '/backend/modules/customer/src');
 Yii::setAlias('modava/social', dirname(dirname(__DIR__)) . '/backend/modules/social/src');
+Yii::setAlias('modava/settings', dirname(dirname(__DIR__)) . '/backend/modules/settings/src');
 Yii::setAlias('modava/marketing', dirname(dirname(__DIR__)) . '/backend/modules/marketing/src');
+Yii::setAlias('modava/report', dirname(dirname(__DIR__)) . '/backend/modules/report/src');
 //Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
 
 //Widget
