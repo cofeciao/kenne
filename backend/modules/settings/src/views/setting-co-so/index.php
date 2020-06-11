@@ -100,7 +100,13 @@ $this->params['breadcrumbs'][] = $this->title;
 										'phone',
 										'email:email',
 										'description',
-										//'language',
+                                        [
+                                            'attribute' => 'language',
+                                            'value' => function ($model) {
+                                                if (!array_key_exists($model->language, Yii::$app->getModule('customer')->params['availableLocales'])) return null;
+                                                return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
+                                            }
+                                        ],
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
