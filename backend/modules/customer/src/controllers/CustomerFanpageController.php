@@ -2,8 +2,10 @@
 
 namespace modava\customer\controllers;
 
+use modava\customer\models\table\CustomerFanpageTable;
 use yii\db\Exception;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -11,6 +13,7 @@ use modava\customer\CustomerModule;
 use backend\components\MyController;
 use modava\customer\models\CustomerFanpage;
 use modava\customer\models\search\CustomerFanpageSearch;
+use yii\web\Response;
 
 /**
  * CustomerFanpageController implements the CRUD actions for CustomerFanpage model.
@@ -172,6 +175,22 @@ class CustomerFanpageController extends MyController
             ]);
         }
         return $this->redirect(['index']);
+    }
+
+    public function actionGetFanpageByOrigin(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if (Yii::$app->request->isAjax) {
+            $origin = Yii::$app->request->get('origin');
+            $data = ArrayHelper::map(CustomerFanpageTable::getFanpageByOrigin($origin), 'id', 'name');
+            return [
+                'code' => 200,
+                'data' => $data
+            ];
+        }
+        return [
+            'code' => 400,
+            'data' => 'Bạn không có quyền sử dụng chức năng này!'
+        ];
     }
 
     /**

@@ -57,120 +57,95 @@ use modava\customer\models\table\CustomerFanpageTable;
         </div>
         <div class="row">
             <div class="col-md-6 col-12">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'country',
-                    'data' => ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'),
-                    'options' => [
-                        'id' => 'select-country',
-                        'class' => 'form-control load-data-on-change',
-//                        'prompt' => CustomerModule::t('customer', 'Country'),
-                        'load-data-element' => '#select-province',
-                        'load-data-url' => Url::toRoute(['/location/location-province/get-province-by-country']),
-                        'load-data-key' => 'country',
-                        'load-data-method' => 'GET',
-                        'load-data-callback' => '$("#select-province").select2();'
-                    ]
+                <?= $form->field($model, 'country')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
+                    'prompt' => CustomerModule::t('customer', 'Country'),
+                    'class' => 'form-control load-data-on-change',
+                    'load-data-element' => '#select-province',
+                    'load-data-url' => Url::toRoute(['/location/location-province/get-province-by-country']),
+                    'load-data-key' => 'country',
+                    'load-data-method' => 'GET',
+                    'load-data-callback' => '$("#select-district, #select-ward").find("option[value!=\'\']").remove();'
                 ]) ?>
             </div>
             <div class="col-md-6 col-12">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'province',
-                    'data' => ArrayHelper::map(LocationProvinceTable::getProvinceByCountry($model->country, Yii::$app->language), 'id', 'name'),
-                    'options' => [
-                        'id' => 'select-province',
-                        'class' => 'form-control load-data-on-change',
-                        'prompt' => CustomerModule::t('customer', 'Province'),
-                        'load-data-element' => '#select-district',
-                        'load-data-url' => Url::toRoute(['/location/location-district/get-district-by-province']),
-                        'load-data-key' => 'province',
-                        'load-data-method' => 'GET',
-                        'load-data-callback' => '$("#select-district").select2();'
-                    ]
+                <?= $form->field($model, 'province')->dropDownList(ArrayHelper::map(LocationProvinceTable::getProvinceByCountry($model->country, Yii::$app->language), 'id', 'name'), [
+                    'id' => 'select-province',
+                    'prompt' => CustomerModule::t('customer', 'Province'),
+                    'class' => 'form-control load-data-on-change',
+                    'load-data-element' => '#select-district',
+                    'load-data-url' => Url::toRoute(['/location/location-district/get-district-by-province']),
+                    'load-data-key' => 'province',
+                    'load-data-method' => 'GET',
+                    'load-data-callback' => '$("#select-ward").find("option[value!=\'\']").remove();'
                 ]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-12">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'district',
-                    'data' => ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->province, Yii::$app->language), 'id', 'name'),
-                    'options' => [
-                        'prompt' => CustomerModule::t('customer', 'District'),
-                        'id' => 'select-district',
-                        'class' => 'form-control load-data-on-change',
-                        'load-data-element' => '#select-ward',
-                        'load-data-url' => Url::toRoute(['/location/location-ward/get-ward-by-district']),
-                        'load-data-key' => 'district',
-                        'load-data-method' => 'GET',
-                        'load-data-callback' => '$("select-ward").select2();'
-                    ]
+                <?= $form->field($model, 'district')->dropDownList(ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->province, Yii::$app->language), 'id', 'name'), [
+                    'id' => 'select-district',
+                    'prompt' => CustomerModule::t('customer', 'District'),
+                    'class' => 'form-control load-data-on-change',
+                    'load-data-element' => '#select-ward',
+                    'load-data-url' => Url::toRoute(['/location/location-ward/get-ward-by-district']),
+                    'load-data-key' => 'district',
+                    'load-data-method' => 'GET',
                 ]) ?>
             </div>
             <div class="col-md-6 col-12">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'ward',
-                    'data' => ArrayHelper::map(LocationWardTable::getWardByDistrict($model->district), 'id', 'name'),
-                    'options' => [
-                        'prompt' => CustomerModule::t('customer', 'Ward'),
-                        'id' => 'select-ward',
-                    ]
+                <?= $form->field($model, 'ward')->dropDownList(ArrayHelper::map(LocationWardTable::getWardByDistrict($model->district), 'id', 'name'), [
+                    'prompt' => CustomerModule::t('customer', 'Ward'),
+                    'id' => 'select-ward',
                 ]) ?>
             </div>
         </div>
         <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
         <div class="row">
             <div class="col-md-6 col-12">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'agency',
-                    'data' => []
+                <?= $form->field($model, 'agency')->dropDownList(ArrayHelper::map(CustomerAgencyTable::getAllAgency(), 'id', 'name'), [
+                    'prompt' => CustomerModule::t('customer', 'Agency'),
+                    'class' => 'form-control load-data-on-change',
+                    'load-data-url' => Url::toRoute(['/customer/customer-origin/get-origin-by-agency']),
+                    'load-data-element' => '#select-origin',
+                    'load-data-key' => 'agency',
+                    'load-data-method' => 'GET',
+                    'load-data-callback' => '$("#select-fanpage").find("option[value!=\'\']").remove();'
                 ]) ?>
             </div>
-            <div class="col-md-6 col-12"></div>
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'origin')->dropDownList(ArrayHelper::map(CustomerOriginTable::getOriginByAgency($model->agency), 'id', 'name'), [
+                    'prompt' => CustomerModule::t('customer', 'Origin'),
+                    'id' => 'select-origin',
+                    'class' => 'form-control load-data-on-change',
+                    'load-data-url' => Url::toRoute(['/customer/customer-fanpage/get-fanpage-by-origin']),
+                    'load-data-element' => '#select-fanpage',
+                    'load-data-key' => 'origin',
+                    'load-data-method' => 'GET'
+                ]) ?>
+            </div>
         </div>
-
-
-        <?= $form->field($model, 'fanpage_id')->textInput() ?>
-
-        <?= $form->field($model, 'permission_user')->textInput() ?>
-
-        <?= Select2::widget([
-            'model' => $model,
-            'attribute' => 'status_call',
-            'data' => ArrayHelper::map(CustomerStatusCallTable::getAllStatysCall(), 'id', 'name'),
-            'options' => [
-                'prompt' => 'Trạng thái gọi...'
-            ]
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'fanpage_id')->dropDownList(ArrayHelper::map(CustomerFanpageTable::getFanpageByOrigin($model->origin), 'id', 'name'), [
+                    'prompt' => CustomerModule::t('customer', 'Fanpage'),
+                    'id' => 'select-fanpage'
+                ]) ?>
+            </div>
+        </div>
+        <?= $form->field($model, 'status_call')->dropDownList(ArrayHelper::map(CustomerStatusCallTable::getAllStatysCall(), 'id', 'name'), [
+            'id' => 'status_call',
+            'prompt' => 'Trạng thái gọi...'
         ]) ?>
 
-        <?= Select2::widget([
-            'model' => $model,
-            'attribute' => 'status_fail',
-            'data' => ArrayHelper::map(CustomerStatusFailTable::getAllStatusFail(), 'id', 'name'),
-            'options' => [
-                'prompt' => 'Lý do fail...'
-            ]
+        <?= $form->field($model, 'status_fail')->dropDownList(ArrayHelper::map(CustomerStatusFailTable::getAllStatusFail(), 'id', 'name'), [
+            'prompt' => 'Lý do fail...'
         ]) ?>
-
-        <?= $form->field($model, 'status_dat_hen')->textInput() ?>
-
-        <?= $form->field($model, 'status_dong_y')->textInput() ?>
 
         <?= $form->field($model, 'time_lich_hen')->textInput() ?>
-
-        <?= $form->field($model, 'time_come')->textInput() ?>
-
-        <?= $form->field($model, 'direct_sale')->textInput() ?>
 
         <?= $form->field($model, 'co_so')->textInput() ?>
 
         <?= $form->field($model, 'sale_online_note')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'direct_sale_note')->textInput(['maxlength' => true]) ?>
 
         <div class="form-group">
             <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
@@ -180,13 +155,13 @@ use modava\customer\models\table\CustomerFanpageTable;
     </div>
 <?php
 $script = <<< JS
-var form = $('#form-sales-online');
+/*var form = $('#form-sales-online');
 form.on('submit', function(e){
     e.preventDefault();
     return false;
 });
 $(function(){
     $('#select-country').trigger('change');
-});
+});*/
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

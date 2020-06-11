@@ -48,11 +48,12 @@ class CustomerStatusFailTable extends \yii\db\ActiveRecord
 
     public static function getAllStatusFail($language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
         $key = 'redis-customer-status-fail-get-all-status-fail-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['language' => $language ?: Yii::$app->language])->published()->all();
+            $data = self::find()->where(['language' => $language])->published()->all();
             $cache->set($key, $data);
         }
         return $data;

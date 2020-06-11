@@ -55,7 +55,7 @@ class SalesOnline extends Customer
                 return in_array($this->status_call, $status_call_dathen);
             }, 'whenClient' => "function(){
                 console.log(" . json_encode(array_values($status_call_dathen)) . ");
-                return " . json_encode(array_values($status_call_dathen)) . ".includes($('').val());
+                return " . json_encode(array_values($status_call_dathen)) . ".includes($('#status_call').val());
             }"],
             [['country', 'province', 'district', 'agency', 'origin'], 'safe']
         ];

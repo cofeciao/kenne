@@ -2,8 +2,10 @@
 
 namespace modava\customer\controllers;
 
+use modava\customer\models\table\CustomerOriginTable;
 use yii\db\Exception;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -11,6 +13,7 @@ use modava\customer\CustomerModule;
 use backend\components\MyController;
 use modava\customer\models\CustomerOrigin;
 use modava\customer\models\search\CustomerOriginSearch;
+use yii\web\Response;
 
 /**
  * CustomerOriginController implements the CRUD actions for CustomerOrigin model.
@@ -18,8 +21,8 @@ use modava\customer\models\search\CustomerOriginSearch;
 class CustomerOriginController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +36,9 @@ class CustomerOriginController extends MyController
     }
 
     /**
-    * Lists all CustomerOrigin models.
-    * @return mixed
-    */
+     * Lists all CustomerOrigin models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new CustomerOriginSearch();
@@ -45,16 +48,15 @@ class CustomerOriginController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single CustomerOrigin model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single CustomerOrigin model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +65,10 @@ class CustomerOriginController extends MyController
     }
 
     /**
-    * Creates a new CustomerOrigin model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new CustomerOrigin model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new CustomerOrigin();
@@ -98,18 +100,18 @@ class CustomerOriginController extends MyController
     }
 
     /**
-    * Updates an existing CustomerOrigin model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing CustomerOrigin model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +139,12 @@ class CustomerOriginController extends MyController
     }
 
     /**
-    * Deletes an existing CustomerOrigin model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing CustomerOrigin model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -174,13 +176,32 @@ class CustomerOriginController extends MyController
         return $this->redirect(['index']);
     }
 
+    public function actionGetOriginByAgency()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if (Yii::$app->request->isAjax) {
+            $agency = Yii::$app->request->get('agency');
+            $get = CustomerOriginTable::getOriginByAgency($agency);
+            $data = ArrayHelper::map($get, 'id', 'name');
+            return [
+                'code' => 200,
+                'data' => $data,
+                'get' => $get
+            ];
+        }
+        return [
+            'code' => 400,
+            'data' => 'Bạn không có quyền sử dụng chức năng này!'
+        ];
+    }
+
     /**
-    * Finds the CustomerOrigin model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return CustomerOrigin the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the CustomerOrigin model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return CustomerOrigin the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
