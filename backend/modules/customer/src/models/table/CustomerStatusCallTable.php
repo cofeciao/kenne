@@ -76,7 +76,7 @@ class CustomerStatusCallTable extends \yii\db\ActiveRecord
         return $data;
     }
 
-    public static function getAllStatysCall($language = null)
+    public static function getAllStatusCall($language = null)
     {
         $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;

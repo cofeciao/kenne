@@ -18,10 +18,17 @@ use modava\location\models\table\LocationWardTable;
 use modava\customer\models\table\CustomerAgencyTable;
 use modava\customer\models\table\CustomerOriginTable;
 use modava\customer\models\table\CustomerFanpageTable;
+use modava\settings\models\table\SettingCoSoTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\SalesOnline */
 /* @var $form yii\widgets\ActiveForm */
+
+if ($model->wardHasOne != null) {
+    $model->district = $model->wardHasOne->districtHasOne->id;
+}
+
+$status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDatHen(), 'id', 'id');
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="customer-form">
@@ -31,6 +38,7 @@ use modava\customer\models\table\CustomerFanpageTable;
             'validationUrl' => Url::toRoute(['validate-sales-online', 'id' => $model->primaryKey]),
             'action' => Url::toRoute([Yii::$app->controller->action->id, 'id' => $model->primaryKey])
         ]); ?>
+        <h5 class="form-group">Thông tin cá nhân</h5>
         <div class="row">
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -100,6 +108,8 @@ use modava\customer\models\table\CustomerFanpageTable;
             </div>
         </div>
         <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+        <hr>
+        <h5 class="form-group">Thông tin hệ thống</h5>
         <div class="row">
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'agency')->dropDownList(ArrayHelper::map(CustomerAgencyTable::getAllAgency(), 'id', 'name'), [
@@ -131,21 +141,44 @@ use modava\customer\models\table\CustomerFanpageTable;
                     'id' => 'select-fanpage'
                 ]) ?>
             </div>
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'status_call')->dropDownList(ArrayHelper::map(CustomerStatusCallTable::getAllStatusCall(), 'id', 'name'), [
+                    'id' => 'status_call',
+                    'prompt' => 'Trạng thái gọi...'
+                ]) ?>
+            </div>
         </div>
-        <?= $form->field($model, 'status_call')->dropDownList(ArrayHelper::map(CustomerStatusCallTable::getAllStatysCall(), 'id', 'name'), [
-            'id' => 'status_call',
-            'prompt' => 'Trạng thái gọi...'
-        ]) ?>
+        <div class="customer-status-call-fail"
+             style="display: <?= $model->status_call != null && !in_array($model->status_call, $status_call_accept) ? 'block' : 'none' ?>;">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <?= $form->field($model, 'status_fail')->dropDownList(ArrayHelper::map(CustomerStatusFailTable::getAllStatusFail(), 'id', 'name'), [
+                        'prompt' => 'Lý do fail...'
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+        <div class="customer-status-call-success"
+             style="display: <?= $model->status_call != null && in_array($model->status_call, $status_call_accept) ? 'block' : 'none' ?>;">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <?= $form->field($model, 'time_lich_hen')->widget(DatePicker::class, [
+                        'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
+                        'clientOptions' => [
+                            'format' => 'dd-mm-yyyy',
+                            'todayHighLight' => true
+                        ]
+                    ]) ?>
+                </div>
+                <div class="col-md-6 col-12">
+                    <?= $form->field($model, 'co_so')->dropDownList(ArrayHelper::map(SettingCoSoTable::getAllCoSo(), 'id', 'name'), [
+                        'prompt' => 'Cơ sở...'
+                    ]) ?>
+                </div>
+            </div>
+        </div>
 
-        <?= $form->field($model, 'status_fail')->dropDownList(ArrayHelper::map(CustomerStatusFailTable::getAllStatusFail(), 'id', 'name'), [
-            'prompt' => 'Lý do fail...'
-        ]) ?>
-
-        <?= $form->field($model, 'time_lich_hen')->textInput() ?>
-
-        <?= $form->field($model, 'co_so')->textInput() ?>
-
-        <?= $form->field($model, 'sale_online_note')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'sale_online_note')->textarea(['maxlength' => true, 'rows' => 5]) ?>
 
         <div class="form-group">
             <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
@@ -154,14 +187,29 @@ use modava\customer\models\table\CustomerFanpageTable;
         <?php ActiveForm::end(); ?>
     </div>
 <?php
+$json_status_call_accept = json_encode(array_values($status_call_accept));
 $script = <<< JS
+var status_call_accept = $json_status_call_accept;
 /*var form = $('#form-sales-online');
 form.on('submit', function(e){
     e.preventDefault();
     return false;
-});
-$(function(){
-    $('#select-country').trigger('change');
 });*/
+$(function(){
+    // $('#select-country').trigger('change');
+    $('#status_call').on('change', function(){
+        var status = parseInt($(this).val()) || null;
+        console.log(status_call_accept, status, status_call_accept.includes(status));
+        if(status == null){
+            $('.customer-status-call-success, .customer-status-call-fail').slideUp();
+        } else if(status_call_accept.includes(status)){
+            $('.customer-status-call-success').slideDown();
+            $('.customer-status-call-fail').slideUp();
+        } else {
+            $('.customer-status-call-fail').slideDown();
+            $('.customer-status-call-success').slideUp();
+        }
+    });
+});
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

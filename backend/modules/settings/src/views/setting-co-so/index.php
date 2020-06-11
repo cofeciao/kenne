@@ -100,6 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										'phone',
 										'email:email',
 										'description',
+										//'language',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -112,13 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'format' => 'date',
                                             'headerOptions' => [
                                                 'width' => 150,
-                                            ],
-                                        ],
-                                        [
-                                            'class' => 'yii\grid\ActionColumn',
-                                            'header' => SettingsModule::t('settings', 'Actions'),
-                                            'headerOptions' => [
-                                                'width' => 130,
                                             ],
                                         ],
                                         [

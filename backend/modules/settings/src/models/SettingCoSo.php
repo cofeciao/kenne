@@ -20,6 +20,7 @@ use Yii;
     * @property string $email
     * @property string $description
     * @property int $status 0:disabled, 1:activated
+    * @property string $language Language
     * @property int $created_at
     * @property int $updated_at
     * @property int $created_by
@@ -60,6 +61,7 @@ class SettingCoSo extends SettingCoSoTable
     {
         return [
 			[['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+			[['language'], 'string'],
 			[['name', 'address', 'phone', 'email', 'description'], 'string', 'max' => 255],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -79,6 +81,7 @@ class SettingCoSo extends SettingCoSoTable
             'email' => SettingsModule::t('settings', 'Email'),
             'description' => SettingsModule::t('settings', 'Description'),
             'status' => SettingsModule::t('settings', 'Status'),
+            'language' => SettingsModule::t('settings', 'Language'),
             'created_at' => SettingsModule::t('settings', 'Created At'),
             'updated_at' => SettingsModule::t('settings', 'Updated At'),
             'created_by' => SettingsModule::t('settings', 'Created By'),

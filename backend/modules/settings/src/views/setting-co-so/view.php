@@ -59,6 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->getModule('settings')->params['status'][$model->status];
                             }
                         ],
+                        [
+                            'attribute' => 'language',
+                            'value' => function ($model) {
+                                return Yii::$app->getModule('settings')->params['availableLocales'][$model->language];
+                            },
+                        ],
 						'created_at',
 						'updated_at',
                         [

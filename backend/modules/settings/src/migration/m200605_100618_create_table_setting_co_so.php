@@ -32,6 +32,8 @@ class m200605_100618_create_table_setting_co_so extends Migration
                 'created_by' => $this->integer(11)->null()->defaultValue(1),
                 'updated_by' => $this->integer(11)->null()->defaultValue(1),
             ], $tableOptions);
+            $this->addColumn('setting_co_so', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
+            $this->createIndex('index-language', 'setting_co_so', 'language');
             $this->addForeignKey('fk_setting_co_so_created_by_user', 'setting_co_so', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_setting_co_so_updated_by_user', 'setting_co_so', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }

@@ -19,7 +19,7 @@ class SettingCoSoSearch extends SettingCoSo
     {
         return [
             [['id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'address', 'phone', 'email', 'description', 'status'], 'safe'],
+            [['name', 'address', 'phone', 'email', 'description', 'status', 'language'], 'safe'],
         ];
     }
 
@@ -72,7 +72,8 @@ class SettingCoSoSearch extends SettingCoSo
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'language', $this->language]);
 
         return $dataProvider;
     }
