@@ -30,14 +30,12 @@ class CustomerTable extends \yii\db\ActiveRecord
         return 'customer';
     }
 
-
-
     public function getWardHasOne()
     {
         return $this->hasOne(LocationWardTable::class, ['id' => 'ward']);
     }
 
-    public function fanpageHasOne()
+    public function getFanpageHasOne()
     {
         return $this->hasOne(CustomerFanpageTable::class, ['id' => 'fanpage_id']);
     }

@@ -6,6 +6,8 @@ use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
 use modava\customer\widgets\NavbarWidgets;
 use modava\customer\CustomerModule;
+use modava\customer\models\table\CustomerTable;
+use modava\customer\models\table\CustomerStatusCallTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\SalesOnline */
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= CustomerModule::t('customer', 'Create'); ?>">
+               title="<?= CustomerModule::t('customer', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('article', 'Create'); ?></a>
             <?= Html::a(CustomerModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(CustomerModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,30 +49,92 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'code',
-						'name',
-						'birthday',
-						'sex',
-						'phone',
-						'address',
-						'ward',
-						'avatar',
-						'fanpage_id',
-						'permission_user',
-						'type',
-						'status_call',
-						'status_fail',
-						'status_dat_hen',
-						'status_dong_y',
-						'time_lich_hen:datetime',
-						'time_come:datetime',
-						'direct_sale',
-						'co_so',
-						'sale_online_note',
-						'direct_sale_note',
-						'created_at',
-						'updated_at',
+                        'id',
+                        'avatar',
+                        'name',
+                        'code',
+                        'birthday',
+                        [
+                            'attribute' => 'sex',
+                            'value' => function ($model) {
+                                if ($model->sex === null || !array_key_exists($model->sex, CustomerTable::SEX)) return null;
+                                return CustomerTable::SEX[$model->sex];
+                            }
+                        ],
+                        'phone',
+                        [
+                            'attribute' => 'address',
+                            'value' => function ($model) {
+                                if ($model->address == null) return null;
+                                $address = $model->address;
+                                if ($model->wardHasOne != null) {
+                                    $address .= ', ' . $model->wardHasOne->name;
+                                    if ($model->wardHasOne->districtHasOne != null) {
+                                        $address .= ', ' . $model->wardHasOne->districtHasOne->name;
+                                        if ($model->wardHasOne->districtHasOne->provinceHasOne != null) {
+                                            $address .= ', ' . $model->wardHasOne->districtHasOne->provinceHasOne->name;
+                                            if ($model->wardHasOne->districtHasOne->provinceHasOne->countryHasOne != null) $address .= ', ' . $model->wardHasOne->districtHasOne->provinceHasOne->countryHasOne->CommonName;
+                                        }
+                                    }
+                                }
+                                return $address;
+                            }
+                        ],
+                        [
+                            'attribute' => 'fanpage_id',
+                            'value' => function ($model) {
+                                if ($model->fanpageHasOne == null) return null;
+                                return $model->fanpageHasOne->name;
+                            }
+                        ],
+                        [
+                            'attribute' => 'permission_user',
+                            'value' => function ($model) {
+                                if ($model->permissionUserHasOne == null || $model->permissionUserHasOne->userProfile == null) return null;
+                                return $model->permissionUserHasOne->userProfile->fullname;
+                            }
+                        ],
+                        [
+                            'attribute' => 'type',
+                            'value' => function ($model) {
+                                if ($model->type == null || !array_key_exists($model->type, CustomerTable::TYPE)) return null;
+                                return CustomerTable::TYPE[$model->type];
+                            }
+                        ],
+                        [
+                            'attribute' => 'status_call',
+                            'value' => function ($model) {
+                                if ($model->statusCallHasOne == null) return null;
+                                return $model->statusCallHasOne->name;
+                            }
+                        ],
+                        [
+                            'attribute' => 'status_fail',
+                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_DISABLED,
+                            'value' => function ($model) {
+                                if ($model->statusFailHasOne == null) return null;
+                                return $model->statusFailHasOne->name;
+                            }
+                        ],
+                        [
+                            'attribute' => 'time_lich_hen',
+                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_PUBLISHED,
+                            'value' => function ($model) {
+                                if ($model->time_lich_hen == null) return null;
+                                return date('d-m-Y H:i', $model->time_lich_hen);
+                            }
+                        ],
+                        [
+                            'attribute' => 'co_so',
+                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_PUBLISHED,
+                            'value' => function ($model) {
+                                if ($model->coSoHasOne == null) return null;
+                                return $model->coSoHasOne->name;
+                            }
+                        ],
+                        'sale_online_note',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => CustomerModule::t('article', 'Created By')

@@ -11,6 +11,7 @@ use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerStatusFailTable;
 use modava\customer\models\table\CustomerStatusCallTable;
 use dosamigos\datepicker\DatePicker;
+use modava\customer\components\CustomerDateTimePicker;
 use modava\location\models\table\LocationCountryTable;
 use modava\location\models\table\LocationProvinceTable;
 use modava\location\models\table\LocationDistrictTable;
@@ -26,6 +27,18 @@ use modava\settings\models\table\SettingCoSoTable;
 
 if ($model->wardHasOne != null) {
     $model->district = $model->wardHasOne->districtHasOne->id;
+    $model->province = $model->wardHasOne->districtHasOne->provinceHasOne->id;
+    $model->country = $model->wardHasOne->districtHasOne->provinceHasOne->countryHasOne->id;
+}
+if ($model->fanpageHasOne != null) {
+    $model->origin = $model->fanpageHasOne->originHasOne->id;
+    $model->agency = $model->fanpageHasOne->originHasOne->agencyHasMany[0]->id;
+}
+if ($model->birthday != null) {
+    $model->birthday = date('d-m-Y', strtotime($model->birthday));
+}
+if ($model->time_lich_hen != null) {
+    $model->time_lich_hen = date('d-m-Y H:i', $model->time_lich_hen);
 }
 
 $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDatHen(), 'id', 'id');
@@ -52,6 +65,7 @@ $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDat
                 <?= $form->field($model, 'birthday')->widget(DatePicker::class, [
                     'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
                     'clientOptions' => [
+                        'autoclose' => true,
                         'format' => 'dd-mm-yyyy',
                         'todayHighlight' => true
                     ]
@@ -162,10 +176,13 @@ $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDat
              style="display: <?= $model->status_call != null && in_array($model->status_call, $status_call_accept) ? 'block' : 'none' ?>;">
             <div class="row">
                 <div class="col-md-6 col-12">
-                    <?= $form->field($model, 'time_lich_hen')->widget(DatePicker::class, [
-                        'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
+                    <?= $form->field($model, 'time_lich_hen')->widget(CustomerDateTimePicker::class, [
+                        'template' => '{input}{button}',
+                        'pickButtonIcon' => 'btn btn-increment btn-light',
+                        'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
                         'clientOptions' => [
-                            'format' => 'dd-mm-yyyy',
+                            'autoclose' => true,
+                            'format' => 'dd-mm-yyyy hh:ii',
                             'todayHighLight' => true
                         ]
                     ]) ?>
@@ -199,15 +216,14 @@ $(function(){
     // $('#select-country').trigger('change');
     $('#status_call').on('change', function(){
         var status = parseInt($(this).val()) || null;
-        console.log(status_call_accept, status, status_call_accept.includes(status));
         if(status == null){
-            $('.customer-status-call-success, .customer-status-call-fail').slideUp();
+            $('.customer-status-call-success, .customer-status-call-fail').hide().find('.has-error').removeClass('has-error').find('.help-block').html('');
         } else if(status_call_accept.includes(status)){
             $('.customer-status-call-success').slideDown();
-            $('.customer-status-call-fail').slideUp();
+            $('.customer-status-call-fail').hide().find('.has-error').removeClass('has-error').find('.help-block').html('');
         } else {
             $('.customer-status-call-fail').slideDown();
-            $('.customer-status-call-success').slideUp();
+            $('.customer-status-call-success').hide().find('.has-error').removeClass('has-error').find('.help-block').html('');
         }
     });
 });

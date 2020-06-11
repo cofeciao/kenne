@@ -25,7 +25,10 @@ class SettingCoSoTable extends \yii\db\ActiveRecord
     public function afterDelete()
     {
         $cache = Yii::$app->cache;
-        $keys = [];
+        $keys = [
+            'redis-settings-co-so-get-all-co-so-' . $this->language,
+            'redis-settings-co-so-get-by-id-' . $this->id . '-' . $this->language
+        ];
         foreach ($keys as $key) {
             $cache->delete($key);
         }
@@ -35,7 +38,10 @@ class SettingCoSoTable extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         $cache = Yii::$app->cache;
-        $keys = [];
+        $keys = [
+            'redis-settings-co-so-get-all-co-so-' . $this->language,
+            'redis-settings-co-so-get-by-id-' . $this->id . '-' . $this->language
+        ];
         foreach ($keys as $key) {
             $cache->delete($key);
         }
@@ -49,7 +55,7 @@ class SettingCoSoTable extends \yii\db\ActiveRecord
         $key = 'redis-settings-co-so-get-all-co-so-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['language' => $language])->one();
+            $data = self::find()->where(['language' => $language])->all();
             $cache->set($key, $data);
         }
         return $data;

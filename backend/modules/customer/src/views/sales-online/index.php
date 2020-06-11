@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
+use modava\customer\models\table\CustomerTable;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\customer\models\search\SalesOnlineSearch */
@@ -98,10 +99,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
-                                            'code',
                                             'name',
+                                            'code',
                                             'birthday',
-                                            'sex',
+                                            [
+                                                'attribute' => 'sex',
+                                                'value' => function ($model) {
+                                                    if ($model->sex === null || !array_key_exists($model->sex, CustomerTable::SEX)) return null;
+                                                    return CustomerTable::SEX[$model->sex];
+                                                }
+                                            ],
                                             'phone',
                                             //'address',
                                             //'ward',

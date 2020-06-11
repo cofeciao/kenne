@@ -52,7 +52,9 @@ class Customer extends CustomerTable
             [
                 'permission_user' => [
                     'class' => AttributeBehavior::class,
-                    'attributes' => [],
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['permission_user']
+                    ],
                     'value' => function () {
                         if ($this->permission_user != null) return $this->permission_user;
                         return Yii::$app->user->id;
@@ -71,6 +73,18 @@ class Customer extends CustomerTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                'time_lich_hen' => [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['time_lich_hen'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['time_lich_hen']
+                    ],
+                    'value' => function () {
+                        if ($this->time_lich_hen == null) return null;
+                        if (is_numeric($this->time_lich_hen)) return $this->time_lich_hen;
+                        return strtotime($this->time_lich_hen);
+                    }
+                ]
             ]
         );
     }
