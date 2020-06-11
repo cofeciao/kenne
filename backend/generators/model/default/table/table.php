@@ -22,13 +22,15 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>\table;
 
 use cheatsheet\Time;
+<?php if(isset($columns['status'])) { ?>
 use modava\<?= $generator->messageCategory ?>\models\query\<?= $className ?>Query;
+<?php } ?>
 use Yii;
 use yii\db\ActiveRecord;
 
 class <?= $className ?>Table extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
-<?php if (isset($tableSchema->columns['status'])) { ?>
+<?php if(isset($columns['status'])) { ?>
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;
 
