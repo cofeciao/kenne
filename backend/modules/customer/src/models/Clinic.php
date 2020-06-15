@@ -2,6 +2,7 @@
 
 namespace modava\customer\models;
 
+use modava\customer\models\table\CustomerStatusCallTable;
 use modava\customer\models\table\CustomerStatusDatHenTable;
 use modava\customer\models\table\CustomerTable;
 use yii\behaviors\AttributeBehavior;
@@ -14,6 +15,10 @@ class Clinic extends Customer
 
     public function behaviors()
     {
+        $get_status_call_accept = CustomerStatusCallTable::getStatusCallDatHen();
+        $get_status_dat_hen_accept = CustomerStatusDatHenTable::getDatHenDen();
+        $status_call_accept = $get_status_call_accept[0]->id;
+        $status_dat_hen_accept = $get_status_dat_hen_accept[0]->id;
         return array_merge(parent::behaviors(), [
             'type' => [
                 'class' => AttributeBehavior::class,
@@ -21,6 +26,20 @@ class Clinic extends Customer
                     ActiveRecord::EVENT_BEFORE_INSERT => ['type']
                 ],
                 'value' => CustomerTable::TYPE_ONLINE
+            ],
+            'status_call' => [
+                'class' => AttributeBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['status_call']
+                ],
+                'value' => $status_call_accept
+            ],
+            'status_dat_hen' => [
+                'class' => AttributeBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['status_dat_hen']
+                ],
+                'value' => $status_dat_hen_accept
             ],
             'birthday' => [
                 'class' => AttributeBehavior::class,

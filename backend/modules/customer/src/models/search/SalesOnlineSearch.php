@@ -39,7 +39,7 @@ class SalesOnlineSearch extends SalesOnline
     public function search($params)
     {
         $dat_hen_accept = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen(), 'id', 'id');
-        $query = SalesOnline::find()->where(self::tableName() . '.status_dat_hen IS NULL')->orWhere(['NOT IN', self::tableName() . '.status_dat_hen', array_values($dat_hen_accept)]);
+        $query = SalesOnline::find()->where([self::tableName() . '.type' => self::TYPE_ONLINE]);
 
         // add conditions that should always apply here
 

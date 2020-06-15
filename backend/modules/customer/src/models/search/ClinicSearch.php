@@ -38,7 +38,7 @@ class ClinicSearch extends Clinic
     public function search($params)
     {
         $status_call_dat_hen = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDatHen(), 'id', 'id');
-        $query = Clinic::find()->where(['IN', self::tableName() . '.status_call', array_values($status_call_dat_hen)]);
+        $query = Clinic::find()->joinWith(['statusCallHasOne'])->where([CustomerStatusCallTable::tableName() . '.accept' => CustomerStatusCallTable::STATUS_PUBLISHED]);
 
         // add conditions that should always apply here
 
