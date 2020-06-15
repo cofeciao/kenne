@@ -30,6 +30,7 @@ use Yii;
  * @property int $status_fail Tiềm năng - Ở xa - Có con nhỏ ...
  * @property int $status_dat_hen Đặt hẹn đến - Đặt hẹn không đến
  * @property int $status_dong_y Đồng ý - Không đồng ý - Làm dịch vụ khác
+ * @property int $remind_call_time Khi nào nên gọi lại
  * @property int $time_lich_hen Thời gian lịch hẹn
  * @property int $time_come Thời gian khách đến
  * @property int $direct_sale Direct Sale phụ trách
