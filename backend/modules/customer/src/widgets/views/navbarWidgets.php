@@ -10,7 +10,7 @@ $is_dev = Yii::$app->user->can('develop');
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'sales-online') echo ' active' ?>"
                href="<?= Url::toRoute(['/customer/sales-online']); ?>" title="<?= CustomerModule::t('customer', 'Customer'); ?> (Sales Online)">
-                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer'); ?>
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Sales Online'); ?>
             </a>
         </li>
     <?php } ?>
@@ -18,7 +18,7 @@ $is_dev = Yii::$app->user->can('develop');
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'clinic') echo ' active' ?>"
                href="<?= Url::toRoute(['/customer/clinic']); ?>" title="<?= CustomerModule::t('customer', 'Customer'); ?> (Clinic)">
-                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer'); ?>
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Clinic'); ?>
             </a>
         </li>
     <?php } ?>

@@ -2,15 +2,14 @@
 
 namespace modava\customer\models\search;
 
-use modava\customer\models\SalesOnline;
-use modava\customer\models\table\CustomerStatusDatHenTable;
+use modava\customer\models\Clinic;
+use modava\customer\models\table\CustomerStatusCallTable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 
-class SalesOnlineSearch extends SalesOnline
+class ClinicSearch extends Clinic
 {
-
     /**
      * @inheritdoc
      */
@@ -38,8 +37,8 @@ class SalesOnlineSearch extends SalesOnline
      */
     public function search($params)
     {
-        $dat_hen_accept = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen(), 'id', 'id');
-        $query = SalesOnline::find()->where(self::tableName() . '.status_dat_hen IS NULL')->orWhere(['NOT IN', self::tableName() . '.status_dat_hen', array_values($dat_hen_accept)]);
+        $status_call_dat_hen = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDatHen(), 'id', 'id');
+        $query = Clinic::find()->where(['IN', self::tableName() . '.status_call', array_values($status_call_dat_hen)]);
 
         // add conditions that should always apply here
 

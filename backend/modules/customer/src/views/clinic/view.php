@@ -8,6 +8,7 @@ use modava\customer\widgets\NavbarWidgets;
 use modava\customer\CustomerModule;
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerStatusCallTable;
+use modava\customer\models\table\CustomerStatusDatHenTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\SalesOnline */
@@ -81,13 +82,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         [
-                            'attribute' => 'fanpage_id',
-                            'value' => function ($model) {
-                                if ($model->fanpageHasOne == null) return null;
-                                return $model->fanpageHasOne->name;
-                            }
-                        ],
-                        [
                             'attribute' => 'permission_user',
                             'value' => function ($model) {
                                 if ($model->permissionUserHasOne == null || $model->permissionUserHasOne->userProfile == null) return null;
@@ -102,18 +96,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         [
-                            'attribute' => 'status_call',
+                            'attribute' => 'status_dat_hen',
                             'value' => function ($model) {
-                                if ($model->statusCallHasOne == null) return null;
-                                return $model->statusCallHasOne->name;
-                            }
-                        ],
-                        [
-                            'attribute' => 'status_fail',
-                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_DISABLED,
-                            'value' => function ($model) {
-                                if ($model->statusFailHasOne == null) return null;
-                                return $model->statusFailHasOne->name;
+                                if ($model->statusDatHenHasOne == null) return null;
+                                $status = $model->statusDatHenHasOne->name;
+                                if ($model->statusCallHasOne != null) $status = $model->statusCallHasOne->name . ' - ' . $status;
+                                return $status;
                             }
                         ],
                         [
@@ -122,6 +110,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                                 if ($model->time_lich_hen == null) return null;
                                 return date('d-m-Y H:i', $model->time_lich_hen);
+                            }
+                        ],
+                        [
+                            'attribute' => 'time_come',
+                            'visible' => $model->statusDatHenHasOne != null && $model->statusDatHenHasOne->accept == CustomerStatusDatHenTable::STATUS_PUBLISHED,
+                            'value' => function ($model) {
+                                if ($model->time_come == null) return null;
+                                return date('d-m-Y H:i', $model->time_come);
+                            }
+                        ],
+                        [
+                            'attribute' => 'status_dong_y',
+                            'visible' => $model->statusDatHenHasOne != null && $model->statusDatHenHasOne->accept == CustomerStatusDatHenTable::STATUS_PUBLISHED,
+                            'value' => function ($model) {
+                                if ($model->statusDongYHasOne == null) return null;
+                                return $model->statusDongYHasOne->name;
                             }
                         ],
                         [

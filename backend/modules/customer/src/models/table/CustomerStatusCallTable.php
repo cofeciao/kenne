@@ -70,7 +70,7 @@ class CustomerStatusCallTable extends \yii\db\ActiveRecord
         $key = 'redis-customer-status-call-get-status-call-dat-hen-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['accept' => self::STATUS_PUBLISHED, 'language' => $language])->published()->all();
+            $data = self::find()->where(['language' => $language])->accepted()->published()->all();
             $cache->set($key, $data);
         }
         return $data;
