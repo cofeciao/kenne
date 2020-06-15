@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute' => 'time_lich_hen',
-                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_PUBLISHED,
+                            'visible' => $model->type == CustomerTable::TYPE_ONLINE && $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_PUBLISHED,
                             'value' => function ($model) {
                                 if ($model->time_lich_hen == null) return null;
                                 return date('d-m-Y H:i', $model->time_lich_hen);
@@ -137,6 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         'sale_online_note',
+                        'direct_sale_note',
                         'created_at:datetime',
                         'updated_at:datetime',
                         [

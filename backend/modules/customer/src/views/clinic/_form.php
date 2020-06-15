@@ -114,16 +114,18 @@ $status_dat_hen_den = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen()
         <hr>
         <h5 class="form-group">Thông tin hệ thống</h5>
 
-        <div class="row">
-            <div class="col-md-6 col-12">
-                <?= $form->field($model, 'status_dat_hen')->dropDownList(ArrayHelper::map(CustomerStatusDatHenTable::getAllDatHen(), 'id', 'name'), [
-                    'id' => 'status-dat-hen',
-                    'prompt' => 'Trạng thái đặt hẹn...'
-                ]) ?>
+        <?php if ($model->primaryKey != null) { ?>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <?= $form->field($model, 'status_dat_hen')->dropDownList(ArrayHelper::map(CustomerStatusDatHenTable::getAllDatHen(), 'id', 'name'), [
+                        'id' => 'status-dat-hen',
+                        'prompt' => 'Trạng thái đặt hẹn...'
+                    ]) ?>
+                </div>
             </div>
-        </div>
+        <?php } ?>
         <div class="status-dat-hen-den"
-             style="display: <?= in_array($model->status_dat_hen, $status_dat_hen_den) ? 'block' : 'none' ?>;">
+             style="display: <?= $model->primaryKey == null || in_array($model->status_dat_hen, $status_dat_hen_den) ? 'block' : 'none' ?>;">
             <div class="row">
                 <div class="col-md-6 col-12">
                     <?= $form->field($model, 'time_come')->widget(CustomerDateTimePicker::class, [
