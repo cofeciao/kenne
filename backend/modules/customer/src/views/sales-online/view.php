@@ -109,8 +109,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         [
+                            'attribute' => 'remind_call_time',
+                            'visible' => $model->status_fail == null,
+                            'value' => function ($model) {
+                                if ($model->remind_call_time == null) return null;
+                                return date('d-m-Y H:i', $model->remind_call_time);
+                            }
+                        ],
+                        [
                             'attribute' => 'status_fail',
-                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_DISABLED,
+                            'visible' => $model->status_fail != null && $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_DISABLED,
                             'value' => function ($model) {
                                 if ($model->statusFailHasOne == null) return null;
                                 return $model->statusFailHasOne->name;

@@ -1,5 +1,6 @@
 <?php
 
+use cheatsheet\Time;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\widgets\Select2;
@@ -39,6 +40,14 @@ if ($model->birthday != null) {
 }
 if ($model->time_lich_hen != null) {
     $model->time_lich_hen = date('d-m-Y H:i', $model->time_lich_hen);
+}
+if ($model->status_fail == null) {
+    $model->remind_call = true;
+}
+if ($model->remind_call_time == null || $model->remind_call_time < time()) {
+    $model->remind_call_time = date('d-m-Y H:i', strtotime(date('d-m-Y') . ' +1day') + 8 * Time::SECONDS_IN_AN_HOUR);
+} else {
+    $model->remind_call_time = date('d-m-Y H:i', $model->remind_call_time);
 }
 
 $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDatHen(), 'id', 'id');
@@ -166,6 +175,27 @@ $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDat
              style="display: <?= $model->status_call != null && !in_array($model->status_call, $status_call_accept) ? 'block' : 'none' ?>;">
             <div class="row">
                 <div class="col-md-6 col-12">
+                    <?= $form->field($model, 'remind_call')->checkbox([
+                        'id' => 'remind-call'
+                    ]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12 remind-call-time"
+                     style="display: <?= $model->remind_call == true ? 'block' : 'none' ?>">
+                    <?= $form->field($model, 'remind_call_time')->widget(CustomerDateTimePicker::class, [
+                        'template' => '{input}{button}',
+                        'pickButtonIcon' => 'btn btn-increment btn-light',
+                        'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                        'clientOptions' => [
+                            'autoclose' => true,
+                            'format' => 'dd-mm-yyyy hh:ii',
+                            'todayHighLight' => true,
+                            'startDate' => '-0d'
+                        ]
+                    ]) ?>
+                </div>
+                <div class="col-md-6 col-12">
                     <?= $form->field($model, 'status_fail')->dropDownList(ArrayHelper::map(CustomerStatusFailTable::getAllStatusFail(), 'id', 'name'), [
                         'prompt' => 'Lý do fail...'
                     ]) ?>
@@ -183,7 +213,7 @@ $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDat
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'dd-mm-yyyy hh:ii',
-                            'todayHighLight' => true
+                            'todayHighLight' => true,
                         ]
                     ]) ?>
                 </div>
@@ -224,6 +254,13 @@ $(function(){
         } else {
             $('.customer-status-call-fail').slideDown();
             $('.customer-status-call-success').hide().find('.has-error').removeClass('has-error').find('.help-block').html('');
+        }
+    });
+    $('#remind-call').on('change', function(){
+        if($(this).is(':checked')){
+            $('.remind-call-time').slideDown();
+        } else {
+            $('.remind-call-time').hide();
         }
     });
 });

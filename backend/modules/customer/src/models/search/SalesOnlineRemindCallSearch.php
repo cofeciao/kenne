@@ -13,6 +13,8 @@ use modava\customer\models\Customer;
  */
 class SalesOnlineRemindCallSearch extends Customer
 {
+    public $remind_call_date;
+
     /**
      * @inheritdoc
      */
@@ -20,7 +22,7 @@ class SalesOnlineRemindCallSearch extends Customer
     {
         return [
             [['id', 'ward', 'fanpage_id', 'permission_user', 'type', 'status_call', 'status_fail', 'status_dat_hen', 'status_dong_y', 'time_lich_hen', 'time_come', 'direct_sale', 'co_so', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['code', 'name', 'birthday', 'sex', 'phone', 'address', 'avatar', 'sale_online_note', 'direct_sale_note'], 'safe'],
+            [['code', 'name', 'birthday', 'sex', 'phone', 'address', 'avatar', 'sale_online_note', 'direct_sale_note', 'remind_call_date'], 'safe'],
         ];
     }
 
@@ -43,6 +45,15 @@ class SalesOnlineRemindCallSearch extends Customer
     public function search($params)
     {
         $query = Customer::find()
+            ->select([
+                self::tableName() . '.id',
+                self::tableName() . '.name',
+                self::tableName() . '.phone',
+                self::tableName() . '.remind_call_time',
+                self::tableName() . '.created_by',
+                self::tableName() . '.created_at',
+                "FROM_UNIXTIME(remind_call_time, '%d-%m-%Y') AS remind_call_date"
+            ])
             ->joinWith(['statusCallHasOne'])
             ->where(['<>', CustomerStatusCallTable::tableName() . '.accept', CustomerStatusCallTable::STATUS_PUBLISHED])
             ->andWhere(self::tableName() . '.status_fail IS NULL');
@@ -51,7 +62,7 @@ class SalesOnlineRemindCallSearch extends Customer
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
+//            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
 
         $this->load($params);
@@ -63,35 +74,11 @@ class SalesOnlineRemindCallSearch extends Customer
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'birthday' => $this->birthday,
-            'ward' => $this->ward,
-            'fanpage_id' => $this->fanpage_id,
-            'permission_user' => $this->permission_user,
-            'type' => $this->type,
-            'status_call' => $this->status_call,
-            'status_fail' => $this->status_fail,
-            'status_dat_hen' => $this->status_dat_hen,
-            'status_dong_y' => $this->status_dong_y,
-            'time_lich_hen' => $this->time_lich_hen,
-            'time_come' => $this->time_come,
-            'direct_sale' => $this->direct_sale,
-            'co_so' => $this->co_so,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
+        $query->orderBy([
+            new \yii\db\Expression('FIELD (remind_call_date, ' . strtotime(date('d-m-Y')) . ') DESC, remind_call_time DESC'),
+            'remind_call_time' => SORT_DESC
         ]);
-
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'sex', $this->sex])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'avatar', $this->avatar])
-            ->andFilterWhere(['like', 'sale_online_note', $this->sale_online_note])
-            ->andFilterWhere(['like', 'direct_sale_note', $this->direct_sale_note]);
+//        echo $query->createCommand()->rawSql;die;
 
         return $dataProvider;
     }
