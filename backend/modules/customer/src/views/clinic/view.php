@@ -9,6 +9,7 @@ use modava\customer\CustomerModule;
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerStatusCallTable;
 use modava\customer\models\table\CustomerStatusDatHenTable;
+use modava\customer\models\table\CustomerStatusDongYTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\SalesOnline */
@@ -28,11 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
+            <?php if ($model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
+                <?= Html::a('<i class="ion-md-card"></i>', [], [
+                    'class' => 'btn btn-success'
+                ]) ?>
+            <?php } ?>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
                title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('article', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(CustomerModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
@@ -136,17 +142,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->coSoHasOne->name;
                             }
                         ],
-                        'sale_online_note',
+                        [
+                            'attribute' => 'sale_online_note',
+                            'visible' => $model->type == CustomerTable::TYPE_ONLINE,
+                            'value' => function ($model) {
+                                return $model->sale_online_note;
+                            }
+                        ],
                         'direct_sale_note',
                         'created_at:datetime',
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => CustomerModule::t('article', 'Created By')
+                            'label' => CustomerModule::t('customer', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => CustomerModule::t('article', 'Updated By')
+                            'label' => CustomerModule::t('customer', 'Updated By')
                         ],
                     ],
                 ]) ?>

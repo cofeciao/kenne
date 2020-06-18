@@ -15,6 +15,7 @@ class SalesOnline extends Customer
 
     public function behaviors()
     {
+        $status_call_dathen = ArrayHelper::map(CustomerStatusCall::getStatusCallDatHen(), 'id', 'id');
         return array_merge(parent::behaviors(), [
             'type' => [
                 'class' => AttributeBehavior::class,
@@ -40,7 +41,8 @@ class SalesOnline extends Customer
                     ActiveRecord::EVENT_BEFORE_INSERT => ['remind_call_time'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['remind_call_time'],
                 ],
-                'value' => function () {
+                'value' => function () use ($status_call_dathen) {
+                    if (in_array($this->status_call, $status_call_dathen)) return null;
                     if ($this->status_fail != null) return null;
                     if ($this->remind_call_time != null) {
                         if (is_numeric($this->remind_call_time)) return $this->remind_call_time;

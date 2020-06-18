@@ -29,6 +29,9 @@ if ($model->wardHasOne != null) {
 if ($model->birthday != null) {
     $model->birthday = date('d-m-Y', strtotime($model->birthday));
 }
+if ($model->time_come != null) {
+    $model->time_come = date('d-m-Y H:i', $model->time_come);
+}
 
 $status_dat_hen_den = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen(), 'id', 'id');
 ?>
@@ -56,7 +59,8 @@ $status_dat_hen_den = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen()
                     'clientOptions' => [
                         'autoclose' => true,
                         'format' => 'dd-mm-yyyy',
-                        'todayHighlight' => true
+                        'todayHighlight' => true,
+                        'endDate' => '+0d'
                     ]
                 ]) ?>
             </div>
@@ -135,7 +139,8 @@ $status_dat_hen_den = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen()
                         'clientOptions' => [
                             'autoclose' => true,
                             'format' => 'dd-mm-yyyy hh:ii',
-                            'todayHighLight' => true
+                            'todayHighLight' => true,
+                            'startDate' => '+0d'
                         ]
                     ]) ?>
                 </div>

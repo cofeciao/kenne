@@ -27,7 +27,8 @@ class CustomerOriginTable extends \yii\db\ActiveRecord
         $cache = Yii::$app->cache;
         $keys = [
             'redis-customer-origin-get-by-id-' . $this->id . '-' . $this->language,
-            'redis-customer-fanpage-get-fanpage-by-origin-' . $this->id . '-' . $this->language
+            'redis-customer-fanpage-get-fanpage-by-origin-' . $this->id . '-' . $this->language,
+            'redis-customer-origin-get-all-origin-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -40,7 +41,8 @@ class CustomerOriginTable extends \yii\db\ActiveRecord
         $cache = Yii::$app->cache;
         $keys = [
             'redis-customer-origin-get-by-id-' . $this->id . '-' . $this->language,
-            'redis-customer-fanpage-get-fanpage-by-origin-' . $this->id . '-' . $this->language
+            'redis-customer-fanpage-get-fanpage-by-origin-' . $this->id . '-' . $this->language,
+            'redis-customer-origin-get-all-origin-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -75,6 +77,19 @@ class CustomerOriginTable extends \yii\db\ActiveRecord
         $data = $cache->get($key);
         if ($data == false) {
             $data = self::find()->where(['id' => $id])->published()->andWhere(['language' => $language])->one();
+            $cache->set($key, $data);
+        }
+        return $data;
+    }
+
+    public static function getAllOrigin($language = null)
+    {
+        $language = $language ?: Yii::$app->language;
+        $cache = Yii::$app->cache;
+        $key = 'redis-customer-origin-get-all-origin-' . $language;
+        $data = $cache->get($key);
+        if ($data == false) {
+            $data = self::find()->where(['language' => $language])->published()->all();
             $cache->set($key, $data);
         }
         return $data;

@@ -27,9 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
                 title="<?= SettingsModule::t('settings', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= SettingsModule::t('article', 'Create'); ?></a>
-            <?= Html::a(SettingsModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(SettingsModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+                <i class="fa fa-plus"></i> <?= SettingsModule::t('settings', 'Create'); ?></a>
+            <?= Html::a(SettingsModule::t('settings', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(SettingsModule::t('settings', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => SettingsModule::t('settings', 'Are you sure you want to delete this item?'),
@@ -69,11 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => SettingsModule::t('article', 'Created By')
+                            'label' => SettingsModule::t('settings', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => SettingsModule::t('article', 'Updated By')
+                            'label' => SettingsModule::t('settings', 'Updated By')
                         ],
                     ],
                 ]) ?>

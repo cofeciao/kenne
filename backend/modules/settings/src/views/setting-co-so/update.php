@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = SettingsModule::t('settings', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= SettingsModule::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= SettingsModule::t('article', 'Create'); ?></a>
+           title="<?= SettingsModule::t('settings', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= SettingsModule::t('settings', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

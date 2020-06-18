@@ -13,14 +13,14 @@ class m200617_084122_create_table_customer_order extends Migration
     public function safeUp()
     {
         /* check table exists */
-        $check_customer_payment_type = Yii::$app->db->getTableSchema('customer_payment_type');
-        if ($check_customer_payment_type === null) {
+        $check_customer_order = Yii::$app->db->getTableSchema('customer_order');
+        if ($check_customer_order === null) {
             $tableOptions = null;
             if ($this->db->driverName === 'mysql') {
                 // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
                 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             }
-            $this->createTable('customer_payment_type', [
+            $this->createTable('customer_order', [
                 'id' => $this->primaryKey(),
                 'customer_id' => $this->integer(11)->notNull()->comment('Mã khách hàng'),
                 'code' => $this->string(100)->null()->comment('Mã đơn hàng'),
@@ -34,13 +34,13 @@ class m200617_084122_create_table_customer_order extends Migration
                 'created_by' => $this->integer(11)->null()->defaultValue(1),
                 'updated_by' => $this->integer(11)->null()->defaultValue(1),
             ], $tableOptions);
-            $this->addColumn('customer_payment_type', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
-            $this->createIndex('index-language', 'customer_payment_type', 'language');
-            $this->createIndex('index-code', 'customer_payment_type', 'code');
-            $this->addForeignKey('fk_customer_payment_type_customer_id_customer', 'customer_payment_type', 'customer_id', 'customer', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_customer_payment_type_co_so_setting_co_so', 'customer_payment_type', 'co_so', 'setting_co_so', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_customer_payment_type_created_by_user', 'customer_payment_type', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_customer_payment_type_updated_by_user', 'customer_payment_type', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->addColumn('customer_order', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
+            $this->createIndex('index-language', 'customer_order', 'language');
+            $this->createIndex('index-code', 'customer_order', 'code');
+            $this->addForeignKey('fk_customer_order_customer_id_customer', 'customer_order', 'customer_id', 'customer', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_customer_order_co_so_setting_co_so', 'customer_order', 'co_so', 'setting_co_so', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_customer_order_created_by_user', 'customer_order', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_customer_order_updated_by_user', 'customer_order', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }
     }
 

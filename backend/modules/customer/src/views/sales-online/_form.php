@@ -76,7 +76,8 @@ $status_call_accept = ArrayHelper::map(CustomerStatusCallTable::getStatusCallDat
                     'clientOptions' => [
                         'autoclose' => true,
                         'format' => 'dd-mm-yyyy',
-                        'todayHighlight' => true
+                        'todayHighlight' => true,
+                        'endDate' => '+0d'
                     ]
                 ]) ?>
             </div>
