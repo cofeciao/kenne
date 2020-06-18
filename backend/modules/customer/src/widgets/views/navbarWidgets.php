@@ -21,12 +21,18 @@ $is_dev = Yii::$app->user->can('develop');
             </a>
         </li>
     <?php } ?>
-    <?php if ($is_dev || Yii::$app->user->can('clinic')) { ?>
+    <?php if ($is_dev || Yii::$app->user->can('clinic') || Yii::$app->user->can('customer-order')) { ?>
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'clinic') echo ' active' ?>"
                href="<?= Url::toRoute(['/customer/clinic']); ?>"
                title="<?= CustomerModule::t('customer', 'Customer'); ?> (Clinic)">
                 <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Clinic'); ?>
+            </a>
+        </li>
+        <li class="nav-item mb-5">
+            <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'customer-order') echo ' active' ?>"
+               href="<?= Url::toRoute(['/customer/customer-order']); ?>">
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer Order'); ?>
             </a>
         </li>
     <?php } ?>

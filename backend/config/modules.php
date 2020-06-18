@@ -76,4 +76,7 @@ return [
     'report' => [
         'class' => 'modava\report\ReportModule',
     ],
+    'comment' => [
+        'class' => 'modava\comment\CommentModule',
+    ],
 ];

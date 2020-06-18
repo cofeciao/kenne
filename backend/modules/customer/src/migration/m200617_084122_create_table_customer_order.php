@@ -26,16 +26,14 @@ class m200617_084122_create_table_customer_order extends Migration
                 'code' => $this->string(100)->null()->comment('Mã đơn hàng'),
                 'total' => $this->double('16,2')->null()->defaultValue(0)->comment('Tổng tiền'),
                 'discount' => $this->double('16,2')->null()->defaultValue(0)->comment('Chiết khấu'),
-                'status' => $this->tinyInteger(1)->null()->defaultValue(1),
-                'co_so' => $this->integer(11)->notNull()->comment('Đơn hàng lập ở cơ sở nào'),
+                'status' => $this->tinyInteger(1)->null()->defaultValue(1)->comment('"0: chưa hoàn thành, 1: hoàn thành"'),
+                'co_so' => $this->integer(11)->null()->comment('Đơn hàng lập ở cơ sở nào'),
                 'ordered_at' => $this->integer(11)->null()->comment('Ngày lập đơn'),
                 'created_at' => $this->integer(11)->null()->comment('Ngày nhập đơn vào hệ thống'),
                 'updated_at' => $this->integer(11)->null(),
                 'created_by' => $this->integer(11)->null()->defaultValue(1),
                 'updated_by' => $this->integer(11)->null()->defaultValue(1),
             ], $tableOptions);
-            $this->addColumn('customer_order', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
-            $this->createIndex('index-language', 'customer_order', 'language');
             $this->createIndex('index-code', 'customer_order', 'code');
             $this->addForeignKey('fk_customer_order_customer_id_customer', 'customer_order', 'customer_id', 'customer', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_customer_order_co_so_setting_co_so', 'customer_order', 'co_so', 'setting_co_so', 'id', 'RESTRICT', 'CASCADE');
