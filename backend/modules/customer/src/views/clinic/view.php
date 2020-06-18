@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <?php if ($model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
-                <?= Html::a('<i class="ion-md-card"></i>', [], [
+                <?= Html::a('<i class="fa fa-plus"></i> ' . CustomerModule::t('customer', 'Order'), ['/customer/customer-order/create', 'customer_id' => $model->primaryKey], [
                     'class' => 'btn btn-success'
                 ]) ?>
             <?php } ?>
