@@ -1,5 +1,7 @@
 <?php
 
+use modava\customer\models\CustomerStatusCall;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -16,6 +18,8 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+$status_call_dathen = ArrayHelper::map(CustomerStatusCall::getStatusCallDatHen(), 'id', 'id');
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -29,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
                title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('article', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(CustomerModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
+                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
@@ -53,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'avatar',
                         'name',
                         'code',
-                        'birthday',
+                        'birthday:date',
                         [
                             'attribute' => 'sex',
                             'value' => function ($model) {
@@ -109,8 +113,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         [
+                            'attribute' => 'remind_call_time',
+                            'visible' => !in_array($model->status_call, $status_call_dathen) && $model->status_fail == null,
+                            'value' => function ($model) {
+                                if ($model->remind_call_time == null) return null;
+                                return date('d-m-Y H:i', $model->remind_call_time);
+                            }
+                        ],
+                        [
                             'attribute' => 'status_fail',
-                            'visible' => $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_DISABLED,
+                            'visible' => $model->status_fail != null && $model->statusCallHasOne != null && $model->statusCallHasOne->accept == CustomerStatusCallTable::STATUS_DISABLED,
                             'value' => function ($model) {
                                 if ($model->statusFailHasOne == null) return null;
                                 return $model->statusFailHasOne->name;
@@ -137,11 +149,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => CustomerModule::t('article', 'Created By')
+                            'label' => CustomerModule::t('customer', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => CustomerModule::t('article', 'Updated By')
+                            'label' => CustomerModule::t('customer', 'Updated By')
                         ],
                     ],
                 ]) ?>

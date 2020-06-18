@@ -30,6 +30,7 @@ use Yii;
  * @property int $status_fail Tiềm năng - Ở xa - Có con nhỏ ...
  * @property int $status_dat_hen Đặt hẹn đến - Đặt hẹn không đến
  * @property int $status_dong_y Đồng ý - Không đồng ý - Làm dịch vụ khác
+ * @property int $remind_call_time Khi nào nên gọi lại
  * @property int $time_lich_hen Thời gian lịch hẹn
  * @property int $time_come Thời gian khách đến
  * @property int $direct_sale Direct Sale phụ trách
@@ -44,6 +45,11 @@ use Yii;
 class Customer extends CustomerTable
 {
     public $toastr_key = 'customer';
+    public $country;
+    public $province;
+    public $district;
+    public $agency;
+    public $origin;
 
     public function behaviors()
     {
@@ -100,6 +106,7 @@ class Customer extends CustomerTable
             [['sex', 'ward', 'fanpage_id', 'permission_user', 'type', 'status_call', 'status_fail', 'status_dat_hen', 'status_dong_y', 'time_lich_hen', 'time_come', 'direct_sale', 'co_so', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['code', 'name', 'address', 'avatar', 'sale_online_note', 'direct_sale_note'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
+            [['country', 'province', 'district', 'agency', 'origin'], 'safe']
         ];
     }
 

@@ -3,8 +3,10 @@
 namespace modava\customer\models\search;
 
 use modava\customer\models\SalesOnline;
+use modava\customer\models\table\CustomerStatusDatHenTable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 class SalesOnlineSearch extends SalesOnline
 {
@@ -36,7 +38,8 @@ class SalesOnlineSearch extends SalesOnline
      */
     public function search($params)
     {
-        $query = SalesOnline::find();
+        $dat_hen_accept = ArrayHelper::map(CustomerStatusDatHenTable::getDatHenDen(), 'id', 'id');
+        $query = SalesOnline::find()->where([self::tableName() . '.type' => self::TYPE_ONLINE]);
 
         // add conditions that should always apply here
 

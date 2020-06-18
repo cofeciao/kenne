@@ -9,16 +9,30 @@ $is_dev = Yii::$app->user->can('develop');
     <?php if ($is_dev || Yii::$app->user->can('sales-online')) { ?>
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'sales-online') echo ' active' ?>"
-               href="<?= Url::toRoute(['/customer/sales-online']); ?>" title="<?= CustomerModule::t('customer', 'Customer'); ?> (Sales Online)">
-                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer'); ?>
+               href="<?= Url::toRoute(['/customer/sales-online']); ?>"
+               title="<?= CustomerModule::t('customer', 'Customer'); ?> (Sales Online)">
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Sales Online'); ?>
+            </a>
+        </li>
+        <li class="nav-item mb-5">
+            <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'sales-online-remind-call') echo ' active' ?>"
+               href="<?= Url::toRoute(['/customer/sales-online-remind-call']); ?>">
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('sales-online-remind-call', 'Remind Call'); ?>
             </a>
         </li>
     <?php } ?>
-    <?php if ($is_dev || Yii::$app->user->can('clinic')) { ?>
+    <?php if ($is_dev || Yii::$app->user->can('clinic') || Yii::$app->user->can('customer-order')) { ?>
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'clinic') echo ' active' ?>"
-               href="<?= Url::toRoute(['/customer/clinic']); ?>" title="<?= CustomerModule::t('customer', 'Customer'); ?> (Clinic)">
-                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer'); ?>
+               href="<?= Url::toRoute(['/customer/clinic']); ?>"
+               title="<?= CustomerModule::t('customer', 'Customer'); ?> (Clinic)">
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Clinic'); ?>
+            </a>
+        </li>
+        <li class="nav-item mb-5">
+            <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'customer-order') echo ' active' ?>"
+               href="<?= Url::toRoute(['/customer/customer-order']); ?>">
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer Order'); ?>
             </a>
         </li>
     <?php } ?>

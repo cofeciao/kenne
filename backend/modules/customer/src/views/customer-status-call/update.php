@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = CustomerModule::t('customer', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= CustomerModule::t('article', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= CustomerModule::t('article', 'Create'); ?></a>
+           title="<?= CustomerModule::t('customer', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 
