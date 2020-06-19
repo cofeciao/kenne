@@ -99,7 +99,6 @@ $this->params['breadcrumbs'][] = $this->title;
 										'code',
 										'total',
 										'discount',
-										'language',
 										//'co_so',
 										//'ordered_at',
                                         [

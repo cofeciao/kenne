@@ -6,6 +6,7 @@ use modava\customer\models\table\CustomerStatusDongYTable;
 use modava\customer\models\table\CustomerTable;
 use yii\db\Exception;
 use Yii;
+use yii\db\Transaction;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -85,8 +86,10 @@ class CustomerOrderController extends MyController
             }
         }
 
+        $transaction = Yii::$app->db->beginTransaction(Transaction::SERIALIZABLE);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save()) {
+            if ($model->validate() && $model->save() && $model->saveOrderDetail()) {
+                $transaction->commit();
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
                     'text' => 'Tạo mới thành công',
@@ -94,6 +97,7 @@ class CustomerOrderController extends MyController
                 ]);
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
+                $transaction->rollBack();
                 $errors = Html::tag('p', 'Tạo mới thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);

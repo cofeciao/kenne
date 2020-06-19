@@ -26,7 +26,7 @@ class m200617_084122_create_table_customer_order extends Migration
                 'code' => $this->string(100)->null()->comment('Mã đơn hàng'),
                 'total' => $this->double('16,2')->null()->defaultValue(0)->comment('Tổng tiền'),
                 'discount' => $this->double('16,2')->null()->defaultValue(0)->comment('Chiết khấu'),
-                'status' => $this->tinyInteger(1)->null()->defaultValue(1)->comment('"0: chưa hoàn thành, 1: hoàn thành"'),
+                'status' => $this->tinyInteger(0)->null()->defaultValue(1)->comment('"0: chưa hoàn thành, 1: hoàn thành"'),
                 'co_so' => $this->integer(11)->null()->comment('Đơn hàng lập ở cơ sở nào'),
                 'ordered_at' => $this->integer(11)->null()->comment('Ngày lập đơn'),
                 'created_at' => $this->integer(11)->null()->comment('Ngày nhập đơn vào hệ thống'),

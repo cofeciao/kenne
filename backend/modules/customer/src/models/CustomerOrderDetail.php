@@ -19,6 +19,7 @@ use Yii;
  * @property int $qty Số lượng
  * @property double $price Đơn giá
  * @property double $discount Chiết khấu
+ * @property int $discount_by Chiết khấu theo
  * @property string $reason_discount Lý do chiết khấu
  */
 class CustomerOrderDetail extends CustomerOrderDetailTable

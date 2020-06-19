@@ -6,11 +6,13 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\customer\CustomerModule;
 use modava\customer\models\table\CustomerOrderTable;
+use modava\product\models\table\ProductTable;
 use modava\settings\models\SettingCoSo;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\db\Transaction;
 
 /**
  * This is the model class for table "customer_order".
@@ -86,7 +88,7 @@ class CustomerOrder extends CustomerOrderTable
             [['total', 'discount'], 'number'],
             [['co_so'], 'exist', 'skipOnError' => true, 'targetClass' => SettingCoSo::class, 'targetAttribute' => ['co_so' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
-            [['ordered_at', 'product_id', 'qty', 'price', 'total_price', 'discount', 'discount_by', 'reason_discount', 'total'], 'safe'],
+            [['ordered_at', 'order_detail_id', 'product_id', 'qty', 'price', 'total_price', 'discount', 'discount_by', 'reason_discount', 'total'], 'safe'],
             [['order_detail'], 'validateOrderDetail']
         ];
     }
@@ -103,6 +105,35 @@ class CustomerOrder extends CustomerOrderTable
                     }
                 }
             }
+        }
+    }
+
+    public function saveOrderDetail()
+    {
+        if (!$this->hasErrors() && $this->primaryKey != null && is_array($this->order_detail)) {
+            $total = 0;
+            $discount = 0;
+            $transaction = Yii::$app->db->beginTransaction(Transaction::SERIALIZABLE);
+            foreach ($this->order_detail as $i => $order_detail) {
+                $customerOrderDetail = new CustomerOrderDetail();
+                if (!empty($order_detail['order_detail_id'])) $customerOrderDetail = CustomerOrderDetail::getById($order_detail['order_detail_id']);
+                $customerOrderDetail->scenario = CustomerOrderDetail::SCENARIO_SAVE;
+                $customerOrderDetail->setAttributes(array_merge($order_detail, ['order_id' => $this->primaryKey]));
+                if (!$customerOrderDetail->validate()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+                $product = ProductTable::getById($customerOrderDetail->product_id);
+                $product_price = $product->price_sale != null ? $product->price_sale : $product->price;
+                $discount = $customerOrderDetail->discount;
+                $discount_by = $customerOrderDetail->discount_by;
+                if (!$customerOrderDetail->save()) {
+                    $transaction->rollBack();
+                    return false;
+                }
+            }
+            $transaction->commit();
+            return true;
         }
     }
 
