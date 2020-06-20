@@ -21,7 +21,9 @@ $is_dev = Yii::$app->user->can('develop');
             </a>
         </li>
     <?php } ?>
-    <?php if ($is_dev || Yii::$app->user->can('clinic') || Yii::$app->user->can('customer-order')) { ?>
+    <?php if ($is_dev || Yii::$app->user->can('clinic') ||
+        Yii::$app->user->can('customer-order') ||
+        Yii::$app->user->can('customer-treatment-schedule')) { ?>
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'clinic') echo ' active' ?>"
                href="<?= Url::toRoute(['/customer/clinic']); ?>"
@@ -33,6 +35,12 @@ $is_dev = Yii::$app->user->can('develop');
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'customer-order') echo ' active' ?>"
                href="<?= Url::toRoute(['/customer/customer-order']); ?>">
                 <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer Order'); ?>
+            </a>
+        </li>
+        <li class="nav-item mb-5">
+            <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'customer-treatment-schedule') echo ' active' ?>"
+               href="<?= Url::toRoute(['/customer/customer-treatment-schedule']); ?>">
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Customer Treatment Schedule'); ?>
             </a>
         </li>
     <?php } ?>

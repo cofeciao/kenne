@@ -4,6 +4,7 @@ namespace modava\customer\models\table;
 
 use cheatsheet\Time;
 use modava\customer\models\query\CustomerOrderQuery;
+use modava\product\models\table\ProductTable;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -14,7 +15,7 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
 
     public function __construct($customer_id = null)
     {
-        $this->customer_id = $customer_id;
+        if ($customer_id != null) $this->customer_id = $customer_id;
         parent::__construct([]);
     }
 
@@ -26,6 +27,16 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
     public static function find()
     {
         return new CustomerOrderQuery(get_called_class());
+    }
+
+    public function getOrderDetailHasMany()
+    {
+        return $this->hasMany(CustomerOrderDetailTable::class, ['order_id' => 'id']);
+    }
+
+    public function getCustomerHasOne()
+    {
+        return $this->hasOne(CustomerTable::class, ['id' => 'customer_id']);
     }
 
     public function afterDelete()

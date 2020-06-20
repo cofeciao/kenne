@@ -127,16 +127,17 @@ class CustomerOrderController extends MyController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                        'title' => 'Thông báo',
-                        'text' => 'Cập nhật thành công',
-                        'type' => 'success'
-                    ]);
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+            $transaction = Yii::$app->db->beginTransaction(Transaction::SERIALIZABLE);
+            if ($model->validate() && $model->save() && $order_data = $model->saveOrderDetail()) {
+                $transaction->commit();
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                    'title' => 'Thông báo',
+                    'text' => 'Cập nhật thành công',
+                    'type' => 'success'
+                ]);
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
+                $transaction->rollBack();
                 $errors = Html::tag('p', 'Cập nhật thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
@@ -146,6 +147,13 @@ class CustomerOrderController extends MyController
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
+            }
+        } else {
+            $model->order_detail = [];
+            if(is_array($model->orderDetailHasMany)){
+                foreach($model->orderDetailHasMany as $order_detail){
+                    $model->order_detail[] = $order_detail->getAttributes();
+                }
             }
         }
 

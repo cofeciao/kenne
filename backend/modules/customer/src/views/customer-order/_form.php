@@ -29,16 +29,21 @@ foreach (ArrayHelper::map(ProductTable::getAll(Yii::$app->language), 'id', 'pric
 }
 
 $model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? is_numeric($model->ordered_at) ? $model->ordered_at : strtotime($model->ordered_at) : time());
+if(Yii::$app->controller->action->id == 'create') {
+    $validation_url = Url::toRoute(['validate-order', 'customer_id' => $model->customer_id]);
+} else {
+    $validation_url = Url::toRoute(['validate-order', 'customer_id' => $model->customer_id, 'id' => $model->primaryKey]);
+}
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="customer-order-form">
         <?php $form = ActiveForm::begin([
             'id' => 'form-order',
             'enableAjaxValidation' => true,
-            'validationUrl' => Url::toRoute(['validate-order', 'customer_id' => Yii::$app->request->get('customer_id'), 'id' => $model->primaryKey])
+            'validationUrl' => $validation_url
         ]); ?>
         <div class="row">
-            <?php if ($model->customer_id == null) { ?>
+            <?php if ($model->customer_id == null || Yii::$app->controller->action->id == 'create') { ?>
                 <div class="col-md-6 col-12">
                     <?= Select2::widget([
                         'model' => $model,
@@ -175,7 +180,7 @@ $model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? is_numeric($
                     Tạm tính:
                 </div>
                 <div class="col-md-3 col-sm-4 col-12 text-right">
-                    <span id="product-tam-tinh"></span>đ
+                    <span id="product-tam-tinh"><?= $model->total ?></span>đ
                 </div>
             </div>
             <div class="row">
@@ -184,7 +189,7 @@ $model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? is_numeric($
                     Chiết khấu:
                 </div>
                 <div class="col-md-3 col-sm-4 col-12 text-right">
-                    <span id="product-chiet-khau"></span>đ
+                    <span id="product-chiet-khau"><?= $model->discount ?></span>đ
                 </div>
             </div>
             <div class="row">
@@ -193,7 +198,7 @@ $model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? is_numeric($
                     Tổng tiền:
                 </div>
                 <div class="col-md-3 col-sm-4 col-12 text-right">
-                    <span id="product-tong-tien"></span>đ
+                    <span id="product-tong-tien"><?= $model->total - $model->discount ?></span>đ
                 </div>
             </div>
         </div>
@@ -258,6 +263,8 @@ $('#order-detail').on('afterInit', function(){
     $('#order-detail .select-product').each(function(){
         $(this).select2();
     });
+}).on('afterDeleteRow', function(e, row, currentIndex){
+    handleOrder($('#order-info'));
 });
 $('#order-info').on('change', '.select-product', function(){
     var id = $(this).val(),
@@ -272,8 +279,10 @@ $('#order-info').on('change', '.select-product', function(){
 }).on('paste keyup', '.key-change', function(){
     handleOrder($('#order-info'));
 });
+/*
 $(function(){
     handleOrder($('#order-info'));
-});
+});*/
+
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

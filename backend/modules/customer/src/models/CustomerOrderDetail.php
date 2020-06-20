@@ -53,8 +53,9 @@ class CustomerOrderDetail extends CustomerOrderDetailTable
             [['order_id'], 'integer', 'on' => self::SCENARIO_SAVE],
             [['product_id'], 'required'],
             [['product_id'], 'exist', 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
-            [['product_id', 'qty'], 'integer'],
-            [['price', 'discount'], 'number'],
+            [['product_id'], 'integer'],
+            [['qty'], 'integer', 'min' => 1],
+            [['price', 'discount', 'discount_by'], 'number'],
             [['reason_discount'], 'string', 'max' => 255],
         ];
     }

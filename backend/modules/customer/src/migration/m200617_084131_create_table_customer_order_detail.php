@@ -21,7 +21,7 @@ class m200617_084131_create_table_customer_order_detail extends Migration
                 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             }
             $this->createTable('customer_order_detail', [
-                'id' => $this->primaryKey(),
+                'order_detail_id' => $this->primaryKey(),
                 'order_id' => $this->integer(11)->notNull(),
                 'product_id' => $this->integer(11)->notNull(),
                 'qty' => $this->integer(11)->null()->defaultValue(1)->comment('Số lượng'),

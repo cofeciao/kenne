@@ -3,6 +3,7 @@
 namespace modava\customer\models\table;
 
 use cheatsheet\Time;
+use modava\product\models\table\ProductTable;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -13,6 +14,15 @@ class CustomerOrderDetailTable extends \yii\db\ActiveRecord
         return 'customer_order_detail';
     }
 
+    public function getOrderHasOne()
+    {
+        return $this->hasOne(CustomerOrderTable::class, ['id' => 'order_id']);
+    }
+
+    public function getProductHasOne()
+    {
+        return $this->hasOne(ProductTable::class, ['id' => 'product_id']);
+    }
 
     public function afterDelete()
     {
@@ -40,7 +50,7 @@ class CustomerOrderDetailTable extends \yii\db\ActiveRecord
         $key = 'redis-customer-order-detail-get-by-id-' . $id;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where([self::tableName() . '.id' => $id])->one();
+            $data = self::find()->where([self::tableName() . '.order_detail_id' => $id])->one();
             $cache->set($key, $data);
         }
         return $data;
