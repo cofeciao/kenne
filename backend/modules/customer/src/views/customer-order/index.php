@@ -96,7 +96,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
-                                            'customerHasOne.name',
+                                            [
+                                                'attribute' => 'customer_id',
+                                                'format' => 'html',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->customerHasOne->name, ['view', 'id' => $model->id], []);
+                                                }
+                                            ],
                                             'code',
                                             'total',
                                             'discount',

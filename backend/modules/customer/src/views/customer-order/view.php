@@ -25,11 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
+            <?= Html::a('<i class="glyphicon glyphicon-credit-card"></i> ' . CustomerModule::t('customer', 'Payment'), ['/customer/customer-payment/create', 'order_id' => $model->primaryKey], ['class' => 'btn btn-warning']) ?>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= CustomerModule::t('customer', 'Create'); ?>">
+               title="<?= CustomerModule::t('customer', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('customer>', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('customer>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(CustomerModule::t('customer>', 'Delete'), ['delete', 'id' => $model->id], [
+            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
@@ -47,21 +48,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'customer_id',
-						'code',
-						'total',
-						'discount',
+                        'id',
+                        'customer_id',
+                        'code',
+                        'total',
+                        'discount',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
                                 return Yii::$app->getModule('customer')->params['status'][$model->status];
                             }
                         ],
-						'co_so',
-						'ordered_at:datetime',
-						'created_at:datetime',
-						'updated_at:datetime',
+                        'co_so',
+                        'ordered_at:datetime',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => CustomerModule::t('customer>', 'Created By')

@@ -18,8 +18,8 @@ use modava\customer\models\search\CustomerTreatmentScheduleSeach;
 class CustomerTreatmentScheduleController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,28 +33,27 @@ class CustomerTreatmentScheduleController extends MyController
     }
 
     /**
-    * Lists all CustomerTreatmentSchedule models.
-    * @return mixed
-    */
-    public function actionIndex()
+     * Lists all CustomerTreatmentSchedule models.
+     * @return mixed
+     */
+    public function actionIndex($order_id = null)
     {
-        $searchModel = new CustomerTreatmentScheduleSeach();
+        $searchModel = new CustomerTreatmentScheduleSeach($order_id);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single CustomerTreatmentSchedule model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single CustomerTreatmentSchedule model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,13 +62,23 @@ class CustomerTreatmentScheduleController extends MyController
     }
 
     /**
-    * Creates a new CustomerTreatmentSchedule model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
-    public function actionCreate()
+     * Creates a new CustomerTreatmentSchedule model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate($order_id = null)
     {
-        $model = new CustomerTreatmentSchedule();
+        $model = new CustomerTreatmentSchedule($order_id);
+        if ($order_id != null && $model->orderHasOne == null) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                'title' => 'Thông báo',
+                'text' => CustomerModule::t('customer', 'Đơn hàng không tồn tại'),
+                'type' => 'warning'
+            ]);
+            return $this->redirect(['create']);
+        } else {
+            $model->customer_id = $model->orderHasOne->customerHasOne->id;
+        }
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -98,18 +107,18 @@ class CustomerTreatmentScheduleController extends MyController
     }
 
     /**
-    * Updates an existing CustomerTreatmentSchedule model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing CustomerTreatmentSchedule model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +146,12 @@ class CustomerTreatmentScheduleController extends MyController
     }
 
     /**
-    * Deletes an existing CustomerTreatmentSchedule model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing CustomerTreatmentSchedule model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,12 +184,12 @@ class CustomerTreatmentScheduleController extends MyController
     }
 
     /**
-    * Finds the CustomerTreatmentSchedule model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return CustomerTreatmentSchedule the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the CustomerTreatmentSchedule model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return CustomerTreatmentSchedule the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
