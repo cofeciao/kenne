@@ -2,27 +2,23 @@
 
 namespace modava\customer\controllers;
 
+use modava\customer\models\CustomerOrderDetail;
 use modava\customer\models\table\CustomerOrderTable;
-use modava\customer\models\table\CustomerStatusDongYTable;
-use modava\customer\models\table\CustomerTable;
+use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use Yii;
-use yii\db\Transaction;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use modava\customer\CustomerModule;
 use backend\components\MyController;
-use modava\customer\models\CustomerOrder;
-use modava\customer\models\search\CustomerOrderSearch;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
+use modava\customer\models\CustomerPayment;
+use modava\customer\models\search\CustomerPaymentSearch;
 
 /**
- * CustomerOrderController implements the CRUD actions for CustomerOrder model.
+ * CustomerPaymentController implements the CRUD actions for CustomerPayment model.
  */
-class CustomerOrderController extends MyController
+class CustomerPaymentController extends MyController
 {
     /**
      * {@inheritdoc}
@@ -40,12 +36,20 @@ class CustomerOrderController extends MyController
     }
 
     /**
-     * Lists all CustomerOrder models.
+     * Lists all CustomerPayment models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($order_id = null)
     {
-        $searchModel = new CustomerOrderSearch();
+        $searchModel = new CustomerPaymentSearch($order_id);
+        if ($order_id != null && $searchModel->customer_id == null) {
+            Yii::$app->session->setFlash('toastr-' . $searchModel->toastr_key . '-index', [
+                'title' => 'Thông báo',
+                'text' => CustomerModule::t('customer', 'Không tìm thấy thanh toán theo đơn hàng "' . $order_id . '"'),
+                'type' => 'warning'
+            ]);
+            return $this->redirect(['index']);
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +60,7 @@ class CustomerOrderController extends MyController
 
 
     /**
-     * Displays a single CustomerOrder model.
+     * Displays a single CustomerPayment model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -69,29 +73,23 @@ class CustomerOrderController extends MyController
     }
 
     /**
-     * Creates a new CustomerOrder model.
+     * Creates a new CustomerPayment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($customer_id = null)
+    public function actionCreate($order_id = null)
     {
-        $model = new CustomerOrder($customer_id);
-        if ($customer_id != null) {
-            $customer = CustomerTable::getById($customer_id);
-            if ($customer == null || $customer->statusDongYHasOne == null || $customer->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => 'Khách hàng không tồn tài hoặc chưa đồng ý làm dịch vụ',
-                    'type' => 'warning'
-                ]);
-                return $this->redirect(['index']);
-            }
+        $model = new CustomerPayment($order_id);
+        if ($order_id != null && $model->customer_id == null) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                'title' => 'Thông báo',
+                'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '"'),
+                'type' => 'warning'
+            ]);
+            return $this->redirect(['create']);
         }
-
-        $transaction = Yii::$app->db->beginTransaction(Transaction::SERIALIZABLE);
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save() && $model->saveOrderDetail()) {
-                $transaction->commit();
+            if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
                     'text' => 'Tạo mới thành công',
@@ -99,7 +97,6 @@ class CustomerOrderController extends MyController
                 ]);
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                $transaction->rollBack();
                 $errors = Html::tag('p', 'Tạo mới thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
@@ -118,7 +115,7 @@ class CustomerOrderController extends MyController
     }
 
     /**
-     * Updates an existing CustomerOrder model.
+     * Updates an existing CustomerPayment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -129,17 +126,16 @@ class CustomerOrderController extends MyController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $transaction = Yii::$app->db->beginTransaction(Transaction::SERIALIZABLE);
-            if ($model->validate() && $model->save() && $order_data = $model->saveOrderDetail()) {
-                $transaction->commit();
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                    'title' => 'Thông báo',
-                    'text' => 'Cập nhật thành công',
-                    'type' => 'success'
-                ]);
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->validate()) {
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                        'title' => 'Thông báo',
+                        'text' => 'Cập nhật thành công',
+                        'type' => 'success'
+                    ]);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             } else {
-                $transaction->rollBack();
                 $errors = Html::tag('p', 'Cập nhật thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
@@ -150,13 +146,6 @@ class CustomerOrderController extends MyController
                     'type' => 'warning'
                 ]);
             }
-        } else {
-            $model->order_detail = [];
-            if (is_array($model->orderDetailHasMany)) {
-                foreach ($model->orderDetailHasMany as $order_detail) {
-                    $model->order_detail[] = $order_detail->getAttributes();
-                }
-            }
         }
 
         return $this->render('update', [
@@ -164,24 +153,8 @@ class CustomerOrderController extends MyController
         ]);
     }
 
-    public function actionValidateOrder($customer_id = null, $id = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        if (Yii::$app->request->isAjax) {
-            $model = new CustomerOrder($customer_id);
-            if ($id != null) $model = $this->findModel($id);
-            if ($model->load(Yii::$app->request->post())) {
-                return ActiveForm::validate($model);
-            }
-        }
-        return [
-            'code' => 403,
-            'msg' => CustomerModule::t('customer', 'Không có quyền truy cập')
-        ];
-    }
-
     /**
-     * Deletes an existing CustomerOrder model.
+     * Deletes an existing CustomerPayment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -218,35 +191,30 @@ class CustomerOrderController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionGetOrderByCustomer()
+    public function actionGetPaymentInfo($order_id = null)
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        if (Yii::$app->request->isAjax) {
-            $customer_id = Yii::$app->request->get('customer_id');
-            $data = CustomerOrderTable::getOrderUnFinishByCustomer($customer_id);
-            return [
-                'code' => 200,
-                'data' => ArrayHelper::map($data, 'id', 'code')
-            ];
+        if (Yii::$app->request->isAjax && $order_id != null) {
+            $order = CustomerOrderTable::getById($order_id);
+            if ($order == null) return CustomerModule::t('customer', 'Không tìm thấy đơn hàng');
+            return $this->renderAjax('_get_payment_info', [
+                'order' => $order,
+            ]);
         }
-        return [
-            'code' => 403,
-            'data' => CustomerModule::t('customer', 'Không có quyền truy cập')
-        ];
+        return null;
     }
 
     /**
-     * Finds the CustomerOrder model based on its primary key value.
+     * Finds the CustomerPayment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return CustomerOrder the loaded model
+     * @return CustomerPayment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
 
 
     protected function findModel($id)
     {
-        if (($model = CustomerOrder::findOne($id)) !== null) {
+        if (($model = CustomerPayment::findOne($id)) !== null) {
             return $model;
         }
 

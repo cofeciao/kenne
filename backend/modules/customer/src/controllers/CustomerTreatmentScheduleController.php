@@ -39,6 +39,14 @@ class CustomerTreatmentScheduleController extends MyController
     public function actionIndex($order_id = null)
     {
         $searchModel = new CustomerTreatmentScheduleSeach($order_id);
+        if ($order_id != null && $searchModel->customer_id == null) {
+            Yii::$app->session->setFlash('toastr-' . $searchModel->toastr_key . '-index', [
+                'title' => 'Thông báo',
+                'text' => CustomerModule::t('customer', 'Không tìm thấy lịch điều trị theo đơn hàng "' . $order_id . '"'),
+                'type' => 'warning'
+            ]);
+            return $this->redirect(['index']);
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -69,15 +77,13 @@ class CustomerTreatmentScheduleController extends MyController
     public function actionCreate($order_id = null)
     {
         $model = new CustomerTreatmentSchedule($order_id);
-        if ($order_id != null && $model->orderHasOne == null) {
+        if ($order_id != null && $model->customer_id == null) {
             Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Đơn hàng không tồn tại'),
+                'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '"'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['create']);
-        } else {
-            $model->customer_id = $model->orderHasOne->customerHasOne->id;
         }
 
         if ($model->load(Yii::$app->request->post())) {

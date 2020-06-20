@@ -6,13 +6,12 @@ use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
 use modava\customer\widgets\NavbarWidgets;
 use modava\customer\CustomerModule;
-use modava\customer\models\table\CustomerOrderTable;
 
 /* @var $this yii\web\View */
-/* @var $model modava\customer\models\CustomerOrder */
+/* @var $model modava\customer\models\CustomerPayment */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Orders'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Payments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <?php if ($model->status == CustomerOrderTable::STATUS_DISABLED) { ?>
-                <?= Html::a('<i class="glyphicon glyphicon-list-alt"></i> ' . CustomerModule::t('customer', 'Treatment Schedule'), ['/customer/customer-treatment-schedule/create', 'order_id' => $model->primaryKey], ['class' => 'btn btn-warning']) ?>
-                <?= Html::a('<i class="glyphicon glyphicon-credit-card"></i> ' . CustomerModule::t('customer', 'Payment'), ['/customer/customer-payment/index', 'order_id' => $model->primaryKey], ['class' => 'btn btn-success']) ?>
-            <?php } ?>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer>', 'Create'); ?></a>
+                title="<?= CustomerModule::t('customer', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
             <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -52,28 +47,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'id',
-                        'customerHasOne.name',
-                        'code',
-                        'total',
-                        'discount',
-                        [
-                            'attribute' => 'status',
-                            'value' => function ($model) {
-                                return Yii::$app->getModule('customer')->params['status'][$model->status];
-                            }
-                        ],
-                        'co_so',
-                        'ordered_at:datetime',
-                        'created_at:datetime',
-                        'updated_at:datetime',
+						'id',
+						'order_id',
+						'price',
+						'payments',
+						'type',
+						'co_so',
+						'payment_at',
+						'created_at',
+						'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => CustomerModule::t('customer>', 'Created By')
+                            'label' => CustomerModule::t('customer', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => CustomerModule::t('customer>', 'Updated By')
+                            'label' => CustomerModule::t('customer', 'Updated By')
                         ],
                     ],
                 ]) ?>

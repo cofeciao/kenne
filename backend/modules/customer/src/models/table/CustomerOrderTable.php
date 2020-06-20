@@ -34,6 +34,11 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
         return $this->hasMany(CustomerOrderDetailTable::class, ['order_id' => 'id']);
     }
 
+    public function getPaymentHasMany()
+    {
+        return $this->hasMany(CustomerPaymentTable::class, ['order_id', 'id']);
+    }
+
     public function getCustomerHasOne()
     {
         return $this->hasOne(CustomerTable::class, ['id' => 'customer_id']);
@@ -43,7 +48,8 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'redis-customer-order-table-get-order-un-finish-by-customer-' . $this->customer_id
+            'redis-customer-order-table-get-order-un-finish-by-customer-' . $this->customer_id,
+            'redis-customer-order-table-get-by-id-' . $this->id
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -55,7 +61,8 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'redis-customer-order-table-get-order-un-finish-by-customer-' . $this->customer_id
+            'redis-customer-order-table-get-order-un-finish-by-customer-' . $this->customer_id,
+            'redis-customer-order-table-get-by-id-' . $this->id
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -69,7 +76,19 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
         $key = 'redis-customer-order-table-get-order-un-finish-by-customer-' . $customer_id;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where([self::tableName() . '.customer_id' => $customer_id, self::tableName() . '.status' => self::STATUS_PUBLISHED])->all();
+            $data = self::find()->where([self::tableName() . '.customer_id' => $customer_id, self::tableName() . '.status' => self::STATUS_DISABLED])->all();
+            $cache->set($key, $data);
+        }
+        return $data;
+    }
+
+    public static function getById($id)
+    {
+        $cache = Yii::$app->cache;
+        $key = 'redis-customer-order-table-get-by-id-' . $id;
+        $data = $cache->get($key);
+        if ($data == false) {
+            $data = self::find()->where([self::tableName() . '.id' => $id])->one();
             $cache->set($key, $data);
         }
         return $data;

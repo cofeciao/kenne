@@ -40,6 +40,7 @@ class CustomerTreatmentSchedule extends CustomerTreatmentScheduleTable
     {
         if ($order_id != null) {
             $this->order_id = $order_id;
+            if($this->orderHasOne != null) $this->customer_id = $this->orderHasOne->customerHasOne->id;
         }
         parent::__construct([]);
     }

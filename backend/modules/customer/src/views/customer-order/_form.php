@@ -43,7 +43,7 @@ if(Yii::$app->controller->action->id == 'create') {
             'validationUrl' => $validation_url
         ]); ?>
         <div class="row">
-            <?php if ($model->customer_id == null || Yii::$app->controller->action->id == 'create') { ?>
+            <?php if ($model->customer_id == null && Yii::$app->controller->action->id == 'create') { ?>
                 <div class="col-md-6 col-12">
                     <?= Select2::widget([
                         'model' => $model,
