@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = <?= ucfirst($generator->messageCategory) ?>Modu
                         class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= "<?=" ?> Url::to(['create']); <?= "?>" ?>"
-           title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Create'); <?= "?>" ?>">
-            <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Create'); <?= "?>" ?></a>
+           title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
+            <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
     </div>
     <!-- /Title -->
 
