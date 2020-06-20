@@ -1,4 +1,2 @@
-<?php
-return [
-    'Contact' => 'Contact'
+<?phpreturn [
 ];

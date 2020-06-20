@@ -111,6 +111,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
+                                    <?php if(in_array('title', $generator->getColumnNames())) { ?>
+                                        [
+                                            'attribute' => 'title',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return Html::a($model->title, ['view', 'id' => $model->id], [
+                                                    'title' => $model->title,
+                                                    'data-pjax' => 0,
+                                                ]);
+                                            }
+                                        ],
+                                    <?php } ?>
+
 <?php
                                         $count = 0;
                                         if (($tableSchema = $generator->getTableSchema()) === false) {
