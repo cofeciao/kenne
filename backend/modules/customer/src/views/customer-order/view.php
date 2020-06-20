@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <?= Html::a('<i class="glyphicon glyphicon-credit-card"></i> ' . CustomerModule::t('customer', 'Payment'), ['/customer/customer-payment/create', 'order_id' => $model->primaryKey], ['class' => 'btn btn-warning']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-credit-card"></i> ' . CustomerModule::t('customer', 'Payment'), ['/customer/customer-payment/create', 'order_id' => $model->primaryKey], ['class' => 'btn btn-success']) ?>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
                title="<?= CustomerModule::t('customer', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('customer>', 'Create'); ?></a>
