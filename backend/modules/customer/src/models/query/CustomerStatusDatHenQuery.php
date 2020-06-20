@@ -21,6 +21,11 @@ class CustomerStatusDatHenQuery extends \yii\db\ActiveQuery
         return $this->andWhere([CustomerStatusDatHen::tableName() . '.status' => CustomerStatusDatHen::STATUS_DISABLED]);
     }
 
+    public function accepted()
+    {
+        return $this->andWhere([CustomerStatusDatHen::tableName() . '.accept' => CustomerStatusDatHen::STATUS_PUBLISHED]);
+    }
+
     public function sortDescById()
     {
         return $this->orderBy([CustomerStatusDatHen::tableName() . '.id' => SORT_DESC]);

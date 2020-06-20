@@ -15,4 +15,11 @@ class Select2Asset extends AssetBundle
     public $js = [
         'vendors/select2/dist/js/select2.full.min.js'
     ];
+    public $jsOptions = array(
+        'position' => \yii\web\View::POS_END
+    );
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
+    ];
 }

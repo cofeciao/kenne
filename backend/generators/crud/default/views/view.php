@@ -39,9 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <a class="btn btn-outline-light" href="<?= "<?=" ?> Url::to(['create']); ?>"
                 title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
+<<<<<<< HEAD
                 <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
             <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) <?= "?>\n" ?>
             <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Delete'), ['delete', 'id' => $model->id], [
+=======
+                <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Create'); <?= "?>" ?></a>
+            <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) <?= "?>\n" ?>
+            <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Delete'), ['delete', 'id' => $model->id], [
+>>>>>>> b140c2ee25eeaccb429ae00bbdedd994ffb6fe55
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Are you sure you want to delete this item?'),
@@ -112,11 +118,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         ?>
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Created By')
+                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Updated By')
+                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>>', 'Updated By')
                         ],
                     ],
                 ]) ?>
