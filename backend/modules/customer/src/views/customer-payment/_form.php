@@ -27,11 +27,12 @@ use modava\customer\models\table\CustomerPaymentTable;
                         'attribute' => 'customer_id',
                         'data' => ArrayHelper::map(CustomerTable::getCustomerDongY(), 'id', 'name'),
                         'options' => [
+                            'id' => 'select-customer',
                             'class' => 'form-control load-data-on-change',
                             'load-data-element' => '#select-order',
                             'load-data-url' => Url::toRoute(['/customer/customer-order/get-order-by-customer']),
                             'load-data-key' => 'customer_id',
-                            'load-data-call-back' => '',
+                            'load-data-callback' => '$("#select-order").trigger("change");',
                             'load-data-method' => 'GET'
                         ]
                     ]) ?>
@@ -93,21 +94,29 @@ use modava\customer\models\table\CustomerPaymentTable;
                     Còn lại:
                 </div>
                 <div class="col-md-3 col-sm-6 col-12 text-right">
-                    <strong id="payment-conlai"></strong>
+                    <strong id="payment-con-lai"></strong>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4 col-12">
-                <?= $form->field($model, 'price')->textInput() ?>
+                <?= $form->field($model, 'price')->textInput([
+                    'id' => 'payment-price',
+                    'class' => 'form-control ipt-payment',
+                    'type' => 'number',
+                    'step' => '0.1'
+                ]) ?>
             </div>
             <div class="col-md-4 col-12">
                 <?= Select2::widget([
                     'model' => $model,
                     'attribute' => 'payments',
                     'data' => CustomerPaymentTable::PAYMENTS,
-                    'options' => []
+                    'options' => [
+                        'id' => 'payment-payments',
+                        'class' => 'form-control ipt-payment'
+                    ]
                 ]) ?>
             </div>
             <div class="col-md-4 col-12">
@@ -115,7 +124,9 @@ use modava\customer\models\table\CustomerPaymentTable;
                     'model' => $model,
                     'attribute' => 'type',
                     'data' => CustomerPaymentTable::TYPE,
-                    'options' => []
+                    'options' => [
+                        'class' => 'form-control ipt-payment'
+                    ]
                 ]) ?>
             </div>
         </div>
@@ -129,12 +140,67 @@ use modava\customer\models\table\CustomerPaymentTable;
 <?php
 $url_get_payment_info = Url::toRoute(['get-payment-info']);
 $order_id = $model->order_id;
+$payment_id = $model->primaryKey;
+$payments_thanh_toan = CustomerPaymentTable::PAYMENTS_THANH_TOAN;
+$payments_dat_coc = CustomerPaymentTable::PAYMENTS_DAT_COC;
 $script = <<< JS
-function getPaymentInfo(order_id){
-    $.get('$url_get_payment_info', {order_id: order_id}, res => {
-        $('#payment-info').html(res);
+function number(number, fix = 1){
+    if(number % 1 === 0) return number;
+    if(typeof fix !== 'number') fix = 1;
+    return Number(parseFloat(number)).toFixed(fix);
+}
+function getOrdertInfo(order_id){
+    $.get('$url_get_payment_info', {order_id: order_id, payment_id: '$payment_id'}, res => {
+        $('#order-info').html(res.order_info);
+        if(res.code === 200){
+            $('#payment-tong-cong').attr('data', res.total).html(res.total);
+            $('#payment-dat-coc').attr('data', res.data_deposit).html(res.deposit);
+            $('#payment-chiet-khau').attr('data', res.discount).html(res.discount);
+            $('#payment-thanh-toan').attr('data', res.data_payment).html(res.payment);
+            $('#payment-con-lai').attr('data', res.total - (res.discount + res.deposit + res.payment)).html(res.total - (res.discount + res.deposit + res.payment));
+            if(res.data_deposit > 0 && [null, undefined, ''].includes('$payment_id')) {
+                $('#payment-payments').select2('destroy').find('option[value="$payments_dat_coc"]').remove().end().select2();
+            }
+        }
     });
 }
-// if('$order_id' !== '') getPaymentInfo($order_id);
+function handlePayment(){
+    var price = parseFloat($('#payment-price').val()) || 0,
+        payments = $('#payment-payments').val() || '$payments_thanh_toan',
+        total = parseFloat($('#payment-tong-cong').attr('data')) || 0,
+        deposit = parseFloat($('#payment-dat-coc').attr('data')) || 0,
+        discount = parseFloat($('#payment-chiet-khau').attr('data')) || 0,
+        payment = parseFloat($('#payment-thanh-toan').attr('data')) || 0,
+        rest = parseFloat(total - (discount + deposit + payment)) 
+    if(price > rest) {
+        price = rest;
+    }
+    if(payments === '$payments_dat_coc'){
+        deposit += price;
+    } else {
+        payment += price;
+    }
+    $('#payment-dat-coc').html(number(deposit));
+    $('#payment-thanh-toan').html(number(payment));
+    $('#payment-con-lai').html(number(rest - price));
+    $('#payment-price').val(price);
+}
+if('$order_id' !== '') {
+    getOrdertInfo($order_id)
+};
+var timeoutHandlePayment;
+$('body').on('change', '.ipt-payment', function(){
+    clearTimeout(timeoutHandlePayment);
+    handlePayment();
+}).on('keyup', '.ipt-payment', function(){
+    clearTimeout(timeoutHandlePayment);
+    timeoutHandlePayment = setTimeout(handlePayment, 300);
+}).on('change', '#select-order', function(){
+    var order_id = $(this).val();
+    getOrdertInfo(order_id)
+});
+$(function(){
+    $('#select-customer').trigger('change');
+});
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

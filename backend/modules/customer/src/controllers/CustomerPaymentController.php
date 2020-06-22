@@ -4,6 +4,7 @@ namespace modava\customer\controllers;
 
 use modava\customer\models\CustomerOrderDetail;
 use modava\customer\models\table\CustomerOrderTable;
+use modava\customer\models\table\CustomerPaymentTable;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use Yii;
@@ -14,6 +15,7 @@ use modava\customer\CustomerModule;
 use backend\components\MyController;
 use modava\customer\models\CustomerPayment;
 use modava\customer\models\search\CustomerPaymentSearch;
+use yii\web\Response;
 
 /**
  * CustomerPaymentController implements the CRUD actions for CustomerPayment model.
@@ -191,16 +193,51 @@ class CustomerPaymentController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionGetPaymentInfo($order_id = null)
+    public function actionGetPaymentInfo($order_id = null, $payment_id = null)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $payment_info = CustomerModule::t('customer', 'Không tìm thấy đơn hàng');
         if (Yii::$app->request->isAjax && $order_id != null) {
             $order = CustomerOrderTable::getById($order_id);
-            if ($order == null) return CustomerModule::t('customer', 'Không tìm thấy đơn hàng');
-            return $this->renderAjax('_get_payment_info', [
-                'order' => $order,
-            ]);
+            if ($order != null) {
+                $total = $order->total;
+                $discount = $order->discount;
+                $deposit = $data_deposit = 0;
+                $payment = $data_payment = 0;
+                if (is_array($order->paymentHasMany)) {
+                    foreach ($order->paymentHasMany as $order_payment) {
+                        if ($order_payment->payments == CustomerPaymentTable::PAYMENTS_DAT_COC) {
+                            $deposit += $order_payment->price;
+                            if($order_payment->id != $payment_id) {
+                                $data_deposit += $order_payment->price;
+                            }
+                        }
+                        if ($order_payment->payments == CustomerPaymentTable::PAYMENTS_THANH_TOAN) {
+                            $payment += $order_payment->price;
+                            if($order_payment->id != $payment_id) {
+                                $data_payment += $order_payment->price;
+                            }
+                        }
+                    }
+                }
+                return [
+                    'code' => 200,
+                    'total' => $total,
+                    'discount' => $discount,
+                    'deposit' => $deposit,
+                    'data_deposit' => $data_deposit,
+                    'payment' => $payment,
+                    'data_payment' => $data_payment,
+                    'order_info' => $this->renderAjax('_get_order_info', [
+                        'order' => $order,
+                    ])
+                ];
+            }
         }
-        return null;
+        return [
+            'code' => 403,
+            'payment_info' => $payment_info
+        ];
     }
 
     /**

@@ -36,7 +36,7 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
 
     public function getPaymentHasMany()
     {
-        return $this->hasMany(CustomerPaymentTable::class, ['order_id', 'id']);
+        return $this->hasMany(CustomerPaymentTable::class, ['order_id' => 'id']);
     }
 
     public function getCustomerHasOne()
@@ -76,7 +76,8 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
         $key = 'redis-customer-order-table-get-order-un-finish-by-customer-' . $customer_id;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where([self::tableName() . '.customer_id' => $customer_id, self::tableName() . '.status' => self::STATUS_DISABLED])->all();
+            $query = self::find()->where([self::tableName() . '.customer_id' => $customer_id, self::tableName() . '.status' => self::STATUS_DISABLED]);
+            $data = $query->all();
             $cache->set($key, $data);
         }
         return $data;
@@ -88,7 +89,8 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
         $key = 'redis-customer-order-table-get-by-id-' . $id;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where([self::tableName() . '.id' => $id])->one();
+            $query = self::find()->joinWith(['orderDetailHasMany', 'paymentHasMany'])->where([self::tableName() . '.id' => $id]);
+            $data = $query->one();
             $cache->set($key, $data);
         }
         return $data;

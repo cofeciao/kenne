@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
+use modava\customer\models\table\CustomerPaymentTable;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\customer\models\search\CustomerPaymentSearch */
@@ -97,11 +98,35 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
-
-                                            'order_id',
+                                            [
+                                                'attribute' => 'customer_id',
+                                                'value' => function ($model) {
+                                                    if ($model->orderHasOne != null && $model->orderHasOne->customerHasOne != null) return $model->orderHasOne->customerHasOne->name;
+                                                    return null;
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'order_id',
+                                                'value' => function ($model) {
+                                                    if ($model->orderHasOne != null) return $model->orderHasOne->code;
+                                                    return null;
+                                                }
+                                            ],
                                             'price',
-                                            'payments',
-                                            'type',
+                                            [
+                                                'attribute' => 'payments',
+                                                'value' => function ($model) {
+                                                    if (array_key_exists($model->payments, CustomerPaymentTable::PAYMENTS)) return CustomerPaymentTable::PAYMENTS[$model->payments];
+                                                    return CustomerPaymentTable::PAYMENTS[CustomerPaymentTable::PAYMENTS_THANH_TOAN];
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'type',
+                                                'value' => function ($model) {
+                                                    if (array_key_exists($model->type, CustomerPaymentTable::TYPE)) return CustomerPaymentTable::TYPE[$model->type];
+                                                    return CustomerPaymentTable::TYPE[CustomerPaymentTable::TYPE_TIEN_MAT];
+                                                }
+                                            ],
                                             'co_so',
                                             //'payment_at',
                                             [

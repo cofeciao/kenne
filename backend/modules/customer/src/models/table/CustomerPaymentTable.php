@@ -50,7 +50,9 @@ class CustomerPaymentTable extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         $cache = Yii::$app->cache;
-        $keys = [];
+        $keys = [
+            'redis-customer-order-table-get-by-id-' . $this->order_id
+        ];
         foreach ($keys as $key) {
             $cache->delete($key);
         }
