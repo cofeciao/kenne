@@ -1,5 +1,8 @@
 <?php
 return [
+    'Customer Treatment Schedules' => 'Lịch điều trị khách hàng',
+    'Order' => 'Đơn hàng',
+    'Payment' => 'Thanh toán',
     'Create' => 'Tạo mới',
     'Update' => 'Cập nhật',
     'Delete' => 'Xóa',

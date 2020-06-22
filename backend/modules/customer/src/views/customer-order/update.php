@@ -8,9 +8,7 @@ use modava\customer\CustomerModule;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerOrder */
 
-$this->title = CustomerModule::t('customer', 'Update : {name}', [
-    'name' => $model->id,
-]);
+$this->title = CustomerModule::t('customer', 'Update') . ' ' . CustomerModule::t('customer', 'Order') . ': ' . $model->customerHasOne->name . ' (' . $model->code . ')';
 $this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = CustomerModule::t('customer', 'Update');

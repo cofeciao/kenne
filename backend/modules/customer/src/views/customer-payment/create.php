@@ -8,7 +8,10 @@ use modava\customer\CustomerModule;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerPayment */
 
-$this->title = CustomerModule::t('customer', 'Create');
+$this->title = CustomerModule::t('customer', 'Create') . ' ' . CustomerModule::t('customer', 'Payment');
+if ($model->order_id != null) {
+    $this->title .= ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
+}
 $this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Payments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

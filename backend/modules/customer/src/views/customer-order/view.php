@@ -11,7 +11,7 @@ use modava\customer\models\table\CustomerOrderTable;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerOrder */
 
-$this->title = $model->id;
+$this->title = CustomerModule::t('customer', 'Order') . ': ' . $model->customerHasOne->name . ' (' . $model->code . ')';
 $this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

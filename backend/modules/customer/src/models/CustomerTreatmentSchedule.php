@@ -8,6 +8,7 @@ use modava\customer\CustomerModule;
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerTreatmentScheduleTable;
 use modava\settings\models\SettingCoSo;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -40,7 +41,7 @@ class CustomerTreatmentSchedule extends CustomerTreatmentScheduleTable
     {
         if ($order_id != null) {
             $this->order_id = $order_id;
-            if($this->orderHasOne != null) $this->customer_id = $this->orderHasOne->customerHasOne->id;
+            if ($this->orderHasOne != null) $this->customer_id = $this->orderHasOne->customerHasOne->id;
         }
         parent::__construct([]);
     }
@@ -63,6 +64,26 @@ class CustomerTreatmentSchedule extends CustomerTreatmentScheduleTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                'time_start' => [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_VALIDATE => ['time_start'],
+                    ],
+                    'value' => function () {
+                        if (is_numeric($this->time_start)) return $this->time_start;
+                        return strtotime($this->time_start);
+                    }
+                ],
+                'time_end' => [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_VALIDATE => ['time_end'],
+                    ],
+                    'value' => function () {
+                        if (is_numeric($this->time_end)) return $this->time_end;
+                        return strtotime($this->time_end);
+                    }
+                ]
             ]
         );
     }
@@ -73,13 +94,14 @@ class CustomerTreatmentSchedule extends CustomerTreatmentScheduleTable
     public function rules()
     {
         return [
-            [['customer_id', 'order_id'], 'required'],
-            [['customer_id', 'order_id', 'time_start', 'time_end'], 'integer'],
+            [['order_id', 'time_start', 'time_end'], 'required'],
+            [['customer_id', 'order_id'], 'integer'],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => CustomerTable::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['note'], 'string', 'max' => 500],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => CustomerOrder::class, 'targetAttribute' => ['order_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['time_start', 'time_end'], 'safe'],
         ];
     }
 

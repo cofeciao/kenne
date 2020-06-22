@@ -9,6 +9,9 @@ use modava\customer\CustomerModule;
 /* @var $model modava\customer\models\CustomerOrder */
 
 $this->title = CustomerModule::t('customer', 'Create');
+if ($model->customer_id != null) {
+    $this->title .= ' ' . CustomerModule::t('customer', 'Order') . ': ' . $model->customerHasOne->name;
+}
 $this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

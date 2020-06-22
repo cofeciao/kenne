@@ -18,8 +18,8 @@ class CustomerTreatmentScheduleSeach extends CustomerTreatmentSchedule
     public function rules()
     {
         return [
-            [['id', 'order_id', 'co_so', 'time_start', 'time_end', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['note'], 'safe'],
+            [['id', 'order_id', 'co_so'], 'integer'],
+            [['note', 'time_start', 'time_end'], 'safe'],
         ];
     }
 
@@ -59,17 +59,6 @@ class CustomerTreatmentScheduleSeach extends CustomerTreatmentSchedule
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'order_id' => $this->order_id,
-            'co_so' => $this->co_so,
-            'time_start' => $this->time_start,
-            'time_end' => $this->time_end,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-        ]);
 
         $query->andFilterWhere(['like', 'note', $this->note]);
 

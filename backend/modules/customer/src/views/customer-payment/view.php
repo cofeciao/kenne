@@ -6,11 +6,12 @@ use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
 use modava\customer\widgets\NavbarWidgets;
 use modava\customer\CustomerModule;
+use modava\customer\models\table\CustomerPaymentTable;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerPayment */
 
-$this->title = $model->id;
+$this->title = CustomerModule::t('customer', 'Payment') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
 $this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Payments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= CustomerModule::t('customer', 'Create'); ?>">
+               title="<?= CustomerModule::t('customer', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
             <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,15 +48,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'order_id',
-						'price',
-						'payments',
-						'type',
-						'co_so',
-						'payment_at',
-						'created_at',
-						'updated_at',
+                        'id',
+                        [
+                            'attribute' => 'orderHasOne.customerHasOne.name',
+                            'label' => CustomerModule::t('customer', 'Customer ID')
+                        ],
+                        [
+                            'attribute' => 'orderHasOne.code',
+                            'label' => CustomerModule::t('customer', 'Order ID')
+                        ],
+                        'price',
+                        [
+                            'attribute' => 'payments',
+                            'value' => function ($model) {
+                                if (array_key_exists($model->payments, CustomerPaymentTable::PAYMENTS)) return CustomerPaymentTable::PAYMENTS[$model->payments];
+                                return CustomerPaymentTable::PAYMENTS[CustomerPaymentTable::PAYMENTS_THANH_TOAN];
+                            }
+                        ],
+                        [
+                            'attribute' => 'type',
+                            'value' => function ($model) {
+                                if (array_key_exists($model->type, CustomerPaymentTable::TYPE)) return CustomerPaymentTable::TYPE[$model->type];
+                                return CustomerPaymentTable::TYPE[CustomerPaymentTable::TYPE_TIEN_MAT];
+                            }
+                        ],
+                        'co_so',
+                        'payment_at',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => CustomerModule::t('customer', 'Created By')
