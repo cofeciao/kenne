@@ -18,8 +18,8 @@ use modava\comment\models\search\CommentSearch;
 class CommentController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +33,9 @@ class CommentController extends MyController
     }
 
     /**
-    * Lists all Comment models.
-    * @return mixed
-    */
+     * Lists all Comment models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new CommentSearch();
@@ -45,16 +45,14 @@ class CommentController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
-
+    }
 
     /**
-    * Displays a single Comment model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Comment model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +61,10 @@ class CommentController extends MyController
     }
 
     /**
-    * Creates a new Comment model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Comment model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Comment();
@@ -98,51 +96,12 @@ class CommentController extends MyController
     }
 
     /**
-    * Updates an existing Comment model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                        'title' => 'Thông báo',
-                        'text' => 'Cập nhật thành công',
-                        'type' => 'success'
-                    ]);
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            } else {
-                $errors = Html::tag('p', 'Cập nhật thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
-            }
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-    * Deletes an existing Comment model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Comment model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,13 +134,12 @@ class CommentController extends MyController
     }
 
     /**
-    * Finds the Comment model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Comment the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-
+     * Finds the Comment model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Comment the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
     protected function findModel($id)
     {

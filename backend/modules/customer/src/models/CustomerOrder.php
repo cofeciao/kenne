@@ -105,6 +105,7 @@ class CustomerOrder extends CustomerOrderTable
                 $product_discount_by = $order_detail['discount_by'];
                 if (!is_numeric($qty) || $qty <= 0) $qty = 1;
                 $product = ProductTable::getById($order_detail['product_id']);
+                if ($product == null) continue;
                 $product_price = ($product->price_sale != null ? $product->price_sale : $product->price) * $qty;
                 $product_discount = 0;
                 if ($product_discount_by == CustomerPayment::DISCOUNT_BY_MONEY) {

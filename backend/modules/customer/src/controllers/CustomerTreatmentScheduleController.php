@@ -2,6 +2,7 @@
 
 namespace modava\customer\controllers;
 
+use modava\customer\models\table\CustomerStatusDongYTable;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -36,13 +37,20 @@ class CustomerTreatmentScheduleController extends MyController
      * Lists all CustomerTreatmentSchedule models.
      * @return mixed
      */
-    public function actionIndex($order_id = null)
+    public function actionIndex()
     {
-        $searchModel = new CustomerTreatmentScheduleSeach($order_id);
-        if ($order_id != null && $searchModel->customer_id == null) {
+        $order_id = Yii::$app->request->get('order_id');
+        $searchModel = new CustomerTreatmentScheduleSeach([
+            'order_id' => $order_id
+        ]);
+        if ($order_id != null && ($searchModel->orderHasOne == null ||
+                $searchModel->orderHasOne->customerHasOne == null ||
+                $searchModel->orderHasOne->customerHasOne->statusDongYHasOne == null ||
+                $searchModel->orderHasOne->customerHasOne->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED
+            )) {
             Yii::$app->session->setFlash('toastr-' . $searchModel->toastr_key . '-index', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Không tìm thấy lịch điều trị theo đơn hàng "' . $order_id . '"'),
+                'text' => CustomerModule::t('customer', 'Không tìm thấy lịch điều trị theo đơn hàng "' . $order_id . '" hoặc khách hàng chưa đồng ý làm dịch vụ'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['index']);
@@ -74,13 +82,20 @@ class CustomerTreatmentScheduleController extends MyController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($order_id = null)
+    public function actionCreate()
     {
-        $model = new CustomerTreatmentSchedule($order_id);
-        if ($order_id != null && $model->customer_id == null) {
+        $order_id = Yii::$app->request->get('order_id');
+        $model = new CustomerTreatmentSchedule([
+            'order_id' => $order_id
+        ]);
+        if ($order_id != null && ($model->orderHasOne == null ||
+                $model->orderHasOne->customerHasOne == null ||
+                $model->orderHasOne->customerHasOne->statusDongYHasOne == null ||
+                $model->orderHasOne->customerHasOne->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED
+            )) {
             Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '"'),
+                'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '" hoặc khách hàng chưa đồng ý làm dịch vụ'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['create']);

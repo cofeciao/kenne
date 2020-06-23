@@ -13,12 +13,6 @@ class CustomerOrderTable extends \yii\db\ActiveRecord
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;
 
-    public function __construct($customer_id = null)
-    {
-        if ($customer_id != null) $this->customer_id = $customer_id;
-        parent::__construct([]);
-    }
-
     public static function tableName()
     {
         return 'customer_order';

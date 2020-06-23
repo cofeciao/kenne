@@ -8,6 +8,7 @@ use backend\widgets\ToastrWidget;
 use modava\customer\CustomerModule;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use modava\customer\components\CustomerDateTimePicker;
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerOrderTable;
 use modava\customer\models\table\CustomerPaymentTable;
@@ -15,6 +16,8 @@ use modava\customer\models\table\CustomerPaymentTable;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerPayment */
 /* @var $form yii\widgets\ActiveForm */
+
+$model->payment_at = ($model->payment_at != null && is_numeric($model->payment_at)) ? date('d-m-Y H:i', $model->payment_at) : date('d-m-Y H:i');
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="customer-payment-form">
@@ -49,6 +52,20 @@ use modava\customer\models\table\CustomerPaymentTable;
                 </div>
             </div>
         <?php } ?>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'payment_at')->widget(CustomerDateTimePicker::class, [
+                    'template' => '{input}{button}',
+                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy hh:ii',
+                        'todayHighLight' => true,
+                    ]
+                ]) ?>
+            </div>
+        </div>
 
         <div id="order-info"></div>
         <div id="payment-info">
@@ -143,6 +160,7 @@ $order_id = $model->order_id;
 $payment_id = $model->primaryKey;
 $payments_thanh_toan = CustomerPaymentTable::PAYMENTS_THANH_TOAN;
 $payments_dat_coc = CustomerPaymentTable::PAYMENTS_DAT_COC;
+$text_payments_dat_coc = CustomerPaymentTable::PAYMENTS[$payments_dat_coc];
 $script = <<< JS
 function number(number, fix = 1){
     if(number % 1 === 0) return number;
@@ -152,6 +170,7 @@ function number(number, fix = 1){
 function getOrdertInfo(order_id){
     $.get('$url_get_payment_info', {order_id: order_id, payment_id: '$payment_id'}, res => {
         $('#order-info').html(res.order_info);
+        $('#payment-price').val('');
         if(res.code === 200){
             $('#payment-tong-cong').attr('data', res.total).html(res.total);
             $('#payment-dat-coc').attr('data', res.data_deposit).html(res.deposit);
@@ -160,6 +179,9 @@ function getOrdertInfo(order_id){
             $('#payment-con-lai').attr('data', res.total - (res.discount + res.deposit + res.payment)).html(res.total - (res.discount + res.deposit + res.payment));
             if(res.data_deposit > 0 && [null, undefined, ''].includes('$payment_id')) {
                 $('#payment-payments').select2('destroy').find('option[value="$payments_dat_coc"]').remove().end().select2();
+            } else if($('#payment-payments option[value="$payments_dat_coc"]').length <= 0) {
+                $('#payment-payments').select2('destroy').append('<option value="$payments_dat_coc">$text_payments_dat_coc</option>');
+                $('#payment-payments').select2();
             }
         }
     });

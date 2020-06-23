@@ -73,19 +73,19 @@ class CustomerOrderController extends MyController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($customer_id = null)
+    public function actionCreate()
     {
-        $model = new CustomerOrder($customer_id);
-        if ($customer_id != null) {
-            $customer = CustomerTable::getById($customer_id);
-            if ($customer == null || $customer->statusDongYHasOne == null || $customer->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => 'Khách hàng không tồn tài hoặc chưa đồng ý làm dịch vụ',
-                    'type' => 'warning'
-                ]);
-                return $this->redirect(['index']);
-            }
+        $customer_id = Yii::$app->request->get('customer_id');
+        $model = new CustomerOrder([
+            'customer_id' => $customer_id
+        ]);
+        if ($customer_id != null && ($model->customerHasOne == null || $model->customerHasOne->statusDongYHasOne == null || $model->customerHasOne->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED)) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                'title' => 'Thông báo',
+                'text' => 'Khách hàng không tồn tại hoặc chưa đồng ý làm dịch vụ',
+                'type' => 'warning'
+            ]);
+            return $this->redirect(['index']);
         }
 
         $transaction = Yii::$app->db->beginTransaction(Transaction::SERIALIZABLE);
@@ -164,11 +164,13 @@ class CustomerOrderController extends MyController
         ]);
     }
 
-    public function actionValidateOrder($customer_id = null, $id = null)
+    public function actionValidateOrder($id = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (Yii::$app->request->isAjax) {
-            $model = new CustomerOrder($customer_id);
+            $model = new CustomerOrder([
+                'customer_id' => Yii::$app->request->get('customer_id')
+            ]);
             if ($id != null) $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post())) {
                 return ActiveForm::validate($model);

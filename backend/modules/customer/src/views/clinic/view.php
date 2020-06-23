@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <?php if ($model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
+            <?php if ($model->statusDongYHasOne != null && $model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
                 <?= Html::a('<i class="fa fa-plus"></i> ' . CustomerModule::t('customer', 'Order'), ['/customer/customer-order/create', 'customer_id' => $model->primaryKey], [
                     'class' => 'btn btn-success'
                 ]) ?>

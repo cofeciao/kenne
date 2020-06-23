@@ -41,10 +41,13 @@ class CustomerPaymentController extends MyController
      * Lists all CustomerPayment models.
      * @return mixed
      */
-    public function actionIndex($order_id = null)
+    public function actionIndex()
     {
-        $searchModel = new CustomerPaymentSearch($order_id);
-        if ($order_id != null && $searchModel->customer_id == null) {
+        $order_id = Yii::$app->request->get('order_id');
+        $searchModel = new CustomerPaymentSearch([
+            'order_id' => $order_id
+        ]);
+        if ($order_id != null && ($searchModel->orderHasOne == null || $searchModel->orderHasOne->customerHasOne == null)) {
             Yii::$app->session->setFlash('toastr-' . $searchModel->toastr_key . '-index', [
                 'title' => 'Thông báo',
                 'text' => CustomerModule::t('customer', 'Không tìm thấy thanh toán theo đơn hàng "' . $order_id . '"'),
@@ -79,10 +82,13 @@ class CustomerPaymentController extends MyController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($order_id = null)
+    public function actionCreate()
     {
-        $model = new CustomerPayment($order_id);
-        if ($order_id != null && $model->customer_id == null) {
+        $order_id = Yii::$app->request->get('order_id');
+        $model = new CustomerPayment([
+            'order_id' => $order_id
+        ]);
+        if ($order_id != null && ($model->orderHasOne == null || $model->orderHasOne->customerHasOne == null)) {
             Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                 'title' => 'Thông báo',
                 'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '"'),
@@ -193,10 +199,11 @@ class CustomerPaymentController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionGetPaymentInfo($order_id = null, $payment_id = null)
+    public function actionGetPaymentInfo($payment_id = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $payment_info = CustomerModule::t('customer', 'Không tìm thấy đơn hàng');
+        $order_id = Yii::$app->request->get('order_id');
         if (Yii::$app->request->isAjax && $order_id != null) {
             $order = CustomerOrderTable::getById($order_id);
             if ($order != null) {
@@ -208,13 +215,13 @@ class CustomerPaymentController extends MyController
                     foreach ($order->paymentHasMany as $order_payment) {
                         if ($order_payment->payments == CustomerPaymentTable::PAYMENTS_DAT_COC) {
                             $deposit += $order_payment->price;
-                            if($order_payment->id != $payment_id) {
+                            if ($order_payment->id != $payment_id) {
                                 $data_deposit += $order_payment->price;
                             }
                         }
                         if ($order_payment->payments == CustomerPaymentTable::PAYMENTS_THANH_TOAN) {
                             $payment += $order_payment->price;
-                            if($order_payment->id != $payment_id) {
+                            if ($order_payment->id != $payment_id) {
                                 $data_payment += $order_payment->price;
                             }
                         }

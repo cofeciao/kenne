@@ -37,13 +37,12 @@ class CustomerTreatmentSchedule extends CustomerTreatmentScheduleTable
     public $toastr_key = 'customer-treatment-schedule';
     public $customer_id;
 
-    public function __construct($order_id = null)
+    public function __construct($config = [])
     {
-        if ($order_id != null) {
-            $this->order_id = $order_id;
-            if ($this->orderHasOne != null) $this->customer_id = $this->orderHasOne->customerHasOne->id;
+        parent::__construct($config);
+        if ($this->orderHasOne != null && $this->orderHasOne->customerHasOne != null) {
+            $this->customer_id = $this->orderHasOne->customerHasOne->id;
         }
-        parent::__construct([]);
     }
 
     public function behaviors()
