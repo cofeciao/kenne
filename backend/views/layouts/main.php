@@ -23,21 +23,21 @@ use yii\widgets\Breadcrumbs;
         <div class="hk-pg-wrapper">
             <!-- Breadcrumb -->
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
-            <?php
-            echo Breadcrumbs::widget([
-                'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                'activeItemTemplate' => '<li class="breadcrumb-item active" aria-current="page">{link}</li>',
-                'tag' => 'ol',
-                'homeLink' => [
-                    'label' => Yii::t('yii', 'Home'),
-                    'url' => Yii::$app->homeUrl,
-                ],
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                'options' => [
-                    'class' => 'breadcrumb breadcrumb-light bg-transparent'
-                ]
-            ])
-            ?>
+                <?php
+                echo Breadcrumbs::widget([
+                    'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
+                    'activeItemTemplate' => '<li class="breadcrumb-item active" aria-current="page">{link}</li>',
+                    'tag' => 'ol',
+                    'homeLink' => [
+                        'label' => Yii::t('yii', 'Home'),
+                        'url' => Yii::$app->homeUrl,
+                    ],
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    'options' => [
+                        'class' => 'breadcrumb breadcrumb-light bg-transparent'
+                    ]
+                ])
+                ?>
             </nav>
             <!-- /Breadcrumb -->
             <!-- Container -->
