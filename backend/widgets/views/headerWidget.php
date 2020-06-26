@@ -15,6 +15,12 @@ use yii\helpers\Url;
     </a>
     <ul class="navbar-nav hk-navbar-content order-xl-2">
         <li class="nav-item">
+            <a id="a-call-center" class="nav-link" href="javascript:void(0);">
+                <span class="badge badge-pill badge-danger"><i class="fa fa-phone fa-2x"></i></span>
+            </a>
+            <?= \backend\widgets\CallCenterWidget::widget() ?>
+        </li>
+        <li class="nav-item">
             <a id="navbar_search_btn" class="nav-link nav-link-hover" href="javascript:void(0);"><span
                         class="feather-icon"><i data-feather="search"></i></span></a>
         </li>
