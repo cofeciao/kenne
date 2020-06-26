@@ -99,7 +99,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             'code',
-                                            'name',
+                                            [
+                                                'attribute' => 'name',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->name, ['view', 'id' => $model->primaryKey], []);
+                                                }
+                                            ],
                                             'birthday',
                                             'sex',
                                             'phone',

@@ -24,8 +24,9 @@ class CustomerAgencyTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'social-agency-get-by-id-' . $this->id . '-' . $this->language,
-            'social-agency-get-all-agency-' . $this->language
+            'redis-customer-agency-get-by-id-' . $this->id . '-' . $this->language,
+            'redis-customer-agency-get-all-agency-' . $this->language,
+            'redis-customer-origin-get-origin-by-agency-' . $this->id . '-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -37,8 +38,9 @@ class CustomerAgencyTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'social-agency-get-by-id-' . $this->id . '-' . $this->language,
-            'social-agency-get-all-agency-' . $this->language
+            'redis-customer-agency-get-by-id-' . $this->id . '-' . $this->language,
+            'redis-customer-agency-get-all-agency-' . $this->language,
+            'redis-customer-origin-get-origin-by-agency-' . $this->id . '-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -52,28 +54,27 @@ class CustomerAgencyTable extends \yii\db\ActiveRecord
             ->viaTable('customer_agency_origin_hasmany', ['agency_id' => 'id']);
     }
 
-    public static function getAllAgency($lang = 'vi')
+    public static function getAllAgency($language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
-        $key = 'social-agency-get-all-agency-' . $lang;
+        $key = 'redis-customer-agency-get-all-agency-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $query = self::find();
-            if ($lang !== null) $query->where(['language' => $lang]);
-            $data = $query->all();
+            $data = self::find()->where(['language' => $language])->all();
+            $cache->set($key, $data);
         }
         return $data;
     }
 
-    public static function getById($id = null, $lang = 'vi')
+    public static function getById($id = null, $language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
-        $key = 'social-agency-get-by-id-' . $id . '-' . $lang;
+        $key = 'redis-customer-agency-get-by-id-' . $id . '-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $query = self::find()->where(['id' => $id])->published();
-            if ($lang !== null) $query->andWhere(['language' => $lang]);
-            $data = $query->one();
+            $data = self::find()->where(['id' => $id, 'language' => $language])->published()->one();
             $cache->set($key, $data);
         }
         return $data;

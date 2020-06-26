@@ -52,11 +52,12 @@ class CustomerStatusCallTable extends \yii\db\ActiveRecord
 
     public static function getById($id, $language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
         $key = 'redis-customer-status-call-get-by-id-' . $id . '-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['id' => $id, 'language' => $language ?: Yii::$app->language])->published()->one();
+            $data = self::find()->where(['id' => $id, 'language' => $language])->published()->one();
             $cache->set($key, $data);
         }
         return $data;
@@ -64,23 +65,25 @@ class CustomerStatusCallTable extends \yii\db\ActiveRecord
 
     public static function getStatusCallDatHen($language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
         $key = 'redis-customer-status-call-get-status-call-dat-hen-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['accept' => self::STATUS_PUBLISHED, 'language' => $language ?: Yii::$app->language])->published()->all();
+            $data = self::find()->where(['language' => $language])->accepted()->published()->all();
             $cache->set($key, $data);
         }
         return $data;
     }
 
-    public static function getAllStatysCall($language = null)
+    public static function getAllStatusCall($language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
         $key = 'redis-customer-status-call-get-all-status-call-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['language' => $language ?: Yii::$app->language])->published()->all();
+            $data = self::find()->where(['language' => $language])->published()->all();
             $cache->set($key, $data);
         }
         return $data;

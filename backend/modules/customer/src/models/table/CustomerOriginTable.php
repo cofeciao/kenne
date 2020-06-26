@@ -26,8 +26,9 @@ class CustomerOriginTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'social-agency-get-all-agency-' . $this->language,
-            'social-agency-get-by-id-' . $this->id . '-' . $this->language
+            'redis-customer-origin-get-by-id-' . $this->id . '-' . $this->language,
+            'redis-customer-fanpage-get-fanpage-by-origin-' . $this->id . '-' . $this->language,
+            'redis-customer-origin-get-all-origin-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -39,8 +40,9 @@ class CustomerOriginTable extends \yii\db\ActiveRecord
     {
         $cache = Yii::$app->cache;
         $keys = [
-            'social-agency-get-all-agency-' . $this->language,
-            'social-agency-get-by-id-' . $this->id . '-' . $this->language
+            'redis-customer-origin-get-by-id-' . $this->id . '-' . $this->language,
+            'redis-customer-fanpage-get-fanpage-by-origin-' . $this->id . '-' . $this->language,
+            'redis-customer-origin-get-all-origin-' . $this->language
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -54,28 +56,40 @@ class CustomerOriginTable extends \yii\db\ActiveRecord
             ->viaTable('customer_agency_origin_hasmany', ['origin_id' => 'id']);
     }
 
-    public static function getAllOrigin($lang = 'vi')
+    public static function getOriginByAgency($agency, $language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
-        $key = 'social-origin-get-all-origin-' . $lang;
+        $key = 'redis-customer-origin-get-origin-by-agency-' . $agency . '-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $query = self::find();
-            if ($lang !== null) $query->where(['language' => $lang]);
-            $data = $query->all();
+            $data = self::find()->joinWith(['agencyHasMany'])->where(['customer_agency_origin_hasmany.agency_id' => $agency, self::tableName() . '.language' => $language])->all();
+            $cache->set($key, $data);
         }
         return $data;
     }
 
-    public static function getById($id = null, $lang = 'vi')
+    public static function getById($id = null, $language = null)
     {
+        $language = $language ?: Yii::$app->language;
         $cache = Yii::$app->cache;
-        $key = 'social-agency-get-by-id-' . $id . '-' . $lang;
+        $key = 'redis-customer-origin-get-by-id-' . $id . '-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $query = self::find()->where(['id' => $id])->published();
-            if ($lang !== null) $query->andWhere(['language' => $lang]);
-            $data = $query->one();
+            $data = self::find()->where(['id' => $id])->published()->andWhere(['language' => $language])->one();
+            $cache->set($key, $data);
+        }
+        return $data;
+    }
+
+    public static function getAllOrigin($language = null)
+    {
+        $language = $language ?: Yii::$app->language;
+        $cache = Yii::$app->cache;
+        $key = 'redis-customer-origin-get-all-origin-' . $language;
+        $data = $cache->get($key);
+        if ($data == false) {
+            $data = self::find()->where(['language' => $language])->published()->all();
             $cache->set($key, $data);
         }
         return $data;

@@ -70,4 +70,13 @@ return [
     'social' => [
         'class' => 'modava\social\SocialModule',
     ],
+    'settings' => [
+        'class' => 'modava\settings\SettingsModule',
+    ],
+    'report' => [
+        'class' => 'modava\report\ReportModule',
+    ],
+    'comment' => [
+        'class' => 'modava\comment\CommentModule',
+    ],
 ];

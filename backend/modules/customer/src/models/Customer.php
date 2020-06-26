@@ -30,6 +30,7 @@ use Yii;
  * @property int $status_fail Tiềm năng - Ở xa - Có con nhỏ ...
  * @property int $status_dat_hen Đặt hẹn đến - Đặt hẹn không đến
  * @property int $status_dong_y Đồng ý - Không đồng ý - Làm dịch vụ khác
+ * @property int $remind_call_time Khi nào nên gọi lại
  * @property int $time_lich_hen Thời gian lịch hẹn
  * @property int $time_come Thời gian khách đến
  * @property int $direct_sale Direct Sale phụ trách
@@ -44,6 +45,11 @@ use Yii;
 class Customer extends CustomerTable
 {
     public $toastr_key = 'customer';
+    public $country;
+    public $province;
+    public $district;
+    public $agency;
+    public $origin;
 
     public function behaviors()
     {
@@ -52,7 +58,9 @@ class Customer extends CustomerTable
             [
                 'permission_user' => [
                     'class' => AttributeBehavior::class,
-                    'attributes' => [],
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['permission_user']
+                    ],
                     'value' => function () {
                         if ($this->permission_user != null) return $this->permission_user;
                         return Yii::$app->user->id;
@@ -71,6 +79,18 @@ class Customer extends CustomerTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                'time_lich_hen' => [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['time_lich_hen'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['time_lich_hen']
+                    ],
+                    'value' => function () {
+                        if ($this->time_lich_hen == null) return null;
+                        if (is_numeric($this->time_lich_hen)) return $this->time_lich_hen;
+                        return strtotime($this->time_lich_hen);
+                    }
+                ]
             ]
         );
     }
@@ -86,6 +106,7 @@ class Customer extends CustomerTable
             [['sex', 'ward', 'fanpage_id', 'permission_user', 'type', 'status_call', 'status_fail', 'status_dat_hen', 'status_dong_y', 'time_lich_hen', 'time_come', 'direct_sale', 'co_so', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['code', 'name', 'address', 'avatar', 'sale_online_note', 'direct_sale_note'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
+            [['country', 'province', 'district', 'agency', 'origin'], 'safe']
         ];
     }
 
@@ -103,6 +124,9 @@ class Customer extends CustomerTable
             'phone' => CustomerModule::t('customer', 'Phone'),
             'address' => CustomerModule::t('customer', 'Address'),
             'ward' => CustomerModule::t('customer', 'Ward'),
+            'country' => CustomerModule::t('customer', 'Country'),
+            'province' => CustomerModule::t('customer', 'Province'),
+            'district' => CustomerModule::t('customer', 'District'),
             'avatar' => CustomerModule::t('customer', 'Avatar'),
             'fanpage_id' => CustomerModule::t('customer', 'Fanpage ID'),
             'permission_user' => CustomerModule::t('customer', 'Permission User'),
