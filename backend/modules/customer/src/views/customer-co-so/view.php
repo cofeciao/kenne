@@ -4,14 +4,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
-use modava\settings\widgets\NavbarWidgets;
-use modava\settings\SettingsModule;
+use modava\customer\widgets\NavbarWidgets;
+use modava\customer\CustomerModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\settings\models\SettingCoSo */
+/* @var $model modava\customer\models\CustomerCoSo */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => SettingsModule::t('settings', 'Setting Co Sos'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Co Sos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= SettingsModule::t('settings', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= SettingsModule::t('settings', 'Create'); ?></a>
-            <?= Html::a(SettingsModule::t('settings', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(SettingsModule::t('settings', 'Delete'), ['delete', 'id' => $model->id], [
+                title="<?= CustomerModule::t('customer', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => SettingsModule::t('settings', 'Are you sure you want to delete this item?'),
+                    'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -56,24 +56,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('settings')->params['status'][$model->status];
+                                return Yii::$app->getModule('customer')->params['status'][$model->status];
                             }
                         ],
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('settings')->params['availableLocales'][$model->language];
+                                return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
                             },
                         ],
 						'created_at',
 						'updated_at',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => SettingsModule::t('settings', 'Created By')
+                            'label' => CustomerModule::t('customer', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => SettingsModule::t('settings', 'Updated By')
+                            'label' => CustomerModule::t('customer', 'Updated By')
                         ],
                     ],
                 ]) ?>

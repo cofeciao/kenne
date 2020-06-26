@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
-use modava\settings\SettingsModule;
+use modava\customer\CustomerModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\settings\models\SettingCoSo */
+/* @var $model modava\customer\models\CustomerCoSo */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
@@ -28,7 +28,7 @@ use modava\settings\SettingsModule;
 		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
 		<?= $form->field($model, 'status')->checkbox() ?>
         <div class="form-group">
-            <?= Html::submitButton(SettingsModule::t('settings', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
     <?php ActiveForm::end(); ?>

@@ -1,19 +1,19 @@
 <?php
 
-use modava\settings\widgets\NavbarWidgets;
+use modava\customer\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use modava\settings\SettingsModule;
+use modava\customer\CustomerModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\settings\models\SettingCoSo */
+/* @var $model modava\customer\models\CustomerCoSo */
 
-$this->title = SettingsModule::t('settings', 'Update : {name}', [
+$this->title = CustomerModule::t('customer', 'Update : {name}', [
     'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => SettingsModule::t('settings', 'Setting Co Sos'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Co Sos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = SettingsModule::t('settings', 'Update');
+$this->params['breadcrumbs'][] = CustomerModule::t('customer', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = SettingsModule::t('settings', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= SettingsModule::t('settings', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= SettingsModule::t('settings', 'Create'); ?></a>
+           title="<?= CustomerModule::t('customer', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

@@ -1,21 +1,21 @@
 <?php
 
-namespace modava\settings\controllers;
+namespace modava\customer\controllers;
 
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\settings\SettingsModule;
+use modava\customer\CustomerModule;
 use backend\components\MyController;
-use modava\settings\models\SettingCoSo;
-use modava\settings\models\search\SettingCoSoSearch;
+use modava\customer\models\CustomerCoSo;
+use modava\customer\models\search\CustomerCoSoSearch;
 
 /**
- * SettingCoSoController implements the CRUD actions for SettingCoSo model.
+ * CustomerCoSoController implements the CRUD actions for CustomerCoSo model.
  */
-class SettingCoSoController extends MyController
+class CustomerCoSoController extends MyController
 {
     /**
     * {@inheritdoc}
@@ -33,12 +33,12 @@ class SettingCoSoController extends MyController
     }
 
     /**
-    * Lists all SettingCoSo models.
+    * Lists all CustomerCoSo models.
     * @return mixed
     */
     public function actionIndex()
     {
-        $searchModel = new SettingCoSoSearch();
+        $searchModel = new CustomerCoSoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -50,7 +50,7 @@ class SettingCoSoController extends MyController
 
 
     /**
-    * Displays a single SettingCoSo model.
+    * Displays a single CustomerCoSo model.
     * @param integer $id
     * @return mixed
     * @throws NotFoundHttpException if the model cannot be found
@@ -63,13 +63,13 @@ class SettingCoSoController extends MyController
     }
 
     /**
-    * Creates a new SettingCoSo model.
+    * Creates a new CustomerCoSo model.
     * If creation is successful, the browser will be redirected to the 'view' page.
     * @return mixed
     */
     public function actionCreate()
     {
-        $model = new SettingCoSo();
+        $model = new CustomerCoSo();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -98,7 +98,7 @@ class SettingCoSoController extends MyController
     }
 
     /**
-    * Updates an existing SettingCoSo model.
+    * Updates an existing CustomerCoSo model.
     * If update is successful, the browser will be redirected to the 'view' page.
     * @param integer $id
     * @return mixed
@@ -137,7 +137,7 @@ class SettingCoSoController extends MyController
     }
 
     /**
-    * Deletes an existing SettingCoSo model.
+    * Deletes an existing CustomerCoSo model.
     * If deletion is successful, the browser will be redirected to the 'index' page.
     * @param integer $id
     * @return mixed
@@ -175,20 +175,20 @@ class SettingCoSoController extends MyController
     }
 
     /**
-    * Finds the SettingCoSo model based on its primary key value.
+    * Finds the CustomerCoSo model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
     * @param integer $id
-    * @return SettingCoSo the loaded model
+    * @return CustomerCoSo the loaded model
     * @throws NotFoundHttpException if the model cannot be found
     */
 
 
     protected function findModel($id)
     {
-        if (($model = SettingCoSo::findOne($id)) !== null) {
+        if (($model = CustomerCoSo::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('settings', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('customer', 'The requested page does not exist.'));
     }
 }

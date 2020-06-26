@@ -1,15 +1,15 @@
 <?php
 
-use modava\settings\widgets\NavbarWidgets;
+use modava\customer\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use modava\settings\SettingsModule;
+use modava\customer\CustomerModule;
 
 
 /* @var $this yii\web\View */
-/* @var $model modava\settings\models\SettingCoSo */
+/* @var $model modava\customer\models\CustomerCoSo */
 
-$this->title = SettingsModule::t('settings', 'Create');
-$this->params['breadcrumbs'][] = ['label' => SettingsModule::t('settings', 'Setting Co Sos'), 'url' => ['index']];
+$this->title = CustomerModule::t('customer', 'Create');
+$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Co Sos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model modava\settings\models\search\SettingCoSoSearch */
+/* @var $model modava\customer\models\search\CustomerCoSoSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -43,8 +43,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('settings', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('settings', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('customer', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('customer', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -1,16 +1,16 @@
 <?php
 
-use modava\settings\SettingsModule;
-use modava\settings\widgets\NavbarWidgets;
+use modava\customer\CustomerModule;
+use modava\customer\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel modava\settings\models\search\SettingCoSoSearch */
+/* @var $searchModel modava\customer\models\search\CustomerCoSoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = SettingsModule::t('settings', 'Setting Co Sos');
+$this->title = CustomerModule::t('customer', 'Customer Co Sos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= SettingsModule::t('settings', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= SettingsModule::t('settings', 'Create'); ?></a>
+           title="<?= CustomerModule::t('customer', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
     </div>
 
     <!-- Row -->
@@ -60,10 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                     'pager' => [
-                                        'firstPageLabel' => SettingsModule::t('settings', 'First'),
-                                        'lastPageLabel' => SettingsModule::t('settings', 'Last'),
-                                        'prevPageLabel' => SettingsModule::t('settings', 'Previous'),
-                                        'nextPageLabel' => SettingsModule::t('settings', 'Next'),
+                                        'firstPageLabel' => CustomerModule::t('customer', 'First'),
+                                        'lastPageLabel' => CustomerModule::t('customer', 'Last'),
+                                        'prevPageLabel' => CustomerModule::t('customer', 'Previous'),
+                                        'nextPageLabel' => CustomerModule::t('customer', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -117,22 +117,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => SettingsModule::t('settings', 'Actions'),
+                                            'header' => CustomerModule::t('customer', 'Actions'),
                                             'template' => '{update} {delete}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => SettingsModule::t('settings', 'Update'),
-                                                        'alia-label' => SettingsModule::t('settings', 'Update'),
+                                                        'title' => CustomerModule::t('customer', 'Update'),
+                                                        'alia-label' => CustomerModule::t('customer', 'Update'),
                                                         'data-pjax' => 0,
                                                         'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => SettingsModule::t('settings', 'Delete'),
+                                                        'title' => CustomerModule::t('customer', 'Delete'),
                                                         'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => SettingsModule::t('settings', 'Delete?'),
+                                                        'data-title' => CustomerModule::t('customer', 'Delete?'),
                                                         'data-pjax' => 0,
                                                         'data-url' => $url,
                                                         'btn-success-class' => 'success-delete',
