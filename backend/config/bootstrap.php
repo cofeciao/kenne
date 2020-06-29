@@ -18,4 +18,5 @@ Yii::setAlias('modava/comment', dirname(dirname(__DIR__)) . '/backend/modules/co
 
 //Widget
 Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
+Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
 Yii::setAlias('modava/imagick', dirname(dirname(__DIR__)) . '/package/imagick/src');
