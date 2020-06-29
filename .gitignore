@@ -88,6 +88,10 @@ phpunit.phar
 /backend/widgets/tiny/README.md
 /backend/widgets/tiny/.git
 
+/backend/widgets/voip24h/composer.json
+/backend/widgets/voip24h/README.md
+/backend/widgets/voip24h/.git
+
 #package
 /package/imagick/.git
 /package/imagick/README.md
