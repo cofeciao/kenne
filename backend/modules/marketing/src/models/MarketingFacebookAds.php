@@ -46,6 +46,8 @@ use Yii;
 */
 class MarketingFacebookAds extends MarketingFacebookAdsTable
 {
+    const FB_ADS = 'fb-ads';
+
     public $toastr_key = 'marketing-facebook-ads';
     public function behaviors()
     {
@@ -75,11 +77,26 @@ class MarketingFacebookAds extends MarketingFacebookAdsTable
     public function rules()
     {
         return [
-			[['don_vi', 'hien_thi', 'tiep_can', 'binh_luan', 'tin_nhan', 'page_chay', 'location_id', 'san_pham', 'tuong_tac', 'so_dien_thoai', 'goi_duoc', 'lich_hen', 'khach_den', 'ngay_chay', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-			[['so_tien_chay'], 'required'],
-			[['money_hienthi', 'money_tiepcan', 'money_binhluan', 'money_tinnhan', 'money_tuongtac', 'money_sodienthoai', 'money_goiduoc', 'money_lichhen', 'money_khachden'], 'number'],
-			[['so_tien_chay'], 'string', 'max' => 25],
+			[['don_vi', 'page_chay', 'location_id', 'san_pham', 'tuong_tac', 'so_dien_thoai', 'goi_duoc', 'lich_hen', 'khach_den', 'ngay_chay', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+			[['money_hienthi', 'money_tiepcan', 'money_binhluan', 'money_tinnhan', 'money_tuongtac', 'money_sodienthoai', 'money_goiduoc', 'money_lichhen', 'money_khachden'], 'integer'],
+            [['hien_thi', 'tiep_can', 'page_chay'], 'required', 'on' => self::FB_ADS],
+            [['hien_thi', 'tiep_can', 'binh_luan', 'tin_nhan', 'ngay_chay'], 'safe'],
+            [['binh_luan', 'tin_nhan', 'ngay_chay', 'location_id', 'so_tien_chay'], 'required'],
+            [['so_tien_chay'], 'string', 'max' => 25],
+            [['hien_thi', 'tiep_can', 'binh_luan', 'tin_nhan', 'so_tien_chay'], 'checkNumber'],
 		];
+    }
+
+    /**
+     * Check Number
+     */
+    public function checkNumber($attribute, $params, $validator)
+    {
+        if (!$this->hasErrors()) {
+            if (!is_numeric(str_replace([',', '.'], '', $this->$attribute))) {
+//                $this->addError($attribute, Yii::t('backend', $this->getAttributeLabel($attribute) . ' không đúng định dạng số'));
+            }
+        }
     }
 
     /**
@@ -89,35 +106,35 @@ class MarketingFacebookAds extends MarketingFacebookAdsTable
     {
         return [
             'id' => MarketingModule::t('marketing', 'ID'),
-            'don_vi' => MarketingModule::t('marketing', 'Don Vi'),
-            'so_tien_chay' => MarketingModule::t('marketing', 'So Tien Chay'),
-            'hien_thi' => MarketingModule::t('marketing', 'Hien Thi'),
-            'tiep_can' => MarketingModule::t('marketing', 'Tiep Can'),
-            'binh_luan' => MarketingModule::t('marketing', 'Binh Luan'),
-            'tin_nhan' => MarketingModule::t('marketing', 'Tin Nhan'),
-            'page_chay' => MarketingModule::t('marketing', 'Page Chay'),
-            'location_id' => MarketingModule::t('marketing', 'Location ID'),
-            'san_pham' => MarketingModule::t('marketing', 'San Pham'),
-            'tuong_tac' => MarketingModule::t('marketing', 'Tuong Tac'),
-            'so_dien_thoai' => MarketingModule::t('marketing', 'So Dien Thoai'),
-            'goi_duoc' => MarketingModule::t('marketing', 'Goi Duoc'),
-            'lich_hen' => MarketingModule::t('marketing', 'Lich Hen'),
-            'khach_den' => MarketingModule::t('marketing', 'Khach Den'),
-            'ngay_chay' => MarketingModule::t('marketing', 'Ngay Chay'),
-            'money_hienthi' => MarketingModule::t('marketing', 'Money Hienthi'),
-            'money_tiepcan' => MarketingModule::t('marketing', 'Money Tiepcan'),
-            'money_binhluan' => MarketingModule::t('marketing', 'Money Binhluan'),
-            'money_tinnhan' => MarketingModule::t('marketing', 'Money Tinnhan'),
-            'money_tuongtac' => MarketingModule::t('marketing', 'Money Tuongtac'),
-            'money_sodienthoai' => MarketingModule::t('marketing', 'Money Sodienthoai'),
-            'money_goiduoc' => MarketingModule::t('marketing', 'Money Goiduoc'),
-            'money_lichhen' => MarketingModule::t('marketing', 'Money Lichhen'),
-            'money_khachden' => MarketingModule::t('marketing', 'Money Khachden'),
+            'don_vi' => MarketingModule::t('marketing', 'Đơn vị'),
+            'so_tien_chay' => MarketingModule::t('marketing', 'Số tiền chạy'),
+            'hien_thi' => MarketingModule::t('marketing', 'Hiển thị'),
+            'tiep_can' => MarketingModule::t('marketing', 'Tiếp cận'),
+            'binh_luan' => MarketingModule::t('marketing', 'Bình luận'),
+            'tin_nhan' => MarketingModule::t('marketing', 'Tin nhắn'),
+            'page_chay' => MarketingModule::t('marketing', 'Page chạy'),
+            'location_id' => MarketingModule::t('marketing', 'Khu vực chạy'),
+            'san_pham' => MarketingModule::t('marketing', 'Sản phẩm'),
+            'tuong_tac' => MarketingModule::t('marketing', 'Tương tác'),
+            'so_dien_thoai' => MarketingModule::t('marketing', 'SĐT'),
+            'goi_duoc' => MarketingModule::t('marketing', 'Gọi được'),
+            'lich_hen' => MarketingModule::t('marketing', 'Lịch hẹn'),
+            'khach_den' => MarketingModule::t('marketing', 'Khách đến'),
+            'ngay_chay' => MarketingModule::t('marketing', 'Ngày chạy'),
+            'money_hienthi' => MarketingModule::t('marketing', 'Giá hiển thị'),
+            'money_tiepcan' => MarketingModule::t('marketing', 'Giá tiếp cập'),
+            'money_binhluan' => MarketingModule::t('marketing', 'Giá bình luận'),
+            'money_tinnhan' => MarketingModule::t('marketing', 'Giá tin nhắn'),
+            'money_tuongtac' => MarketingModule::t('marketing', 'Giá tương tác'),
+            'money_sodienthoai' => MarketingModule::t('marketing', 'Giá SĐT'),
+            'money_goiduoc' => MarketingModule::t('marketing', 'Giá gọi được'),
+            'money_lichhen' => MarketingModule::t('marketing', 'Giá lịch hẹn'),
+            'money_khachden' => MarketingModule::t('marketing', 'Giá khách đến'),
             'status' => MarketingModule::t('marketing', 'Status'),
-            'created_at' => MarketingModule::t('marketing', 'Created At'),
-            'updated_at' => MarketingModule::t('marketing', 'Updated At'),
-            'created_by' => MarketingModule::t('marketing', 'Created By'),
-            'updated_by' => MarketingModule::t('marketing', 'Updated By'),
+            'created_at' => MarketingModule::t('marketing', 'Ngày tạo'),
+            'updated_at' => MarketingModule::t('marketing', 'Ngày cập nhật'),
+            'created_by' => MarketingModule::t('marketing', 'Tạo bởi'),
+            'updated_by' => MarketingModule::t('marketing', 'Cập nhật bởi'),
         ];
     }
 

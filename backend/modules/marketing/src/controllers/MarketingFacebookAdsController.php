@@ -2,15 +2,16 @@
 
 namespace modava\marketing\controllers;
 
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\marketing\MarketingModule;
 use backend\components\MyController;
 use modava\marketing\models\MarketingFacebookAds;
 use modava\marketing\models\search\MarketingFacebookAdsSearch;
+use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * MarketingFacebookAdsController implements the CRUD actions for MarketingFacebookAds model.
@@ -18,8 +19,8 @@ use modava\marketing\models\search\MarketingFacebookAdsSearch;
 class MarketingFacebookAdsController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +34,9 @@ class MarketingFacebookAdsController extends MyController
     }
 
     /**
-    * Lists all MarketingFacebookAds models.
-    * @return mixed
-    */
+     * Lists all MarketingFacebookAds models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new MarketingFacebookAdsSearch();
@@ -45,16 +46,36 @@ class MarketingFacebookAdsController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
-
+    }
 
     /**
-    * Displays a single MarketingFacebookAds model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     *
+     */
+    public function actionValidateMktFbAds($id = null)
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new MarketingFacebookAds();
+
+            if ($id != null) {
+                $model = MarketingFacebookAds::find()->where(['id' => $id])->one();
+            }
+
+            $model->scenario = MarketingFacebookAds::FB_ADS;
+
+            if ($model->load(Yii::$app->request->post())) {
+                return ActiveForm::validate($model);
+            }
+        }
+    }
+
+    /**
+     * Displays a single MarketingFacebookAds model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +84,10 @@ class MarketingFacebookAdsController extends MyController
     }
 
     /**
-    * Creates a new MarketingFacebookAds model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new MarketingFacebookAds model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new MarketingFacebookAds();
@@ -98,18 +119,18 @@ class MarketingFacebookAdsController extends MyController
     }
 
     /**
-    * Updates an existing MarketingFacebookAds model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing MarketingFacebookAds model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +158,12 @@ class MarketingFacebookAdsController extends MyController
     }
 
     /**
-    * Deletes an existing MarketingFacebookAds model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing MarketingFacebookAds model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,12 +196,12 @@ class MarketingFacebookAdsController extends MyController
     }
 
     /**
-    * Finds the MarketingFacebookAds model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return MarketingFacebookAds the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the MarketingFacebookAds model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return MarketingFacebookAds the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
