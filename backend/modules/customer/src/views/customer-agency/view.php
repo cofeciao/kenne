@@ -11,7 +11,7 @@ use modava\customer\CustomerModule;
 /* @var $model modava\customer\models\CustomerAgency */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Agencies'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Agency'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -62,8 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
                             },
                         ],
-						'created_at',
-						'updated_at',
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => CustomerModule::t('customer', 'Created By')

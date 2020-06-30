@@ -13,6 +13,10 @@ class CustomerTreatmentScheduleTable extends \yii\db\ActiveRecord
         return 'customer_treatment_schedule';
     }
 
+    public function getOrderHasOne()
+    {
+        return $this->hasOne(CustomerOrderTable::class, ['id' => 'order_id']);
+    }
 
     public function afterDelete()
     {

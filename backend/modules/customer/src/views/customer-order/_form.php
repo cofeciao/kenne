@@ -28,17 +28,22 @@ foreach (ArrayHelper::map(ProductTable::getAll(Yii::$app->language), 'id', 'pric
     ];
 }
 
-$model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? $model->ordered_at : time());
+$model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? is_numeric($model->ordered_at) ? $model->ordered_at : strtotime($model->ordered_at) : time());
+if(Yii::$app->controller->action->id == 'create') {
+    $validation_url = Url::toRoute(['validate-order', 'customer_id' => $model->customer_id]);
+} else {
+    $validation_url = Url::toRoute(['validate-order', 'customer_id' => $model->customer_id, 'id' => $model->primaryKey]);
+}
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="customer-order-form">
         <?php $form = ActiveForm::begin([
             'id' => 'form-order',
             'enableAjaxValidation' => true,
-            'validationUrl' => Url::toRoute(['validate-order', 'customer_id' => Yii::$app->request->get('customer_id'), 'id' => $model->primaryKey])
+            'validationUrl' => $validation_url
         ]); ?>
         <div class="row">
-            <?php if ($model->customer_id == null) { ?>
+            <?php if ($model->customer_id == null && Yii::$app->controller->action->id == 'create') { ?>
                 <div class="col-md-6 col-12">
                     <?= Select2::widget([
                         'model' => $model,
@@ -63,84 +68,142 @@ $model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? $model->orde
                 ]) ?>
             </div>
         </div>
-        <?= $form->field($model, 'order_detail')->widget(MultipleInput::class, [
-            'id' => 'order-detail',
-            'max' => 6,
-            'allowEmptyList' => false,
-            'columns' => [
-                [
-                    'name' => 'product_id',
-                    'type' => 'dropdownList',
-                    'title' => CustomerModule::t('customer', 'Product ID'),
-                    'enableError' => true,
-                    'items' => ArrayHelper::map(ProductTable::getAll(Yii::$app->language), 'id', 'title'),
-                    'options' => [
-                        'prompt' => CustomerModule::t('customer', 'Chọn sản phẩm...'),
-                        'class' => 'form-control select-product',
-                        'options' => $options_price
-                    ]
+        <div id="order-info">
+            <?= $form->field($model, 'order_detail')->widget(MultipleInput::class, [
+                'id' => 'order-detail',
+                'max' => 6,
+                'allowEmptyList' => false,
+                'rowOptions' => [
+                    'class' => 'product-row'
                 ],
-                [
-                    'name' => 'qty',
-                    'title' => CustomerModule::t('customer', 'Qty'),
-                    'enableError' => true,
-                    'defaultValue' => 1,
-                    'options' => [
-                        'type' => 'number',
-                        'min' => 1,
-                        'step' => 1
-                    ]
-                ],
-                [
-                    'name' => 'price',
-                    'title' => CustomerModule::t('customer', 'Price'),
-                    'enableError' => true,
-                    'defaultValue' => 1,
-                    'options' => [
-                        'disabled' => true
-                    ]
-                ],
-                [
-                    'name' => 'total_price',
-                    'title' => CustomerModule::t('customer', 'Total Price'),
-                    'enableError' => true,
-                    'defaultValue' => 1,
-                    'options' => [
-                        'disabled' => true
-                    ]
-                ],
-                [
-                    'name' => 'discount',
-                    'title' => CustomerModule::t('customer', 'Discount'),
-                    'enableError' => true,
-                    'defaultValue' => 0,
-                    'options' => [
-                        'type' => 'number',
-                        'min' => 0
-                    ]
-                ],
-                [
-                    'name' => 'discount_by',
-                    'type' => 'dropdownList',
-                    'title' => CustomerModule::t('customer', 'Discount By'),
-                    'enableError' => true,
-                    'items' => CustomerPayment::DISCOUNT,
-                    'defaultValue' => 1,
-                ],
-                [
-                    'name' => 'total',
-                    'title' => CustomerModule::t('customer', 'Total'),
-                    'enableError' => true,
-                    'defaultValue' => 1,
-                    'options' => [
-                        'disabled' => true
-                    ]
-                ],
-            ]
-        ])->label(false);
-        ?>
+                'columns' => [
+                    [
+                        'name' => 'order_detail_id',
+                        'type' => 'hiddenInput',
+                        'title' => CustomerModule::t('customer', 'Order Detail Id'),
+                        'enableError' => true,
+                        'options' => [
+                            'class' => 'hidden',
+                        ]
+                    ],
+                    [
+                        'name' => 'product_id',
+                        'type' => 'dropdownList',
+                        'title' => CustomerModule::t('customer', 'Product ID'),
+                        'enableError' => true,
+                        'items' => ArrayHelper::map(ProductTable::getAll(Yii::$app->language), 'id', 'title'),
+                        'options' => [
+                            'prompt' => CustomerModule::t('customer', 'Chọn sản phẩm...'),
+                            'class' => 'form-control select-product',
+                            'options' => $options_price
+                        ]
+                    ],
+                    [
+                        'name' => 'qty',
+                        'title' => CustomerModule::t('customer', 'Qty'),
+                        'enableError' => true,
+                        'defaultValue' => 1,
+                        'options' => [
+                            'class' => 'product-qty product-change key-change',
+                            'type' => 'number',
+                            'min' => 1,
+                            'step' => 1
+                        ]
+                    ],
+                    [
+                        'name' => 'price',
+                        'title' => CustomerModule::t('customer', 'Price'),
+                        'enableError' => true,
+                        'defaultValue' => 0,
+                        'options' => [
+                            'class' => 'product-price',
+                            'readonly' => true
+                        ]
+                    ],
+                    [
+                        'name' => 'total_price',
+                        'title' => CustomerModule::t('customer', 'Total Price'),
+                        'enableError' => true,
+                        'defaultValue' => 0,
+                        'options' => [
+                            'class' => 'product-total-price',
+                            'readonly' => true
+                        ]
+                    ],
+                    [
+                        'name' => 'discount',
+                        'title' => CustomerModule::t('customer', 'Discount'),
+                        'enableError' => true,
+                        'defaultValue' => 0,
+                        'options' => [
+                            'class' => 'product-discount product-change key-change',
+                            'type' => 'number',
+                            'min' => 0
+                        ]
+                    ],
+                    [
+                        'name' => 'discount_by',
+                        'type' => 'dropdownList',
+                        'title' => CustomerModule::t('customer', 'Discount By'),
+                        'enableError' => true,
+                        'items' => CustomerPayment::DISCOUNT,
+                        'defaultValue' => 1,
+                        'options' => [
+                            'class' => 'product-discount-by product-change'
+                        ]
+                    ],
+                    [
+                        'name' => 'reason_discount',
+                        'type' => 'textarea',
+                        'title' => CustomerModule::t('customer', 'Reason Discount'),
+                        'enableError' => true,
+                        'options' => [
+                            'class' => ''
+                        ]
+                    ],
+                    [
+                        'name' => 'total',
+                        'title' => CustomerModule::t('customer', 'Total'),
+                        'enableError' => true,
+                        'defaultValue' => 0,
+                        'options' => [
+                            'class' => 'product-total',
+                            'readonly' => true
+                        ]
+                    ],
+                ]
+            ])->label(false);
+            ?>
+            <div class="row">
+                <div class="col-md-6 col-sm-4"></div>
+                <div class="col-md-3 col-sm-4 col-12 text-right">
+                    Tạm tính:
+                </div>
+                <div class="col-md-3 col-sm-4 col-12 text-right">
+                    <span id="product-tam-tinh"><?= $model->total ?></span>đ
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-4"></div>
+                <div class="col-md-3 col-sm-4 col-12 text-right">
+                    Chiết khấu:
+                </div>
+                <div class="col-md-3 col-sm-4 col-12 text-right">
+                    <span id="product-chiet-khau"><?= $model->discount ?></span>đ
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-4"></div>
+                <div class="col-md-3 col-sm-4 col-12 text-right">
+                    Tổng tiền:
+                </div>
+                <div class="col-md-3 col-sm-4 col-12 text-right">
+                    <span id="product-tong-tien"><?= $model->total - $model->discount ?></span>đ
+                </div>
+            </div>
+            <?= $form->field($model, 'total', ['template' => '{error}'])->textInput()->label(false) ?>
+        </div>
     </div>
-<?= $form->field($model, 'discount')->textInput() ?>
     <div class="form-group">
         <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
@@ -150,7 +213,53 @@ $model->ordered_at = date('d-m-Y H:i', $model->ordered_at != null ? $model->orde
 <?php
 $discount_by_money = CustomerPayment::DISCOUNT_BY_MONEY;
 $discount_by_percent = CustomerPayment::DISCOUNT_BY_PERCENT;
+$urlGetProductInfo = Url::toRoute(['/product/product/get-product-info']);
 $script = <<< JS
+function getProductInfo(id){
+    return new Promise(resolve => {
+        $.get('$urlGetProductInfo', {id: id}, res => resolve(res.code === 200 ? res.data : null));
+    });
+}
+function handleOrderRow(row){
+    return new Promise(resolve => {
+        var price = parseFloat(row.find('.product-price').val() || 0),
+            qty = parseInt(row.find('.product-qty').val() || 1),
+            discount = parseFloat(row.find('.product-discount').val() || 0),
+            discount_by = row.find('.product-discount-by').val() + '' || '$discount_by_money',
+            total_price = price * qty,
+            total_discount;
+        if(discount_by == '$discount_by_percent' && discount > 100) {
+            discount = 100;
+            row.find('.product-discount').val(discount);
+        }
+        if(discount_by === '$discount_by_money') {
+            total_discount = discount;
+        } else {
+            total_discount = total_price * discount / 100;
+        }
+        row.find('.product-price').val(price);
+        row.find('.product-total-price').val(total_price);
+        row.find('.product-total').val(total_price - total_discount);
+        resolve({
+            total_price: total_price,
+            total_discount: total_discount,
+        });
+    });
+}
+async function handleOrder(order_info){
+    var total_price = 0,
+        total_discount = 0;
+    await order_info.find('.product-row').each(function(){
+        var row = $(this);
+        handleOrderRow(row).then(product => {
+            total_price += product.total_price;
+            total_discount += product.total_discount;
+        });
+    });
+    order_info.find('#product-tam-tinh').html(total_price);
+    order_info.find('#product-chiet-khau').html(total_discount);
+    order_info.find('#product-tong-tien').html(total_price - total_discount);
+}
 $('#order-detail').on('afterInit', function(){
     $('#order-detail .select-product').each(function(){
         $(this).select2();
@@ -159,7 +268,26 @@ $('#order-detail').on('afterInit', function(){
     $('#order-detail .select-product').each(function(){
         $(this).select2();
     });
+}).on('afterDeleteRow', function(e, row, currentIndex){
+    handleOrder($('#order-info'));
 });
-$('#order-detail').on('change', '', function(){});
+$('#order-info').on('change', '.select-product', function(){
+    var id = $(this).val(),
+        row = $(this).closest('.product-row');
+    getProductInfo(id).then(res => {
+        var price = parseInt(![null, undefined, ''].includes(res.price_sale) ? res.price_sale : res.price);
+        row.find('.product-price').val(price);
+        handleOrder($('#order-info'));
+    });
+}).on('change', '.product-change', function(){
+    handleOrder($('#order-info'));
+}).on('paste keyup', '.key-change', function(){
+    handleOrder($('#order-info'));
+});
+/*
+$(function(){
+    handleOrder($('#order-info'));
+});*/
+
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

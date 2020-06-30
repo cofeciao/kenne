@@ -21,11 +21,13 @@ class m200617_084131_create_table_customer_order_detail extends Migration
                 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             }
             $this->createTable('customer_order_detail', [
+                'order_detail_id' => $this->primaryKey(),
                 'order_id' => $this->integer(11)->notNull(),
                 'product_id' => $this->integer(11)->notNull(),
                 'qty' => $this->integer(11)->null()->defaultValue(1)->comment('Số lượng'),
                 'price' => $this->double('16,2')->null()->defaultValue(0)->comment('Đơn giá'),
                 'discount' => $this->double('16,2')->null()->defaultValue(0)->comment('Chiết khấu'),
+                'discount_by' => $this->tinyInteger(1)->null()->defaultValue(1)->comment('1: Giảm theo đ, 2: Giảm theo %'),
                 'reason_discount' => $this->string(255)->null()->comment('Lý do chiết khấu'),
             ], $tableOptions);
         }

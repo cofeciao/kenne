@@ -6,7 +6,6 @@ use backend\modules\user\models\User;
 use cheatsheet\Time;
 use modava\customer\CustomerModule;
 use modava\location\models\table\LocationWardTable;
-use modava\settings\models\table\SettingCoSoTable;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -20,9 +19,11 @@ class CustomerTable extends \yii\db\ActiveRecord
     ];
     const SEX_WOMEN = 0;
     const SEX_MEN = 1;
+    const SEX_OTHER = 2;
     const SEX = [
         self::SEX_WOMEN => 'Nữ',
-        self::SEX_MEN => 'Nam'
+        self::SEX_MEN => 'Nam',
+        self::SEX_OTHER => 'Chưa xác định',
     ];
 
     public static function tableName()
@@ -43,6 +44,11 @@ class CustomerTable extends \yii\db\ActiveRecord
     public function getPermissionUserHasOne()
     {
         return $this->hasOne(User::class, ['id' => 'permission_user']);
+    }
+
+    public function getDirectSaleHasOne()
+    {
+        return $this->hasOne(User::class, ['id' => 'direct_sale']);
     }
 
     public function getStatusCallHasOne()
@@ -67,7 +73,12 @@ class CustomerTable extends \yii\db\ActiveRecord
 
     public function getCoSoHasOne()
     {
-        return $this->hasOne(SettingCoSoTable::class, ['id' => 'co_so']);
+        return $this->hasOne(CustomerCoSoTable::class, ['id' => 'co_so']);
+    }
+
+    public function getOrderHasMany()
+    {
+        return $this->hasMany(CustomerOrderTable::class, ['customer_id' => 'id']);
     }
 
     public function afterDelete()

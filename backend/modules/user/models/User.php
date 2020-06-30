@@ -141,7 +141,7 @@ class User extends \common\models\User
 
         if ($assignment == false) {
             $assignment = array_keys($this->manager->getAssignments($id));
-            $assignment = $assignment != null ? $assignment[0] : User::USER_USERS;
+            $assignment = $assignment != null ? $assignment[0] : null;
 
             $cache->set($key, $assignment);
         }

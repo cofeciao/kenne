@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <?php if ($model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
+            <?php if ($model->statusDongYHasOne != null && $model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
                 <?= Html::a('<i class="fa fa-plus"></i> ' . CustomerModule::t('customer', 'Order'), ['/customer/customer-order/create', 'customer_id' => $model->primaryKey], [
                     'class' => 'btn btn-success'
                 ]) ?>
@@ -71,20 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'phone',
                         [
                             'attribute' => 'address',
+                            'label' => CustomerModule::t('customer', 'Address'),
                             'value' => function ($model) {
-                                if ($model->address == null) return null;
-                                $address = $model->address;
-                                if ($model->wardHasOne != null) {
-                                    $address .= ', ' . $model->wardHasOne->name;
-                                    if ($model->wardHasOne->districtHasOne != null) {
-                                        $address .= ', ' . $model->wardHasOne->districtHasOne->name;
-                                        if ($model->wardHasOne->districtHasOne->provinceHasOne != null) {
-                                            $address .= ', ' . $model->wardHasOne->districtHasOne->provinceHasOne->name;
-                                            if ($model->wardHasOne->districtHasOne->provinceHasOne->countryHasOne != null) $address .= ', ' . $model->wardHasOne->districtHasOne->provinceHasOne->countryHasOne->CommonName;
-                                        }
-                                    }
-                                }
-                                return $address;
+                                return $model->address . ', ' . $model->wardHasOne->name . ', ' . $model->wardHasOne->districtHasOne->name . ', ' . $model->wardHasOne->districtHasOne->provinceHasOne->name . ', ' . $model->wardHasOne->districtHasOne->provinceHasOne->countryHasOne->CommonName;
                             }
                         ],
                         [

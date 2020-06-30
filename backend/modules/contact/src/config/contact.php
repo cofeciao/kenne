@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kem Bi
- * Date: 06-Jul-18
- * Time: 4:00 PM
- */
-
 use modava\contact\components\MyErrorHandler;
 
 $config = [

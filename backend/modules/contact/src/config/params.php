@@ -1,12 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kem Bi
- * Date: 06-Jul-18
- * Time: 4:42 PM
- */
+use modava\contact\ContactModule;
 
 return [
+    'availableLocales' => [
+        'vi' => 'Tiếng Việt',
+        'en' => 'English',
+        'jp' => 'Japan',
+    ],
     'contactName' => 'Contact',
-    'contactVersion' => '1.0'
+    'contactVersion' => '1.0',
+    'status' => [
+        '0' => ContactModule::t('contact', 'Tạm ngưng'),
+        '1' => ContactModule::t('contact', 'Hiển thị'),
+    ]
 ];

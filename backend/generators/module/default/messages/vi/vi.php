@@ -11,4 +11,7 @@ return [
     'Last' => 'Cuối',
     'Previous' => 'Trước',
     'Next' => 'Tiếp',
+    'Status' => 'Trạng thái',
+    'Created At' => 'Ngày tạo',
+    'Actions' => 'Hành động'
 ];

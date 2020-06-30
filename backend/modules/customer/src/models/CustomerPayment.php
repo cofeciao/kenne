@@ -6,6 +6,7 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\customer\CustomerModule;
 use modava\customer\models\table\CustomerPaymentTable;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -30,13 +31,16 @@ use Yii;
  */
 class CustomerPayment extends CustomerPaymentTable
 {
-    const DISCOUNT_BY_MONEY = '1';
-    const DISCOUNT_BY_PERCENT = '2';
-    const DISCOUNT = [
-        self::DISCOUNT_BY_MONEY => 'đ',
-        self::DISCOUNT_BY_PERCENT => '%',
-    ];
     public $toastr_key = 'customer-payment';
+    public $customer_id;
+
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        if ($this->orderHasOne != null && $this->orderHasOne->customerHasOne != null) {
+            $this->customer_id = $this->orderHasOne->customerHasOne->id;
+        }
+    }
 
     public function behaviors()
     {
@@ -47,6 +51,15 @@ class CustomerPayment extends CustomerPaymentTable
                     'class' => BlameableBehavior::class,
                     'createdByAttribute' => 'created_by',
                     'updatedByAttribute' => 'updated_by',
+                ],
+                'payment_at' => [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [],
+                    'value' => function () {
+                        if (is_string($this->payment_at)) return strtotime($this->payment_at);
+                        if (is_numeric($this->payment_at)) return $this->payment_at;
+                        return time();
+                    }
                 ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
@@ -67,10 +80,11 @@ class CustomerPayment extends CustomerPaymentTable
     {
         return [
             [['order_id', 'payments', 'type'], 'required'],
-            [['order_id', 'payments', 'type', 'co_so', 'payment_at', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['order_id', 'payments', 'type', 'co_so'], 'integer'],
             [['price'], 'number'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['payment_at'], 'safe'],
         ];
     }
 

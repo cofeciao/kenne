@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\customer\models\search\CustomerFanpageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CustomerModule::t('customer', 'Customer Fanpages');
+$this->title = CustomerModule::t('customer', 'Fanpage facebook');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -96,8 +96,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
-                                            'origin_id',
-                                            'name',
+                                            [
+                                                'attribute' => 'name',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->name, ['view', 'id' => $model->primaryKey], []);
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'origin_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    if ($model->origin_id == null) return null;
+                                                    return Html::a($model->name, ['/customer/customer-origin/view', 'id' => $model->originHasOne->primaryKey], []);
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'originHasOne.name',
+                                                'label' => CustomerModule::t('customer', 'Origin')
+                                            ],
                                             'description:ntext',
                                             'url_page:url',
                                             [

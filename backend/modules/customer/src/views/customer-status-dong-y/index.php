@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\customer\models\search\CustomerStatusDongYSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CustomerModule::t('customer', 'Customer Status Dong ies');
+$this->title = CustomerModule::t('customer', 'Trạng thái khách đến');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -96,7 +96,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
-                                            'name',
+                                            [
+                                                'attribute' => 'name',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->name, ['view', 'id' => $model->primaryKey], []);
+                                                }
+                                            ],
                                             'description:ntext',
                                             [
                                                 'attribute' => 'language',

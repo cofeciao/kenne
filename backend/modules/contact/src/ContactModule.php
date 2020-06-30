@@ -10,17 +10,17 @@ use yii\web\Application;
 use yii\web\Controller;
 
 /**
- * Contact module definition class
+ * contact module definition class
  */
 class ContactModule extends Module implements BootstrapInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public $controllerNamespace = 'modava\contact\controllers';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function init()
     {
@@ -31,7 +31,9 @@ class ContactModule extends Module implements BootstrapInterface
         $handler = $this->get('errorHandler');
         Yii::$app->set('errorHandler', $handler);
         $handler->register();
+        $this->layout = 'contact';
     }
+
 
     public function bootstrap($app)
     {
@@ -59,5 +61,4 @@ class ContactModule extends Module implements BootstrapInterface
     {
         return Yii::t('contact/messages/' . $category, $message, $params, $language);
     }
-
 }

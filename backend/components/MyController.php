@@ -8,6 +8,7 @@
 
 namespace backend\components;
 
+use backend\modules\user\models\User;
 use yii\web\Controller;
 use Yii;
 
@@ -16,6 +17,9 @@ class MyController extends Controller
     public function init()
     {
         parent::init();
+        $user = new User();
+        $userRoleName = $user->getRoleName(Yii::$app->user->id);
+        $this->view->params['userRoleName'] = $userRoleName;
 //        if (Yii::$app->user->id != null) {
 //            $system_maintenance = Setting::getKey('system_maintenance');
 //            if ($system_maintenance != null && $system_maintenance->value == '1') {

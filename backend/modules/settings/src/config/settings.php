@@ -2,7 +2,7 @@
 use modava\settings\components\MyErrorHandler;
 
 $config = [
-    'defaultRoute' => 'setting-co-so/index',
+    'defaultRoute' => 'setting/index',
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'aliases' => [
         '@settingsweb' => '@modava/settings/web',
