@@ -1,45 +1,30 @@
 <?php
 
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
-use yii\helpers\Url;
-
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
-
-$modelClass = StringHelper::basename($generator->modelClass);
-$urlParams = $generator->generateUrlParams();
-$nameAttribute = $generator->getNameAttribute();
-
-echo "<?php\n";
-?>
-
-use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
-use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
+use modava\settings\SettingsModule;
+use modava\settings\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
-<?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
-
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-<?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
+/* @var $searchModel modava\settings\models\search\SettingCoSoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>');
+$this->title = SettingsModule::t('settings', 'Setting Co Sos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= "<?=" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
+<?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-    <?= "<?=" ?> NavbarWidgets::widget(); ?>
+    <?= NavbarWidgets::widget(); ?>
 
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
+                        class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
-        <a class="btn btn-outline-light" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
-           title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
-            <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
+        <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
+           title="<?= SettingsModule::t('settings', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= SettingsModule::t('settings', 'Create'); ?></a>
     </div>
 
     <!-- Row -->
@@ -47,21 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
 
-                <?= $generator->enablePjax ? "<?php Pjax::begin(); ?>\n" : '' ?>
+                <?php Pjax::begin(); ?>
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
                             <div class="dataTables_wrapper dt-bootstrap4">
-                                <?php if ($generator->indexWidgetType === 'grid'): ?>
-<?= "<?= " ?>GridView::widget([
+                                <?= GridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'layout' => '
                                         {errors}
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <div class="table-responsive">
-                                                    {items}
-                                                </div>
+                                                {items}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -78,10 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                     'pager' => [
-                                        'firstPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'First'),
-                                        'lastPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Last'),
-                                        'prevPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Previous'),
-                                        'nextPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Next'),
+                                        'firstPageLabel' => SettingsModule::t('settings', 'First'),
+                                        'lastPageLabel' => SettingsModule::t('settings', 'Last'),
+                                        'prevPageLabel' => SettingsModule::t('settings', 'Previous'),
+                                        'nextPageLabel' => SettingsModule::t('settings', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -113,47 +95,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                    <?php if(in_array('title', $generator->getColumnNames())) { ?>
+										'name',
+										'address',
+										'phone',
+										'email:email',
+										'description',
                                         [
-                                            'attribute' => 'title',
-                                            'format' => 'raw',
+                                            'attribute' => 'language',
                                             'value' => function ($model) {
-                                                return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                    'title' => $model->title,
-                                                    'data-pjax' => 0,
-                                                ]);
+                                                if (!array_key_exists($model->language, Yii::$app->getModule('customer')->params['availableLocales'])) return null;
+                                                return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
                                             }
                                         ],
-                                    <?php } ?>
-
-<?php
-                                        $count = 0;
-                                        if (($tableSchema = $generator->getTableSchema()) === false) {
-                                            foreach ($generator->getColumnNames() as $name) {
-                                                if(in_array($name, ['id', 'status', 'slug', 'created_at', 'created_by', 'updated_at', 'updated_by'])) {
-                                                    continue;
-                                                }
-                                                if (++$count < 6) {
-                                                    echo "\t\t\t\t\t\t\t\t\t\t'" . $name . "',\n";
-                                                } else {
-                                                    echo "\t\t\t\t\t\t\t\t\t\t//'" . $name . "',\n";
-                                                }
-                                            }
-                                        } else {
-                                            foreach ($tableSchema->columns as $column) {
-                                                if(in_array($column->name, ['id', 'status', 'slug', 'created_at', 'created_by', 'updated_at', 'updated_by'])) {
-                                                    continue;
-                                                }
-                                                $format = $generator->generateColumnFormat($column);
-                                                if (++$count < 6) {
-                                                    echo "\t\t\t\t\t\t\t\t\t\t'" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-                                                } else {
-                                                    echo "\t\t\t\t\t\t\t\t\t\t//'" . $column->name . ($format === 'text' ? "" : ":" . $format) . "',\n";
-                                                }
-                                            }
-                                        }
-                                        ?>
-<?php if(in_array('created_by', $generator->getColumnNames())) { ?>
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -161,8 +114,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 150,
                                             ],
                                         ],
-<?php } ?>
-<?php if(in_array('created_by', $generator->getColumnNames())) { ?>
                                         [
                                             'attribute' => 'created_at',
                                             'format' => 'date',
@@ -170,25 +121,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 150,
                                             ],
                                         ],
-<?php } ?>
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Actions'),
+                                            'header' => SettingsModule::t('settings', 'Actions'),
                                             'template' => '{update} {delete}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update'),
-                                                        'alia-label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update'),
+                                                        'title' => SettingsModule::t('settings', 'Update'),
+                                                        'alia-label' => SettingsModule::t('settings', 'Update'),
                                                         'data-pjax' => 0,
                                                         'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Delete'),
+                                                        'title' => SettingsModule::t('settings', 'Delete'),
                                                         'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Delete?'),
+                                                        'data-title' => SettingsModule::t('settings', 'Delete?'),
                                                         'data-pjax' => 0,
                                                         'data-url' => $url,
                                                         'btn-success-class' => 'success-delete',
@@ -203,25 +153,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                     ],
                                 ]); ?>
-                                <?php else: ?>
-                                    <?= "<?= " ?>ListView::widget([
-                                        'dataProvider' => $dataProvider,
-                                        'itemOptions' => ['class' => 'item'],
-                                        'itemView' => function ($model, $key, $index, $widget) {
-                                            return Html::a(Html::encode($model-><?= $nameAttribute ?>), ['view', <?= $urlParams ?>]);
-                                        },
-                                    ]) ?>
-                                <?php endif; ?>
-                            </div>
+                                                            </div>
                         </div>
                     </div>
                 </div>
-                <?= $generator->enablePjax ? "<?php Pjax::end(); ?>\n" : '' ?>
+                <?php Pjax::end(); ?>
             </section>
         </div>
     </div>
 </div>
-<?= "<?php\n" ?>
+<?php
 $script = <<< JS
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();
