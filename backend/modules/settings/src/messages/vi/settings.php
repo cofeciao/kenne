@@ -1,5 +1,6 @@
 <?php
 return [
+    'Setting Co Sos' => 'Cơ sở',
     'Create' => 'Tạo mới',
     'Update' => 'Cập nhật',
     'Delete' => 'Xóa',
