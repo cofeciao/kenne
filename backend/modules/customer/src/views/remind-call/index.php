@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 use modava\customer\models\table\CustomerTable;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\customer\models\search\SalesOnlineRemindCallSearch */
+/* @var $searchModel modava\customer\models\search\RemindCallSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = CustomerModule::t('customer', 'Nhắc lịch chăm sóc');
@@ -24,9 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
-            <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
         </div>
 
         <!-- Row -->
@@ -107,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'name',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->name, ['/customer/sales-online/view', 'id' => $model->id], []);
+                                                    return Html::a($model->name, ['/customer/customer/view', 'id' => $model->id], []);
                                                 }
                                             ],
                                             'phone',
@@ -139,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'template' => '{update}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
-                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['/customer/sales-online/update', 'id' => $model->id], [
+                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['/customer/customer/update', 'id' => $model->id], [
                                                             'title' => CustomerModule::t('customer', 'Update'),
                                                             'alia-label' => CustomerModule::t('customer', 'Update'),
                                                             'data-pjax' => 0,

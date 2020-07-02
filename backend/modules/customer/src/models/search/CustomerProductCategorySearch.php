@@ -2,21 +2,24 @@
 
 namespace modava\customer\models\search;
 
-use modava\customer\models\SalesOnline;
-use modava\customer\models\table\CustomerStatusDatHenTable;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
+use modava\customer\models\CustomerProductCategory;
 
-class SalesOnlineSearch extends SalesOnline
+/**
+ * CustomerProductCategorySearch represents the model behind the search form of `modava\customer\models\CustomerProductCategory`.
+ */
+class CustomerProductCategorySearch extends CustomerProductCategory
 {
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
+            [['id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['name', 'description', 'status', 'language'], 'safe'],
         ];
     }
 
@@ -38,7 +41,7 @@ class SalesOnlineSearch extends SalesOnline
      */
     public function search($params)
     {
-        $query = SalesOnline::find()->where([self::tableName() . '.type' => self::TYPE_ONLINE]);
+        $query = CustomerProductCategory::find();
 
         // add conditions that should always apply here
 
@@ -54,6 +57,20 @@ class SalesOnlineSearch extends SalesOnline
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'language', $this->language]);
 
         return $dataProvider;
     }

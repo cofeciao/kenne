@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m200617_084111_create_table_comment
+ * Class m200702_112804_create_table_comment
  */
-class m200617_084111_create_table_comment extends Migration
+class m200702_112804_create_table_comment extends Migration
 {
     /**
      * {@inheritdoc}
@@ -37,7 +37,7 @@ class m200617_084111_create_table_comment extends Migration
      */
     public function safeDown()
     {
-        echo "m200617_084111_create_table_comment cannot be reverted.\n";
+        echo "m200702_112804_create_table_comment cannot be reverted.\n";
 
         return false;
     }
@@ -51,7 +51,7 @@ class m200617_084111_create_table_comment extends Migration
 
     public function down()
     {
-        echo "m200617_084111_create_table_comment cannot be reverted.\n";
+        echo "m200702_112804_create_table_comment cannot be reverted.\n";
 
         return false;
     }
