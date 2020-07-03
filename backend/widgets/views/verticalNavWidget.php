@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Url;
+use modava\auth\models\User;
+
 ?>
 
 <nav class="hk-nav hk-nav-light">
@@ -62,6 +64,14 @@ use yii\helpers\Url;
                         <span class="nav-link-text"><?= Yii::t('backend', 'Marketing'); ?></span>
                     </a>
                 </li>
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('authUser')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'auth') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/auth/user']); ?>">
+                            <i class="ion icon-user"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'User'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
                 <li class="nav-item<?php if (Yii::$app->controller->module->id == 'settings') echo ' active'; ?>">
                     <a class="nav-link" href="<?= Url::toRoute(['/settings']); ?>">
                         <i class="ion ion-ios-cog"></i>

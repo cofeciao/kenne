@@ -25,4 +25,9 @@ class LocationDistrictQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy([LocationDistrict::tableName() . '.id' => SORT_DESC]);
     }
+
+    public function sortAscBySortOrder()
+    {
+        return $this->orderBy([LocationDistrict::tableName() . '.SortOrder' => SORT_ASC]);
+    }
 }

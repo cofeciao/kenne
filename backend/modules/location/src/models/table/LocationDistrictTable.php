@@ -71,9 +71,9 @@ class LocationDistrictTable extends \yii\db\ActiveRecord
         $key = 'redis-get-district-by-province-' . $province . '-' . $language;
         $data = $cache->get($key);
         if ($data === false) {
-            $query = self::find()->where([self::tableName() . '.ProvinceId' => $province]);
+            $query = self::find()->select(["*", "CONCAT(Type, ' ', name) AS name"])->where([self::tableName() . '.ProvinceId' => $province]);
             if ($language !== null) $query->andWhere([self::tableName() . '.language' => $language]);
-            $data = $query->published()->sortDescById()->all();
+            $data = $query->published()->sortAscBySortOrder()->all();
             $cache->set($key, $data, Time::SECONDS_IN_A_MONTH);
         }
         return $data;

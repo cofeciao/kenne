@@ -98,9 +98,9 @@ class LocationProvinceTable extends \yii\db\ActiveRecord
 //        $key = 'redis-get-province-by-country-' . $country . '-' . $lang;
 //        $data = $cache->get($key);
 //        if ($data === false) {
-        $query = self::find()->where([self::tableName() . '.CountryId' => $country]);
+        $query = self::find()->select(["*", "CONCAT(Type, ' ', name) AS name"])->where([self::tableName() . '.CountryId' => $country]);
         if ($lang !== null) $query->andWhere([self::tableName() . '.language' => $lang]);
-        $data = $query->sortDescById()->all();
+        $data = $query->sortAscBySortOrder()->all();
 //            $cache->set($key, $data, Time::SECONDS_IN_A_MONTH);
 //        }
         return $data;

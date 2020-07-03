@@ -5,7 +5,7 @@ $(function(){
             url_load_data = el.attr('load-data-url') || null,
             element_load_data = el.attr('load-data-element') || null,
             self_key = el.attr('load-data-key') || null,
-            data_add = el.attr('load-data-data') || {},
+            data_add = el.attr('load-data-data') || '{}',
             callback = el.attr('load-data-callback') || null,
             method_load = el.attr('load-data-method') || 'POST';
         if (url_load_data === null) {
@@ -26,7 +26,7 @@ $(function(){
         }
         var data = {};
         data[self_key] = el.val();
-        data = Object.assign(data_add, data);
+        data = Object.assign(JSON.parse(data_add), data);
         $(element_load_data).find('option[value!=""]').remove();
         $.ajax({
             type: method_load,

@@ -68,7 +68,7 @@ class LocationCountryTable extends \yii\db\ActiveRecord
         $data = $cache->get($key);
 
         if ($data === false) {
-            $data = self::find()->where([self::tableName() . '.language' => $language])->published()->sortDescById()->all();
+            $data = self::find()->where([self::tableName() . '.language' => $language])->published()->sortAscBySortOrder()->all();
             $cache->set($key, $data, Time::SECONDS_IN_A_MONTH);
         }
 

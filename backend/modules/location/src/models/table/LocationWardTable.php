@@ -71,7 +71,8 @@ class LocationWardTable extends \yii\db\ActiveRecord
         $key = 'redis-location-ward-get-ward-by-district-' . $district . '-' . $language;
         $data = $cache->get($key);
         if ($data == false) {
-            $data = self::find()->where(['DistrictID' => $district, 'language' => $language ?: Yii::$app->language])->published()->all();
+            $query = self::find()->select(["*", "CONCAT(Type, ' ', name) AS name"])->where(['DistrictID' => $district, 'language' => $language ?: Yii::$app->language])->published()->sortDescById();
+            $data = $query->all();
             $cache->set($key, $data);
         }
         return $data;

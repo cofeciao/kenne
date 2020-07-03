@@ -25,4 +25,9 @@ class LocationCountryQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy([LocationCountry::tableName() . '.id' => SORT_DESC]);
     }
+
+    public function sortAscBySortOrder()
+    {
+        return $this->orderBy([LocationCountry::tableName() . '.SortOrder' => SORT_ASC]);
+    }
 }

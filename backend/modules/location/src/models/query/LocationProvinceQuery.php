@@ -25,4 +25,9 @@ class LocationProvinceQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy([LocationProvince::tableName() . '.id' => SORT_DESC]);
     }
+
+    public function sortAscBySortOrder()
+    {
+        return $this->orderBy([LocationProvince::tableName() . '.SortOrder' => SORT_ASC]);
+    }
 }

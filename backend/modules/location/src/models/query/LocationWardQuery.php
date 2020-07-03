@@ -25,4 +25,9 @@ class LocationWardQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy([LocationWard::tableName() . '.id' => SORT_DESC]);
     }
+
+    public function sortAscBySortOrder()
+    {
+        return $this->orderBy([LocationWard::tableName() . '.SortOrder' => SORT_ASC]);
+    }
 }
