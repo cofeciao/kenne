@@ -15,11 +15,11 @@ use yii\helpers\Url;
     </a>
     <ul class="navbar-nav hk-navbar-content order-xl-2">
         <?= class_exists('modava\voip24h\CallCenter') ? \modava\voip24h\CallCenter::widget([
-            'Pass' => 'm6e5qacy@r8',
-            'Display' => '281',
-            'User' => '281',
-            'Realm' => 'node2-9pl.voip24h.vn:8089',
-            'WSServer' => 'wss://node2-9pl.voip24h.vn:8089/ws',
+            'Pass' => 'xcuapx36@',
+            'Display' => '500',
+            'User' => '500',
+            'Realm' => 'node2-11pl.voip24h.vn:8089',
+            'WSServer' => 'wss://node2-11pl.voip24h.vn:8089/ws',
             'layout' => "<li class=\"nav-item\">{item}{callcenter}</li>",
             'itemOptions' => [
                 'class' => 'nav-link'
