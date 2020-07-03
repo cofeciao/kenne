@@ -45,6 +45,7 @@ phpunit.phar
 /common/config/_mailer.php
 /common/config/_console.php
 /common/config/_api.php
+/common/config/config.php
 
 /backend/runtime
 /backend/web/assets
