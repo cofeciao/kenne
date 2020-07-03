@@ -2,6 +2,7 @@
 
 use yii\helpers\Url;
 use modava\auth\models\User;
+$is_dev = Yii::$app->user->can('develop');
 
 ?>
 
@@ -64,7 +65,7 @@ use modava\auth\models\User;
                         <span class="nav-link-text"><?= Yii::t('backend', 'Marketing'); ?></span>
                     </a>
                 </li>
-                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('authUser')) { ?>
+                <?php if ($is_dev|| Yii::$app->user->can('authUser')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'auth') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/auth/user']); ?>">
                             <i class="ion icon-user"></i>
