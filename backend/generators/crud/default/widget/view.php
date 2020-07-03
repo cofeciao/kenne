@@ -5,11 +5,13 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 $modelClass = StringHelper::basename($generator->modelClass);
+$ns = explode('\\', $generator->modelClass)[0];
+
+echo "<?php";
 ?>
-<?= "<?php" ?>
 
 use yii\helpers\Url;
-use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 
 ?>
 <ul class="nav nav-tabs nav-sm nav-light mb-25">

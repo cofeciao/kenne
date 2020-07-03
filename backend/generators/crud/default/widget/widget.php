@@ -1,9 +1,10 @@
 <?php
 /* @var $generator yii\gii\generators\crud\Generator */
+$ns = explode('\\', $generator->modelClass)[0];
+echo "<?php";
 ?>
-<?= "<?php" ?>
 
-namespace modava\<?= $generator->messageCategory ?>\widgets;
+namespace <?= $ns ?>\<?= $generator->messageCategory ?>\widgets;
 
 class NavbarWidgets extends \yii\base\Widget
 {

@@ -13,6 +13,7 @@ if (empty($safeAttributes)) {
     $safeAttributes = $model->attributes();
 }
 $columns = $generator->tableSchema->columns;
+$ns = explode('\\', $generator->modelClass)[0];
 
 echo "<?php\n";
 ?>
@@ -21,7 +22,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
-use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

@@ -10,12 +10,13 @@ use yii\helpers\Url;
 $modelClass = StringHelper::basename($generator->modelClass);
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
+$ns = explode('\\', $generator->modelClass)[0];
 
 echo "<?php\n";
 ?>
 
-use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
-use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
+use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= $ns ?>\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;

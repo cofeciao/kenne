@@ -8,6 +8,7 @@ use yii\helpers\StringHelper;
 
 $urlParams = $generator->generateUrlParams();
 $modelClass = StringHelper::basename($generator->modelClass);
+$ns = explode('\\', $generator->modelClass)[0];
 
 echo "<?php\n";
 ?>
@@ -16,8 +17,8 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
-use modava\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
-use modava\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= $ns ?>\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
+use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
