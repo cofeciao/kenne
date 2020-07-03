@@ -1,9 +1,10 @@
 <?php
 /* @var $generator yii\gii\generators\model\Generator */
+$ns = explode('\\', $generator->moduleClass)[0];
 ?>
 <?= "<?php" ?>
 
-use modava\<?= $generator->moduleID ?>\<?= ucfirst($generator->moduleID) ?>Module;
+use <?= $ns ?>\<?= $generator->moduleID ?>\<?= ucfirst($generator->moduleID) ?>Module;
 
 return [
     'availableLocales' => [

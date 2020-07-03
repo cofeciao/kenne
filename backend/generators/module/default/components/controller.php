@@ -1,9 +1,10 @@
 <?php
 /* @var $generator yii\gii\generators\model\Generator */
+$ns = explode('\\', $generator->moduleClass)[0];
 ?>
 <?= "<?php" ?>
 
-namespace modava\<?= $generator->moduleID ?>\components;
+namespace <?= $ns ?>\<?= $generator->moduleID ?>\components;
 
 use backend\components\MyController;
 

@@ -1,9 +1,10 @@
 <?php
 /* @var $generator yii\gii\generators\model\Generator */
+$ns = explode('\\', $generator->moduleClass)[0];
 ?>
 <?= "<?php\n" ?>
 
-namespace modava\<?= $generator->moduleID ?>\assets;
+namespace <?= $ns ?>\<?= $generator->moduleID ?>\assets;
 
 use yii\web\AssetBundle;
 

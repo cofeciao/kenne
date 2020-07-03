@@ -23,7 +23,7 @@ namespace <?= $generator->ns ?>\table;
 
 use cheatsheet\Time;
 <?php if(isset($columns['status'])) { ?>
-use modava\<?= $generator->messageCategory ?>\models\query\<?= $className ?>Query;
+use <?= $generator->ns ?>\query\<?= $className ?>Query;
 <?php } ?>
 use Yii;
 use yii\db\ActiveRecord;

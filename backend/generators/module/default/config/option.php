@@ -1,15 +1,16 @@
 <?php
 /* @var $generator yii\gii\generators\model\Generator */
+$ns = explode('\\', $generator->moduleClass)[0];
 ?>
 <?= "<?php" ?>
 
-use modava\<?= $generator->moduleID ?>\components\MyErrorHandler;
+use <?= $ns ?>\<?= $generator->moduleID ?>\components\MyErrorHandler;
 
 $config = [
     'defaultRoute' => '<?= $generator->moduleID ?>/index',
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'aliases' => [
-        '@<?= $generator->moduleID ?>web' => '@modava/<?= $generator->moduleID ?>/web',
+        '@<?= $generator->moduleID ?>web' => '@<?= $ns ?>/<?= $generator->moduleID ?>/web',
     ],
     'components' => [
         'errorHandler' => [
