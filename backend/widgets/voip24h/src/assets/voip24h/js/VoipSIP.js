@@ -629,6 +629,14 @@ $(function () {
         $('#numDisplay').val(uri);
         micPermissionAllowed(VoipSIP.phoneCallButtonPressed, VoipSIP.phoneCallButtonPressed);
     });
+    $('body').on('click', '.call-to', function (event) {
+        event.preventDefault();
+        console.log('a');
+        if (!$('#sipClient').hasClass('active')) $('#sipClient').addClass('active');
+        var uri = $(this).data('uri');
+        $('#numDisplay').val(uri);
+        micPermissionAllowed(VoipSIP.phoneCallButtonPressed, VoipSIP.phoneCallButtonPressed);
+    });
     $('#sldVolume').on('change', function () {
         var v = $(this).val() / 100, btn = $('#btnVol'), icon = $('#btnVol').find('i'), active = VoipSIP.callActiveID;
         if (VoipSIP.Sessions[active]) {

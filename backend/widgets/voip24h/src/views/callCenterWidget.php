@@ -5,6 +5,7 @@
 
 ?>
     <div id="sipClient">
+        <div id="hide-call-center"><i class="fa fa-times"></i></div>
         <div id="sip-dialpad">
             <div id="sip-dialpad-header">
                 <i class="fa fa-angle-double-down"></i>
