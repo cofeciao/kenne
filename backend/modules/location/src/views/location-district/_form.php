@@ -42,7 +42,7 @@ if ($model->ProvinceId != null) $model->countryId = $model->provinceHasOne->coun
         </div>
         <div class="col-6">
             <?php
-            echo common\widgets\Select2::widget([
+            echo modava\select2\Select2::widget([
                 'model' => $model,
                 'attribute' => 'ProvinceId',
                 'data' => ArrayHelper::map(LocationProvinceTable::getProvinceByCountry($model->countryId), 'id', 'name'),

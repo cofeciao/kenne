@@ -1,6 +1,6 @@
 <?php
 
-namespace common\widgets\assets;
+namespace modava\select2\assets;
 
 use yii\web\AssetBundle;
 

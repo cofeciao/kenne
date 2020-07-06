@@ -47,6 +47,7 @@
     "modava/tiny": "@dev",
     "modava/imagick": "@dev",
     "modava/location": "@dev",
+    "modava/generator": "@dev",
     "unclead/yii2-multiple-input": "~2.0",
     "2amigos/yii2-date-picker-widget" : "*",
     "2amigos/yii2-date-time-picker-widget" : "*"
