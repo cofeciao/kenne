@@ -22,15 +22,15 @@ if (YII2_ENV_DEV) {
         'allowedIPs' => ['127.0.0.1', '::1'],
         'generators' => [
             'module' => [
-                'class' => \backend\generators\module\Generator::class,
+                'class' => \modava\generators\module\Generator::class,
                 'templates' => ['generators' => '@app/backend/generators/module/Generator']
             ],
             'model' => [
-                'class' => \backend\generators\model\Generator::class,
+                'class' => \modava\generators\model\Generator::class,
                 'templates' => ['generators' => '@app/backend/generators/model/Generator']
             ],
             'crud' => [
-                'class' => \backend\generators\crud\Generator::class,
+                'class' => \modava\generators\crud\Generator::class,
                 'templates' => ['generators' => '@app/backend/generators/crud/Generator']
             ],
         ]

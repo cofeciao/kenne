@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace backend\generators\module;
+namespace modava\generators\module;
 
 use yii\gii\CodeFile;
 use yii\helpers\Html;

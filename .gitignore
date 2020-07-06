@@ -101,3 +101,8 @@ phpunit.phar
 /package/tiny/.git
 /package/tiny/README.md
 /package/tiny/composer.json
+
+
+/backend/modava/composer.json
+/backend/modava/README.md
+/backend/modava/.git

@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace backend\generators\model;
+namespace modava\generators\model;
 
 use Yii;
 use yii\db\ActiveQuery;

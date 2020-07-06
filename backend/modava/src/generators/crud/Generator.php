@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace backend\generators\crud;
+namespace modava\generators\crud;
 
 use Yii;
 use yii\db\ActiveRecord;

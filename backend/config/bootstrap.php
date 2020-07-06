@@ -20,3 +20,6 @@ Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/vo
 //Widget
 Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
 Yii::setAlias('modava/imagick', dirname(dirname(__DIR__)) . '/package/imagick/src');
+
+
+Yii::setAlias('modava/generators', dirname(dirname(__DIR__)) . '/backend/modava/src/generators');
