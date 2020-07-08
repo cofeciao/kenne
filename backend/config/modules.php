@@ -34,6 +34,9 @@ return [
     'marketing' => [
         'class' => 'modava\marketing\MarketingModule',
     ],
+    'website' => [
+        'class' => 'modava\website\WebsiteModule',
+    ],
 
     'user' => [
         'class' => 'backend\modules\user\User',

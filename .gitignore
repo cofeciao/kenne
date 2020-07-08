@@ -85,6 +85,10 @@ phpunit.phar
 /backend/modules/location/README.md
 /backend/modules/location/.git
 
+/backend/modules/website/composer.json
+/backend/modules/website/README.md
+/backend/modules/website/.git
+
 /backend/widgets/tiny/composer.json
 /backend/widgets/tiny/README.md
 /backend/widgets/tiny/.git
