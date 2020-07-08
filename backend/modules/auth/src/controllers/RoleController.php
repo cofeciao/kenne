@@ -2,21 +2,25 @@
 
 namespace modava\auth\controllers;
 
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\auth\AuthModule;
-use backend\components\MyController;
+use backend\components\MyComponent;
 use modava\auth\models\RbacAuthItem;
 use modava\auth\models\search\RbacAuthItemSearch;
+use modava\auth\models\User;
+use Yii;
 
-/**
- * RbacAuthItemController implements the CRUD actions for RbacAuthItem model.
- */
-class RbacAuthItemController extends MyController
+use modava\auth\components\MyAuthController;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\rbac\Item;
+use yii\web\NotFoundHttpException;
+
+class RoleController extends MyAuthController
 {
+    public $searchClass = [
+        'class' => RbacAuthItemSearch::class,
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -39,23 +43,38 @@ class RbacAuthItemController extends MyController
     }
 
     /**
-     * Lists all RbacAuthItem models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new RbacAuthItemSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $user = new User();
+        $roleName = $user->getRoleName(Yii::$app->user->id);
+        $searchModel = Yii::createObject($this->searchClass);
+        $searchModel->type = Item::TYPE_ROLE;
+        $dataProvider = $searchModel->searchRole(Yii::$app->request->queryParams);
+        unset($dataProvider->allModels['loginToBackend']);
+        unset($dataProvider->allModels[$roleName]);
+
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 20;
+        }
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'totalPage' => $totalPage,
         ]);
     }
 
 
     /**
-     * Displays a single RbacAuthItem model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -68,42 +87,18 @@ class RbacAuthItemController extends MyController
     }
 
     /**
-     * Creates a new RbacAuthItem model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new RbacAuthItem();
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                    'title' => 'Thông báo',
-                    'text' => 'Tạo mới thành công',
-                    'type' => 'success'
-                ]);
-                return $this->redirect(['view', 'id' => $model->name]);
-            } else {
-                $errors = Html::tag('p', 'Tạo mới thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
-            }
-        }
-
         return $this->render('create', [
-            'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing RbacAuthItem model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -111,38 +106,12 @@ class RbacAuthItemController extends MyController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                        'title' => 'Thông báo',
-                        'text' => 'Cập nhật thành công',
-                        'type' => 'success'
-                    ]);
-                    return $this->redirect(['view', 'id' => $model->name]);
-                }
-            } else {
-                $errors = Html::tag('p', 'Cập nhật thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
-            }
-        }
-
         return $this->render('update', [
-            'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing RbacAuthItem model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -180,17 +149,18 @@ class RbacAuthItemController extends MyController
     }
 
     /**
-     * Finds the RbacAuthItem model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return RbacAuthItem the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
 
 
     protected function findModel($id)
     {
-        if (($model = RbacAuthItem::findOne($id)) !== null) {
+        return null;
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 

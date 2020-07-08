@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= AuthModule::t('auth', 'Create'); ?>">
+               title="<?= AuthModule::t('auth', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= AuthModule::t('auth', 'Create'); ?></a>
             <?= Html::a(AuthModule::t('auth', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(AuthModule::t('auth', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,24 +47,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'username',
-						'auth_key',
-						'password_hash',
-						'oauth_client',
-						'oauth_client_user_id',
-						'password_reset_token',
-						'email:email',
+                        'id',
+                        'username',
+                        'auth_key',
+                        'password_hash',
+                        'oauth_client',
+                        'oauth_client_user_id',
+                        'password_reset_token',
+                        'email:email',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
                                 return Yii::$app->getModule('auth')->params['status'][$model->status];
                             }
                         ],
-						'created_at',
-						'updated_at',
-						'logged_at',
-						'verification_token',
+                        'created_at:datetime',
+                        'updated_at:datetime',
+                        'logged_at',
+                        'verification_token',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => AuthModule::t('auth', 'Created By')

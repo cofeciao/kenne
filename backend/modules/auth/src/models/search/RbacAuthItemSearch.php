@@ -2,10 +2,13 @@
 
 namespace modava\auth\models\search;
 
+use dosamigos\arrayquery\ArrayQuery;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use modava\auth\models\RbacAuthItem;
+use yii\data\ArrayDataProvider;
+use yii\rbac\Item;
 
 /**
  * RbacAuthItemSearch represents the model behind the search form of `modava\auth\models\RbacAuthItem`.
@@ -15,6 +18,7 @@ class RbacAuthItemSearch extends RbacAuthItem
     /**
      * @inheritdoc
      */
+
     public function rules()
     {
         return [
@@ -71,5 +75,42 @@ class RbacAuthItemSearch extends RbacAuthItem
             ->andFilterWhere(['like', 'data', $this->data]);
 
         return $dataProvider;
+    }
+
+    public function searchRole(array $params): ArrayDataProvider
+    {
+        $authManager = Yii::$app->getAuthManager();
+
+        if ($this->type == Item::TYPE_ROLE) {
+            $result = Yii::$app->getAuthManager()->getAssignments(Yii::$app->user->id);
+            foreach ($result as $roleName) {
+                $roleNames = $roleName->roleName;
+            }
+
+            $items = $authManager->getChildRoles($roleNames);
+        } elseif
+        ($this->type == Item::TYPE_PERMISSION) {
+            $items = $authManager->getPermissions();
+        }
+
+        $query = new ArrayQuery($items);
+
+        $this->load($params);
+
+        if ($this->validate()) {
+            $query->addCondition('name', $this->name ? "~{$this->name}" : null)
+                ->addCondition('rule_name', $this->rule_name ? "~{$this->rule_name}" : null)
+                ->addCondition('description', $this->description ? "~{$this->description}" : null);
+        }
+
+        return new ArrayDataProvider([
+            'allModels' => $query->find(),
+            'sort' => [
+                'attributes' => ['name'],
+            ],
+            'pagination' => [
+                'pageSize' => 25,
+            ],
+        ]);
     }
 }

@@ -145,6 +145,7 @@ class UserController extends MyController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelProfile = UserProfile::findOne(['user_id' => $id]);
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -171,6 +172,7 @@ class UserController extends MyController
 
         return $this->render('update', [
             'model' => $model,
+            'modelProfile' => $modelProfile
         ]);
     }
 

@@ -39,6 +39,12 @@ class User extends ActiveRecord implements IdentityInterface
     const USERS = 'users'; //user frontend
 
     public $toastr_key = 'user';
+    public $manager;
+
+    public function init()
+    {
+        $this->manager = Yii::$app->authManager;
+    }
 
     /**
      * {@inheritdoc}
@@ -220,6 +226,28 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /*
+     * Trả về tên Role của user.
+     */
+
+    public function getRoleName($id)
+    {
+        $cache = Yii::$app->cache;
+        $key = 'rbac-' . $id;
+
+        $assignment = $cache->get($key);
+
+        if ($assignment == false) {
+            $assignment = array_keys($this->manager->getAssignments($id));
+            $assignment = $assignment != null ? $assignment[0] : null;
+
+            $cache->set($key, $assignment);
+        }
+
+
+        return $assignment;
     }
 
     /**
