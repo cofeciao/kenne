@@ -1,6 +1,6 @@
 <?php
 
-use common\widgets\assets\Select2Asset;
+use modava\select2\assets\Select2Asset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use modava\customer\models\table\CustomerProductTable;
@@ -9,7 +9,7 @@ use modava\customer\models\CustomerPayment;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\customer\CustomerModule;
-use common\widgets\Select2;
+use modava\select2\Select2;
 use yii\helpers\ArrayHelper;
 use unclead\multipleinput\MultipleInput;
 use modava\customer\models\table\CustomerTable;

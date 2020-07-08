@@ -1,11 +1,10 @@
 <?php
 
-namespace common\widgets;
+namespace modava\select2;
 
-use common\widgets\assets\Select2Asset;
+use modava\select2\assets\Select2Asset;
 use kartik\base\InputWidget;
 use yii\helpers\Html;
-use yii\base\Widget;
 
 class Select2 extends InputWidget
 {
