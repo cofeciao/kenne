@@ -29,7 +29,7 @@ class m200708_071423_create_table_website_key_value extends Migration
             'updated_by' => $this->integer(11)->null(),
         ], $tableOptions);
 
-        $this->addColumn('website_key_value', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
+        $this->addColumn('website_key_value', 'language', "ENUM('', 'vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NULL COMMENT 'Language' AFTER `status`");
         $this->createIndex('key', 'website_key_value', 'key');
         $this->addForeignKey('fk_website_key_value_created_user', 'website_key_value', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         $this->addForeignKey('fk_website_key_value_updated_user', 'website_key_value', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');

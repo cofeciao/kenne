@@ -4,7 +4,7 @@ namespace modava\website\models;
 
 use common\models\User;
 use modava\website\WebsiteModule;
-use modava\website\models\table\LinkStaticTable;
+use modava\website\models\table\KeyValueTable;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 
@@ -22,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property int $created_by
  * @property int $updated_by
  */
-class KeyValue extends LinkStaticTable
+class KeyValue extends KeyValueTable
 {
     public $toastr_key = 'key-value';
 

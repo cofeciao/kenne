@@ -7,7 +7,7 @@ use modava\website\models\query\KeyValueQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
-class LinkStaticTable extends \yii\db\ActiveRecord
+class KeyValueTable extends \yii\db\ActiveRecord
 {
     const STATUS_PUBLISHED = 1;
     const STATUS_DISABLED = 0;

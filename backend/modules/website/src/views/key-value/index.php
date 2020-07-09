@@ -111,6 +111,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'attribute' => 'language',
                                                 'value' => function ($model) {
+                                                    if ($model->language == '')
+                                                        return null;
                                                     return Yii::$app->getModule('website')->params['availableLocales'][$model->language];
                                                 },
                                                 'headerOptions' => [
