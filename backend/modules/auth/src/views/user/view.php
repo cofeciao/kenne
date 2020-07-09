@@ -49,22 +49,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attributes' => [
                         'id',
                         'username',
-                        'auth_key',
-                        'password_hash',
                         'oauth_client',
                         'oauth_client_user_id',
-                        'password_reset_token',
                         'email:email',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('auth')->params['status'][$model->status];
+                                return \modava\auth\models\User::STATUS[$model->status];
                             }
                         ],
                         'created_at:datetime',
                         'updated_at:datetime',
-                        'logged_at',
-                        'verification_token',
+                        'logged_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => AuthModule::t('auth', 'Created By')

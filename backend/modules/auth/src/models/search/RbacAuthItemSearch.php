@@ -3,6 +3,7 @@
 namespace modava\auth\models\search;
 
 use dosamigos\arrayquery\ArrayQuery;
+use modava\auth\models\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -46,6 +47,7 @@ class RbacAuthItemSearch extends RbacAuthItem
     public function search($params)
     {
         $query = RbacAuthItem::find();
+        if(!Yii::$app->user->can(User::DEV)) $query->andWhere(['<>', 'type' => self::TYPE_ROLE]);
 
         // add conditions that should always apply here
 

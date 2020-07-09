@@ -4,6 +4,7 @@ namespace modava\auth\models;
 
 use Yii;
 use yii\base\NotSupportedException;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -30,9 +31,9 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
     const STATUS = [
+        self::STATUS_ACTIVE => 'Active',
         self::STATUS_DELETED => 'Deleted',
         self::STATUS_INACTIVE => 'Inactive',
-        self::STATUS_ACTIVE => 'Active'
     ];
 
     const DEV = 'develop';
@@ -40,6 +41,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     public $toastr_key = 'user';
     public $manager;
+    public $role_name;
+    public $role;
 
     public function init()
     {
@@ -287,6 +290,25 @@ class User extends ActiveRecord implements IdentityInterface
         $this->trigger(self::EVENT_AFTER_SIGNUP);
         // Default role
         $auth = Yii::$app->authManager;
-        $auth->assign($auth->getRole(self::USERS), $this->getId());
+        $auth->assign($auth->getRole($this->role_name), $this->getId());
+    }
+
+    /*
+     * Kiểm tra parent - child
+     * $role đưa vào cần kiểm tra
+     * $roleUser role của người đang kiểm tra
+     */
+    public function checkParent(string $role, string $roleUser): bool
+    {
+        if ($roleUser == 'user_develop') {
+            return true;
+        }
+        $result = $this->manager->getChildRoles($roleUser);
+        foreach ($result as $roleName) {
+            if ($role == $roleName->name) {
+                return true;
+            }
+        }
+        return false;
     }
 }

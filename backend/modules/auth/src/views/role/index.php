@@ -13,7 +13,7 @@ use modava\auth\models\RbacAuthItem;
 /* @var $searchModel modava\auth\models\search\RbacAuthItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = AuthModule::t('auth', 'Rbac Auth Items');
+$this->title = AuthModule::t('auth', 'Roles');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>

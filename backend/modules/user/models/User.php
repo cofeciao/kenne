@@ -161,25 +161,6 @@ class User extends \common\models\User
     }
 
     /*
-     * Kiểm tra parent - child
-     * $role đưa vào cần kiểm tra
-     * $roleUser role của người đang kiểm tra
-     */
-    public function checkParent(string $role, string $roleUser): bool
-    {
-        if ($roleUser == 'user_develop') {
-            return true;
-        }
-        $result = $this->manager->getChildRoles($roleUser);
-        foreach ($result as $roleName) {
-            if ($role == $roleName->name) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /*
      * Lấy toàn bộ người dùng là do người đó tạo ra hoặc người được tạo ra tạo ra.
      */
     public static function getChild($id)

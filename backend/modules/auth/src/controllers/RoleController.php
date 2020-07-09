@@ -5,21 +5,24 @@ namespace modava\auth\controllers;
 use backend\components\MyComponent;
 use modava\auth\models\RbacAuthItem;
 use modava\auth\models\search\RbacAuthItemSearch;
+use modava\auth\models\table\RbacAuthItemTable;
 use modava\auth\models\User;
 use Yii;
-
 use modava\auth\components\MyAuthController;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\rbac\Item;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class RoleController extends MyAuthController
 {
     public $searchClass = [
         'class' => RbacAuthItemSearch::class,
     ];
+
+    protected $type = Item::TYPE_ROLE;
 
     /**
      * {@inheritdoc}
@@ -81,89 +84,100 @@ class RoleController extends MyAuthController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if (!$model) return $this->redirect(['index']);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-    /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionPermissionForRole()
     {
-        return $this->render('create', [
-        ]);
-    }
+        if (Yii::$app->request->isAjax) {
+            $result = [];
+            $name = Yii::$app->request->get('name');
+            $permission = Yii::$app->authManager->getPermissions();
+            $permission_user = array_keys(Yii::$app->authManager->getPermissionsByRole($name));
 
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        return $this->render('update', [
-        ]);
-    }
-
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
-        try {
-            if ($model->delete()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => 'Xoá thành công',
-                    'type' => 'success'
-                ]);
-            } else {
-                $errors = Html::tag('p', 'Xoá thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
+            if (!Yii::$app->user->can(User::DEV)) {
+                unset($permission['loginToBackend']);
+                unset($permission_user['loginToBackend']);
             }
-        } catch (Exception $ex) {
-            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                'title' => 'Thông báo',
-                'text' => Html::tag('p', 'Xoá thất bại: ' . $ex->getMessage()),
-                'type' => 'warning'
-            ]);
+
+            foreach ($permission as $name) {
+                if (in_array($name->name, $permission_user)) {
+                    $selected = 'selected';
+                } else {
+                    $selected = '';
+                }
+                $result[] = [
+                    'name' => $name->name,
+                    'description' => $name->description,
+                    'selected' => $selected
+                ];
+            }
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return $result;
         }
-        return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-
-
-    protected function findModel($id)
+    public function actionPermissionChange()
     {
-        return null;
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $itemAssign = [];
+        $name = Yii::$app->request->post('name');
+        $item = Yii::$app->request->post('item');
+
+        if ($item != null && count($item) != 0) {
+            foreach ($item as $value) {
+                $itemAssign[] = $value;
+            }
         }
 
-        throw new NotFoundHttpException(Yii::t('auth', 'The requested page does not exist.'));
+        $permission_user = Yii::$app->authManager->getPermissionsByRole($name);
+        unset($permission_user["loginToBackend"]);
+        $permission_user = array_keys($permission_user);
+
+        $model = $this->findModel($name);
+
+        if (count($itemAssign) > count($permission_user)) {
+            $itemAdd = array_diff($itemAssign, $permission_user);
+            if ($model->addChildren($itemAdd)) {
+                return 1;
+            }
+        } elseif (count($itemAssign) < count($permission_user)) {
+            $itemRemove = array_diff($permission_user, $itemAssign);
+            if ($model->removeChildren($itemRemove)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    protected function findModel($name)
+    {
+        $auth = Yii::$app->authManager;
+
+        $user = new User();
+
+        if (!$user->checkParent($name, $user->getRoleName(Yii::$app->user->id))) {
+            Yii::$app->session->setFlash('alert', [
+                'body' => 'Bạn không có quyền.',
+                'class' => 'bg-danger',
+            ]);
+            return false;
+        }
+
+        $item = $this->type === Item::TYPE_ROLE ? $auth->getRole($name) : $auth->getPermission($name);
+
+        if (empty($item)) {
+            return false;
+        }
+        if ($item->name == 'loginToBackend' || $item->name == $user->getRoleName(Yii::$app->user->id)) {
+            header("Location: " . FRONTEND_HOST_INFO, true, 301);
+            exit();
+        }
+
+        return new RbacAuthItem($item);
     }
 }

@@ -9,6 +9,11 @@ return [
             'roles' => ['?']
         ],
         [
+            'allow' => true,
+            'actions' => ['logout'],
+            'roles' => ['@']
+        ],
+        [
             'controllers' => ['site'],
             'allow' => true,
             'actions' => ['index'],

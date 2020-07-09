@@ -190,7 +190,8 @@ class RbacAuthItemController extends MyController
 
     protected function findModel($id)
     {
-        if (($model = RbacAuthItem::findOne($id)) !== null) {
+        $model = RbacAuthItem::findOne($id);
+        if ($model !== null) {
             return $model;
         }
 
