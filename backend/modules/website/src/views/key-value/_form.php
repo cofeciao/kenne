@@ -19,6 +19,8 @@ use modava\website\WebsiteModule;
 
     <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('website')->params['availableLocales'])->label(WebsiteModule::t('website', 'Ngôn ngữ')) ?>
+
     <div class="form-group">
         <?= Html::submitButton(WebsiteModule::t('website', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

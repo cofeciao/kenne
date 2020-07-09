@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string $key
  * @property string $value
  * @property string $status
+ * @property string $language
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
@@ -57,6 +58,8 @@ class KeyValue extends LinkStaticTable
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'value'], 'string', 'max' => 255],
             [['key'], 'string', 'max' => 25],
+            [['language'], 'string'],
+            ['language','in','range'=>['vi','en','jp'],'strict'=>false],
         ];
     }
 
@@ -70,6 +73,8 @@ class KeyValue extends LinkStaticTable
             'title' => WebsiteModule::t('website', 'Title'),
             'key' => WebsiteModule::t('website', 'Key'),
             'value' => WebsiteModule::t('website', 'Value'),
+            'status' => WebsiteModule::t('website', 'Status'),
+            'language' => WebsiteModule::t('website', 'Language'),
             'created_at' => WebsiteModule::t('website', 'Created At'),
             'updated_at' => WebsiteModule::t('website', 'Updated At'),
             'created_by' => WebsiteModule::t('website', 'Created By'),

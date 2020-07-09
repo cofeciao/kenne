@@ -109,6 +109,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'key',
                                             'value',
                                             [
+                                                'attribute' => 'language',
+                                                'value' => function ($model) {
+                                                    return Yii::$app->getModule('website')->params['availableLocales'][$model->language];
+                                                },
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
                                                 'attribute' => 'created_by',
                                                 'value' => 'userCreated.userProfile.fullname',
                                                 'headerOptions' => [
