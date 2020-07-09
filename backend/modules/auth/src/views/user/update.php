@@ -7,6 +7,7 @@ use modava\auth\AuthModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\auth\models\User */
+/* @var $modelProfile modava\auth\models\UserProfile */
 
 $this->title = AuthModule::t('auth', 'Update : {name}', [
     'name' => $model->id,
@@ -35,6 +36,7 @@ $this->params['breadcrumbs'][] = AuthModule::t('auth', 'Update');
             <section class="hk-sec-wrapper">
                 <?= $this->render('_form', [
                     'model' => $model,
+                    'modelProfile' => $modelProfile
                 ]) ?>
 
             </section>
