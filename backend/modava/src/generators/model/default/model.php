@@ -80,7 +80,7 @@ class <?= $className ?> extends <?= $className ?>Table
 <?php if (isset($tableSchema->columns['created_at']) && isset($tableSchema->columns['updated_at'])) { ?>
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
-                    'preserveNonEmptyValues' => true,
+                    'preserveNonEmptyValues' => false,
                     'attributes' => [
                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
