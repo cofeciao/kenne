@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= WebsiteModule::t('website', 'Create'); ?>">
+               title="<?= WebsiteModule::t('website', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
             <?= Html::a(WebsiteModule::t('website', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(WebsiteModule::t('website', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,12 +47,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'title',
-						'key',
-						'value',
-						'created_at:date',
-						'updated_at:date',
+                        'id',
+                        'title',
+                        'key',
+                        'value',
+                        [
+                            'attribute' => 'language',
+                            'value' => function ($model) {
+                                if ($model->language == '')
+                                    return null;
+                                return Yii::$app->getModule('website')->params['availableLocales'][$model->language];
+                            },
+                        ],
+                        'created_at:date',
+                        'updated_at:date',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => WebsiteModule::t('website', 'Created By')

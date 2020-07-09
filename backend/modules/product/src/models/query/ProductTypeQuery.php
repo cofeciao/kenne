@@ -25,4 +25,8 @@ class ProductTypeQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy(['id' => SORT_DESC]);
     }
+    public function findByLanguage()
+    {
+        return $this->andWhere([ProductType::tableName() . '.language' => \Yii::$app->language]);
+    }
 }

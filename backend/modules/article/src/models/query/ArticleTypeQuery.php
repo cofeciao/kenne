@@ -25,4 +25,9 @@ class ArticleTypeQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy(['id' => SORT_DESC]);
     }
+
+    public function findByLanguage()
+    {
+        return $this->andWhere([ArticleType::tableName() . '.language' => \Yii::$app->language]);
+    }
 }
