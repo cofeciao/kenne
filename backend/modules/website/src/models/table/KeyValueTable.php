@@ -2,10 +2,8 @@
 
 namespace modava\website\models\table;
 
-use cheatsheet\Time;
 use modava\website\models\query\KeyValueQuery;
 use Yii;
-use yii\db\ActiveRecord;
 
 class KeyValueTable extends \yii\db\ActiveRecord
 {
@@ -17,6 +15,10 @@ class KeyValueTable extends \yii\db\ActiveRecord
         return 'website_key_value';
     }
 
+    public static function find()
+    {
+        return new KeyValueQuery(get_called_class());
+    }
 
     public function afterDelete()
     {
