@@ -28,6 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
                title="<?= AuthModule::t('auth', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= AuthModule::t('auth', 'Create'); ?></a>
+            <a class="btn btn-success" href="<?= Url::to(['/auth/user-metadata/update', 'id' => $model->id]); ?>"
+               title="<?= AuthModule::t('auth', 'Metadata'); ?>">
+                <i class="glyphicon glyphicon-cog"></i> <?= AuthModule::t('auth', 'Metadata'); ?></a>
             <?= Html::a(AuthModule::t('auth', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(AuthModule::t('auth', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -62,11 +65,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:datetime',
                         'logged_at:datetime',
                         [
-                            'attribute' => 'userCreated.userProfile.fullname',
+                            'attribute' => 'created_by',
+                            'value' => function ($model) {
+                                if ($model->userCreated == null) return null;
+                                return $model->userCreated->userProfile->fullname;
+                            },
                             'label' => AuthModule::t('auth', 'Created By')
                         ],
                         [
-                            'attribute' => 'userUpdated.userProfile.fullname',
+                            'attribute' => 'updated_by',
+                            'value' => function ($model) {
+                                if ($model->userUpdated == null) return null;
+                                return $model->userUpdated->userProfile->fullname;
+                            },
                             'label' => AuthModule::t('auth', 'Updated By')
                         ],
                     ],

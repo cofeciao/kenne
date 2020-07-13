@@ -142,8 +142,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => AuthModule::t('auth', 'Actions'),
-                                                'template' => '{update} {delete}',
+                                                'template' => '{metadata} {update} {delete}',
                                                 'buttons' => [
+                                                    'metadata' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-cog"></span>', ['/auth/user-metadata/update', 'id' => $model->id], [
+                                                            'title' => AuthModule::t('auth', 'Metadata'),
+                                                            'alia-label' => AuthModule::t('auth', 'Metadata'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-success btn-xs'
+                                                        ]);
+                                                    },
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                                             'title' => AuthModule::t('auth', 'Update'),

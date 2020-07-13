@@ -7,6 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -273,6 +274,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
+    public function getUserUpdated()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
     public function getAuthItem()
     {
         return $this->hasMany(RbacAuthItem::class, ['name' => 'item_name'])
@@ -310,5 +316,22 @@ class User extends ActiveRecord implements IdentityInterface
             }
         }
         return false;
+    }
+
+    public function getUserMetadataHasOne()
+    {
+        return $this->hasOne(UserMetadata::class, ['user_id' => 'id']);
+    }
+
+    public function getUserMetadata($metadataName = null)
+    {
+        if ($this->primaryKey == null) return null;
+        $metadata = $this->userMetadataHasOne == null ? [] : $this->userMetadataHasOne->metadata;
+        if (!is_array($metadata)) $metadata = [];
+        if (is_string($metadataName)) return $metadata[$metadataName] ?: null;
+        if (is_array($metadataName)) {
+            return ArrayHelper::filter($metadata, $metadataName);
+        }
+        return null;
     }
 }
