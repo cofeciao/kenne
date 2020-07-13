@@ -160,6 +160,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                             ],
                                             [
+                                                'attribute' => 'permission_user',
+                                                'value' => function ($model) {
+                                                    if ($model->type != \modava\customer\models\Customer::TYPE_ONLINE) return null;
+                                                    return $model->permissionUserHasOne->userProfile->fullname;
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'direct_sale',
+                                                'value' => function ($model) {
+                                                    if ($model->directSaleHasOne == null) return null;
+                                                    return $model->directSaleHasOne->userProfile->fullname;
+                                                }
+                                            ],
+                                            [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => CustomerModule::t('customer', 'Actions'),
                                                 'template' => '<div>{update} {delete}</div><div class="mt-1">{create-order} {list-order}</div>',
