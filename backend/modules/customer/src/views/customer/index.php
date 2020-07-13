@@ -173,6 +173,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     return $model->directSaleHasOne->userProfile->fullname;
                                                 }
                                             ],
+                                            'sale_online_note',
+                                            'direct_sale_note',
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => CustomerModule::t('customer', 'Actions'),
@@ -218,8 +220,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     },
                                                 ],
                                                 'headerOptions' => [
-                                                    'width' => 150,
+                                                    'width' => 120,
                                                 ],
+                                                'contentOptions' => [
+                                                    'class' => 'text-center'
+                                                ]
                                             ],
                                         ],
                                     ]); ?>
