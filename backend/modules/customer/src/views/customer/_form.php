@@ -49,7 +49,7 @@ $is_online = in_array($model->scenario, [Customer::SCENARIO_ONLINE, Customer::SC
 $is_clinic = in_array($model->scenario, [Customer::SCENARIO_ADMIN, Customer::SCENARIO_CLINIC]);
 
 $user_sales_online = $this->params['user_sales_online'] ?: null;
-$user_direct = $this->params['user_direct'] ?: null;
+$user_direct_sales = $this->params['user_direct_sales'] ?: null;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="customer-form">
@@ -309,7 +309,7 @@ $user_direct = $this->params['user_direct'] ?: null;
                                     <?= Select2::widget([
                                         'model' => $model,
                                         'attribute' => 'direct_sale',
-                                        'data' => ArrayHelper::map(User::getUserByRole($user_direct, [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                                        'data' => ArrayHelper::map(User::getUserByRole($user_direct_sales, [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
                                         'options' => []
                                     ]) ?>
                                 </div>
