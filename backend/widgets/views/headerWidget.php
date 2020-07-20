@@ -10,17 +10,18 @@ use yii\helpers\Url;
        href="javascript:void(0);"><span class="feather-icon"><i data-feather="more-vertical"></i></span></a>
     <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
                 class="feather-icon"><i data-feather="menu"></i></span></a>
-    <a class="navbar-brand" href="<?=Url::home(); ?>">
+    <a class="navbar-brand" href="<?= Url::home(); ?>">
         <?= Yii::t('backend', 'Modava'); ?>
     </a>
     <ul class="navbar-nav hk-navbar-content order-xl-2">
         <?= class_exists('modava\voip24h\CallCenter') ? \modava\voip24h\CallCenter::widget(array_merge(Yii::$app->user->identity->getUserMetadata([
-                'Pass',
-                'Display',
-                'User',
-                'Realm',
-                'WSServer',
-            ]), [
+            'Pass',
+            'Display',
+            'User',
+            'Realm',
+            'WSServer',
+        ]), [
+            'urlGetUserInfo' => Url::toRoute(['/customer/customer/get-info']),
             'layout' => "<li class=\"nav-item\">{item}{callcenter}</li>",
             'itemOptions' => [
                 'class' => 'nav-link'
@@ -204,7 +205,7 @@ use yii\helpers\Url;
                 <a href="#" class="nav-link">Help Desk</a>
             </li>
             <li class="nav-item<?php if (Yii::$app->controller->module->id == 'calendar') echo ' active'; ?>">
-                <a href="<?=Url::toRoute(['/calendar']); ?>" class="nav-link"><?=Yii::t('backend', 'Calendar'); ?></a>
+                <a href="<?= Url::toRoute(['/calendar']); ?>" class="nav-link"><?= Yii::t('backend', 'Calendar'); ?></a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">Email</a>
