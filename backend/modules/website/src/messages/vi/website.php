@@ -1,0 +1,23 @@
+<?php
+return [
+    'Create' => 'Tạo mới',
+    'Update' => 'Cập nhật',
+    'Delete' => 'Xóa',
+    'Delete?' => 'Bạn thực sự muốn xóa?',
+    'First' => 'Đầu',
+    'Last' => 'Cuối',
+    'Previous' => 'Trước',
+    'Next' => 'Tiếp',
+    'Title' => 'Tiêu đề',
+    'Slug' => 'Slug',
+    'Created At' => 'Thời gian tạo',
+    'Updated At' => 'Thời gian cập nhật',
+    'Created By' => 'Người tạo',
+    'Updated By' => 'Người cập nhật',
+    'Update : {name}' => 'Cập nhật : {name}',
+    'Actions' => 'Hành động',
+    'Update type: {name}' => 'Cập nhật thể loại: {name}',
+    'Content' => 'Nội dung',
+    'Language' => 'Ngôn ngữ',
+    'Name' => 'Tên',
+];

@@ -1,0 +1,116 @@
+# yii console commands
+#/yii
+/yii_test
+/yii_test.bat
+
+#Composer
+composer.lock
+
+# phpstorm project files
+.idea
+
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor
+
+# composer itself is not needed
+/composer.phar
+/composer.lock
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+
+# vagrant runtime
+/.vagrant
+
+/common/config/_log.php
+/common/config/_db.php
+/common/config/_db2.php
+/common/config/_mailer.php
+/common/config/_console.php
+/common/config/_api.php
+/common/config/config.php
+
+/backend/runtime
+/backend/web/assets
+/backend/web/img
+/backend/web/thumbs
+/backend/.htaccess
+
+/log
+
+/frontend/runtime
+/frontend/web/assets
+/frontend/web/uploads/
+/frontend/.htaccess
+
+# Git
+/backend/modules/auth/composer.json
+/backend/modules/auth/README.md
+/backend/modules/auth/.git
+
+/backend/modules/contact/composer.json
+/backend/modules/contact/README.md
+/backend/modules/contact/.git
+
+/backend/modules/product/composer.json
+/backend/modules/product/README.md
+/backend/modules/product/.git
+
+/backend/modules/article/composer.json
+/backend/modules/article/README.md
+/backend/modules/article/.git
+
+/backend/modules/customer/composer.json
+/backend/modules/customer/README.md
+/backend/modules/customer/.git
+
+/backend/modules/location/composer.json
+/backend/modules/location/README.md
+/backend/modules/location/.git
+
+/backend/modules/website/composer.json
+/backend/modules/website/README.md
+/backend/modules/website/.git
+
+/backend/widgets/tiny/composer.json
+/backend/widgets/tiny/README.md
+/backend/widgets/tiny/.git
+
+/backend/widgets/voip24h/composer.json
+/backend/widgets/voip24h/README.md
+/backend/widgets/voip24h/.git
+
+#package
+/package/imagick/.git
+/package/imagick/README.md
+/package/imagick/composer.json
+
+/package/tiny/.git
+/package/tiny/README.md
+/package/tiny/composer.json
+
+
+/backend/modava/composer.json
+/backend/modava/README.md
+/backend/modava/.git
+
+/common/widgets/select2/composer.json
+/common/widgets/select2/README.md
+/common/widgets/select2/.git
