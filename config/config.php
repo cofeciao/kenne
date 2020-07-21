@@ -137,11 +137,11 @@ if (YII2_CACHE) {
     ];
     $config['components']['session'] = [
         'class' => 'yii\redis\Session',
-        'keyPrefix' => $domain,
+        'keyPrefix' => $_SERVER['HTTP_HOST'],
     ];
     $config['components']['cache'] = [
         'class' => 'yii\redis\Cache',
-        'keyPrefix' => $domain,
+        'keyPrefix' => $_SERVER['HTTP_HOST'],
     ];
 }
 
