@@ -36,7 +36,6 @@ class User extends ActiveRecord implements IdentityInterface
         self::STATUS_DELETED => 'Deleted',
         self::STATUS_INACTIVE => 'Inactive',
     ];
-
     const DEV = 'develop';
     const SALES_ONLINE = 'sales_online';
     const CLINIC = 'clinic';

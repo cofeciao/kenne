@@ -54,4 +54,16 @@ return [
     'test' => [
         'class' => 'modava\test\TestModule',
     ],
+    'products' => [
+        'class' => 'modava\products\ProductsModule',
+    ],
+    'transactions' => [
+            'class' => 'modava\transactions\TransactionsModule',
+        ],
+    'orders' => [
+        'class' => 'modava\orders\OrdersModule',
+    ],
+    'categories' => [
+        'class' => 'modava\categories\CategoriesModule',
+    ],
 ];
