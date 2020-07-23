@@ -2,6 +2,7 @@
 
 namespace modava\products\controllers;
 
+use modava\imagick\Imagick;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -11,6 +12,7 @@ use modava\products\ProductsModule;
 use backend\components\MyController;
 use modava\products\models\Products;
 use modava\products\models\search\ProductsSearch;
+use yii\web\UploadedFile;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -74,7 +76,22 @@ class ProductsController extends MyController
         if ($model->load(Yii::$app->request->post())) {
             $model->created_at =  date('Y-m-d H:i:s');
             $model->updated_at =  date('Y-m-d H:i:s');
-
+            $model->pro_image = UploadedFile::getInstance($model,'file');
+            $tempName = explode('/',$model->pro_image->tempName);
+            $extension = explode('/',$model->pro_image->type);
+           /* echo "<pre>";
+            print_r($extension);
+            echo "</pre>";
+            die;*/
+            if($model->pro_image){
+                if (!file_exists("uploads")){
+                    mkdir('uploads',0755,true);
+                    $model->pro_image->saveAs("uploads/".$tempName[2].'.'.$extension[1]);
+                }else{
+                    $model->pro_image->saveAs("uploads/".$tempName[2].'.'.$extension[1]);
+                }
+            }
+            $model->pro_image ="/backend/web/uploads/".$tempName[2].'.'.$extension[1];
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',

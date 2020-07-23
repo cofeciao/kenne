@@ -121,7 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'attribute' => 'pro_image',
-                                                'label' => 'Hình ảnh'
+                                                'label' => 'Hình ảnh',
+                                                'content'=>function($model){
+                                                    return Html::img($model->pro_image,['width'=>'100px','height'=>'100px']);
+                                                }
                                             ],
                                             [
                                                 'attribute' => 'pro_status',

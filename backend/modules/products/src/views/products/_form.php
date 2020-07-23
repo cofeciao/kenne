@@ -15,7 +15,7 @@ use modava\products\ProductsModule;
     <?php
     
     ?>
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 		<?= $form->field($model, 'pro_name')->label('Tên sp')->textInput(['maxlength' => true]) ?>
 
 		<?= $form->field($model, 'cat_id')->dropDownList(\yii\helpers\ArrayHelper::map($model->getCategory(),'id','cat_name'),['prompt'=>'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
@@ -30,13 +30,13 @@ use modava\products\ProductsModule;
 
 		<?= $form->field($model, 'pro_price')->label('Giá')->textInput() ?>
 
-        <?=  \modava\tiny\FileManager::widget([
+        <?php /*  \modava\tiny\FileManager::widget([
             'model' => $model,
             'attribute' => 'pro_image',
             'label' => ProductsModule::t('products', 'Hình ảnh ') . ': ' . Yii::$app->params['product-size'],
             ]);
-        
-        ?>
+        */ ?>
+    <?= $form->field($model, 'file')->fileInput() ?>
 
         <?php if (Yii::$app->controller->action->id == 'create')
             $model->pro_status = 1;

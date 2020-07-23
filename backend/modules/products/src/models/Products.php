@@ -27,6 +27,7 @@ use Yii;
 class Products extends ProductsTable
 {
     public $toastr_key = 'products';
+    public $file;
     public function behaviors()
     {
         return array_merge(
@@ -55,6 +56,7 @@ class Products extends ProductsTable
             [['created_at', 'updated_at'], 'safe'],
 			[['pro_name', 'pro_slug', 'pro_description', 'pro_image'], 'string', 'max' => 255],
 			[['pro_slug'], 'unique'],
+            [['file'],'file','extensions'=> 'jpg,png,gif']
 		];
     }
 
