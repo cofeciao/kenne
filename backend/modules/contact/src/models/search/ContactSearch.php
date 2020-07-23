@@ -18,8 +18,8 @@ class ContactSearch extends Contact
     public function rules()
     {
         return [
-            [['id', 'phone', 'content', 'status', 'created_at'], 'integer'],
-            [['fullname', 'email', 'address', 'title', 'ip_address'], 'safe'],
+            [['id', 'status', 'created_at'], 'integer'],
+            [['fullname', 'phone', 'email', 'address', 'title', 'content', 'ip_address'], 'safe'],
         ];
     }
 
@@ -61,16 +61,16 @@ class ContactSearch extends Contact
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'phone' => $this->phone,
-            'content' => $this->content,
             'status' => $this->status,
             'created_at' => $this->created_at,
         ]);
 
         $query->andFilterWhere(['like', 'fullname', $this->fullname])
+            ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'ip_address', $this->ip_address]);
 
         return $dataProvider;

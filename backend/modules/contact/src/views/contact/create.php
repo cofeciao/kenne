@@ -9,7 +9,7 @@ use modava\contact\ContactModule;
 /* @var $model modava\contact\models\Contact */
 
 $this->title = ContactModule::t('contact', 'Create');
-$this->params['breadcrumbs'][] = ['label' => ContactModule::t('contact', 'Contact'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => ContactModule::t('contact', 'Contacts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
