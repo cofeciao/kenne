@@ -3,6 +3,7 @@
 namespace modava\products\models\table;
 
 use cheatsheet\Time;
+use modava\categories\models\Categories;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -13,6 +14,11 @@ class ProductsTable extends \yii\db\ActiveRecord
         return 'products';
     }
 
+    public function getCategory(){
+        return $this->hasOne(Categories::class,['cat_id'=>'id'])->orderBy('id');
+        /*$categoryProduct = Categories::find()->all();
+        return $categoryProduct;*/
+    }
 
     public function afterDelete()
     {

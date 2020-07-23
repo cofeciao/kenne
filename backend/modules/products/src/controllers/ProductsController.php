@@ -72,6 +72,9 @@ class ProductsController extends MyController
         $model = new Products();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->created_at =  date('Y-m-d H:i:s');
+            $model->updated_at =  date('Y-m-d H:i:s');
+
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',

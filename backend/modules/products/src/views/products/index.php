@@ -106,7 +106,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'attribute' => 'pro_description',
-                                                'label' => 'Mô tả'
+                                                'label' => 'Mô tả',
+                                                'content'=>function($model){
+                                                    return html_entity_decode($model->pro_description);
+                                                }
                                             ],
                                             [
                                                 'attribute' => 'pro_quantity',
@@ -124,10 +127,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'pro_status',
                                                 'content'=>function($model){
                                                     if($model->pro_status == 1){
-                                                        return '<span class="badge badge-secondary">Chưa kích hoạt</span>';
-                                                    }else{
                                                         return '<span class="badge badge-success">Kích hoạt</span>';
-
+                                                    }else{
+                                                        return '<span class="badge badge-secondary">Chưa kích hoạt</span>';
                                                     }
                                                 },
                                                 'label' => 'Trạng thái',

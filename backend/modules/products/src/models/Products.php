@@ -50,8 +50,9 @@ class Products extends ProductsTable
     public function rules()
     {
         return [
-			[['pro_name', 'pro_slug', 'created_at', 'updated_at'], 'required'],
-			[['pro_quantity', 'pro_price', 'pro_status', 'pro_sale', 'created_at', 'updated_at'], 'integer'],
+			[['pro_name', 'pro_slug'], 'required'],
+			[['pro_quantity', 'pro_price', 'pro_status', 'pro_sale'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
 			[['pro_name', 'pro_slug', 'pro_description', 'pro_image'], 'string', 'max' => 255],
 			[['pro_slug'], 'unique'],
 		];
@@ -64,6 +65,7 @@ class Products extends ProductsTable
     {
         return [
             'id' => ProductsModule::t('products', 'ID'),
+            'cat_id' => ProductsModule::t('products', 'Id Loại Sp'),
             'pro_name' => ProductsModule::t('products', 'Pro Name'),
             'pro_slug' => ProductsModule::t('products', 'Pro Slug'),
             'pro_description' => ProductsModule::t('products', 'Pro Description'),
