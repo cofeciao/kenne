@@ -13,13 +13,13 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         '/css/vendor/bootstrap.min.css',
-        'css/vendor/font-awesome.min.css',
+        '/css/vendor/font-awesome.min.css',
         '/css/vendor/fontawesome-stars.min.css',
         '/css/vendor/ion-fonts.css',
         '/css/plugins/slick.css',
         '/css/plugins/animate.css',
         '/css/plugins/jquery-ui.min.css',
-        'css/plugins/nice-select.css',
+        '/css/plugins/nice-select.css',
         '/css/plugins/timecircles.css',
         '/css/style.css'
     ];
