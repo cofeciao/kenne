@@ -40,6 +40,14 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('affiliate')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'affiliate') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/affiliate']); ?>">
+                            <i class="ion ion-md-link"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Affiliate'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('product')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'product') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/product']); ?>">
@@ -106,6 +114,21 @@ $is_dev = Yii::$app->user->can('develop');
                 <?php } ?>
             </ul>
             <hr class="nav-separator">
+            <div class="nav-header">
+                <span>User Helper</span>
+                <span>UI</span>
+            </div>
+            <ul class="navbar-nav flex-column">
+                <?php if (Yii::$app->user->can(User::DEV) ||
+                    Yii::$app->user->can('log') ){ ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'log') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/log']); ?>">
+                            <i class="ion ion-logo-polymer  "></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Log'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
         </div>
     </div>
 </nav>

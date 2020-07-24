@@ -45,6 +45,9 @@ return [
     'comment' => [
         'class' => 'modava\comment\CommentModule',
     ],
+    'affiliate' => [
+        'class' => 'modava\affiliate\AffiliateModule',
+    ],
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],
