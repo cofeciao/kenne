@@ -66,4 +66,7 @@ return [
     'categories' => [
         'class' => 'modava\categories\CategoriesModule',
     ],
+    'blogs' => [
+        'class' => 'modava\blogs\BlogsModule',
+    ],
 ];
