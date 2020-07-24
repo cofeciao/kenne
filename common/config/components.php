@@ -48,7 +48,6 @@ return [
                     'backend' => 'backend.php',
                     'frontend' => 'frontend.php',
                 ],
-                'on missingTranslation' => [backend\modules\i18n\Module::class, 'missingTranslation']
             ],
         ],
     ],

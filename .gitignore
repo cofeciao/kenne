@@ -47,18 +47,29 @@ phpunit.phar
 /common/config/_api.php
 /common/config/config.php
 
-/backend/runtime
-/backend/web/assets
+/log
+
+!/backend/runtime
+/backend/runtime/*
+!/backend/runtime/index.html
+
+!/backend/web/assets
+/backend/web/assets/*
+!/backend/web/assets/index.html
+
 /backend/web/img
 /backend/web/thumbs
 /backend/.htaccess
 
-/log
+!/frontend/runtime
+/frontend/runtime/*
+!/frontend/runtime/index.html
 
-/frontend/runtime
-/frontend/web/assets
+!/frontend/web/assets
+/frontend/web/assets/*
+!/frontend/web/assets/index.html
+
 /frontend/web/uploads/
-/frontend/.htaccess
 
 # Git
 /backend/modules/auth/composer.json
@@ -88,6 +99,22 @@ phpunit.phar
 /backend/modules/website/composer.json
 /backend/modules/website/README.md
 /backend/modules/website/.git
+
+/backend/modules/calendar/composer.json
+/backend/modules/calendar/README.md
+/backend/modules/calendar/.git
+
+/backend/modules/filemanager/composer.json
+/backend/modules/filemanager/README.md
+/backend/modules/filemanager/.git
+
+/backend/modules/log/composer.json
+/backend/modules/log/README.md
+/backend/modules/log/.git
+
+/backend/modules/affiliate/composer.json
+/backend/modules/affiliate/README.md
+/backend/modules/affiliate/.git
 
 /backend/widgets/tiny/composer.json
 /backend/widgets/tiny/README.md
