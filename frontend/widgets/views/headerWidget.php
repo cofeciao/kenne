@@ -20,19 +20,18 @@ use yii\helpers\Url;
                                     <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
                                     </li>
                                     <li class="megamenu-holder position-static"><a href="<?= Url::toRoute(['/shop']) ?>">Shop</a></li>
-                                    <li><a href="blog-grid_view.html">Blog</a>
+                                    <li><a href="<?= Url::toRoute(['/blog']) ?>">Blog</a>
                                         <!--<li><a href="blog-details.html">Blog Details</a></li>-->
                                     </li>
-                                    <li><a href="<?= Url::toRoute('/contact')?>">Contact Us</a></li>
-                                    <li><a href="about-us.html">About Us</a></li>
+                                    <li><a href="<?= Url::toRoute('/contact-us')?>">Contact Us</a></li>
+                                    <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
                                     <li><a href="">My Account <i class="ion-chevron-down"></i></a>
                                         <ul class="kenne-dropdown">
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="login-register.html">Login | Register</a></li>
-                                            <li><a href="wishlist.html">Wishlist</a></li>
-                                            <li><a href="cart.html">Cart</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="compare.html">Compare</a></li>
+                                            <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
+                                            <li><a href="<?= Url::toRoute(['/login']) ?>">Login | Register</a></li>
+                                            <li><a href="<?= Url::toRoute(['/wishlist']) ?>">Wishlist</a></li>
+                                            <li><a href="<?= Url::toRoute(['/cart']) ?>">Cart</a></li>
+                                            <li><a href="<?= Url::toRoute(['/checkout']) ?>">Checkout</a></li>
                                         </ul>
                                     </li>
                                 </ul>
