@@ -14,6 +14,7 @@ use Yii;
 
 class MyController extends Controller
 {
+
     public function actions()
     {
         return [

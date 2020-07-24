@@ -1,4 +1,6 @@
 <?php
+use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <!-- Begin Main Header Area -->
 <header class="main-header_area">
@@ -8,20 +10,20 @@
                 <div class="col-lg-12">
                     <div class="transparent-header_nav position-relative">
                         <div class="header-logo_area">
-                            <a href="">
+                            <a href="<?= Url::home()?>">
                                 <img src="/images/menu/logo/1.png" alt="Header Logo">
                             </a>
                         </div>
                         <div class="main-menu_area d-none d-lg-block">
                             <nav class="main-nav d-flex justify-content-center">
                                 <ul>
-                                    <li class="dropdown-holder"><a href="javascript:void(0)">Home</a>
+                                    <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
                                     </li>
-                                    <li class="megamenu-holder position-static"><a href="shop-fullwidth.html">Shop</a></li>
+                                    <li class="megamenu-holder position-static"><a href="<?= Url::toRoute(['/shop']) ?>">Shop</a></li>
                                     <li><a href="blog-grid_view.html">Blog</a>
                                         <!--<li><a href="blog-details.html">Blog Details</a></li>-->
                                     </li>
-                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                    <li><a href="<?= Url::toRoute('/contact')?>">Contact Us</a></li>
                                     <li><a href="about-us.html">About Us</a></li>
                                     <li><a href="">My Account <i class="ion-chevron-down"></i></a>
                                         <ul class="kenne-dropdown">

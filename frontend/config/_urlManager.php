@@ -11,7 +11,7 @@ return [
     'class' => yii\web\UrlManager::class,
     'enablePrettyUrl' => true,
     'showScriptName' => false,
-    'suffix' => '.html',
+    'suffix' => '',
     'rules' => [
         '' => '/site/index',
         'quy-tac-hoat-dong' => 'site/quy-tac-hoat-dong',
