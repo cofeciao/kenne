@@ -6,7 +6,15 @@ use yii\widgets\Breadcrumbs;
 
 $this->beginContent('@frontend/views/layouts/common.php');
 ?>
+    <div class="main-wrapper">
+<?= \frontend\widgets\LoadingWidget::widget()?>
+<?= HeaderWidget::widget() ?>
 <?= $content; ?>
+
+    </div>
+    <!-- end main -->
+<?= FooterWidget::widget()?>
+<?= \frontend\widgets\ScrollWidget::widget()?>
 <?php
 $this->endContent();
 ?>

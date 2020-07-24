@@ -14,6 +14,7 @@ use yii\widgets\Pjax;
 $this->title = ProductsModule::t('products', 'Products');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
         <?= NavbarWidgets::widget(); ?>
@@ -145,7 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => ProductsModule::t('products', 'Actions'),
-                                                'template' => '{update} {delete}',
+                                                'template' => '{update} {delete}{view}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
@@ -166,7 +167,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             'btn-cancel-class' => 'cancel-delete',
                                                             'data-placement' => 'top'
                                                         ]);
-                                                    }
+                                                    },
+                                                    'view' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                                            'title' => ProductsModule::t('products', 'View'),
+                                                            'alia-label' => ProductsModule::t('products', 'View'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-info btn-xs'
+                                                        ]);
+                                                    },
                                                 ],
                                                 'headerOptions' => [
                                                     'width' => 150,

@@ -19,8 +19,8 @@ class ProductsTable extends \yii\db\ActiveRecord
 
     public function getImage()
     {
-        if ($this->image == null || is_dir($this->pathImage . '/' . $this->image) || !file_exists($this->pathImage . '/' . $this->image)) return null;
-        return Yii::$app->assetManager->publish($this->pathImage . '/' . $this->image)[1];
+        if ($this->pro_image == null || is_dir($this->pathImage . '/' . $this->pro_image) || !file_exists($this->pathImage . '/' . $this->pro_image)) return null;
+        return Yii::$app->assetManager->publish($this->pathImage . '/' . $this->pro_image)[1];
     }
 
     public static function tableName()
