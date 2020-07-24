@@ -8,7 +8,7 @@
 
 namespace backend\components;
 
-use backend\modules\user\models\User;
+use common\models\User;
 use yii\web\Controller;
 use Yii;
 

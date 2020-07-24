@@ -23,7 +23,6 @@ echo "<?php\n"; ?>
 
 namespace <?= $generator->ns ?>;
 
-use common\helpers\MyHelper;
 use common\models\User;
 use <?= str_replace('\models', '', $generator->ns) ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 use <?= $generator->ns ?>\table\<?= $modelClass ?>Table;
