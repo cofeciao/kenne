@@ -1,3 +1,0 @@
-[submodule "backend/modules/affiliate"]
-	path = backend/modules/affiliate
-	url = https://github.com/modava/affiliate.git
