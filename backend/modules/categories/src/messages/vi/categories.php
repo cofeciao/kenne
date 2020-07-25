@@ -9,7 +9,7 @@ return [
     'Previous' => 'Trước',
     'Next' => 'Tiếp',
     'Cat Name'=>'Tên loại sách',
-    'Cat Status'=>'Tên loại sách',
+    'Cat Status'=>'Trạng thái',
     'Status' => 'Trạng thái',
     'Created At' => 'Ngày tạo',
     'Updated At'=>'Ngày cập nhật',

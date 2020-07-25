@@ -6,28 +6,38 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\categories\CategoriesModule;
 use modava\categories\models\table\CategoriesTable;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "categories".
-*
-    * @property int $id
-    * @property string $cat_name
-    * @property int $cat_status
-    * @property string $created_at
-    * @property string $updated_at
-    *
-            * @property Products[] $products
-    */
+ * This is the model class for table "categories".
+ *
+ * @property int $id
+ * @property string $cat_name
+ * @property int $cat_status
+ * @property string $created_at
+ * @property string $updated_at
+ *
+ * @property Products[] $products
+ */
 class Categories extends CategoriesTable
 {
     public $toastr_key = 'categories';
+
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
+                [
+                    'class' => SluggableBehavior::class,
+                    'ensureUnique' => true,
+                    'slugAttribute'=>'cat_slug',
+                    'value' => function () {
+                            return MyHelper::createAlias($this->cat_name);
+                        }
+                ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
                     'preserveNonEmptyValues' => true,
@@ -41,22 +51,22 @@ class Categories extends CategoriesTable
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-			[['cat_name'], 'required'],
-			[['cat_status'], 'integer'],
-			[['created_at', 'updated_at'], 'safe'],
-			[['cat_name'], 'string', 'max' => 255],
-			[['cat_name'], 'unique'],
-		];
+            [['cat_name'], 'required'],
+            [['cat_status'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['cat_name'], 'string', 'max' => 255],
+            [['cat_name'], 'unique'],
+        ];
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [

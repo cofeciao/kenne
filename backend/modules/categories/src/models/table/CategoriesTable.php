@@ -3,17 +3,12 @@
 namespace modava\categories\models\table;
 
 use cheatsheet\Time;
+use common\models\CategoriesCommon;
 use Yii;
 use yii\db\ActiveRecord;
 
-class CategoriesTable extends \yii\db\ActiveRecord
+class CategoriesTable extends CategoriesCommon
 {
-    public static function tableName()
-    {
-        return 'categories';
-    }
-
-
     public function afterDelete()
     {
         $cache = Yii::$app->cache;

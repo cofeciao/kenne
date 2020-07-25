@@ -1,4 +1,6 @@
 <?php
+use yii\helpers\Html;
+use yii\helpers\Url;
 $this->title = 'Đăng nhập - Đăng ký'
 ?>
 <!-- Begin Kenne's Breadcrumb Area -->
@@ -7,7 +9,7 @@ $this->title = 'Đăng nhập - Đăng ký'
         <div class="breadcrumb-content">
             <h2>Shop Related</h2>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="<?= Url::home()?>">Home</a></li>
                 <li class="active">Login Or Register</li>
             </ul>
         </div>
