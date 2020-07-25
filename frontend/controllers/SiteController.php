@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\ProductsCommon;
 use frontend\models\Activity;
 use frontend\models\ExHistory;
 use frontend\models\Exploration;
@@ -14,13 +15,16 @@ use frontend\models\TagSeo;
 use Yii;
 use frontend\components\MyController;
 use yii\helpers\Url;
+use function GuzzleHttp\Promise\all;
 
 class SiteController extends MyController
 {
 
     public function actionIndex()
     {
+        $proNew = ProductsCommon::find()->orderBy('id')->offset(0)->limit(6)->all();
         return $this->render('index', [
+            'data'=>$proNew,
         ]);
     }
 

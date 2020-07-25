@@ -2,6 +2,7 @@
 
 namespace modava\products\controllers;
 
+use common\helpers\MyHelper;
 use modava\imagick\Imagick;
 use yii\db\Exception;
 use Yii;
@@ -76,7 +77,9 @@ class ProductsController extends MyController
         if ($model->load(Yii::$app->request->post())) {
             $model->created_at =  date('Y-m-d H:i:s');
             $model->updated_at =  date('Y-m-d H:i:s');
-            $model->pro_image = UploadedFile::getInstance($model,'file');
+            $model->pro_slug = MyHelper::createAlias($model->pro_name);
+            $model->cat_id = Yii::$app->request->post()['Products']['cat_id'];
+           $model->pro_image = UploadedFile::getInstance($model,'file');
             $tempName = explode('/',$model->pro_image->tempName);
             $extension = explode('/',$model->pro_image->type);
            /* echo "<pre>";

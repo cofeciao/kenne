@@ -6,6 +6,7 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\products\ProductsModule;
 use modava\products\models\table\ProductsTable;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -33,6 +34,14 @@ class Products extends ProductsTable
         return array_merge(
             parent::behaviors(),
             [
+                [
+                    'class'=>SluggableBehavior::class,
+                    'slugAttribute' => 'pro_slug',
+                    'ensureUnique' => true,
+                    'value' => function () {
+                        return MyHelper::createAlias($this->pro_slug);
+                    }
+                ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
                     'preserveNonEmptyValues' => true,
@@ -51,11 +60,10 @@ class Products extends ProductsTable
     public function rules()
     {
         return [
-			[['pro_name', 'pro_slug'], 'required'],
+			[['pro_name'], 'required'],
 			[['pro_quantity', 'pro_price', 'pro_status', 'pro_sale'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-			[['pro_name', 'pro_slug', 'pro_description', 'pro_image'], 'string', 'max' => 255],
-			[['pro_slug'], 'unique'],
+			[['pro_name', 'pro_description', 'pro_image'], 'string', 'max' => 255],
             [['file'],'file','extensions'=> 'jpg,png,gif']
 		];
     }

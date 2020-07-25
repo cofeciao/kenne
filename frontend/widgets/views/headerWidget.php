@@ -98,12 +98,14 @@ use yii\helpers\Url;
                                     <nav class="main-nav d-flex justify-content-center">
                                         <ul>
                                             <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
-                                            <li class="megamenu-holder position-static"><a href="<?= Url::toRoute(['/shop']) ?>">Shop</a>
-                                                <i class="ion-chevron-down"></i>
-                                                <ul class="kenne-megamenu">
-                                                    <li><span class="megamenu-title">Shop Page Layout</span></li>
-                                                    <li><span class="megamenu-title">Shop Page Layout</span></li>
-                                                    <li><span class="megamenu-title">Shop Page Layout</span></li>
+                                            <li class="dropdown-holder">
+                                                <a href="<?= Url::toRoute(['/shop']) ?>">Shop
+                                                    <i class="ion-chevron-down"></i>
+                                                </a>
+                                                <ul class="kenne-dropdown">
+                                                    <?php foreach ($data as $item){?>
+                                                        <li><a href="<?=Url::toRoute('/shop/'. $item['cat_slug'])?>"> <?= $item['cat_name']?></a></li>
+                                                    <?php } ?>
 
                                                 </ul>
                                             </li>
