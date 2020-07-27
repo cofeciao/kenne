@@ -8,6 +8,7 @@ use yii\helpers\Html;
 class CustomerDateTimePicker extends DateTimePicker
 {
     public $pickIconContent = '';
+
     public function run()
     {
 
