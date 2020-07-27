@@ -4,9 +4,9 @@ namespace backend\models\search;
 
 use backend\models\phongkham\QuanlyModel;
 use backend\modules\clinic\models\Clinic;
+use modava\auth\models\User;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\modules\user\models\User;
 
 /**
  * Dep365CustomerOnlineSearch represents the model behind the search form of `backend\modules\customer\models\Dep365CustomerOnline`.
@@ -40,9 +40,9 @@ class QuanlySearch extends QuanlyModel
 
         $query = Clinic::find()->where(['dep365_customer_online.status' => Clinic::STATUS_DH, 'dep365_customer_online.dat_hen' => self::DA_DEN]);
 
-        if ($roleUser == User::USER_DIRECT_SALE) {
+        /*if ($roleUser == User::USER_DIRECT_SALE) {
             $query->andFilterWhere(['dep365_customer_online.directsale' => \Yii::$app->user->id]);
-        }
+        }*/
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,10 +56,10 @@ class QuanlySearch extends QuanlyModel
             $this->to = date('d-m-Y');
         }
 
-        if ($this->button == '2' && $roleUser == User::USER_DIRECT_SALE) {
+        /*if ($this->button == '2' && $roleUser == User::USER_DIRECT_SALE) {
             $rowUser = User::findIdentity(\Yii::$app->user->id);
             $this->co_so = $rowUser->permission_coso;
-        }
+        }*/
 
         $query->joinWith(['provinceHasOne']);
 

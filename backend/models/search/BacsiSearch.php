@@ -10,7 +10,7 @@ namespace backend\models\search;
 
 use backend\models\phongkham\BacsiModel;
 use backend\modules\clinic\models\Clinic;
-use backend\modules\user\models\User;
+use modava\auth\models\User;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
