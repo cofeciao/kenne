@@ -24,3 +24,8 @@ li.nav-item.mb-5 {
 .form-group .help-block {
     color: red;
 }
+
+form div.required label.control-label:after {
+    content:" * ";
+    color:red;
+}

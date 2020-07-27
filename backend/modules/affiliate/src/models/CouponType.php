@@ -105,4 +105,8 @@ class CouponType extends CouponTypeTable
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
+
+    public static function getAll () {
+        return self::find()->all();
+    }
 }
