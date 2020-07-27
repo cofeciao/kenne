@@ -22,7 +22,7 @@ use backend\modules\customer\models\Dep365CustomerOnlineFailDathen;
 use backend\modules\customer\models\Dep365CustomerOnlineGenitive;
 use backend\modules\customer\models\Dep365CustomerOnlineStatus;
 use backend\modules\location\models\District;
-use backend\modules\user\models\User;
+use modava\auth\models\User;
 use Yii;
 use backend\modules\customer\models\Dep365CustomerOnlineFailStatus;
 use backend\modules\customer\models\Dep365CustomerOnlineNguon;

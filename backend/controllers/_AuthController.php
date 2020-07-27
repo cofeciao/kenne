@@ -23,13 +23,13 @@ use backend\models\LoginForm;
 use backend\models\UserSettings;
 use backend\modules\log\models\Dep365SendSms;
 use backend\modules\setting\models\Setting;
-use backend\modules\user\models\User;
 use cheatsheet\Time;
 use common\commands\SendEmailCommand;
 use common\helpers\MyHelper;
 use common\models\UserProfile;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use modava\auth\models\User;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\db\Exception;
@@ -61,7 +61,7 @@ class AuthController extends MyController
             $roleUser = $user->getRoleName($id);
             Yii::$app->response->format = Response::FORMAT_JSON;
             $roleNumber = 0;
-            if ($roleUser == User::USER_MANAGER_ONLINE || $roleUser == User::USER_NHANVIEN_ONLINE || $roleUser == User::USER_ADMINISTRATOR || $roleUser == User::USER_DEVELOP) {
+            if ($roleUser == User::DEV) {
                 $roleNumber = 1;
             }
             return ['status' => '200', 'role' => $roleNumber];
@@ -73,9 +73,6 @@ class AuthController extends MyController
         $user = new User();
         $roleUser = $user->getRoleName(Yii::$app->user->id);
         $model = UserProfile::findOne(Yii::$app->user->id);
-        if ($roleUser == User::USER_MANAGER_ONLINE || $roleUser == User::USER_NHANVIEN_ONLINE) {
-            $model->scenario = UserProfile::SCENARIO_PANCAKE;
-        }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // upload avatar
             $avatar = UploadedFile::getInstance($model, 'avatar');

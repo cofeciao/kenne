@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use backend\modules\setting\models\Setting;
-use backend\modules\user\models\User;
 use Yii;
 use yii\web\Controller;
 
