@@ -7,10 +7,10 @@ return [
         'en' => 'English',
         'jp' => 'Japan',
     ],
-    'iwayName' => 'IwayController',
+    'iwayName' => 'Iway',
     'iwayVersion' => '1.0',
     'status' => [
-        '0' => IwayModule::t('IwayController', 'Tạm ngưng'),
-        '1' => IwayModule::t('IwayController', 'Hiển thị'),
+        '0' => IwayModule::t('iway', 'Tạm ngưng'),
+        '1' => IwayModule::t('iway', 'Hiển thị'),
     ]
 ];

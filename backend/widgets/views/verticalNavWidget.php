@@ -48,6 +48,14 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('iway')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'iway') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/iway']); ?>">
+                            <i class="ion ion-ios-code-working"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Iway'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('product')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'product') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/product']); ?>">
