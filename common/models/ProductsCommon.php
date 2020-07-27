@@ -15,5 +15,13 @@ class ProductsCommon extends ActiveRecord
         return 'products';
     }
 
+    public function getCategory(){
+        return $this->hasOne(Categories::class,['id'=>"cat_id"]);
+    }
 
+    public static function getDetailProduct($slug){
+        $data = ProductsCommon::find()->where(['pro_slug'=>$slug]);
+        $data = $data->asArray()->one();
+        return $data;
+    }
 }

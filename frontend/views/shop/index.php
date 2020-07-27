@@ -32,7 +32,7 @@ $this->title = "Shop";
                         <a class="list" data-target="listview" data-toggle="tooltip" data-placement="top" title="List View"><i class="fa fa-th-list"></i></a>
                     </div>
                     <div class="product-page_count">
-                        <p>Hiển thị <?= isset($pagination) ? $pagination->pageSize : "0"?> trang trên <?= isset($pagination) ? $pagination->totalCount : "0"?> kết quả</p>
+                        <p>Hiển thị <?= isset($pagination) ? $pagination->totalCount : "0"?> / <?= isset($pagination) ? $pagination->pageSize : "0"?> kết quả </p>
                     </div>
                     <div class="product-item-selection_area">
                         <div class="product-short">
@@ -57,7 +57,7 @@ $this->title = "Shop";
                         <div class="product-item">
                             <div class="single-product">
                                 <div class="product-img">
-                                    <a href="single-product.html">
+                                    <a href="<?= \yii\helpers\Url::toRoute(['/detail-product/','slug' => $item->pro_slug])?>">
                                         <img class="primary-img" src="<?= $item->pro_image?>" alt="<?= $item->pro_slug?>">
                                         <img class="secondary-img" src="<?= $item->pro_image?>" alt="<?= $item->pro_slug?>">
                                     </a>

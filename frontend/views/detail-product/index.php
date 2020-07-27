@@ -7,8 +7,8 @@
         <div class="breadcrumb-content">
             <h2>Single Product Type</h2>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">Single Product</li>
+                <li><a href="<?= \yii\helpers\Url::home()?>">Home</a></li>
+                <li class="active">Chi tiết sản phẩm</li>
             </ul>
         </div>
     </div>
@@ -16,6 +16,7 @@
 <!-- Kenne's Breadcrumb Area End Here -->
 
 <!-- Begin Kenne's Single Product Area -->
+<?php if(isset($data)){?>
 <div class="sp-area">
     <div class="container">
         <div class="sp-nav">
@@ -31,9 +32,10 @@
                                 "asNavFor": ".sp-img_slider-nav"
                                 }'>
                             <div class="single-slide red zoom">
-                                <img src="/images/product/1-1.jpg" alt="Kenne's Product Image">
+                                <img src="<?=  $data['pro_image']?>" alt="<?= $data['pro_slug'];?>">
                             </div>
-                            <div class="single-slide orange zoom">
+                            <!--Ảnh zoom lớn-->
+                            <!--<div class="single-slide orange zoom">
                                 <img src="/images/product/1-2.jpg" alt="Kenne's Product Image">
                             </div>
                             <div class="single-slide brown zoom">
@@ -47,7 +49,7 @@
                             </div>
                             <div class="single-slide green zoom">
                                 <img src="/images/product/3-2.jpg" alt="Kenne's Product Image">
-                            </div>
+                            </div>-->
                         </div>
                         <div class="sp-img_slider-nav slick-slider-nav kenne-element-carousel arrow-style-2 arrow-style-3" data-slick-options='{
                                 "slidesToShow": 3,
@@ -63,9 +65,10 @@
                                         {"breakpoint":575, "settings": {"slidesToShow": 2}}
                                     ]'>
                             <div class="single-slide red">
-                                <img src="/images/product/1-1.jpg" alt="Kenne's Product Thumnail">
+                                <img src="<?=  $data['pro_image']?>" alt="<?= $data['pro_slug'];?>">
                             </div>
-                            <div class="single-slide orange">
+                            <!--Ảnh nhỏ-->
+                            <!--<div class="single-slide orange">
                                 <img src="/images/product/1-2.jpg" alt="Kenne's Product Thumnail">
                             </div>
                             <div class="single-slide brown">
@@ -79,16 +82,15 @@
                             </div>
                             <div class="single-slide orange">
                                 <img src="/images/product/3-2.jpg" alt="Kenne's Product Thumnail">
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="sp-content">
                         <div class="sp-heading">
-                            <h5><a href="#">Aliquid rerum ipsam maxime</a></h5>
+                            <h5><a href="#"><?= $data['pro_name'];?></a></h5>
                         </div>
-                        <span class="reference">Reference: demo_1</span>
                         <div class="rating-box">
                             <ul>
                                 <li><i class="ion-android-star"></i></li>
@@ -100,15 +102,27 @@
                         </div>
                         <div class="sp-essential_stuff">
                             <ul>
-                                <li>Brands <a href="javascript:void(0)">Buxton</a></li>
-                                <li>Product Code: <a href="javascript:void(0)">Product 16</a></li>
-                                <li>Reward Points: <a href="javascript:void(0)">100</a></li>
-                                <li>Availability: <a href="javascript:void(0)">In Stock</a></li>
-                                <li>EX Tax: <a href="javascript:void(0)"><span>$453.35</span></a></li>
-                                <li>Price in reward points: <a href="javascript:void(0)">400</a></li>
+                                <?php if($data['pro_quantity'] != 0) {?>
+                                <li>Có hàng</li>
+                                <?php }else{?>
+                                <li>Hết hàng</li>
+                                <?php } ?>
+
+                                <!--show price sale or not?-->
+                                <?php if($data['pro_sale'] !=0 ){?>
+                                <li>Giá: <a href="javascript:void(0)">
+                                        <span><?= number_format($data['pro_price']*(100-$data['pro_sale'])/100,0,',','.') ?> đ</span>
+                                        <span style="text-decoration: line-through"><?= number_format($data['pro_price'],0,',','.')?> đ</span></a>
+                                </li>
+                                <?php } else {?>
+                                    <li>Giá: <a href="javascript:void(0)">
+                                            <span><?= number_format($data['pro_price'],0,',','.')?> đ</span></a>
+                                    </li>
+                                <?php } ?>
+                                <!--End show price-->
                             </ul>
                         </div>
-                        <div class="product-size_box">
+                        <!--<div class="product-size_box">
                             <span>Size</span>
                             <select class="myniceselect nice-select">
                                 <option value="1">S</option>
@@ -116,11 +130,11 @@
                                 <option value="3">L</option>
                                 <option value="4">XL</option>
                             </select>
-                        </div>
+                        </div>-->
                         <div class="quantity">
-                            <label>Quantity</label>
+                            <label>Số lượng</label>
                             <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" value="1" type="text">
+                                <input class="cart-plus-minus-box" value="1" type="text" name="pro_quantity">
                                 <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                 <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                             </div>
@@ -130,15 +144,9 @@
                                 <li><a class="qty-cart_btn" href="cart.html">Add To Cart</a></li>
                                 <li><a class="qty-wishlist_btn" href="wishlist.html" data-toggle="tooltip" title="Add To Wishlist"><i class="ion-android-favorite-outline"></i></a>
                                 </li>
-                                <li><a class="qty-compare_btn" href="compare.html" data-toggle="tooltip" title="Compare This Product"><i class="ion-ios-shuffle-strong"></i></a></li>
                             </ul>
                         </div>
-                        <div class="kenne-tag-line">
-                            <h6>Tags:</h6>
-                            <a href="javascript:void(0)">scarf</a>,
-                            <a href="javascript:void(0)">jacket</a>,
-                            <a href="javascript:void(0)">shirt</a>
-                        </div>
+                        <br><br>
                         <div class="kenne-social_link">
                             <ul>
                                 <li class="facebook">
@@ -184,10 +192,10 @@
                 <div class="sp-product-tab_nav">
                     <div class="product-tab">
                         <ul class="nav product-menu">
-                            <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a>
+                            <li><a class="active" data-toggle="tab" href="#description"><span>Mô tả</span></a>
                             </li>
-                            <li><a data-toggle="tab" href="#specification"><span>Specification</span></a></li>
-                            <li><a data-toggle="tab" href="#reviews"><span>Reviews (1)</span></a></li>
+                            <li><a data-toggle="tab" href="#specification"><span>Đặc tả</span></a></li>
+                            <li><a data-toggle="tab" href="#reviews"><span>Đánh giá (1)</span></a></li>
                         </ul>
                     </div>
                     <div class="tab-content uren-tab_content">
@@ -195,57 +203,13 @@
                             <div class="product-description">
                                 <ul>
                                     <li>
-                                        <span class="title">Ullam aliquam</span>
-                                        <span>Voluptatum, minus? Optio molestias voluptates aspernatur laborum
-                                                ratione minima, natus eaque nemo rem quisquam, suscipit architecto
-                                                saepe. Debitis omnis labore laborum consectetur, quas, esse voluptates
-                                                minus aliquam modi nesciunt earum! Vero rerum molestiae corporis libero
-                                                repellat doloremque quae sapiente ratione maiores qui aliquam, sunt
-                                                obcaecati! Iure nisi doloremque numquam delectus.</span>
+                                        <span class="title"><?= $data['pro_name'];?></span>
+                                        <span><?= $data['pro_description'];?></span>
                                     </li>
-                                    <li>
-                                        <span class="title">Enim tempore</span>
-                                        <span>Molestias amet quibusdam eligendi exercitationem alias labore tenetur
-                                                quaerat veniam similique aspernatur eveniet, suscipit corrupti itaque
-                                                dolore deleniti nobis, rerum reprehenderit recusandae. Eligendi beatae
-                                                asperiores nisi distinctio doloribus voluptatibus voluptas repellendus
-                                                tempore unde velit temporibus atque maiores aliquid deserunt aspernatur
-                                                amet, soluta fugit magni saepe fugiat vel sunt voluptate vitae</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">Laudantium suscipit</span>
-                                        <span>Odit repudiandae maxime, ducimus necessitatibus error fugiat nihil eum
-                                                dolorem animi voluptates sunt, rem quod reprehenderit expedita, nostrum
-                                                sit accusantium ut delectus. Voluptates at ipsam, eligendi labore
-                                                dignissimos consectetur reprehenderit id error excepturi illo velit
-                                                ratione nisi nam saepe quod! Reiciendis eos, velit fugiat voluptates
-                                                accusamus nesciunt dicta ratione mollitia, asperiores error aliquam!
-                                                Reprehenderit provident, omnis blanditiis fugit, accusamus deserunt
-                                                illum unde, voluptatum consequuntur illo officiis labore doloremque
-                                                quidem aperiam! Fuga, expedita? Laboriosam eum, tempore vitae libero
-                                                voluptate omnis ducimus doloremque hic quibusdam reiciendis ab itaque
-                                                aperiam maiores laudantium esse, consequuntur quos labore modi quasi
-                                                recusandae distinctio iusto optio officia tempora.</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">Molestiae veritatis officia</span>
-                                        <span>Illum fuga esse tenetur inventore, in voluptatibus saepe iste quia
-                                                cupiditate, explicabo blanditiis accusantium ut. Eaque nostrum, quisquam
-                                                doloribus asperiores tempore autem. Ea perspiciatis vitae reiciendis
-                                                maxime similique vel, id ratione blanditiis ullam officiis odio sunt nam
-                                                quos atque accusantium ad! Repellendus, magni aliquid. Iure asperiores
-                                                veniam eum unde dignissimos reprehenderit ut atque velit, harum labore
-                                                nam expedita, pariatur excepturi consectetur animi optio mollitia ad a
-                                                natus eaque aut assumenda inventore dolor obcaecati! Enim ab tempore
-                                                nulla iusto consequuntur quod sit voluptatibus adipisci earum fuga,
-                                                explicabo amet, provident, molestiae optio. Ducimus ex necessitatibus
-                                                assumenda, nisi excepturi ut aspernatur est eius dignissimos pariatur
-                                                unde ipsum sunt quaerat.</span>
-                                    </li>
-
                                 </ul>
                             </div>
                         </div>
+                        <?php if (isset($data->pro_specification)){?>
                         <div id="specification" class="tab-pane" role="tabpanel">
                             <table class="table table-bordered specification-inner_stuff">
                                 <tbody>
@@ -272,6 +236,11 @@
                                 </tbody>
                             </table>
                         </div>
+                        <?php } else { ?>
+                        <div id="specification" class="tab-pane" role="tabpanel">
+                            Không có đặc tả
+                        </div>
+                        <?php }?>
                         <div id="reviews" class="tab-pane" role="tabpanel">
                             <div class="tab-pane active" id="tab-review">
                                 <form class="form-horizontal" id="form-review">
@@ -345,6 +314,9 @@
 </div>
 <!-- Product Tab Area Two End Here -->
 
+<?php } else {
+    echo  "<h3>Không tìm thấy sản phẩm bạn yêu cầu. Vui lòng quay lại trang chủ</h3>";
+} ?>
 <!-- Begin Product Area -->
 <div class="product-area pb-90">
     <div class="container">

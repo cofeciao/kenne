@@ -12,4 +12,8 @@ class CategoriesCommon extends ActiveRecord
     {
         return 'categories';
     }
+
+    public function getProducts(){
+        return $this->hasMany(ProductsCommon::class,['cat_id'=> 'id']);
+    }
 }

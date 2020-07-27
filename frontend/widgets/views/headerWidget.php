@@ -25,7 +25,7 @@ use yii\helpers\Url;
                                         </a>
                                         <ul class="kenne-dropdown">
                                             <?php foreach ($data as $item){?>
-                                            <li><a href="<?=Url::toRoute('/shop/'. $item['cat_slug'])?>"> <?= $item['cat_name']?></a></li>
+                                            <li><a href="<?=Url::toRoute(['/shop/','slug'=> $item['cat_slug']])?>"> <?= $item['cat_name']?></a></li>
                                             <?php } ?>
 
                                         </ul>
@@ -104,9 +104,8 @@ use yii\helpers\Url;
                                                 </a>
                                                 <ul class="kenne-dropdown">
                                                     <?php foreach ($data as $item){?>
-                                                        <li><a href="<?=Url::toRoute('/shop/'. $item['cat_slug'])?>"> <?= $item['cat_name']?></a></li>
+                                                        <li><a href="<?=Url::toRoute(['/shop/','slug'=>$item->cat_slug])?>"> <?= $item['cat_name']?></a></li>
                                                     <?php } ?>
-
                                                 </ul>
                                             </li>
                                             <li><a href="<?= Url::toRoute(['/blog']) ?>">Blog</a>
