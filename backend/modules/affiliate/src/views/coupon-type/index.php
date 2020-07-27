@@ -105,8 +105,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-                                    
-										'title',
 										'description:ntext',
                                         [
                                             'attribute' => 'created_by',
