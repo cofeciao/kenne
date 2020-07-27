@@ -48,6 +48,9 @@ return [
     'affiliate' => [
         'class' => 'modava\affiliate\AffiliateModule',
     ],
+    'IwayController' => [
+        'class' => 'modava\iway\IwayModule',
+    ],
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],

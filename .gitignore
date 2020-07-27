@@ -116,6 +116,10 @@ phpunit.phar
 /backend/modules/affiliate/README.md
 /backend/modules/affiliate/.git
 
+/backend/modules/iway/composer.json
+/backend/modules/iway/README.md
+/backend/modules/iway/.git
+
 /backend/modules/comment/composer.json
 /backend/modules/comment/README.md
 /backend/modules/comment/.git
