@@ -27,6 +27,10 @@ class m200727_035943_create_table_coupon_type extends Migration
             'created_by' => $this->integer(11)->null(),
             'updated_by' => $this->integer(11)->null(),
         ], $tableOptions);
+
+        $this->createIndex('idx-slug', 'coupon_type', 'slug', true);
+        $this->addForeignKey('fk-coupon-type-user_created-by_user-id', 'coupon_type', 'created_by', 'user', 'id');
+        $this->addForeignKey('fk-coupon-type-user_updated-by_user-id', 'coupon_type', 'updated_by', 'user', 'id');
     }
 
     /**

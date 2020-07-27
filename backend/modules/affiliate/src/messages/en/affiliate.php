@@ -1,2 +1,3 @@
-<?phpreturn [
+<?php
+return [
 ];

@@ -104,15 +104,4 @@ return [
         'anonymizeIp' => true, // If you want to anonymize the sender’s IP address
         'asyncMode' => true, // Enables the asynchronous mode (see below)
     ],
-    'formatter' => [
-        'class' => 'yii\i18n\Formatter',
-        'nullDisplay' => '-',
-        'dateFormat' => 'php:d-m-Y',
-        'datetimeFormat' => 'php:d-m-Y H:i',
-        'timeFormat' => 'php:H:i:s',
-        'locale' => 'vi_VN',
-        'decimalSeparator' => ',',
-        'thousandSeparator' => ' ',
-//        'currencyCode' => '₫',
-    ],
 ];
