@@ -76,7 +76,7 @@ $this->title = "Shop";
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i
                                                         class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                            <li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Add To cart" onclick="addCart(<?= $item->id?>)"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
                                     </div>
