@@ -10,5 +10,9 @@ return [
     'Next' => 'Tiếp',
     'Status' => 'Trạng thái',
     'Created At' => 'Ngày tạo',
-    'Actions' => 'Hành động'
+    'Actions' => 'Hành động',
+    'Updated At' => 'Ngày sửa',
+    'Created By' => 'Tạo bởi',
+    'Updated By' => 'Cập nhật bởi',
+    'Description' => 'Mô tả',
 ];
