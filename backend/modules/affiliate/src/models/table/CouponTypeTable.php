@@ -39,7 +39,7 @@ class CouponTypeTable extends \yii\db\ActiveRecord
         $cache = Yii::$app->cache;
         $key = 'redis-coupon-type-get-all';
         $data = $cache->get($key);
-        if ($data === false) {
+        if (!$data) {
             $data = self::find()->all();
             $cache->set($key, $data, Time::SECONDS_IN_A_YEAR);
         }
