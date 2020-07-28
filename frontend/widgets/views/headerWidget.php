@@ -19,7 +19,17 @@ use yii\helpers\Url;
                                 <ul>
                                     <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
                                     </li>
-                                    <li class="megamenu-holder position-static"><a href="<?= Url::toRoute(['/shop']) ?>">Shop</a></li>
+                                    <li class="dropdown-holder">
+                                        <a href="<?= Url::toRoute(['/shop']) ?>">Shop
+                                            <i class="ion-chevron-down"></i>
+                                        </a>
+                                        <ul class="kenne-dropdown">
+                                            <?php foreach ($data as $item){?>
+                                            <li><a href="<?=Url::toRoute(['/shop/','slug'=> $item['cat_slug']])?>"> <?= $item['cat_name']?></a></li>
+                                            <?php } ?>
+
+                                        </ul>
+                                    </li>
                                     <li><a href="<?= Url::toRoute(['/blog']) ?>">Blog</a>
                                         <!--<li><a href="blog-details.html">Blog Details</a></li>-->
                                     </li>
@@ -88,7 +98,16 @@ use yii\helpers\Url;
                                     <nav class="main-nav d-flex justify-content-center">
                                         <ul>
                                             <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
-                                            <li class="megamenu-holder position-static"><a href="<?= Url::toRoute(['/shop']) ?>">Shop</a></li>
+                                            <li class="dropdown-holder">
+                                                <a href="<?= Url::toRoute(['/shop']) ?>">Shop
+                                                    <i class="ion-chevron-down"></i>
+                                                </a>
+                                                <ul class="kenne-dropdown">
+                                                    <?php foreach ($data as $item){?>
+                                                        <li><a href="<?=Url::toRoute(['/shop/','slug'=>$item->cat_slug])?>"> <?= $item['cat_name']?></a></li>
+                                                    <?php } ?>
+                                                </ul>
+                                            </li>
                                             <li><a href="<?= Url::toRoute(['/blog']) ?>">Blog</a>
                                                 <!--<li><a href="blog-details.html">Blog Details</a></li>-->
                                             </li>

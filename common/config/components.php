@@ -60,5 +60,9 @@ return [
         'hashCallback' => function ($path) {
             return hash('md4', $path);
         }
+    ],
+    'request' => [
+        'cookieValidationKey' => FRONTEND_HOST_INFO,
+        //Lấy key là domain
     ]
 ];

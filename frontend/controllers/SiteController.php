@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\ProductsCommon;
 use frontend\models\Activity;
 use frontend\models\ExHistory;
 use frontend\models\Exploration;
@@ -15,13 +16,23 @@ use Yii;
 use frontend\components\MyController;
 use yii\helpers\Url;
 use modava\blogs\models\Blogs;
+use function GuzzleHttp\Promise\all;
 
 class SiteController extends MyController
 {
 
     public function actionIndex()
     {
-        return $this->render('index', []);
+        $proNew = ProductsCommon::find()->orderBy('id')->offset(0)->limit(6)->all();
+        $proBags = ProductsCommon::find()->where(['cat_id' => 7 ])->all();
+        $proShirts = ProductsCommon::find()->where(['cat_id' => 6 ])->all();
+        $proShoes = ProductsCommon::find()->where(['cat_id' => 8 ])->all();
+        return $this->render('index', [
+            'data'=>$proNew,
+            'proBags'=>$proBags,
+            'proShirts'=>$proShirts,
+            'proShoes'=>$proShoes
+        ]);
     }
 
 

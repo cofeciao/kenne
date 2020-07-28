@@ -30,6 +30,7 @@ return [
 
 
 
+
         ['pattern' => 'robots', 'route' => 'robotsTxt/web/index', 'suffix' => '.txt'],
         ['pattern' => 'sitemap', 'route' => 'sitemap/default/index', 'suffix' => '.xml'],
     ],

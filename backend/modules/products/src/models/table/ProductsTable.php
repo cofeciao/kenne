@@ -3,11 +3,12 @@
 namespace modava\products\models\table;
 
 use cheatsheet\Time;
+use common\models\ProductsCommon;
 use modava\categories\models\Categories;
 use Yii;
 use yii\db\ActiveRecord;
 
-class ProductsTable extends \yii\db\ActiveRecord
+class ProductsTable extends ProductsCommon
 {
     public $pathImage;
 
@@ -23,10 +24,10 @@ class ProductsTable extends \yii\db\ActiveRecord
         return Yii::$app->assetManager->publish($this->pathImage . '/' . $this->pro_image)[1];
     }
 
-    public static function tableName()
+    /*public static function tableName()
     {
         return 'products';
-    }
+    }*/
 
     public function getCategory()
     {

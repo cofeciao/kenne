@@ -41,6 +41,14 @@ $bundle = AppAsset::register($this);
     <?= $content ?>
 
     <?php $this->endBody() ?>
+    <script>
+        function addCart(id) {
+            $.get('<?= Yii::$app->homeUrl.'shop/addCart' ?>',{'id':id},function (data) {
+                alert("as");
+            });
+        }
+    </script>
+
     </body>
     </html>
 <?php $this->endPage() ?>

@@ -20,8 +20,6 @@ use modava\products\ProductsModule;
 
 		<?= $form->field($model, 'cat_id')->dropDownList(\yii\helpers\ArrayHelper::map($model->getCategory(),'id','cat_name'),['prompt'=>'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
 
-		<?= $form->field($model, 'pro_slug')->label('Slug')->textInput(['maxlength' => true]) ?>
-
         <?= $form->field($model, 'pro_description')->label('Mô tả')->widget(\modava\tiny\TinyMce::class, [
             'options' => ['rows' => 6],
         ]) ?>
