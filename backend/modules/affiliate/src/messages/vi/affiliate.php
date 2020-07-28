@@ -29,4 +29,7 @@ return [
     'Discount Percent In Order' => 'Giảm trên phần trăm (%) giá trị đơn hàng',
     'Discount Amount In Order' => 'Giảm tiền trực tiếp trên đơn hàng',
     'must be greater than or equal to' => 'phải lơn hơn hoặc bằng',
+    'Create Coupon' => 'Tạo Coupon',
+    'Coupon Type' => 'Loại Coupon',
+    'Customer' => 'Khách hàng',
 ];

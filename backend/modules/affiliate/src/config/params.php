@@ -17,4 +17,9 @@ return [
         '0' => AffiliateModule::t('affiliate', 'Discount Percent In Order'),
         '1' => AffiliateModule::t('affiliate', 'Discount Amount In Order'),
     ],
+    'myauris_config' => [
+        'api_endpoint' => "http://dashboard.myauris.vn/api/v2/affiliate/complete-customer-service",
+        'header' => ['X-Api-Key: qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'],
+        'row_per_page' => 10
+    ]
 ];

@@ -86,12 +86,17 @@ $model->expired_date = $model->expired_date != null
 
 <?php
 $script = <<< JS
-function generateCouponCode() {
-    return Math.random(10).toString(36).substr(2);
+function generateCouponCode(upperCase = false) {
+    let code = Math.random(10).toString(36).substr(2);
+    return upperCase ? code.toUpperCase() : code;
 }
 
 $('#js-generate-coupon-code').on('click', function() {
     $('#coupon-coupon_code').val(generateCouponCode()).trigger('change');
+});
+
+$('#coupon-coupon_code').on('change keyup blur', function() {
+    $(this).val($(this).val().toUpperCase());  
 });
 
 JS;
