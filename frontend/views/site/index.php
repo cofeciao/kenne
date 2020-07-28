@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = WEB_NAME;
+$this->title = 'WEB_NAME';
+
+
 ?>
 
     <!-- Begin Slider Area -->

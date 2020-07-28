@@ -1,4 +1,6 @@
-<?php  ?>
+<?php
+
+?>
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
@@ -35,63 +37,29 @@
                         </ul>
                     </div>
                     <div class="kenne-blog-sidebar">
+
+
+<!--////////////////////////////////////////   Recent Post //////////////////////////////////////////////////////////-->
                         <h4 class="kenne-blog-sidebar-title">Recent Posts</h4>
+                        <?php foreach ($RecentPost as $item)  : ?>
                         <div class="recent-post">
                             <div class="recent-post_thumb">
                                 <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/1.jpg" alt="Kenne's Blog Image">
+                                    <img class="img-full" src="<?='./backend/web/uploads/'.$item['image']?>" alt="Kenne's Blog Image">
                                 </a>
                             </div>
                             <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Ut eum laborum</a></span>
-                                <span class="post-date">October 25,2019</span>
+                                <span><a href="blog-details.html"><?=$item['title']?></a></span>
+                                <span class="post-date"><?= $item['date'] ?></span>
+
                             </div>
                         </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/2.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="#">Soluta ad tempore</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/3.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Possimus reiciendis</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/4.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Tortor Posuere</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/5.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Hello World!</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
+<!--//////////////////////////////////////// End Recent Post ////////////////////////////////////////////////////////-->
+
+
+<!--/////////////////////////////////////////////////// Tags ////////////////////////////////////////////////////////-->
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Comments</h4>
                         <div class="recent-comment">
@@ -134,35 +102,41 @@
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Tags</h4>
                         <ul class="kenne-tags_list">
-                            <li><a href="javascript:void(0)">Shirt</a></li>
-                            <li><a href="javascript:void(0)">Hoodie</a></li>
-                            <li><a href="javascript:void(0)">Jacket</a></li>
-                            <li><a href="javascript:void(0)">Scarf</a></li>
-                            <li><a href="javascript:void(0)">Frocks</a></li>
+                            <? foreach ($data as $item): ?>
+                                <li>
+                                    <a href="javascript:void(0)"><?=$item['tags']?></a>
+                                </li>
+                            <? endforeach; ?>
                         </ul>
                     </div>
                 </div>
             </div>
+<!--/////////////////////////////////////////////// End Tags ////////////////////////////////////////////////////////-->
+
+
+
+<!--///////////////////////////////////////////////////////  Gallery ////////////////////////////////////////////////-->
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="row blog-item_wrap">
+                    <?php foreach($data as $item): ?>
                     <div class="col-lg-6">
                         <div class="blog-item">
                             <div class="blog-img">
                                 <a href="blog-details.html">
-                                    <img src="/images/blog/1.jpg" alt="Blog Image">
+                                    <img src="<?='./backend/web/uploads/'.$item['image']?>" alt="Blog Image"/>
                                 </a>
                             </div>
                             <div class="blog-content">
                                 <h3 class="heading">
-                                    <a href="blog-details.html">Blog Image Post</a>
+                                    <a href="blog-details.html"><?=$item['title'];?></a>
                                 </h3>
                                 <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
+                                    <?=$item['descriptions']?>
                                 </p>
                                 <div class="blog-meta">
+
                                     <ul>
-                                        <li>Oct.20.2019</li>
+                                        <li><?=$item['date'] ?></li>
                                         <li>
                                             <a href="javascript:void(0)">02 Comments</a>
                                         </li>
@@ -171,244 +145,91 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="kenne-element-carousel single-blog_slider arrow-style-2 overflow-hidden" data-slick-options='{
-                                    "slidesToShow": 1,
-                                    "slidesToScroll": 1,
-                                    "infinite": false,
-                                    "arrows": true,
-                                    "dots": false,
-                                    "spaceBetween": 30
-                                    }' data-slick-responsive='[
-                                    {"breakpoint":768, "settings": {
-                                    "slidesToShow": 1
-                                    }},
-                                    {"breakpoint":575, "settings": {
-                                    "slidesToShow": 1
-                                    }}
-                                ]'>
-                                <div class="single-item">
-                                    <div class="blog-img">
-                                        <a href="blog-details.html">
-                                            <img src="/images/blog/2.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="blog-img">
-                                        <a href="blog-details.html">
-                                            <img src="/images/blog/3.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="blog-img">
-                                        <a href="blog-details.html">
-                                            <img src="/images/blog/4.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="blog-img">
-                                        <a href="blog-details.html">
-                                            <img src="/images/blog/5.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">Post With Gallery</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="/images/blog/3.jpg" alt="Blog Image">
-                                </a>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">When an unknown printer took.</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="/images/blog/6.jpg" alt="Blog Image">
-                                </a>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">When an unknown printer took.</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/256180869&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
-                                </iframe>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">Post With Audio</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe src="https://www.youtube.com/embed/-lG0kDeuSJk" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                                </iframe>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">Post With Video</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="/images/blog/4.jpg" alt="Blog Image">
-                                </a>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">When an unknown printer.</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="/images/blog/5.jpg" alt="Blog Image">
-                                </a>
-                            </div>
-                            <div class="blog-content">
-                                <h3 class="heading">
-                                    <a href="blog-details.html">When an unknown printer.</a>
-                                </h3>
-                                <p class="short-desc">
-                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                                    line in section 1.10.32.
-                                </p>
-                                <div class="blog-meta">
-                                    <ul>
-                                        <li>Oct.20.2019</li>
-                                        <li>
-                                            <a href="javascript:void(0)">02 Comments</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="kenne-paginatoin-area">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <ul class="kenne-pagination-box primary-color">
-                                        <li class="active"><a href="javascript:void(0)">1</a></li>
-                                        <li><a href="javascript:void(0)">2</a></li>
-                                        <li><a href="javascript:void(0)">3</a></li>
-                                        <li><a href="javascript:void(0)">4</a></li>
-                                        <li><a href="javascript:void(0)">5</a></li>
-                                        <li><a class="Next" href="javascript:void(0)">Next</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                  <?php endforeach ;?>
+
+
+<!--                    <div class="col-lg-6">-->
+<!--                        <div class="blog-item">-->
+<!--                            <div class="kenne-element-carousel single-blog_slider arrow-style-2 overflow-hidden" data-slick-options='{-->
+<!--                                    "slidesToShow": 1,-->
+<!--                                    "slidesToScroll": 1,-->
+<!--                                    "infinite": false,-->
+<!--                                    "arrows": true,-->
+<!--                                    "dots": false,-->
+<!--                                    "spaceBetween": 30-->
+<!--                                    }' data-slick-responsive='[-->
+<!--                                    {"breakpoint":768, "settings": {-->
+<!--                                    "slidesToShow": 1-->
+<!--                                    }},-->
+<!--                                    {"breakpoint":575, "settings": {-->
+<!--                                    "slidesToShow": 1-->
+<!--                                    }}-->
+<!--                                ]'>-->
+<!--                                < ?php //foreach ($data as $item) :?>-->
+<!--                                <div class="single-item">-->
+<!--                                    <div class="blog-img">-->
+<!--                                        <a href="blog-details.html">-->
+<!--                                            <img src="< ?//='./backend/web/uploads/'.$item['image']?>" alt="Blog Image">-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                < ?php //endforeach;?>
+-->
+<!--                            </div>-->
+<!--                            <div class="blog-content">-->
+<!--                                <h3 class="heading">-->
+<!--                                    <a href="blog-details.html">Post With Gallery</a>-->
+<!--                                </h3>-->
+<!--                                <p class="short-desc">-->
+<!--                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a-->
+<!--                                    line in section 1.10.32.-->
+<!--                                </p>-->
+<!--                                <div class="blog-meta">-->
+<!--                                    <ul>-->
+<!--                                        <li>Oct.20.2019</li>-->
+<!--                                        <li>-->
+<!--                                            <a href="javascript:void(0)">02 Comments</a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!---->
+<!--                </div>-->
+<!--//////////////////////////////////////////////////// End Gallery //////////////////////////////////////////////////////-->
+
+
+
+<!--           ////////////////////////////////////////  Phan Trang  Chua Xong    ///////////////////////////////////////////-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-12">-->
+<!--                <div class="kenne-paginatoin-area">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-lg-12">-->
+<!--            < ?php-->
+<!--//            if (isset($pages)){-->
+<!--//                echo \yii\widgets\LinkPager::widget([-->
+<!--//                    'pagination' => $pages,-->
+<!--//                    'prevPageLabel' => false,-->
+<!--//                    'nextPageLabel' => false,-->
+<!--//                    'options' => [-->
+<!--//                        'class' => 'kenne-pagination-box primary-color',-->
+<!--//                    ],-->
+<!--//                ]);-->
+<!--//            }-->
+<!--//            else{-->
+<!--//                echo 'khong co ';-->
+<!--//            }-->
+<!--//            ?>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@
                                 ]'>
 
                         <div class="brand-item">
-                            <a href="javascript:void(0)">
+                            <a href="https://google.com.vn">
                                 <img src="/images/brand/1.png" alt="Brand Images">
                             </a>
                         </div>

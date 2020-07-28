@@ -17,6 +17,7 @@ class m200724_095718_create_blogs_table extends Migration
 
         $this->createTable('{{%blogs}}', [
             'id' => $this->primaryKey(),
+            'status' => $this->tinyInmiteger()->notNull(),
             'image' => $this->string(255),
             'title' => $this->string(255)->notNull()->unique(),
             'descriptions' => $this->string(255)->notNull(),

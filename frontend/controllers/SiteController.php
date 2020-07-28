@@ -14,14 +14,14 @@ use frontend\models\TagSeo;
 use Yii;
 use frontend\components\MyController;
 use yii\helpers\Url;
+use modava\blogs\models\Blogs;
 
 class SiteController extends MyController
 {
 
     public function actionIndex()
     {
-        return $this->render('index', [
-        ]);
+        return $this->render('index', []);
     }
 
 

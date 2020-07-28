@@ -12,6 +12,8 @@ use yii\widgets\Pjax;
 
 $this->title = BlogsModule::t('blogs', 'Blogs');
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -95,7 +97,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                                                            [
+
+                                        [
                                             'attribute' => 'title',
                                             'format' => 'raw',
                                             'value' => function ($model) {
@@ -105,15 +108,38 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-                                    
-										'image',
+
+										[
+                                            'attribute' =>'image',
+                                            'content' => function($model){
+                                                return Html::img('../uploads/'.$model->image,['width' => '200px']);
+                                            }
+										],
 										'title',
 										'descriptions',
 										'date',
 										'comments',
+                                        [
+                                            'attribute'  => 'status',
+                                             'content' =>
+                                                 function($model){
+                                                if($model->status == 0){
+                                                    return Html::tag('div','Không Hoạt Động',['style' => ['text-align:center'],'class' => ['badge badge-secondary']]);
+                                                }
+                                                if($model->status == 1){
+                                                    return Html::tag('span','Hoạt Động',['style' => ['text-align:center'],'class' => ['badge badge-success']]);
+                                                }
+                                             },
+                                            'label' => 'status'
+                                        ],
+
 										//'search',
 										//'recent_post',
 										//'tags',
+                                        [
+                                                'attribute' => 'tags',
+
+                                        ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => BlogsModule::t('blogs', 'Actions'),

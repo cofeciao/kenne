@@ -11,6 +11,7 @@ use modava\blogs\BlogsModule;
 use backend\components\MyController;
 use modava\blogs\models\Blogs;
 use modava\blogs\models\search\BlogsSearch;
+use yii\web\UploadedFile;
 
 /**
  * BlogsController implements the CRUD actions for Blogs model.
@@ -40,10 +41,10 @@ class BlogsController extends MyController
     {
         $searchModel = new BlogsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+
         ]);
             }
 
@@ -67,12 +68,28 @@ class BlogsController extends MyController
     * If creation is successful, the browser will be redirected to the 'view' page.
     * @return mixed
     */
+
+
     public function actionCreate()
     {
         $model = new Blogs();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save()) {
+
+            $model->date = date('Y-m-d H:i:s');
+
+            ////////////////////////// Upload Hình Ảnh /////////////////////////////////////////////////
+
+            $file = UploadedFile::getInstance($model,'file');
+            if($file != null)
+            {
+                $file->saveAs('./uploads/'. $file->baseName.'.'.$file->extension);
+                $model->image = $file->name;
+            }
+
+
+            if ($model->validate() && $model->save(false)) {
+
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
                     'text' => 'Tạo mới thành công',
@@ -85,7 +102,7 @@ class BlogsController extends MyController
                     $errors .= Html::tag('p', $error[0]);
                 }
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',``
+                    'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);

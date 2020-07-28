@@ -49,4 +49,11 @@ $(function () {
     $('body').on('load-body', function () {
         setPopovers();
     }).trigger('load-body');
+
+
+    // $('#blogs-image').click(function() {
+    //   $('#modal-media-imge').modal('show');
+    // });
+
 });
+

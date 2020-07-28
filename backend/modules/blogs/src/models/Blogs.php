@@ -3,26 +3,15 @@
 namespace modava\blogs\models;
 
 use common\helpers\MyHelper;
+use common\models\BlogsCommon;
 use common\models\User;
 use modava\blogs\BlogsModule;
 use modava\blogs\models\table\BlogsTable;
 use yii\db\ActiveRecord;
 use Yii;
 
-/**
-* This is the model class for table "blogs".
-*
-    * @property int $id
-    * @property string $image
-    * @property string $title
-    * @property string $descriptions
-    * @property string $date
-    * @property string $comments
-    * @property string $search
-    * @property string $recent_post
-    * @property string $tags
-*/
-class Blogs extends BlogsTable
+
+class Blogs extends BlogsCommon
 {
     public $toastr_key = 'blogs';
     public function behaviors()
@@ -37,14 +26,16 @@ class Blogs extends BlogsTable
     /**
     * {@inheritdoc}
     */
+    public $file;
     public function rules()
     {
         return [
 			[['title', 'descriptions', 'tags'], 'required'],
-			[['date'], 'safe'],
 			[['image', 'title', 'descriptions', 'comments', 'search', 'recent_post'], 'string', 'max' => 255],
 			[['tags'], 'string', 'max' => 50],
 			[['title'], 'unique'],
+            [['file'],'file', 'extensions' => 'png,jpg'],
+            [['status'], 'integer']
 		];
     }
 
@@ -63,6 +54,7 @@ class Blogs extends BlogsTable
             'search' => BlogsModule::t('blogs', 'Search'),
             'recent_post' => BlogsModule::t('blogs', 'Recent Post'),
             'tags' => BlogsModule::t('blogs', 'Tags'),
+            //'status' => BlogsModule::t('blogs','status')
         ];
     }
 

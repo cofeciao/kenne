@@ -36,8 +36,10 @@ $bundle = AppAsset::register($this);
 
     </head>
     <body class="template-color-1">
+
     <?php $this->beginBody() ?>
     <?= $content ?>
+
     <?php $this->endBody() ?>
     </body>
     </html>
