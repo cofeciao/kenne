@@ -120,6 +120,15 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
+
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('pages')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'pages') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/pages']); ?>">
+                            <i class="ion ion-ios-beaker"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Pages'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
             <hr class="nav-separator">
             <div class="nav-header">

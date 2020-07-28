@@ -1,7 +1,4 @@
 <?php
-/* @var $tableSchema yii\db\TableSchema */
-?>
-<?= "<?php\n" ?>
 return [
     'Create' => 'Tạo mới',
     'Update' => 'Cập nhật',
@@ -22,5 +19,6 @@ return [
     'Content' => 'Nội dung',
     'Language' => 'Ngôn ngữ',
     'Name' => 'Tên',
+    'Description' => 'Mô tả',
 
 ];

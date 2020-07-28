@@ -120,6 +120,10 @@ phpunit.phar
 /backend/modules/iway/README.md
 /backend/modules/iway/.git
 
+/backend/modules/pages/composer.json
+/backend/modules/pages/README.md
+/backend/modules/pages/.git
+
 /backend/modules/comment/composer.json
 /backend/modules/comment/README.md
 /backend/modules/comment/.git

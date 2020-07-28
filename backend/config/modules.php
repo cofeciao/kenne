@@ -51,6 +51,9 @@ return [
     'iway' => [
         'class' => 'modava\iway\IwayModule',
     ],
+    'pages' => [
+        'class' => 'modava\pages\PagesModule',
+    ],
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],
