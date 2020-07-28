@@ -42,7 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             {errors}
                                             <div class="row">
                                                 <div class="col-sm-12">
+                                                    <div class="table-responsive">
                                                     {items}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row">
