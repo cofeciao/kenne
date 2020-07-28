@@ -45,6 +45,7 @@
     "skeeks/yii2-assets-auto-compress": "*",
     "tinymce/tinymce": " 5.2.2",
     "modava/tiny": "@dev",
+    "modava/auth": "@dev",
     "modava/imagick": "@dev",
     "modava/location": "@dev",
     "modava/generator": "@dev",
