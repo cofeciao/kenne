@@ -106,8 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             }
                                         ],
                                     
-										'title',
-										'description:ntext',
+										'slug',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',

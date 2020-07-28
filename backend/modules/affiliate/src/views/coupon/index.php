@@ -5,6 +5,7 @@ use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\CouponSearch */
@@ -121,6 +122,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'attribute' => 'promotion_type',
                                             'value' => function ($model) {
                                                 return AffiliateModule::t('affiliate', Yii::$app->controller->module->params["promotion_type"][$model->promotion_type]);
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'partner_id',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
                                             }
                                         ],
 										//'description:ntext',

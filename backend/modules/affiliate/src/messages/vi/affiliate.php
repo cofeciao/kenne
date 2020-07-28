@@ -32,4 +32,6 @@ return [
     'Create Coupon' => 'Tạo Coupon',
     'Coupon Type' => 'Loại Coupon',
     'Customer' => 'Khách hàng',
+    'Partners' => 'Hệ thống',
+    'Partner Id' => 'Hệ thống',
 ];

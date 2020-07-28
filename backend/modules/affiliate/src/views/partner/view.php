@@ -50,9 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
 						'id',
 						'title',
 						'slug',
-						'description:ntext',
-						'created_at',
-						'updated_at',
+						'description:html',
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => AffiliateModule::t('affiliate', 'Created By')

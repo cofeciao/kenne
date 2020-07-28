@@ -15,17 +15,9 @@ use modava\affiliate\AffiliateModule;
     <?php $form = ActiveForm::begin(); ?>
 		<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-		<?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-		<?= $form->field($model, 'created_at')->textInput() ?>
-
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-		<?= $form->field($model, 'created_by')->textInput() ?>
-
-		<?= $form->field($model, 'updated_by')->textInput() ?>
+        <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
+            'options' => ['rows' => 6],
+        ]) ?>
 
         <div class="form-group">
             <?= Html::submitButton(AffiliateModule::t('affiliate', 'Save'), ['class' => 'btn btn-success']) ?>

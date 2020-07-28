@@ -39,7 +39,7 @@ class Partner extends PartnerTable
                     'class' => SluggableBehavior::class,
                     'immutable' => false,
                     'ensureUnique' => true,
-                    'value' => function () {
+                    'value' =>  function () {
                         return MyHelper::createAlias($this->title);
                     }
                 ],
@@ -66,9 +66,8 @@ class Partner extends PartnerTable
     public function rules()
     {
         return [
-			[['title', 'slug', 'created_at', 'updated_at'], 'required'],
+			[['title',], 'required'],
 			[['description'], 'string'],
-			[['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
 			[['title', 'slug'], 'string', 'max' => 255],
 			[['slug'], 'unique'],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],

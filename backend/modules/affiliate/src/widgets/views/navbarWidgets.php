@@ -19,13 +19,13 @@ $routeInfos = [
     [
         'module' => 'affiliate',
         'controllerId' => 'coupon',
-        'label' => 'Coupon',
+        'label' => AffiliateModule::t('affiliate', 'Coupon'),
         'icon' => '<i class="icon dripicons-ticket"></i>',
     ],
     [
         'module' => 'affiliate',
         'controllerId' => 'partner',
-        'label' => 'Coupon',
+        'label' => AffiliateModule::t('affiliate', 'Partners'),
         'icon' => '<i class="fa fa-share-alt"></i>',
     ],
 ];

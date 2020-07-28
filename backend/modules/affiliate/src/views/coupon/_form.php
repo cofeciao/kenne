@@ -55,7 +55,7 @@ $model->expired_date = $model->expired_date != null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'coupon_type_id')->dropDownList(
-                    ArrayHelper::map(\modava\affiliate\models\CouponType::getAll(), 'id', 'title'),
+                    ArrayHelper::map(\modava\affiliate\models\table\CouponTypeTable::getAllRecords(), 'id', 'title'),
                     [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...') ]
             ) ?>
         </div>
@@ -69,6 +69,14 @@ $model->expired_date = $model->expired_date != null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'partner_id')->dropDownList(
+                ArrayHelper::map(\modava\affiliate\models\table\PartnerTable::getAllRecords(), 'id', 'title'),
+                [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
+                    'id' => 'partner-id'
+                ]
+            ) ?>
         </div>
         <div class="col-12">
             <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
