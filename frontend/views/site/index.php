@@ -71,7 +71,7 @@ $this->title = WEB_NAME;
                                             </li>
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                            <li><a href="<?= '/cart/add-cart?slug='.$item->pro_slug ?>" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
                                     </div>

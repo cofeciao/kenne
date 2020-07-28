@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
 
 class ProductsCommon extends ActiveRecord
 {
+    public $qtt ;
     public static function tableName()
     {
         return 'products';

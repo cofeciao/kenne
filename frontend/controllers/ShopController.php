@@ -37,7 +37,4 @@ class ShopController extends  MyController
         }
     }
 
-    public function actionAddcart($id){
-        return $this->renderAjax('cart');
-    }
 }
