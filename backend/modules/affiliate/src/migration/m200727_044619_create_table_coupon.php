@@ -30,7 +30,7 @@ class m200727_044619_create_table_coupon extends Migration
             'quantity_used' => $this->integer()->defaultValue(0)->notNull()->comment('Số lượng đã sử dụng'),
             'promotion_type' => $this->smallInteger(3)->notNull()->comment('Loại khuyễn mại'),
             'promotion_value' => $this->integer(11)->notNull()->comment('Giá trị coupon'),
-            'partner' => $this->string(100)->notNull()->comment('Partner tích hợp affiliate'),
+            'partner_id' => $this->integer(11)->notNull()->comment('Partner tích hợp affiliate'),
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),
             'created_by' => $this->integer(11)->null(),

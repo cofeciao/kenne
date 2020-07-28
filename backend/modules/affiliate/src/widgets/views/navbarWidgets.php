@@ -22,6 +22,12 @@ $routeInfos = [
         'label' => 'Coupon',
         'icon' => '<i class="icon dripicons-ticket"></i>',
     ],
+    [
+        'module' => 'affiliate',
+        'controllerId' => 'partner',
+        'label' => 'Coupon',
+        'icon' => '<i class="fa fa-share-alt"></i>',
+    ],
 ];
 ?>
 <ul class="nav nav-tabs nav-sm nav-light mb-25">
