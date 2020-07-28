@@ -11,18 +11,17 @@ use frontend\components\MyController;
 class ShopController extends  MyController
 {
     public function actionIndex($slug=''){
+
+        $query = CategoriesCommon::find();
         if ($slug != ''){
-            $categories = CategoriesCommon::find()->where(['cat_slug' => $slug])->one();
-            $query = $categories->getProducts();
+            $query = $query->where(['cat_slug' => $slug])->one();
+            $query = $query->getProducts();
             //Array
             $count = $query->count();
             $pagination = new Pagination(['totalCount'=> $count]);
             $pagination->pageSize = 4;
             $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            return $this->render('index',[
-                'pagination'=>$pagination,
-                'data'=>$data,
-            ]);
+
         }else{
             $query = ProductsCommon::find()->where(['pro_status' => 1]);
             //Activequery
@@ -30,11 +29,13 @@ class ShopController extends  MyController
             $pagination = new Pagination(['totalCount'=> $count]);
             $pagination->pageSize = 7;
             $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            return $this->render('index',[
-                'pagination'=>$pagination,
-                'data'=>$data,
-            ]);
         }
+        $pagination = 0;
+        $data = '';
+        return $this->render('index',[
+            'pagination'=>$pagination,
+            'data'=>$data,
+        ]);
     }
 
 }

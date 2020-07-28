@@ -2,14 +2,17 @@
 
 namespace modava\products\models\table;
 
-use cheatsheet\Time;
-use common\models\ProductsCommon;
 use modava\categories\models\Categories;
 use Yii;
 use yii\db\ActiveRecord;
 
-class ProductsTable extends ProductsCommon
+class ProductsTable extends ActiveRecord
 {
+    public static function tableName()
+    {
+        return 'products';
+    }
+
     public $pathImage;
 
     public function init()

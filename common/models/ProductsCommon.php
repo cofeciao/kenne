@@ -5,16 +5,11 @@ namespace common\models;
 
 
 use modava\categories\models\Categories;
-use modava\products\models\Products;
-use yii\db\ActiveRecord;
+use modava\products\models\table\ProductsTable;
 
-class ProductsCommon extends ActiveRecord
+class ProductsCommon extends ProductsTable
 {
     public $qtt ;
-    public static function tableName()
-    {
-        return 'products';
-    }
 
     public function getCategory(){
         return $this->hasOne(Categories::class,['id'=>"cat_id"]);
