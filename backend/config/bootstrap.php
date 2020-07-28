@@ -21,7 +21,7 @@ Yii::setAlias('modava/categories', dirname(dirname(__DIR__)) . '/backend/modules
 Yii::setAlias('modava/products', dirname(dirname(__DIR__)) . '/backend/modules/products/src');
 Yii::setAlias('modava/transactions', dirname(dirname(__DIR__)) . '/backend/modules/transactions/src');
 Yii::setAlias('modava/orders', dirname(dirname(__DIR__)) . '/backend/modules/orders/src');
-//Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
+Yii::setAlias('modava/blogs', dirname(dirname(__DIR__)) . '/backend/modules/blogs/src');
 
 //Widget
 Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
