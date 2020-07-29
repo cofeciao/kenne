@@ -1,25 +1,21 @@
 <?php
 
-
 namespace frontend\models;
 
 
-use common\models\BlogsCommon;
+use modava\blogs\models\table\BlogsTable;
+use yii\data\Pagination;
+use yii\elasticsearch\ActiveDataProvider;
 
-class Blogs extends BlogsCommon
+class Blogs extends BlogsTable
 {
-    public function getOneBLogsRecord()
-    {
-        return self::find()
-            ->where(['status' => self::ACTIVE_STATUS])
-            ->one();
-    }
     public function getAllBLogsRecord()
     {
-        return self::find()
-            ->where(['status' => self::ACTIVE_STATUS])
-            ->all();
+        $data = self::find()
+            ->where(['status' => self::ACTIVE_STATUS]);
+        return $data;
     }
+
     public function getAllRecentPost()
     {
         return self::find()
@@ -28,8 +24,27 @@ class Blogs extends BlogsCommon
             ->orderBy(['date' => SORT_DESC])
             ->all();
     }
-    public function getPagination()
-    {
 
+    public function getAllTags()
+    {
+        return self::find()
+            ->where(['status' => self::ACTIVE_STATUS])
+            ->select(['tags'])
+            ->distinct()
+            ->all();
+    }
+
+    public function getAllPagination()
+    {
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => self::find()->where(['status' => self::ACTIVE_STATUS]),
+            'pagination' => [
+                'pageSize' => $pageSize = 4,
+            ]
+        ]);
+        return $dataProvider;
+        echo '<pre>';
+            print_r($dataProvider);
+        echo '</pre>';die;
     }
 }

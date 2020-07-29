@@ -6,11 +6,30 @@ use cheatsheet\Time;
 use Yii;
 use yii\db\ActiveRecord;
 
+/**
+ * This is the model class for table "blogs".
+ *
+ * @property int $id
+ * @property string $image
+ * @property string $title
+ * @property string $descriptions
+ * @property string $date
+ * @property string $comments
+ * @property string $search
+ * @property string $recent_post
+ * @property string $tags
+ */
+
 class BlogsTable extends \yii\db\ActiveRecord
 {
 //    const STATUS_DISABLED = 0;
 //    const STATUS_PUBLISHED = 1;
 
+    const ACTIVE_STATUS = 1;
+    public static function tableName()
+    {
+        return 'blogs';
+    }
 
     public function afterDelete()
     {

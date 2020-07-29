@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
 use Yii;
 
 
-class Blogs extends BlogsCommon
+class Blogs extends ActiveRecord
 {
     public $toastr_key = 'blogs';
     public function behaviors()
@@ -57,6 +57,7 @@ class Blogs extends BlogsCommon
             //'status' => BlogsModule::t('blogs','status')
         ];
     }
+
 
 
 }

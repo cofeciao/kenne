@@ -1,5 +1,5 @@
 <?php
-
+use yii\widgets\LinkPager;
 ?>
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">
@@ -45,7 +45,7 @@
                         <div class="recent-post">
                             <div class="recent-post_thumb">
                                 <a href="blog-details.html">
-                                    <img class="img-full" src="<?='./backend/web/uploads/'.$item['image']?>" alt="Kenne's Blog Image">
+                                    <img class="img-full" src="<?='/backend/web/uploads/'.$item['image']?>" alt="Kenne's Blog Image">
                                 </a>
                             </div>
                             <div class="recent-post_desc">
@@ -102,11 +102,11 @@
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Tags</h4>
                         <ul class="kenne-tags_list">
-                            <? foreach ($data as $item): ?>
+                            <?php foreach($tags as $item) : ?>
                                 <li>
                                     <a href="javascript:void(0)"><?=$item['tags']?></a>
                                 </li>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -118,12 +118,12 @@
 <!--///////////////////////////////////////////////////////  Gallery ////////////////////////////////////////////////-->
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="row blog-item_wrap">
-                    <?php foreach($data as $item): ?>
+                    <?php foreach($pages->models as $item): ?>
                     <div class="col-lg-6">
                         <div class="blog-item">
                             <div class="blog-img">
                                 <a href="blog-details.html">
-                                    <img src="<?='./backend/web/uploads/'.$item['image']?>" alt="Blog Image"/>
+                                    <img src="<?='/backend/web/uploads/'.$item->image?>" alt="Blog Image"/>
                                 </a>
                             </div>
                             <div class="blog-content">
@@ -146,7 +146,6 @@
                         </div>
                     </div>
                   <?php endforeach ;?>
-
 
 <!--                    <div class="col-lg-6">-->
 <!--                        <div class="blog-item">-->
@@ -201,35 +200,32 @@
 
 
 
-<!--           ////////////////////////////////////////  Phan Trang  Chua Xong    ///////////////////////////////////////////-->
+<!-- ////////////////////////////////////////////  Pagination    ////////////////////////////////////////////////////-->
 <!--        <div class="row">-->
-<!--            <div class="col-lg-12">-->
-<!--                <div class="kenne-paginatoin-area">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-12">-->
-<!--            < ?php-->
-<!--//            if (isset($pages)){-->
-<!--//                echo \yii\widgets\LinkPager::widget([-->
-<!--//                    'pagination' => $pages,-->
-<!--//                    'prevPageLabel' => false,-->
-<!--//                    'nextPageLabel' => false,-->
-<!--//                    'options' => [-->
-<!--//                        'class' => 'kenne-pagination-box primary-color',-->
-<!--//                    ],-->
-<!--//                ]);-->
-<!--//            }-->
-<!--//            else{-->
-<!--//                echo 'khong co ';-->
-<!--//            }-->
-<!--//            ?>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
-
+                    <div class="col-lg-12">
+                        <div class="kenne-paginatoin-area">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <?php
+                                        if (isset($pages)){
+                                            echo LinkPager::widget([
+                                                'pagination' => $pages->pagination,
+                                                'prevPageLabel' => false,
+                                                'nextPageLabel' => false,
+                                                'options' => [
+                                                    'class' => 'kenne-pagination-box primary-color',
+                                                ],
+                                            ]);
+                                        }
+                                        else{
+                                            echo 'do not';
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
