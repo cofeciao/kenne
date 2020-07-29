@@ -151,13 +151,11 @@ function openCreateModal(params) {
     
     $.get('$couponURL/get-create-modal', params, function(data, status, xhr) {
         if (status === 'success') {
+            debugger;
+            if (typeof tinymce != "undefined") tinymce.remove();
             $('.ModalContainer').html(data);
             $('.ModalContainer').modal();
         }
-    });
-    
-    $('.ModalContainer').on('hide.bs.modal', function() {
-        tinymce.remove();
     });
 }
 
