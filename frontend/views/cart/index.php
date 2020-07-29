@@ -1,4 +1,7 @@
-<?php ?>
+<?php
+$this->title = "Giỏ hàng";
+?>
+
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
@@ -23,47 +26,32 @@
                             <thead>
                             <tr>
                                 <th class="kenne-product-remove">remove</th>
-                                <th class="kenne-product-thumbnail">images</th>
-                                <th class="cart-product-name">Product</th>
-                                <th class="kenne-product-price">Unit Price</th>
-                                <th class="kenne-product-quantity">Quantity</th>
-                                <th class="kenne-product-subtotal">Total</th>
+                                <th class="kenne-product-thumbnail">Hình ảnh</th>
+                                <th class="cart-product-name">Tên sản phẩm</th>
+                                <th class="kenne-product-price">Đơn giá</th>
+                                <th class="kenne-product-quantity">Số lượng</th>
+                                <th class="kenne-product-subtotal">Tổng tiền</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php foreach ($data as $key => $item){?>
                             <tr>
+
                                 <td class="kenne-product-remove"><a href="javascript:void(0)"><i class="fa fa-trash"
                                                                                                  title="Remove"></i></a></td>
-                                <td class="kenne-product-thumbnail"><a href="javascript:void(0)"><img src="/images/product/small-size/1.jpg" alt="Uren's Cart Thumbnail"></a></td>
-                                <td class="kenne-product-name"><a href="javascript:void(0)">Juma rema pola</a></td>
-                                <td class="kenne-product-price"><span class="amount">$46.80</span></td>
+                                <td class="kenne-product-thumbnail"><a href="javascript:void(0)"><img width="100px" height="100px" src="<?= $item['image']?>" alt="<?= $item['slug']?>"></a></td>
+                                <td class="kenne-product-name"><a href="javascript:void(0)"><?= $item['name']?></a></td>
+                                <td class="kenne-product-price"><span class="amount"><?= number_format($item['price'],0,',','.') ?> đ</span></td>
                                 <td class="quantity">
-                                    <label>Quantity</label>
                                     <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                        <input class="cart-plus-minus-box" value="<?= $item['sl'] ?>" type="text">
                                         <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                     </div>
                                 </td>
-                                <td class="product-subtotal"><span class="amount">$46.80</span></td>
+                                <td class="product-subtotal"><span class="amount"><?= number_format($item['price']*$item['sl'],0,',','.') ?> đ</span></td>
                             </tr>
-                            <tr>
-                                <td class="kenne-product-remove"><a href="javascript:void(0)"><i class="fa fa-trash"
-                                                                                                 title="Remove"></i></a></td>
-                                <td class="kenne-product-thumbnail"><a href="javascript:void(0)"><img src="/images/product/small-size/2.jpg" alt="Uren's Cart Thumbnail"></a></td>
-                                <td class="kenne-product-name"><a href="javascript:void(0)">Bag Goodscol model</a>
-                                </td>
-                                <td class="kenne-product-price"><span class="amount">$71.80</span></td>
-                                <td class="quantity">
-                                    <label>Quantity</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                    </div>
-                                </td>
-                                <td class="product-subtotal"><span class="amount">$71.80</span></td>
-                            </tr>
+                            <?php }?>
                             </tbody>
                         </table>
                     </div>

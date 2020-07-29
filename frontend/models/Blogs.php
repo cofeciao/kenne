@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-
 use modava\blogs\models\table\BlogsTable;
 use yii\data\Pagination;
 use yii\elasticsearch\ActiveDataProvider;
@@ -19,7 +18,7 @@ class Blogs extends BlogsTable
     public function getAllRecentPost()
     {
         return self::find()
-            ->where(['status' => self::ACTIVE_STATUS])
+            ->where(['status' => self::STATUS_PUBLISHED])
             ->limit(5)
             ->orderBy(['date' => SORT_DESC])
             ->all();

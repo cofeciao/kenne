@@ -1,8 +1,6 @@
 <?php
 
-
 namespace frontend\controllers;
-
 
 use common\components\Component;
 use frontend\components\MyController;
@@ -12,22 +10,22 @@ class CartController extends MyController
 {
     public function actionIndex()
     {
-        return $this->render('index',[]);
+        $data = unserialize(serialize(Component::getCookies('cart')));
+
+        return $this->render('index', [
+            'data' => $data
+        ]);
     }
 
-    public function actionAddCart($slug){
+    public function actionAddCart($slug)
+    {
         $cart = new Cart();
-        $cart->add( $slug);
+        $cart->add($slug);
 
-        
         //__PHP_Incomplete_Class Object with cookie.
         //Need unserialize , serialize to transfer
-        /*$ojb = unserialize (serialize (Component::getCookies('cart')));
 
-        echo "<pre>";
-        print_r($ojb);
-        echo "</pre>";
-        die;*/
+        return $this->redirect(['/cart']);
 
     }
 }

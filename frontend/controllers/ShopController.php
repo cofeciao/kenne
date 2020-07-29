@@ -3,38 +3,37 @@
 
 namespace frontend\controllers;
 
-use common\models\CategoriesCommon;
-use yii\data\Pagination;
-use common\models\ProductsCommon;
+use frontend\models\Products;
 use frontend\components\MyController;
 
 class ShopController extends  MyController
 {
     public function actionIndex($slug=''){
+        $data = '';
+        $model = new Products();
         if ($slug != ''){
-            $categories = CategoriesCommon::find()->where(['cat_slug' => $slug])->one();
-            $query = $categories->getProducts();
+            $query = $model->getProductByCategory($slug);
+            $data = $model->getPagination($query,6);
+            /*$query = Categories::find();
+            $query = $query->where(['cat_slug' => $slug])->one();
+            $query = $query->getProducts();
+
             //Array
             $count = $query->count();
             $pagination = new Pagination(['totalCount'=> $count]);
-            $pagination->pageSize = 4;
-            $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            return $this->render('index',[
-                'pagination'=>$pagination,
-                'data'=>$data,
-            ]);
+            $pagination->pageSize = 6;
+            $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();*/
         }else{
-            $query = ProductsCommon::find()->where(['pro_status' => 1]);
+            $query = $model->getAllProducts();
+            $data = $model->getPagination($query,9);
             //Activequery
-            $count = $query->count();
+            /*$count = $query->count();
             $pagination = new Pagination(['totalCount'=> $count]);
-            $pagination->pageSize = 7;
-            $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            return $this->render('index',[
-                'pagination'=>$pagination,
-                'data'=>$data,
-            ]);
+            $pagination->pageSize = 9;
+            $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();*/
         }
+        return $this->render('index',[
+            'data'=>$data,
+        ]);
     }
-
 }

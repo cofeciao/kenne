@@ -1,9 +1,8 @@
 <?php
 
-
 namespace frontend\components;
-use common\models\ProductsCommon;
 
+use common\models\ProductsCommon;
 use common\components\Component;
 
 class Cart
@@ -45,10 +44,6 @@ class Cart
         }
 
         Component::setCookies('cart',$cartstore);
-        echo "<pre>";
-        print_r($cartstore);
-        echo "</pre>";
-
 
 
 

@@ -22,8 +22,8 @@ use yii\db\ActiveRecord;
 
 class BlogsTable extends \yii\db\ActiveRecord
 {
-//    const STATUS_DISABLED = 0;
-//    const STATUS_PUBLISHED = 1;
+    const STATUS_DISABLED = 0;
+    const STATUS_PUBLISHED = 1;
 
     const ACTIVE_STATUS = 1;
     public static function tableName()

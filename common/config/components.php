@@ -62,7 +62,7 @@ return [
         }
     ],
     'request' => [
-        'cookieValidationKey' => FRONTEND_HOST_INFO,
+        //'cookieValidationKey' => FRONTEND_HOST_INFO,
         //Lấy key là domain
     ]
 ];

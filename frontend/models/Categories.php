@@ -1,12 +1,13 @@
 <?php
 
 
-namespace common\models;
+namespace frontend\models;
 
 
+use yii\data\Pagination;
 use yii\db\ActiveRecord;
 
-class CategoriesCommon extends ActiveRecord
+class Categories extends ActiveRecord
 {
     public static function tableName()
     {
@@ -14,6 +15,7 @@ class CategoriesCommon extends ActiveRecord
     }
 
     public function getProducts(){
-        return $this->hasMany(ProductsCommon::class,['cat_id'=> 'id']);
+        return $this->hasMany(Products::class,['cat_id'=> 'id']);
     }
+
 }
