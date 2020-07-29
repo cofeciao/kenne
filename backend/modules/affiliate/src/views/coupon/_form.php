@@ -1,5 +1,6 @@
 <?php
 
+use modava\affiliate\widgets\JsCreateModalWidget;
 use modava\customer\components\CustomerDateTimePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,8 +19,9 @@ $model->expired_date = $model->expired_date != null
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="coupon-form">
     <?php $form = ActiveForm::begin([
+        'id' => 'coupon_form',
         'enableAjaxValidation' => true,
-        'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]), // Khi sử dụng cần test lại
+        'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]),
     ]); ?>
     <div class="row">
         <div class="col-6">
@@ -91,6 +93,8 @@ $model->expired_date = $model->expired_date != null
 
     <?php ActiveForm::end(); ?>
 </div>
+
+<?= JsCreateModalWidget::widget(['formClassName' => 'coupon_form', 'modelName' => 'Coupon']) ?>
 
 <?php
 $script = <<< JS

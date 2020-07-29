@@ -4,6 +4,7 @@ use modava\affiliate\AffiliateModule;
 use modava\affiliate\widgets\NavbarWidgets;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 $this->title = AffiliateModule::t('affiliate', 'Customer');
@@ -100,14 +101,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                            'template' => '{create-coupon} {create-call-note}',
+                                            'template' => '{create-coupon} {create-call-note} {hidden-input-customer-info}',
                                             'buttons' => [
                                                 'create-coupon' => function ($url, $model) {
                                                     return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
                                                         'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
                                                         'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),
                                                         'data-pjax' => 0,
-                                                        'data-customer-info' => json_encode($model),
                                                         'data-partner' => 'myaris',
                                                         'class' => 'btn btn-info btn-xs create-coupon'
                                                     ]);
@@ -117,11 +117,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         'title' => AffiliateModule::t('affiliate', 'Create Call Note'),
                                                         'alia-label' => AffiliateModule::t('affiliate', 'Create Call Note'),
                                                         'data-pjax' => 0,
-                                                        'data-customer-info' => json_encode($model),
                                                         'data-partner' => 'myaris',
                                                         'class' => 'btn btn-success btn-xs create-call-note'
                                                     ]);
                                                 },
+                                                'hidden-input-customer-info' => function ($url, $model) {
+                                                    return Html::input('hidden', 'customer_info[]', json_encode($model));
+                                                }
                                             ],
                                             'headerOptions' => [
                                                 'width' => 150,
@@ -138,43 +140,39 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-    <div class="modal fade" id="createCouponModal" tabindex="-1" role="dialog" aria-labelledby="createCouponModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createCouponModalLabel"><?=AffiliateModule::t('affiliate', 'Create Coupon')?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<div class="modal fade ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true">
+</div>
 <?php
+$couponURL = Url::toRoute(["/affiliate/handle-ajax"]);
 $script = <<< JS
 
+function openCreateModal(params) {
+  $.get('$couponURL/get-create-modal', params, function(data, status, xhr) {
+        if (status === 'success') {
+            modalContainer.html(data);
+            modalContainer.modal();
+        }
+    });
+}
+
+var modalContainer = $('.ModalContainer'); 
+
 $('.create-coupon').on('click', function() {
-    let customerInfo = $(this).data('customer-info');
+    let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
     console.log(customerInfo);
-    $('#createCouponModal').modal();
+    openCreateModal({model: 'Coupon', 
+        'Coupon[partner_id]' : 7,
+        'Coupon[customer_id]' : customerInfo.id,
+    });
 });
 
+$('.create-call-note').on('click', function() {
+    let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
+    console.log(customerInfo);
+    openCreateModal({model: 'Note', 
+        'Note[partner_id]' : 7,
+        'Note[customer_id]' : customerInfo.id,
+    });
+});
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

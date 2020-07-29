@@ -34,8 +34,12 @@ return [
     'Customer' => 'Khách hàng',
     'Partners' => 'Hệ thống tích hợp',
     'Partner Id' => 'Hệ thống tích hợp',
+    'Partner ID' => 'Hệ thống tích hợp',
     'Coupon Types' => 'Loại Coupon',
     'Create Call Note' => 'Tạo Note Cuộc Gọi',
     'Call Time' => 'Thời gian gọi',
     'Recall Time' => 'Thời gian gọi lại',
+    'Object is not existed' => 'Đối tượng không tồn tại',
+    'Form is not existed' => 'Biểu mẫu không tồn tại',
+    'An Error Occur' => 'Đã có lỗi xảy ra',
 ];

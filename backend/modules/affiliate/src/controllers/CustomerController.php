@@ -20,6 +20,20 @@ class CustomerController extends MyAffiliateController
         $curlHelper->setHeader($apiParam['header']);
         $response = $curlHelper->execute();
         $realResponse = json_decode($response['result'], true);
+
+        if (!$realResponse) {
+            $dataProvider = new ArrayDataProvider([
+                'allModels' => [],
+                'pagination' => [
+                    'pageSize' => $apiParam['row_per_page'],
+                ]
+            ]);
+
+            return $this->render('index', [
+                'dataProvider' => $dataProvider
+            ]);
+        }
+
         $data = $realResponse['data'];
 
         /*
