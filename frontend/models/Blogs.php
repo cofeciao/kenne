@@ -42,8 +42,5 @@ class Blogs extends BlogsTable
             ]
         ]);
         return $dataProvider;
-        echo '<pre>';
-            print_r($dataProvider);
-        echo '</pre>';die;
     }
 }

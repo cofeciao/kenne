@@ -21,7 +21,8 @@ class AppAsset extends AssetBundle
         '/css/plugins/jquery-ui.min.css',
         '/css/plugins/nice-select.css',
         '/css/plugins/timecircles.css',
-        '/css/style.css'
+        '/css/style.css',
+        '/css/custom.css'
     ];
     public $js = [
         '/js/vendor/jquery-1.12.4.min.js',

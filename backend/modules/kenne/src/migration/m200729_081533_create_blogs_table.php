@@ -23,7 +23,7 @@ class m200729_081533_create_blogs_table extends Migration
             'image' => $this->string(255),
             'title' => $this->string(255)->notNull()->unique(),
             'descriptions' => $this->string(255)->notNull(),
-            'date' => $this->dateTime('d-M-Y H:i:s'),
+            'date' => $this->dateTime(),
             'comments' => $this->string(255),
             'status' => $this->smallInteger(1)->defaultValue(0),
             'search' => $this->string(255),
