@@ -6,6 +6,7 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\kenne\KenneModule;
 use modava\kenne\models\table\ProductsTable;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -32,11 +33,21 @@ use Yii;
 class Products extends ProductsTable
 {
     public $toastr_key = 'products';
+    public $file;
+
     public function behaviors()
     {
         return array_merge(
             parent::behaviors(),
             [
+                [
+                    'class'=>SluggableBehavior::class,
+                    'slugAttribute' => 'pro_slug',
+                    'ensureUnique' => true,
+                    'value' => function () {
+                        return MyHelper::createAlias($this->pro_slug);
+                    }
+                ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
                     'preserveNonEmptyValues' => true,

@@ -2,17 +2,24 @@
 
 namespace modava\kenne\models\table;
 
-use cheatsheet\Time;
+use modava\kenne\models\Categories;
 use Yii;
 use yii\db\ActiveRecord;
 
-class ProductsTable extends \yii\db\ActiveRecord
+
+class ProductsTable extends ActiveRecord
 {
     public static function tableName()
     {
         return 'products';
     }
 
+    public function getCategory()
+    {
+        //return $this->hasOne(Categories::class,['cat_id'=>'id'])->orderBy('id');
+        $categoryProduct = Categories::find()->all();
+        return $categoryProduct;
+    }
 
     public function afterDelete()
     {

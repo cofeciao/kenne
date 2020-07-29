@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\kenne\KenneModule;
@@ -12,34 +11,43 @@ use modava\kenne\KenneModule;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="products-form">
-    <?php $form = ActiveForm::begin(); ?>
-		<?= $form->field($model, 'cat_id')->textInput() ?>
+    <?php
 
-		<?= $form->field($model, 'pro_name')->textInput(['maxlength' => true]) ?>
+    ?>
+    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
+    <?= $form->field($model, 'pro_name')->label('Tên sp')->textInput(['maxlength' => true]) ?>
 
-		<?= $form->field($model, 'pro_slug')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'cat_id')->dropDownList(\yii\helpers\ArrayHelper::map($model->getCategory(),'id','cat_name'),['prompt'=>'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
 
-		<?= $form->field($model, 'pro_description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'pro_description')->label('Mô tả')->widget(\modava\tiny\TinyMce::class, [
+        'options' => ['rows' => 6],
+    ]) ?>
 
-		<?= $form->field($model, 'pro_quantity')->textInput() ?>
+    <?= $form->field($model, 'pro_quantity')->label('Số lượng')->textInput() ?>
 
-		<?= $form->field($model, 'pro_price')->textInput() ?>
+    <?= $form->field($model, 'pro_price')->label('Giá')->textInput() ?>
 
-		<?= $form->field($model, 'pro_image')->textInput(['maxlength' => true]) ?>
+    <?php /*  \modava\tiny\FileManager::widget([
+            'model' => $model,
+            'attribute' => 'pro_image',
+            'label' => ProductsModule::t('products', 'Hình ảnh ') . ': ' . Yii::$app->params['product-size'],
+            ]);
+        */ ?>
+    <?= $form->field($model, 'file')->fileInput() ?>
 
-		<?= $form->field($model, 'pro_status')->textInput() ?>
+    <?php if (Yii::$app->controller->action->id == 'create')
+        $model->pro_status = 1;
+    ?>
 
-		<?= $form->field($model, 'pro_sale')->textInput() ?>
+    <?= $form->field($model, 'pro_status')->checkbox(['label' => 'Trạng thái']) ?>
 
-		<?= $form->field($model, 'pro_number')->textInput() ?>
+    <?= $form->field($model, 'pro_sale')->label('Khuyến mãi %')->input('number') ?>
 
-		<?= $form->field($model, 'created_at')->textInput() ?>
 
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-        <div class="form-group">
-            <?= Html::submitButton(KenneModule::t('kenne', 'Save'), ['class' => 'btn btn-success']) ?>
-        </div>
+    <div class="form-group">
+        <?= Html::submitButton(KenneModule::t('products', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 </div>
+

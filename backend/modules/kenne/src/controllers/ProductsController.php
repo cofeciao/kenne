@@ -2,6 +2,7 @@
 
 namespace modava\kenne\controllers;
 
+use common\helpers\MyHelper;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -11,6 +12,7 @@ use modava\kenne\KenneModule;
 use backend\components\MyController;
 use modava\kenne\models\Products;
 use modava\kenne\models\search\ProductsSearch;
+use yii\web\UploadedFile;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -72,6 +74,26 @@ class ProductsController extends MyController
         $model = new Products();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->created_at =  date('Y-m-d H:i:s');
+            $model->updated_at =  date('Y-m-d H:i:s');
+            $model->pro_slug = MyHelper::createAlias($model->pro_name);
+            $model->cat_id = Yii::$app->request->post()['Products']['cat_id'];
+            $model->pro_image = UploadedFile::getInstance($model,'file');
+            $tempName = explode('/',$model->pro_image->tempName);
+            $extension = explode('/',$model->pro_image->type);
+            /* echo "<pre>";
+             print_r($extension);
+             echo "</pre>";
+             die;*/
+            if($model->pro_image){
+                if (!file_exists("uploads")){
+                    mkdir('uploads',0755,true);
+                    $model->pro_image->saveAs("uploads/".$tempName[2].'.'.$extension[1]);
+                }else{
+                    $model->pro_image->saveAs("uploads/".$tempName[2].'.'.$extension[1]);
+                }
+            }
+            $model->pro_image ="/backend/web/uploads/".$tempName[2].'.'.$extension[1];
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
