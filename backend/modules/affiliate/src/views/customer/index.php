@@ -5,7 +5,6 @@ use modava\affiliate\widgets\NavbarWidgets;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\Pjax;
 
 $this->title = AffiliateModule::t('affiliate', 'Customer');
 $this->params['breadcrumbs'][] = $this->title;
@@ -139,38 +138,41 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
-<div class="modal fade ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true">
-</div>
 <?php
 $couponURL = Url::toRoute(["/affiliate/handle-ajax"]);
 $script = <<< JS
 
 function openCreateModal(params) {
-  $.get('$couponURL/get-create-modal', params, function(data, status, xhr) {
+    let modalHTML = `<div class="modal fade ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true"></div>`;
+    
+    if ($('.ModalContainer').length) $('.ModalContainer').remove();
+    
+    $('body').append(modalHTML);
+    
+    $.get('$couponURL/get-create-modal', params, function(data, status, xhr) {
         if (status === 'success') {
-            modalContainer.html(data);
-            modalContainer.modal();
+            $('.ModalContainer').html(data);
+            $('.ModalContainer').modal();
         }
+    });
+    
+    $('.ModalContainer').on('hide.bs.modal', function() {
+        tinymce.remove();
     });
 }
 
-var modalContainer = $('.ModalContainer'); 
-
 $('.create-coupon').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
-    console.log(customerInfo);
     openCreateModal({model: 'Coupon', 
-        'Coupon[partner_id]' : 7,
+        'Coupon[partner_id]' : 7, // todo
         'Coupon[customer_id]' : customerInfo.id,
     });
 });
 
 $('.create-call-note').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
-    console.log(customerInfo);
     openCreateModal({model: 'Note', 
-        'Note[partner_id]' : 7,
+        'Note[partner_id]' : 7, // todo
         'Note[customer_id]' : customerInfo.id,
     });
 });
