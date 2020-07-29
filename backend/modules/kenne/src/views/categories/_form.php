@@ -13,19 +13,17 @@ use modava\kenne\KenneModule;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="categories-form">
     <?php $form = ActiveForm::begin(); ?>
-		<?= $form->field($model, 'cat_slug')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'cat_name')->textInput(['maxlength' => true]) ?>
 
-		<?= $form->field($model, 'cat_name')->textInput(['maxlength' => true]) ?>
+    <?php if (Yii::$app->controller->action->id == 'create')
+        $model->cat_status = 1;
+    ?>
 
-		<?= $form->field($model, 'cat_status')->textInput() ?>
+    <?= $form->field($model, 'cat_status')->checkbox(['label'=> 'Trạng thái']) ?>
 
-		<?= $form->field($model, 'created_at')->textInput() ?>
-
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-        <div class="form-group">
-            <?= Html::submitButton(KenneModule::t('kenne', 'Save'), ['class' => 'btn btn-success']) ?>
-        </div>
+    <div class="form-group">
+        <?= Html::submitButton(KenneModule::t('categories', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 </div>

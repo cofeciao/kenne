@@ -105,9 +105,18 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
 
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('categories')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'categories') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/kenne/categories']); ?>">
+                            <i class="icon ion-md-reorder"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Loại sản phẩm'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('products')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'products') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/products']); ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/kenne/products']); ?>">
                             <i class="ion ion-md-cube"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Products'); ?></span>
                         </a>
@@ -116,7 +125,7 @@ $is_dev = Yii::$app->user->can('develop');
 
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('transactions')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'transactions') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/transactions']); ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/kenne/transactions']); ?>">
                             <i class="icon ion-md-cart"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Đơn hàng'); ?></span>
                         </a>
@@ -124,21 +133,14 @@ $is_dev = Yii::$app->user->can('develop');
                 <?php } ?>
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('orders')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'orders') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/orders']); ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/kenne/orders']); ?>">
                             <i class="icon ion-ios-briefcase"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Chi tiết đơn hàng'); ?></span>
                         </a>
                     </li>
                 <?php } ?>
 
-                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('categories')) { ?>
-                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'categories') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/categories']); ?>">
-                            <i class="icon ion-md-reorder"></i>
-                            <span class="nav-link-text"><?= Yii::t('backend', 'Loại sản phẩm'); ?></span>
-                        </a>
-                    </li>
-                <?php } ?>
+
             </ul>
             <hr class="nav-separator">
         </div>

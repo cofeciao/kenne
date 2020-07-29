@@ -6,6 +6,7 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\kenne\KenneModule;
 use modava\kenne\models\table\CategoriesTable;
+use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -29,6 +30,14 @@ class Categories extends CategoriesTable
         return array_merge(
             parent::behaviors(),
             [
+                [
+                    'class' => SluggableBehavior::className(),
+                    'ensureUnique' => true,
+                    'slugAttribute'=>'cat_slug',
+                    'value' => function () {
+                        return MyHelper::createAlias($this->cat_name);
+                    }
+                ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
                     'preserveNonEmptyValues' => true,
