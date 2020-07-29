@@ -23,11 +23,12 @@ class m200724_095718_create_blogs_table extends Migration
             'descriptions' => $this->string(255)->notNull(),
             'date' => $this->dateTime('d-M-Y H:i:s'),
             'comments' => $this->string(255),
-
+            'status' => $this->smallInteger()->defaultValue(0),
             'search' => $this->string(255),
             'recent_post' => $this->string(255),
             'tags' => $this->string(50)->notNull(),
         ], $tableOptions);
+
     }
 
     public function down()
