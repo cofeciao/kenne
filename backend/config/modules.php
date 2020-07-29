@@ -69,4 +69,7 @@ return [
     'blogs' => [
         'class' => 'modava\blogs\BlogsModule',
     ],
+    'kenne' => [
+        'class' => 'modava\kenne\KenneModule',
+    ],
 ];

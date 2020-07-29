@@ -4,6 +4,7 @@
 namespace frontend\models;
 
 
+use yii\data\Pagination;
 use yii\db\ActiveRecord;
 
 class Categories extends ActiveRecord
@@ -16,4 +17,5 @@ class Categories extends ActiveRecord
     public function getProducts(){
         return $this->hasMany(Products::class,['cat_id'=> 'id']);
     }
+
 }

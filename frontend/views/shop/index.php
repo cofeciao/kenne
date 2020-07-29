@@ -32,7 +32,7 @@ $this->title = "Shop";
                         <a class="list" data-target="listview" data-toggle="tooltip" data-placement="top" title="List View"><i class="fa fa-th-list"></i></a>
                     </div>
                     <div class="product-page_count">
-                        <p>Hiển thị <?= isset($pagination) ? $pagination->totalCount : "0"?> / <?= isset($pagination) ? $pagination->pageSize : "0"?> kết quả </p>
+                        <p>Hiển thị <?= isset($data) ? $data->pagination->totalCount : "0"?>  kết quả  / <?= isset($data) ? $data->pagination->pageSize : "0"?></p>
                     </div>
                     <div class="product-item-selection_area">
                         <div class="product-short">
@@ -52,7 +52,7 @@ $this->title = "Shop";
                     </div>
                 </div>
                 <div class="shop-product-wrap grid gridview-3 row">
-                    <?php foreach ($data as $item){?>
+                    <?php foreach ($data->getModels() as $item){?>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="product-item">
                             <div class="single-product">
@@ -157,7 +157,18 @@ $this->title = "Shop";
                             <div class="row">
                                 <div class="col-lg-12">
                 <?php
-                if (isset($pagination)){
+                echo LinkPager::widget([
+                    'pagination'=>$data->pagination,
+                    'prevPageLabel' => false,
+                    'nextPageLabel' => false,
+                    'options' => [
+                        'class' => 'kenne-pagination-box primary-color',
+                    ],
+                ]);
+
+
+
+                /*if (isset($pagination)){
                     echo LinkPager::widget([
                         'pagination' => $pagination,
                         'prevPageLabel' => false,
@@ -166,7 +177,7 @@ $this->title = "Shop";
                             'class' => 'kenne-pagination-box primary-color',
                         ],
                     ]);
-                }
+                }*/
                 ?>
                                 </div>
                             </div>

@@ -1,16 +1,14 @@
 <?php
 
-
 namespace frontend\controllers;
 
-
-use common\models\ProductsCommon;
+use frontend\models\Products;
 use frontend\components\MyController;
 
 class DetailProductController extends MyController
 {
     public function actionIndex($slug=''){
-        $data = ProductsCommon::getDetailProduct($slug);
+        $data = Products::getDetailProduct($slug);
         return $this->render('index',[
             'data' => $data,
         ]);

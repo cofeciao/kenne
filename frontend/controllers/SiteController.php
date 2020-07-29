@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\ProductsCommon;
+use frontend\models\Products;
 use frontend\components\MyController;
 
 
@@ -11,15 +11,16 @@ class SiteController extends MyController
 
     public function actionIndex()
     {
-        $proNew = ProductsCommon::find()->orderBy('id')->offset(0)->limit(6)->all();
-        $proBags = ProductsCommon::find()->where(['cat_id' => 7 ])->all();
-        $proShirts = ProductsCommon::find()->where(['cat_id' => 6 ])->all();
-        $proShoes = ProductsCommon::find()->where(['cat_id' => 8 ])->all();
+        $model = new Products();
+        $proNew = $model->getProductLimitNumber(6);
+        $proBags = $model->getProductsByCategories(7);
+        $proShirts =$model->getProductsByCategories(6);
+        $proShoes = $model->getProductsByCategories(8);
         return $this->render('index', [
-            'data'=>$proNew,
-            'proBags'=>$proBags,
-            'proShirts'=>$proShirts,
-            'proShoes'=>$proShoes
+            'data' => $proNew,
+            'proBags' => $proBags,
+            'proShirts' => $proShirts,
+            'proShoes' => $proShoes
         ]);
     }
 
