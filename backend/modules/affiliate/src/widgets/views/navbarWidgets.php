@@ -12,15 +12,21 @@ $routeInfos = [
     ],
     [
         'module' => 'affiliate',
-        'controllerId' => 'coupon-type',
-        'label' => AffiliateModule::t('affiliate', 'Coupon Type'),
-        'icon' => '<i class="ion ion-md-analytics"></i>',
+        'controllerId' => 'note',
+        'label' => AffiliateModule::t('affiliate', 'Note'),
+        'icon' => '<span class="material-icons">event_note</span>',
     ],
     [
         'module' => 'affiliate',
         'controllerId' => 'coupon',
         'label' => AffiliateModule::t('affiliate', 'Coupon'),
         'icon' => '<i class="icon dripicons-ticket"></i>',
+    ],
+    [
+        'module' => 'affiliate',
+        'controllerId' => 'coupon-type',
+        'label' => AffiliateModule::t('affiliate', 'Coupon Type'),
+        'icon' => '<i class="ion ion-md-analytics"></i>',
     ],
     [
         'module' => 'affiliate',

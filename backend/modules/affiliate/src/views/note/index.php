@@ -2,21 +2,38 @@
 
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\widgets\NavbarWidgets;
-use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\grid\GridView;
+use backend\widgets\ToastrWidget;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
+/* @var $this yii\web\View */
+/* @var $searchModel modava\affiliate\models\search\NoteSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = AffiliateModule::t('affiliate', 'Customer');
+$this->title = AffiliateModule::t('affiliate', 'Notes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
-<?= NavbarWidgets::widget(); ?>
+    <?= NavbarWidgets::widget(); ?>
+
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title"><span class="pg-title-icon"><span
+                        class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
+        </h4>
+        <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
+           title="<?= AffiliateModule::t('affiliate', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= AffiliateModule::t('affiliate', 'Create'); ?></a>
+    </div>
 
     <!-- Row -->
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
+
+                <?php Pjax::begin(); ?>
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
@@ -79,49 +96,80 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                        'full_name',
-                                        [
-                                            'label' => 'phone',
+                                                                            [
+                                            'attribute' => 'title',
                                             'format' => 'raw',
                                             'value' => function ($model) {
-                                                $content = '';
-                                                if (class_exists('modava\voip24h\CallCenter')) $content .= Html::a('<i class="fa fa-phone"></i>', 'javascript: void(0)', [
-                                                    'class' => 'btn btn-xs btn-success call-to',
-                                                    'title' => 'Gọi',
-                                                    'data-uri' => $model['phone']
+                                                return Html::a($model->title, ['view', 'id' => $model->id], [
+                                                    'title' => $model->title,
+                                                    'data-pjax' => 0,
                                                 ]);
-                                                $content .= Html::a('<i class="fa fa-paste"></i>', 'javascript: void(0)', [
-                                                    'class' => 'btn btn-xs btn-info copy ml-1',
-                                                    'title' => 'Copy'
-                                                ]);
-                                                return $content;
                                             }
+                                        ],
+                                        [
+                                            'attribute' => 'partner_id',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
+                                            }
+                                        ],
+										'customer_id',
+                                        [
+                                            'attribute' => 'call_time',
+                                            'value' => function ($model) {
+                                                return $model->call_time
+                                                    ? date('d-m-Y H:i', strtotime($model->call_time))
+                                                    : '';
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'recall_time',
+                                            'value' => function ($model) {
+                                                return $model->recall_time
+                                                    ? date('d-m-Y H:i', strtotime($model->recall_time))
+                                                    : '';
+                                            }
+                                        ],
+										'description:html',
+                                        [
+                                            'attribute' => 'created_by',
+                                            'value' => 'userCreated.userProfile.fullname',
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
+                                        [
+                                            'attribute' => 'created_at',
+                                            'format' => 'date',
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                            'template' => '{create-coupon} {create-call-note}',
+                                            'template' => '{update} {delete}',
                                             'buttons' => [
-                                                'create-coupon' => function ($url, $model) {
-                                                    return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
-                                                        'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
-                                                        'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),
+                                                'update' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                        'title' => AffiliateModule::t('affiliate', 'Update'),
+                                                        'alia-label' => AffiliateModule::t('affiliate', 'Update'),
                                                         'data-pjax' => 0,
-                                                        'data-customer-info' => json_encode($model),
-                                                        'data-partner' => 'myaris',
-                                                        'class' => 'btn btn-info btn-xs create-coupon'
+                                                        'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
-                                                'create-call-note' => function ($url, $model) {
-                                                    return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
-                                                        'title' => AffiliateModule::t('affiliate', 'Create Call Note'),
-                                                        'alia-label' => AffiliateModule::t('affiliate', 'Create Call Note'),
+                                                'delete' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                        'title' => AffiliateModule::t('affiliate', 'Delete'),
+                                                        'class' => 'btn btn-danger btn-xs btn-del',
+                                                        'data-title' => AffiliateModule::t('affiliate', 'Delete?'),
                                                         'data-pjax' => 0,
-                                                        'data-customer-info' => json_encode($model),
-                                                        'data-partner' => 'myaris',
-                                                        'class' => 'btn btn-success btn-xs create-call-note'
+                                                        'data-url' => $url,
+                                                        'btn-success-class' => 'success-delete',
+                                                        'btn-cancel-class' => 'cancel-delete',
+                                                        'data-placement' => 'top'
                                                     ]);
-                                                },
+                                                }
                                             ],
                                             'headerOptions' => [
                                                 'width' => 150,
@@ -129,52 +177,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                     ],
                                 ]); ?>
-                            </div>
+                                                            </div>
                         </div>
                     </div>
                 </div>
+                <?php Pjax::end(); ?>
             </section>
         </div>
     </div>
 </div>
-
-    <div class="modal fade" id="createCouponModal" tabindex="-1" role="dialog" aria-labelledby="createCouponModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createCouponModalLabel"><?=AffiliateModule::t('affiliate', 'Create Coupon')?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 <?php
 $script = <<< JS
-
-$('.create-coupon').on('click', function() {
-    let customerInfo = $(this).data('customer-info');
-    console.log(customerInfo);
-    $('#createCouponModal').modal();
+$('body').on('click', '.success-delete', function(e){
+    e.preventDefault();
+    var url = $(this).attr('href') || null;
+    if(url !== null){
+        $.post(url);
+    }
+    return false;
 });
-
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

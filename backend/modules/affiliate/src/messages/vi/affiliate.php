@@ -32,6 +32,10 @@ return [
     'Create Coupon' => 'Tạo Coupon',
     'Coupon Type' => 'Loại Coupon',
     'Customer' => 'Khách hàng',
-    'Partners' => 'Hệ thống',
-    'Partner Id' => 'Hệ thống',
+    'Partners' => 'Hệ thống tích hợp',
+    'Partner Id' => 'Hệ thống tích hợp',
+    'Coupon Types' => 'Loại Coupon',
+    'Create Call Note' => 'Tạo Note Cuộc Gọi',
+    'Call Time' => 'Thời gian gọi',
+    'Recall Time' => 'Thời gian gọi lại',
 ];

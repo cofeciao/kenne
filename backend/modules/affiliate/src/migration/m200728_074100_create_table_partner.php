@@ -31,7 +31,7 @@ class m200728_074100_create_table_partner extends Migration
         $this->createIndex('idx-slug', 'partner', 'slug', true);
         $this->addForeignKey('fk-partner-user_created-by_user-id', 'partner', 'created_by', 'user', 'id');
         $this->addForeignKey('fk-partner-user_updated-by_user-id', 'partner', 'updated_by', 'user', 'id');
-        $this->addForeignKey('fk_partner_partner_id_partner_id', 'coupon', 'partner_id', 'partner', 'id');
+        $this->addForeignKey('fk_coupon_partner_id_partner_id', 'coupon', 'partner_id', 'partner', 'id');
     }
 
     /**
