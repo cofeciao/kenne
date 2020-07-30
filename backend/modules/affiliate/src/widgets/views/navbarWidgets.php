@@ -6,15 +6,33 @@ use modava\affiliate\AffiliateModule;
 $routeInfos = [
     [
         'module' => 'affiliate',
-        'controllerId' => 'coupon-type',
-        'label' => 'Coupon Type',
-        'icon' => '<i class="ion ion-md-analytics"></i>',
+        'controllerId' => 'customer',
+        'label' => AffiliateModule::t('affiliate', 'Customer'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'affiliate',
+        'controllerId' => 'note',
+        'label' => AffiliateModule::t('affiliate', 'Note'),
+        'icon' => '<span class="material-icons">event_note</span>',
     ],
     [
         'module' => 'affiliate',
         'controllerId' => 'coupon',
-        'label' => 'Coupon',
+        'label' => AffiliateModule::t('affiliate', 'Coupon'),
         'icon' => '<i class="icon dripicons-ticket"></i>',
+    ],
+    [
+        'module' => 'affiliate',
+        'controllerId' => 'coupon-type',
+        'label' => AffiliateModule::t('affiliate', 'Coupon Type'),
+        'icon' => '<i class="ion ion-md-analytics"></i>',
+    ],
+    [
+        'module' => 'affiliate',
+        'controllerId' => 'partner',
+        'label' => AffiliateModule::t('affiliate', 'Partners'),
+        'icon' => '<i class="fa fa-share-alt"></i>',
     ],
 ];
 ?>

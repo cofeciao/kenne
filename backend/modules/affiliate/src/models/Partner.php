@@ -2,10 +2,9 @@
 
 namespace modava\affiliate\models;
 
-use cheatsheet\Time;
 use common\models\User;
 use modava\affiliate\AffiliateModule;
-use modava\affiliate\models\table\CouponTypeTable;
+use modava\affiliate\models\table\PartnerTable;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use common\helpers\MyHelper;
@@ -13,21 +12,24 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
- * This is the model class for table "coupon_type".
- *
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property string $description
- * @property int $created_at
- * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
- */
-class CouponType extends CouponTypeTable
+* This is the model class for table "partner".
+*
+    * @property int $id
+    * @property string $title
+    * @property string $slug
+    * @property string $description Mô tả
+    * @property int $created_at
+    * @property int $updated_at
+    * @property int $created_by
+    * @property int $updated_by
+    *
+            * @property Coupon[] $coupons
+            * @property User $createdBy
+            * @property User $updatedBy
+    */
+class Partner extends PartnerTable
 {
-    public $toastr_key = 'coupon-type';
-
+    public $toastr_key = 'partner';
     public function behaviors()
     {
         return array_merge(
@@ -37,7 +39,7 @@ class CouponType extends CouponTypeTable
                     'class' => SluggableBehavior::class,
                     'immutable' => false,
                     'ensureUnique' => true,
-                    'value' => function () {
+                    'value' =>  function () {
                         return MyHelper::createAlias($this->title);
                     }
                 ],
@@ -59,21 +61,23 @@ class CouponType extends CouponTypeTable
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['description'], 'string'],
-            [['title', 'slug'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
-        ];
+			[['title',], 'required'],
+			[['description'], 'string'],
+			[['title', 'slug'], 'string', 'max' => 255],
+			[['slug'], 'unique'],
+			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+		];
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function attributeLabels()
     {
         return [
@@ -89,20 +93,20 @@ class CouponType extends CouponTypeTable
     }
 
     /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);

@@ -14,7 +14,8 @@ class GiaoHangTietKiem
      * Token
      */
     // public $token = '0c786A5454FfEdc5308a67c5C1273241b0A90c8d';
-    public $token;
+    private $token;
+
     public function __construct($token)
     {
         $this->token = $token;

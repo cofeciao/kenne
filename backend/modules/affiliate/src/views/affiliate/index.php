@@ -1,13 +1,9 @@
 <?php
-
-use modava\affiliate\AffiliateModule;
-use modava\affiliate\widgets\NavbarWidgets;
-
-$this->title = 'Affiliate';
-$this->title = AffiliateModule::t('affiliate', 'Affiliate');
-$this->params['breadcrumbs'][] = $this->title;
+/* @var $this yii\web\View */
 ?>
+<h1>affiliate/index</h1>
 
-<div class="container-fluid px-xxl-25 px-xl-10">
-<?= NavbarWidgets::widget(); ?>
-</div>
+<p>
+    You may change the content of this page by modifying
+    the file <code><?= __FILE__; ?></code>.
+</p>

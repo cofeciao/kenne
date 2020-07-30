@@ -8,15 +8,15 @@ use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use backend\components\MyController;
-use modava\affiliate\models\CouponType;
-use modava\affiliate\models\search\CouponTypeSearch;
+use modava\affiliate\models\Partner;
+use modava\affiliate\models\search\PartnerSearch;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 /**
- * CouponTypeController implements the CRUD actions for CouponType model.
+ * PartnerController implements the CRUD actions for Partner model.
  */
-class CouponTypeController extends MyController
+class PartnerController extends MyController
 {
     /**
     * {@inheritdoc}
@@ -34,12 +34,12 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Lists all CouponType models.
+    * Lists all Partner models.
     * @return mixed
     */
     public function actionIndex()
     {
-        $searchModel = new CouponTypeSearch();
+        $searchModel = new PartnerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -51,7 +51,7 @@ class CouponTypeController extends MyController
 
 
     /**
-    * Displays a single CouponType model.
+    * Displays a single Partner model.
     * @param integer $id
     * @return mixed
     * @throws NotFoundHttpException if the model cannot be found
@@ -64,13 +64,13 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Creates a new CouponType model.
+    * Creates a new Partner model.
     * If creation is successful, the browser will be redirected to the 'view' page.
     * @return mixed
     */
     public function actionCreate()
     {
-        $model = new CouponType();
+        $model = new Partner();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -99,7 +99,7 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Updates an existing CouponType model.
+    * Updates an existing Partner model.
     * If update is successful, the browser will be redirected to the 'view' page.
     * @param integer $id
     * @return mixed
@@ -138,7 +138,7 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Deletes an existing CouponType model.
+    * Deletes an existing Partner model.
     * If deletion is successful, the browser will be redirected to the 'index' page.
     * @param integer $id
     * @return mixed
@@ -180,7 +180,7 @@ class CouponTypeController extends MyController
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            $model = new CouponType();
+            $model = new Partner();
 
             if ($id != null) $model = $this->findModel($id);
 
@@ -191,17 +191,17 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Finds the CouponType model based on its primary key value.
+    * Finds the Partner model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
     * @param integer $id
-    * @return CouponType the loaded model
+    * @return Partner the loaded model
     * @throws NotFoundHttpException if the model cannot be found
     */
 
 
     protected function findModel($id)
     {
-        if (($model = CouponType::findOne($id)) !== null) {
+        if (($model = Partner::findOne($id)) !== null) {
             return $model;
         }
 

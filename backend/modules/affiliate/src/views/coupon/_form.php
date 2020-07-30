@@ -1,5 +1,6 @@
 <?php
 
+use modava\affiliate\widgets\JsCreateModalWidget;
 use modava\customer\components\CustomerDateTimePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,8 +19,9 @@ $model->expired_date = $model->expired_date != null
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="coupon-form">
     <?php $form = ActiveForm::begin([
+        'id' => 'coupon_form',
         'enableAjaxValidation' => true,
-        'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]), // Khi sử dụng cần test lại
+        'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]),
     ]); ?>
     <div class="row">
         <div class="col-6">
@@ -55,7 +57,7 @@ $model->expired_date = $model->expired_date != null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'coupon_type_id')->dropDownList(
-                    ArrayHelper::map(\modava\affiliate\models\CouponType::getAll(), 'id', 'title'),
+                    ArrayHelper::map(\modava\affiliate\models\table\CouponTypeTable::getAllRecords(), 'id', 'title'),
                     [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...') ]
             ) ?>
         </div>
@@ -69,6 +71,14 @@ $model->expired_date = $model->expired_date != null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'partner_id')->dropDownList(
+                ArrayHelper::map(\modava\affiliate\models\table\PartnerTable::getAllRecords(), 'id', 'title'),
+                [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
+                    'id' => 'partner-id'
+                ]
+            ) ?>
         </div>
         <div class="col-12">
             <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
@@ -84,14 +94,21 @@ $model->expired_date = $model->expired_date != null
     <?php ActiveForm::end(); ?>
 </div>
 
+<?= JsCreateModalWidget::widget(['formClassName' => 'coupon_form', 'modelName' => 'Coupon']) ?>
+
 <?php
 $script = <<< JS
-function generateCouponCode() {
-    return Math.random(10).toString(36).substr(2);
+function generateCouponCode(upperCase = false) {
+    let code = Math.random(10).toString(36).substr(2);
+    return upperCase ? code.toUpperCase() : code;
 }
 
 $('#js-generate-coupon-code').on('click', function() {
     $('#coupon-coupon_code').val(generateCouponCode()).trigger('change');
+});
+
+$('#coupon-coupon_code').on('change keyup blur', function() {
+    $(this).val($(this).val().toUpperCase());  
 });
 
 JS;
