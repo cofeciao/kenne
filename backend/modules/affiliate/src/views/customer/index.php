@@ -5,6 +5,7 @@ use modava\affiliate\widgets\NavbarWidgets;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use modava\affiliate\models\search\PartnerSearch;
 
 $this->title = AffiliateModule::t('affiliate', 'Customer');
 $this->params['breadcrumbs'][] = $this->title;
@@ -80,6 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                         ],
                                         'full_name',
+                                        'birthday',
                                         [
                                             'label' => 'phone',
                                             'format' => 'raw',
@@ -140,6 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <?php
 $couponURL = Url::toRoute(["/affiliate/handle-ajax"]);
+$myAuris = PartnerSearch::getRecordBySlug('dashboard-myauris');
 $script = <<< JS
 
 function openCreateModal(params) {
@@ -151,7 +154,6 @@ function openCreateModal(params) {
     
     $.get('$couponURL/get-create-modal', params, function(data, status, xhr) {
         if (status === 'success') {
-            debugger;
             if (typeof tinymce != "undefined") tinymce.remove();
             $('.ModalContainer').html(data);
             $('.ModalContainer').modal();
@@ -162,7 +164,7 @@ function openCreateModal(params) {
 $('.create-coupon').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
     openCreateModal({model: 'Coupon', 
-        'Coupon[partner_id]' : 7, // todo
+        'Coupon[partner_id]' : $myAuris->id,
         'Coupon[customer_id]' : customerInfo.id,
     });
 });
@@ -170,7 +172,7 @@ $('.create-coupon').on('click', function() {
 $('.create-call-note').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
     openCreateModal({model: 'Note', 
-        'Note[partner_id]' : 7, // todo
+        'Note[partner_id]' : $myAuris->id,
         'Note[customer_id]' : customerInfo.id,
     });
 });
