@@ -2,7 +2,7 @@
 
 namespace modava\datetime;
 
-use modava\datetime\assets\DateTimePickerAsset;
+use modava\datetime\assets\DateTimePickerAssets;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -120,11 +120,11 @@ class DateTimePicker extends InputWidget
         // @codeCoverageIgnoreStart
         if ($this->language !== null) {
             $this->clientOptions['language'] = $this->language;
-            DateTimePickerAsset::register(
+            DateTimePickerAssets::register(
                 $view
             )->js[] = 'js/locales/bootstrap-datetimepicker.' . $this->language . '.js';
         } else {
-            DateTimePickerAsset::register($view);
+            DateTimePickerAssets::register($view);
         }
         // @codeCoverageIgnoreEnd
 
