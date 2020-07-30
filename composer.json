@@ -49,6 +49,7 @@
     "modava/location": "@dev",
     "modava/generator": "@dev",
     "modava/voip24h": "@dev",
+    "modava/datetime": "@dev",
     "unclead/yii2-multiple-input": "~2.0",
     "2amigos/yii2-date-picker-widget" : "*",
     "2amigos/yii2-date-time-picker-widget" : "*",
