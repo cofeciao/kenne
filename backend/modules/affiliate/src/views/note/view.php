@@ -8,10 +8,10 @@ use modava\affiliate\widgets\NavbarWidgets;
 use modava\affiliate\AffiliateModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\affiliate\models\Coupon */
+/* @var $model modava\affiliate\models\Note */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => AffiliateModule::t('affiliate', 'Coupons'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => AffiliateModule::t('affiliate', 'Notes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -50,32 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'id',
 						'title',
 						'slug',
-						'coupon_code',
-						'quantity',
-                        'quantity_used',
-						[
-						    'attribute' => 'expired_date',
-                            'value' => function ($model) {
-                                return $model->expired_date
-                                    ? date('d-m-Y H:i', strtotime($model->expired_date))
-                                    : '';
-                            }
-                        ],
-						'customer_id', // Todo handle this
-						[
-						    'attribute'   => 'coupon_type_id',
-                            'format' => 'raw',
-                            'value' => function ($model) {
-                                return $model->coupon_type_id ? Html::a($model->couponType->title, Url::toRoute(['/affiliate/coupon-type/view', 'id' => $model->coupon_type_id])) : '';
-                            }
-                        ],
-                        [
-                            'attribute' => 'promotion_type',
-                            'value' => function ($model) {
-                                return AffiliateModule::t('affiliate', Yii::$app->controller->module->params["promotion_type"][$model->promotion_type]);
-                            }
-                        ],
-						'promotion_value',
+                        'customer_id',
                         [
                             'attribute' => 'partner_id',
                             'format' => 'raw',
@@ -83,6 +58,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
                             }
                         ],
+                        [
+                            'attribute' => 'call_time',
+                            'value' => function ($model) {
+                                return $model->call_time
+                                    ? date('d-m-Y H:i', strtotime($model->call_time))
+                                    : '';
+                            }
+                        ],
+                        [
+                            'attribute' => 'recall_time',
+                            'value' => function ($model) {
+                                return $model->recall_time
+                                    ? date('d-m-Y H:i', strtotime($model->recall_time))
+                                    : '';
+                            }
+                        ],
+						'description:html',
 						'created_at:datetime',
 						'updated_at:datetime',
                         [
@@ -93,7 +85,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'userUpdated.userProfile.fullname',
                             'label' => AffiliateModule::t('affiliate', 'Updated By')
                         ],
-                        'description:html',
                     ],
                 ]) ?>
             </section>

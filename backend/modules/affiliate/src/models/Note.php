@@ -4,7 +4,7 @@ namespace modava\affiliate\models;
 
 use common\models\User;
 use modava\affiliate\AffiliateModule;
-use modava\affiliate\models\table\CouponTable;
+use modava\affiliate\models\table\NoteTable;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -13,30 +13,28 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "coupon".
+* This is the model class for table "note".
 *
     * @property int $id
     * @property string $title
     * @property string $slug
-    * @property string $coupon_code
-    * @property int $quantity
-    * @property string $expired_date
-    * @property string $description
-    * @property int $customer_id
-    * @property int $coupon_type_id
-    * @property int $quantity_used
-    * @property int $promotion_type
-    * @property string $promotion_value
+    * @property int $partner_id Partner tích hợp affiliate
+    * @property int $customer_id Mã khách hàng
+    * @property string $call_time Thời gian gọi
+    * @property string $recall_time Thời gian gọi lại
+    * @property string $description Mô tả
     * @property int $created_at
     * @property int $updated_at
-    * @property int $created_by
+    * @property int $created_by Người gọi
     * @property int $updated_by
     *
-            * @property CouponType $couponType
+            * @property User $createdBy
+            * @property User $updatedBy
+            * @property Partner $partner
     */
-class Coupon extends CouponTable
+class Note extends NoteTable
 {
-    public $toastr_key = 'coupon';
+    public $toastr_key = 'note';
     public function behaviors()
     {
         return array_merge(
@@ -66,11 +64,21 @@ class Coupon extends CouponTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
-                        ActiveRecord::EVENT_BEFORE_INSERT => ['expired_date'],
-                        ActiveRecord::EVENT_BEFORE_UPDATE => ['expired_date'],
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['call_time', ],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['call_time',],
                     ],
                     'value' => function ($event) {
-                        return date('Y-m-d H:i:s', strtotime($this->expired_date));
+                        return date('Y-m-d H:i:s', strtotime($this->call_time));
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['recall_time'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['recall_time'],
+                    ],
+                    'value' => function ($event) {
+                        return date('Y-m-d H:i:s', strtotime($this->recall_time));
                     },
                 ],
             ]
@@ -83,22 +91,15 @@ class Coupon extends CouponTable
     public function rules()
     {
         return [
-			[['title', 'slug', 'partner_id','coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
-			[['quantity', 'customer_id', 'coupon_type_id', 'quantity_used', 'promotion_type',], 'integer'],
-            ['quantity_used', 'validateQuantityUsed'],
-            [['quantity', 'promotion_value'], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
-			[['expired_date'], 'safe'],
+			[['title', 'slug', 'partner_id', 'customer_id', 'call_time', 'recall_time',], 'required'],
+			[['partner_id', 'customer_id',], 'integer'],
+			[['call_time', 'recall_time'], 'safe'],
 			[['description'], 'string'],
-			[['promotion_value'], 'number'],
-			[['title', 'slug', 'coupon_code'], 'string', 'max' => 255],
+			[['title', 'slug'], 'string', 'max' => 255],
 			[['slug'], 'unique'],
-			[['coupon_code'], 'unique'],
-			[['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
-            ['promotion_value', 'compare', 'compareValue' => 100, 'operator' => '<=', 'type' => 'number', 'when' => function ($model) {
-                return $model->promotion_type == '0';
-                    }, 'whenClient' => "function (attribute, value) {
-                return $('#promotion-type').val() == '0';
-            }"]
+			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+			[['partner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Partner::class, 'targetAttribute' => ['partner_id' => 'id']],
 		];
     }
 
@@ -111,27 +112,16 @@ class Coupon extends CouponTable
             'id' => AffiliateModule::t('affiliate', 'ID'),
             'title' => AffiliateModule::t('affiliate', 'Title'),
             'slug' => AffiliateModule::t('affiliate', 'Slug'),
-            'coupon_code' => AffiliateModule::t('affiliate', 'Coupon Code'),
-            'quantity' => AffiliateModule::t('affiliate', 'Quantity'),
-            'expired_date' => AffiliateModule::t('affiliate', 'Expired Date'),
-            'description' => AffiliateModule::t('affiliate', 'Description'),
+            'partner_id' => AffiliateModule::t('affiliate', 'Partner ID'),
             'customer_id' => AffiliateModule::t('affiliate', 'Customer ID'),
-            'coupon_type_id' => AffiliateModule::t('affiliate', 'Coupon Type ID'),
-            'quantity_used' => AffiliateModule::t('affiliate', 'Quantity Used'),
-            'promotion_type' => AffiliateModule::t('affiliate', 'Promotion Type'),
-            'promotion_value' => AffiliateModule::t('affiliate', 'Promotion Value'),
+            'call_time' => AffiliateModule::t('affiliate', 'Call Time'),
+            'recall_time' => AffiliateModule::t('affiliate', 'Recall Time'),
+            'description' => AffiliateModule::t('affiliate', 'Description'),
             'created_at' => AffiliateModule::t('affiliate', 'Created At'),
             'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
             'created_by' => AffiliateModule::t('affiliate', 'Created By'),
             'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
-            'partner_id' => AffiliateModule::t('affiliate', 'Partner Id'),
         ];
-    }
-
-    function validateQuantityUsed () {
-        if((int) $this->quantity_used > (int) $this->quantity){
-            $this->addError('quantity_used',AffiliateModule::t('affiliate', 'Quantity Used must be less than or equal quantity'));
-        }
     }
 
     /**
@@ -154,9 +144,6 @@ class Coupon extends CouponTable
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    public function getCouponType() {
-        return $this->hasOne(CouponType::class, ['id' => 'coupon_type_id']);
-    }
     public function getPartner() {
         return $this->hasOne(Partner::class, ['id' => 'partner_id']);
     }

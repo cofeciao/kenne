@@ -136,6 +136,10 @@ phpunit.phar
 /backend/widgets/voip24h/README.md
 /backend/widgets/voip24h/.git
 
+/backend/widgets/datetime/composer.json
+/backend/widgets/datetime/README.md
+/backend/widgets/datetime/.git
+
 /backend/widgets/giaohang/composer.json
 /backend/widgets/giaohang/README.md
 /backend/widgets/giaohang/.git

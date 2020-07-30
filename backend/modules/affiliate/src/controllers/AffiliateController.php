@@ -2,12 +2,11 @@
 
 namespace modava\affiliate\controllers;
 
-use modava\affiliate\components\MyAffiliateController;
-
-class AffiliateController extends MyAffiliateController
+class AffiliateController extends \backend\components\MyController
 {
     public function actionIndex()
     {
-        return $this->render('index', []);
+        return $this->redirect(['customer/index']);
     }
+
 }

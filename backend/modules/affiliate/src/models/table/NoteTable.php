@@ -6,11 +6,11 @@ use cheatsheet\Time;
 use Yii;
 use yii\db\ActiveRecord;
 
-class CouponTable extends \yii\db\ActiveRecord
+class NoteTable extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'coupon';
+        return 'note';
     }
 
 

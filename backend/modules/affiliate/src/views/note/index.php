@@ -8,10 +8,10 @@ use backend\widgets\ToastrWidget;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel modava\affiliate\models\search\CouponSearch */
+/* @var $searchModel modava\affiliate\models\search\NoteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = AffiliateModule::t('affiliate', 'Coupon');
+$this->title = AffiliateModule::t('affiliate', 'Notes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -106,24 +106,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-										'coupon_code',
-                                        'customer_id',
-										'quantity',
-                                        'quantity_used',
-                                        [
-                                            'attribute' => 'expired_date',
-                                            'value' => function ($model) {
-                                                return $model->expired_date
-                                                    ? date('d-m-Y H:i', strtotime($model->expired_date))
-                                                    : '';
-                                            }
-                                        ],
-                                        [
-                                            'attribute' => 'promotion_type',
-                                            'value' => function ($model) {
-                                                return AffiliateModule::t('affiliate', Yii::$app->controller->module->params["promotion_type"][$model->promotion_type]);
-                                            }
-                                        ],
                                         [
                                             'attribute' => 'partner_id',
                                             'format' => 'raw',
@@ -131,10 +113,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
                                             }
                                         ],
-										//'description:ntext',
-										//'coupon_type_id',
-										//'promotion_type',
-										//'promotion_value',
+										'customer_id',
+                                        [
+                                            'attribute' => 'call_time',
+                                            'value' => function ($model) {
+                                                return $model->call_time
+                                                    ? date('d-m-Y H:i', strtotime($model->call_time))
+                                                    : '';
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'recall_time',
+                                            'value' => function ($model) {
+                                                return $model->recall_time
+                                                    ? date('d-m-Y H:i', strtotime($model->recall_time))
+                                                    : '';
+                                            }
+                                        ],
+										'description:html',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',

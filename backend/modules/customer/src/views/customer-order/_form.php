@@ -13,8 +13,8 @@ use modava\select2\Select2;
 use yii\helpers\ArrayHelper;
 use unclead\multipleinput\MultipleInput;
 use modava\customer\models\table\CustomerTable;
-use modava\customer\components\CustomerDateTimePicker;
 use modava\customer\models\table\CustomerCoSoTable;
+use modava\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerOrder */
@@ -57,7 +57,7 @@ if (Yii::$app->controller->action->id == 'create') {
                 </div>
             <?php } ?>
             <div class="col-md-6 col-12">
-                <?= $form->field($model, 'ordered_at')->widget(CustomerDateTimePicker::class, [
+                <?= $form->field($model, 'ordered_at')->widget(DateTimePicker::class, [
                     'template' => '{input}{button}',
                     'pickButtonIcon' => 'btn btn-increment btn-light',
                     'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),

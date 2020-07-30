@@ -1,0 +1,30 @@
+{
+  "name": "modava/giaohang",
+  "description": "Giaohang Modava",
+  "keywords": [
+    "yii2",
+    "giaohang"
+  ],
+  "type": "Yii2-extension",
+  "license": "BSD-3-Clause",
+  "support": {
+    "wiki": "http://www.yiiframework.com/wiki/",
+    "source": "https://github.com/modava/giaohang"
+  },
+  "authors": [
+    {
+      "name": "Mong Dao",
+      "email": "mongdaovan86@yahoo.com",
+      "homepage": "https://modava.com.vn/"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "modava\\giaohang\\": "src"
+    }
+  },
+  "minimum-stability": "dev"
+}

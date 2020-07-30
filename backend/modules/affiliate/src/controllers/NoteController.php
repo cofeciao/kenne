@@ -8,15 +8,15 @@ use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use backend\components\MyController;
-use modava\affiliate\models\CouponType;
-use modava\affiliate\models\search\CouponTypeSearch;
+use modava\affiliate\models\Note;
+use modava\affiliate\models\search\NoteSearch;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 /**
- * CouponTypeController implements the CRUD actions for CouponType model.
+ * NoteController implements the CRUD actions for Note model.
  */
-class CouponTypeController extends MyController
+class NoteController extends MyController
 {
     /**
     * {@inheritdoc}
@@ -34,12 +34,12 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Lists all CouponType models.
+    * Lists all Note models.
     * @return mixed
     */
     public function actionIndex()
     {
-        $searchModel = new CouponTypeSearch();
+        $searchModel = new NoteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -51,7 +51,7 @@ class CouponTypeController extends MyController
 
 
     /**
-    * Displays a single CouponType model.
+    * Displays a single Note model.
     * @param integer $id
     * @return mixed
     * @throws NotFoundHttpException if the model cannot be found
@@ -64,13 +64,13 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Creates a new CouponType model.
+    * Creates a new Note model.
     * If creation is successful, the browser will be redirected to the 'view' page.
     * @return mixed
     */
     public function actionCreate()
     {
-        $model = new CouponType();
+        $model = new Note();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -99,7 +99,7 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Updates an existing CouponType model.
+    * Updates an existing Note model.
     * If update is successful, the browser will be redirected to the 'view' page.
     * @param integer $id
     * @return mixed
@@ -138,7 +138,7 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Deletes an existing CouponType model.
+    * Deletes an existing Note model.
     * If deletion is successful, the browser will be redirected to the 'index' page.
     * @param integer $id
     * @return mixed
@@ -180,7 +180,7 @@ class CouponTypeController extends MyController
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            $model = new CouponType();
+            $model = new Note();
 
             if ($id != null) $model = $this->findModel($id);
 
@@ -191,17 +191,17 @@ class CouponTypeController extends MyController
     }
 
     /**
-    * Finds the CouponType model based on its primary key value.
+    * Finds the Note model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
     * @param integer $id
-    * @return CouponType the loaded model
+    * @return Note the loaded model
     * @throws NotFoundHttpException if the model cannot be found
     */
 
 
     protected function findModel($id)
     {
-        if (($model = CouponType::findOne($id)) !== null) {
+        if (($model = Note::findOne($id)) !== null) {
             return $model;
         }
 
