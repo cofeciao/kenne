@@ -105,9 +105,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-                                    
-										'title',
-										'description:ntext',
 										'image',
 										'file',
 										'language',
