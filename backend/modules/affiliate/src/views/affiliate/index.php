@@ -3,6 +3,7 @@
 use backend\widgets\ToastrWidget;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\widgets\NavbarWidgets;
+use modava\affiliate\widgets\JsUtils;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -143,31 +144,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+<?=JsUtils::widget()?>
 <?php
-$couponURL = Url::toRoute(["/affiliate/handle-ajax"]);
 $myAuris = PartnerSearch::getRecordBySlug('dashboard-myauris');
 $script = <<< JS
-
-function openCreateModal(params) {
-    let modalHTML = `<div class="modal fade ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true"></div>`;
-    
-    if ($('.ModalContainer').length) $('.ModalContainer').remove();
-    
-    $('body').append(modalHTML);
-    
-    $.get('$couponURL/get-create-modal', params, function(data, status, xhr) {
-        if (status === 'success') {
-            if (typeof tinymce != "undefined") tinymce.remove();
-            $('.ModalContainer').html(data);
-            $('.ModalContainer').modal();
-        }
-    });
-}
-
 $('.create-coupon').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
     openCreateModal({model: 'Coupon', 
-        'Coupon[partner_id]' : $myAuris->id,
         'Coupon[customer_id]' : customerInfo.id,
     });
 });
@@ -175,7 +158,6 @@ $('.create-coupon').on('click', function() {
 $('.create-call-note').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
     openCreateModal({model: 'Note', 
-        'Note[partner_id]' : $myAuris->id,
         'Note[customer_id]' : customerInfo.id,
     });
 });

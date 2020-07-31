@@ -1,6 +1,7 @@
 <?php
 
 use modava\affiliate\AffiliateModule;
+use modava\affiliate\widgets\JsUtils;
 use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -33,13 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
 
-                <?php Pjax::begin(); ?>
+            <?php //Pjax::begin(['enablePushState' => false, 'id' => 'customer-index']); ?>
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
                             <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
                                 <?= GridView::widget([
                                     'dataProvider' => $dataProvider,
+                                    'filterModel' => $searchModel,
                                     'layout' => '
                                         {errors}
                                         <div class="row">
@@ -108,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
 										'phone',
 										'email:email',
-										'face_customer',
+                                        'face_customer',
                                         [
                                             'attribute' => 'partner_id',
                                             'format' => 'raw',
@@ -116,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
                                             }
                                         ],
-										//'description:ntext',
+                                        //'description:ntext',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -133,15 +135,49 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
+                                            'header' => AffiliateModule::t('affiliate', 'Related Record'),
+                                            'template' => '{list-coupon} {list-note}',
+                                            'buttons' => [
+                                                'list-coupon' => function ($url, $model) {
+                                                    return Html::button('<i class="icon dripicons-ticket"></i>', [
+                                                        'title' => AffiliateModule::t('affiliate', 'List Tickets'),
+                                                        'alia-label' => AffiliateModule::t('affiliate', 'List Tickets'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-info btn-xs list-relate-record',
+                                                        'data-related-id' => $model->primaryKey,
+                                                        'data-related-field' => 'customer_id',
+                                                        'data-model' => 'Coupon',
+                                                        'onclick' => 'getListRelatedRecords(this)'
+                                                    ]);
+                                                },
+                                                'list-note' => function ($url, $model) {
+                                                    return Html::button('<i class="icon dripicons-to-do"></i>', [
+                                                        'title' => AffiliateModule::t('affiliate', 'List Notes'),
+                                                        'alia-label' => AffiliateModule::t('affiliate', 'List Notes'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-success btn-xs list-relate-record',
+                                                        'data-related-id' => $model->primaryKey,
+                                                        'data-related-field' => 'customer_id',
+                                                        'data-model' => 'Note',
+                                                        'onclick' => 'getListRelatedRecords(this)'
+                                                    ]);
+                                                },
+                                            ],
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
                                             'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                            'template' => '{update} {delete}',
+                                            'template' => '{create-coupon} {create-call-note} {hidden-input-customer-info} {update} {delete}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                                         'title' => AffiliateModule::t('affiliate', 'Update'),
                                                         'alia-label' => AffiliateModule::t('affiliate', 'Update'),
                                                         'data-pjax' => 0,
-                                                        'class' => 'btn btn-info btn-xs'
+                                                        'class' => 'btn btn-info btn-xs',
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
@@ -155,6 +191,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         'btn-cancel-class' => 'cancel-delete',
                                                         'data-placement' => 'top'
                                                     ]);
+                                                },
+                                                'create-coupon' => function ($url, $model) {
+                                                    return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
+                                                        'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
+                                                        'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),
+                                                        'data-pjax' => 0,
+                                                        'data-partner' => 'myaris',
+                                                        'class' => 'btn btn-info btn-xs create-coupon'
+                                                    ]);
+                                                },
+                                                'create-call-note' => function ($url, $model) {
+                                                    return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
+                                                        'title' => AffiliateModule::t('affiliate', 'Create Call Note'),
+                                                        'alia-label' => AffiliateModule::t('affiliate', 'Create Call Note'),
+                                                        'data-pjax' => 0,
+                                                        'data-partner' => 'myaris',
+                                                        'class' => 'btn btn-success btn-xs create-call-note'
+                                                    ]);
+                                                },
+                                                'hidden-input-customer-info' => function ($url, $model) {
+                                                    return Html::input('hidden', 'customer_info[]', json_encode($model->getAttributes()));
                                                 }
                                             ],
                                             'headerOptions' => [
@@ -167,11 +224,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <?php Pjax::end(); ?>
+                <?php //Pjax::end(); ?>
             </section>
         </div>
     </div>
 </div>
+<?=JsUtils::widget()?>
 <?php
 $script = <<< JS
 $('body').on('click', '.success-delete', function(e){
@@ -181,6 +239,19 @@ $('body').on('click', '.success-delete', function(e){
         $.post(url);
     }
     return false;
+});
+
+$('.create-coupon').on('click', function() {
+    let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
+    openCreateModal({model: 'Coupon', 
+        'Coupon[customer_id]' : customerInfo.id,
+    });
+});
+$('.create-call-note').on('click', function() {
+    let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_info[]"]').val());
+    openCreateModal({model: 'Note', 
+        'Note[customer_id]' : customerInfo.id,
+    });
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

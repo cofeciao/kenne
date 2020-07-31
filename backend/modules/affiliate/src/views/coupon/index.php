@@ -7,6 +7,7 @@ use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\CouponSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

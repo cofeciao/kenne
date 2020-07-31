@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'full_name',
 						'phone',
 						'email:email',
-						'face_customer',
+                        'face_customer',
                         [
                             'attribute' => 'partner_id',
                             'format' => 'raw',

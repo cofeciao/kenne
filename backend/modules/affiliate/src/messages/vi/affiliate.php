@@ -47,4 +47,6 @@ return [
     'Email' => 'Email',
     'Face Customer' => 'FB Link',
     'Customer Called' => 'KH Đã gọi',
+    'Related Record' => 'Danh sách liên quan',
+    'List' => 'Danh sách',
 ];

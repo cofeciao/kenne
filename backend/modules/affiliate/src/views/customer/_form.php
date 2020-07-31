@@ -13,7 +13,11 @@ use modava\affiliate\AffiliateModule;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="customer-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'customer_form',
+        'enableAjaxValidation' => true,
+        'validationUrl' => Url::toRoute(['/affiliate/customer/validate', 'id' => $model->primaryKey]),
+    ]); ?>
         <div class="row">
             <div class="col-6">
                 <?= $form->field($model, 'full_name')->textInput(['maxlength' => true]) ?>

@@ -54,7 +54,7 @@ $model->expired_date = $model->expired_date != null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'customer_id')->dropDownList(
-                ArrayHelper::map(\modava\affiliate\models\table\CustomerTable::getAllRecords(), 'id', 'full_name'),
+                ArrayHelper::map(\modava\affiliate\models\table\CustomerTable::getAllRecords(), 'id', function($model) { return $model['full_name'] . ' - ' . $model['phone']; }),
                 [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
                     'id' => 'customer-id'
                 ]
