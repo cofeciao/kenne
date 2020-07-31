@@ -77,14 +77,18 @@ $this->title = "Shop";
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i
                                                         class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Add To cart" onclick="addCart(<?= $item->id?>)"><i class="ion-bag"></i></a>
+                                            <li><a href="<?= \yii\helpers\Url::toRoute(['/cart/add-cart','slug'=>$item->pro_slug])?>" data-toggle="tooltip" data-placement="right" title="Add To cart" onclick="addCart(<?= $item->id?>)"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="product-content">
                                     <div class="product-desc_info">
-                                        <h3 class="product-name"><a href="single-product.html"><?= $item->pro_name?></a></h3>
+                                        <h3 class="product-name">
+                                            <a href="<?= \yii\helpers\Url::toRoute(['/detail-product/','slug' => $item->pro_slug])?>">
+                                                <?= $item->pro_name?>
+                                            </a>
+                                        </h3>
                                         <div class="price-box">
                                             <span class="new-price"><?=number_format($item->pro_price*(100-$item->pro_sale)/100,0,',','.')?> đ</span>
                                             <span class="old-price"><?=number_format($item->pro_price,0,',','.')?> đ</span>
@@ -116,7 +120,7 @@ $this->title = "Shop";
                                             <span class="new-price"><?=number_format($item->pro_price*(100-$item->pro_sale)/100,0,',','.')?> đ</span>
                                             <span class="old-price"><?=number_format($item->pro_price,0,',','.')?> đ</span>
                                         </div>
-                                        <h6 class="product-name"><a href="single-product.html"><?= $item->pro_name?></a></h6>
+                                        <h6 class="product-name"><a href="<?= \yii\helpers\Url::toRoute(['/detail-product'])?>"><?= $item->pro_name?></a></h6>
                                         <div class="rating-box">
                                             <ul>
                                                 <li><i class="ion-ios-star"></i></li>
@@ -141,7 +145,7 @@ $this->title = "Shop";
                                             </li>
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="top" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="top" title="Add To cart"><i class="ion-bag"></i></a>
+                                            <li><a href="<?= \yii\helpers\Url::toRoute(['/cart'])?>>" data-toggle="tooltip" data-placement="top" title="Add To cart"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
                                     </div>

@@ -47,4 +47,26 @@ class CartController extends MyController
         Cart::deleteAll();;
         return $this->redirect(['/cart']);
     }
+
+    public function actionUpdateQuantity(){
+        $kq = [];
+        $data = unserialize(serialize(Component::getCookies('cart')));
+
+        $data1 = Yii::$app->request->post();
+        unset($data1['_csrf']);
+
+        foreach ($data as $key => $value){
+            foreach($data1 as $k => $v){
+                if ( $k == $key ){
+                    $value['sl'] = $v['sl'];;
+                }
+            }
+            $kq[$key] = $value;
+        }
+
+        Component::setCookies('cart',$kq);
+
+        return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
+
+    }
 }

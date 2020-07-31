@@ -16,7 +16,6 @@ $this->title = "Giỏ hàng";
 </div>
 <!-- Kenne's Breadcrumb Area End Here -->
 <!-- Begin Uren's Cart Area -->
-
 <?php
 if (empty($data)){ ?>
     <div class="alert alert-danger text-center" style="margin: 5% 0">
@@ -38,7 +37,8 @@ if (empty($data)){ ?>
         </div>
         <div class="row">
             <div class="col-12">
-                <form action="javascript:void(0)">
+                <form action="<?= '/cart/update-quantity'?>" method="post">
+                    <?= \yii\helpers\Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken());?>
                     <div class="table-content table-responsive">
                         <table class="table">
                             <thead>
@@ -65,7 +65,7 @@ if (empty($data)){ ?>
                                 <td class="kenne-product-price"><span class="amount"><?= number_format($item['price'],0,',','.') ?> đ</span></td>
                                 <td class="quantity">
                                     <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="<?= $item['sl'] ?>" type="text">
+                                        <input class="cart-plus-minus-box" value="<?= $item['sl'] ?>" type="text" name="<?=$key?>[sl]">
                                         <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                     </div>
@@ -80,11 +80,11 @@ if (empty($data)){ ?>
                         <div class="col-12">
                             <div class="coupon-all">
                                 <div class="coupon">
-                                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                    <input class="button" name="apply_coupon" value="Mã khuyến mãi" type="submit">
+                                    <input id="coupon_code" class="input-text" value="" placeholder="Coupon code" type="text">
+                                    <input class="button" value="Mã khuyến mãi" type="submit">
                                 </div>
                                 <div class="coupon2">
-                                    <input class="button" name="update_cart" value="Cập nhật giỏ hàng" type="submit">
+                                    <input class="button"  value="Cập nhật giỏ hàng" type="submit">
                                 </div>
                             </div>
                         </div>

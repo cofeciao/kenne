@@ -141,7 +141,7 @@
                         </div>
                         <div class="qty-btn_area">
                             <ul>
-                                <li><a class="qty-cart_btn" href="cart.html">Add To Cart</a></li>
+                                <li><a class="qty-cart_btn" href="<?= \yii\helpers\Url::toRoute(['/cart/add-cart','slug'=>$data['pro_slug']])?>">Add To Cart</a></li>
                                 <li><a class="qty-wishlist_btn" href="wishlist.html" data-toggle="tooltip" title="Add To Wishlist"><i class="ion-android-favorite-outline"></i></a>
                                 </li>
                             </ul>
