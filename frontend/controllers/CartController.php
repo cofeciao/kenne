@@ -11,14 +11,13 @@ class CartController extends MyController
 {
     public function actionIndex()
     {
-
         $total = 0;
         $data = unserialize(serialize(Component::getCookies('cart')));
         if (empty($data)){
             $data = "";
         } else {
             foreach ($data as $item){
-                $total += $item['price'];
+                $total += $item['price']*$item['sl'];
             }
         }
         return $this->render('index', [
