@@ -1,8 +1,6 @@
 <?php
 
-
 namespace frontend\controllers;
-
 
 use common\components\Component;
 use frontend\components\Cart;

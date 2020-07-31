@@ -27,10 +27,14 @@ class CartController extends MyController
         ]);
     }
 
-    public function actionAddCart($slug)
+    public function actionAddCart()
     {
+
+       $queryParams = Yii::$app->request->queryParams;
+        $slug = $queryParams['slug'];
+        isset($queryParams['qtt']) ? $quantity = $queryParams['qtt']: $quantity = 1;
         $cart = new Cart();
-        $cart->add($slug);
+        $cart->add($slug,$quantity);
 
         //__PHP_Incomplete_Class Object with cookie.
         //Need unserialize , serialize to transfer

@@ -32,7 +32,7 @@
                                 "asNavFor": ".sp-img_slider-nav"
                                 }'>
                             <div class="single-slide red zoom">
-                                <img src="<?=  $data['pro_image']?>" alt="<?= $data['pro_slug'];?>">
+                                <img src="<?=  $data['pro_image']?>" alt="<?= $data['pro_slug'];?>" id="image_slug">
                             </div>
                             <!--Ảnh zoom lớn-->
                             <!--<div class="single-slide orange zoom">
@@ -134,14 +134,15 @@
                         <div class="quantity">
                             <label>Số lượng</label>
                             <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" value="1" type="text" name="pro_quantity">
+                                <input class="cart-plus-minus-box" value="1" type="text" name="pro_quantity" id="pro_quantity">
                                 <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                 <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                             </div>
                         </div>
                         <div class="qty-btn_area">
                             <ul>
-                                <li><a class="qty-cart_btn" href="<?= \yii\helpers\Url::toRoute(['/cart/add-cart','slug'=>$data['pro_slug']])?>">Add To Cart</a></li>
+                                <!--<li><a class="qty-cart_btn" href="<?/*= \yii\helpers\Url::toRoute(['/cart/add-cart','slug'=>$data['pro_slug']])*/?>">Add To Cart</a></li>-->
+                                <li><a class="qty-cart_btn"  id="chooseQuantity" ">Add To Cart</a></li>
                                 <li><a class="qty-wishlist_btn" href="wishlist.html" data-toggle="tooltip" title="Add To Wishlist"><i class="ion-android-favorite-outline"></i></a>
                                 </li>
                             </ul>
@@ -691,3 +692,15 @@
     </div>
 </div>
 <!-- Product Area End Here -->
+<?php
+
+$script = <<<JS
+$('#chooseQuantity').on('click',function() {
+    var slug = $('#image_slug').attr('alt');
+    var qtt = $('#pro_quantity').val();
+    location.replace('/cart/add-cart?slug='+slug+'&qtt='+qtt);
+});
+
+JS;
+$this->registerJs($script,\yii\web\View::POS_END)
+?>
