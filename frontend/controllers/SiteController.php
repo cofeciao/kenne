@@ -8,7 +8,6 @@ use frontend\components\MyController;
 
 class SiteController extends MyController
 {
-
     public function actionIndex()
     {
         $model = new Products();
@@ -23,6 +22,4 @@ class SiteController extends MyController
             'proShoes' => $proShoes
         ]);
     }
-
-
 }

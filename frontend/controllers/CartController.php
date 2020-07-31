@@ -5,18 +5,21 @@ namespace frontend\controllers;
 use common\components\Component;
 use frontend\components\MyController;
 use frontend\components\Cart;
+use Yii;
 
 class CartController extends MyController
 {
     public function actionIndex()
     {
+
         $total = 0;
         $data = unserialize(serialize(Component::getCookies('cart')));
         if (empty($data)){
             $data = "";
-        }
-        foreach ($data as $item){
-            $total += $item['price'];
+        } else {
+            foreach ($data as $item){
+                $total += $item['price'];
+            }
         }
         return $this->render('index', [
             'data' => $data,
@@ -37,7 +40,7 @@ class CartController extends MyController
 
     public function actionDelete($id){
         Cart::delete($id);
-        return $this->redirect(['/cart']);
+        return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
     }
 
     public function actionDeleteAll(){

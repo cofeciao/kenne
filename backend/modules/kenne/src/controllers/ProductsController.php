@@ -86,14 +86,17 @@ class ProductsController extends MyController
              echo "</pre>";
              die;*/
             if($model->pro_image){
-                if (!file_exists("uploads")){
-                    mkdir('uploads',0755,true);
-                    $model->pro_image->saveAs("uploads/".$tempName[2].'.'.$extension[1]);
+                $path = Yii::getAlias('@frontend/web');
+                $pathImage = '/uploads/';
+                $image = $tempName[2].'.'.$extension[1];
+                if (!file_exists($path.$pathImage)){
+                    mkdir($path.$pathImage,0755,true);
+                    $model->pro_image->saveAs($path.$pathImage.$image);
                 }else{
-                    $model->pro_image->saveAs("uploads/".$tempName[2].'.'.$extension[1]);
+                    $model->pro_image->saveAs($path.$pathImage.$image);
                 }
             }
-            $model->pro_image ="/backend/web/uploads/".$tempName[2].'.'.$extension[1];
+            $model->pro_image =$pathImage.$image;
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',

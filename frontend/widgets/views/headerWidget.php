@@ -1,5 +1,4 @@
 <?php
-use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <!-- Begin Main Header Area -->
@@ -57,7 +56,9 @@ use yii\helpers\Url;
                                 <li class="minicart-wrap">
                                     <a href="#miniCart" class="minicart-btn toolbar-btn">
                                         <div class="minicart-count_area">
-                                            <span class="item-count">03</span>
+                                            <?php if(isset($total)){?>
+                                            <span class="item-count"><?= $total?></span>
+                                            <?php }?>
                                             <i class="ion-bag"></i>
                                         </div>
                                     </a>
@@ -137,7 +138,9 @@ use yii\helpers\Url;
                                         <li class="minicart-wrap">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <div class="minicart-count_area">
-                                                    <span class="item-count">03</span>
+                                                    <?php if(isset($total)){?>
+                                                        <span class="item-count"><?= $total?></span>
+                                                    <?php }?>
                                                     <i class="ion-bag"></i>
                                                 </div>
                                             </a>

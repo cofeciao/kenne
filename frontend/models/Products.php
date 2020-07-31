@@ -5,7 +5,6 @@ namespace frontend\models;
 use modava\categories\models\Categories;
 use modava\products\models\table\ProductsTable;
 use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
 
 class Products extends ProductsTable
 {

@@ -11,9 +11,10 @@ class MinicartWidget extends \yii\base\Widget
         $data = unserialize(serialize(Component::getCookies('cart')));
         if (empty($data)){
             $data = "";
-        }
-        foreach ($data as $item){
-            $total += $item['price'];
+        } else {
+            foreach ($data as $item){
+                $total += $item['price'];
+            }
         }
 
         return $this->render('minicartWidget',[

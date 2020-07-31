@@ -40,7 +40,8 @@ class AppAsset extends AssetBundle
         '/js/plugins/waypoints.min.js',
         '/js/plugins/jquery.zoom.min.js',
         '/js/plugins/timecircles.js',
-        '/js/main.js'
+        '/js/main.js',
+        '/js/custom.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

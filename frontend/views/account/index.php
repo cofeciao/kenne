@@ -1,22 +1,27 @@
 <?php
 $this->title = "Tài khoản";
+\yii\web\YiiAsset::register($this);
+
 ?>
 
 <!-- Begin Kenne's Breadcrumb Area -->
-<div class="breadcrumb-area">
+<div class="breadcrumb-area" style="margin-bottom: 3%">
     <div class="container">
         <div class="breadcrumb-content">
             <h2>Shop Related</h2>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">My Account</li>
+                <li><a href="<?= \yii\helpers\Url::home()?>">Home</a></li>
+                <li class="active">Tài khoản của tôi</li>
             </ul>
         </div>
     </div>
 </div>
+
+<?= \frontend\widgets\AlertWidget::widget() ?>
+
 <!-- Kenne's Breadcrumb Area End Here -->
 <!-- Begin Kenne's Page Content Area -->
-<main class="page-content">
+<main class="page-content" style="margin-top: -3%">
     <div class="account-page-area">
         <div class="container">
             <div class="row">

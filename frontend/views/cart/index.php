@@ -24,7 +24,8 @@ if (empty($data)){ ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <p style="font-size: larger;margin-top: 1%"><b>Thông báo:</b> Giỏ hàng của bạn đang trống.<br> Vui lòng quay về shop để chọn sản phẩm.</p>
+            <p style="font-size: larger;margin-top: 1%"><b>Thông báo:</b> Giỏ hàng của bạn đang trống.<br> Vui lòng quay về
+                <a href="<?= \yii\helpers\Url::home()?>" style="color: #0b2e13;font-weight: bold">SHOP</a>  để chọn sản phẩm.</p>
         </div>
     </div>
 <?php }else{?>
@@ -96,7 +97,7 @@ if (empty($data)){ ?>
                                     <li>Tổng tiền <span><?= isset($total) ? number_format($total,0,',','.'): 0?> đ</span></li>
                                     <li>Thành tiền <span><?= isset($total) ? number_format($total,0,',','.'): 0?> đ</span></li>
                                 </ul>
-                                <a href="javascript:void(0)">Tiến hành thanh toán</a>
+                                <a href="<?= \yii\helpers\Url::toRoute('/checkout')?>">Tiến hành thanh toán</a>
                             </div>
                         </div>
                     </div>

@@ -20,3 +20,6 @@ Yii::setAlias('modava/products', dirname(dirname(__DIR__)) . '/backend/modules/p
 Yii::setAlias('modava/transactions', dirname(dirname(__DIR__)) . '/backend/modules/transactions/src');
 Yii::setAlias('modava/orders', dirname(dirname(__DIR__)) . '/backend/modules/orders/src');
 Yii::setAlias('modava/blogs', dirname(dirname(__DIR__)) . '/backend/modules/blogs/src');
+Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
+Yii::setAlias('modava/kenne', dirname(dirname(__DIR__)) . '/backend/modules/kenne/src');
+

@@ -17,6 +17,7 @@ Yii::setAlias('modava/website', dirname(dirname(__DIR__)) . '/backend/modules/we
 Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
 Yii::setAlias('modava/test', dirname(dirname(__DIR__)) . '/backend/modules/test/src');
 Yii::setAlias('modava/kenne', dirname(dirname(__DIR__)) . '/backend/modules/kenne/src');
+Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
 
 Yii::setAlias('modava/categories', dirname(dirname(__DIR__)) . '/backend/modules/categories/src');
 Yii::setAlias('modava/products', dirname(dirname(__DIR__)) . '/backend/modules/products/src');

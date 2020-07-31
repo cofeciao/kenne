@@ -6,9 +6,14 @@
                 <h4>Giỏ hàng</h4>
             </div>
             <ul class="minicart-list">
-                <?php if (isset($data)){
-                    foreach ($data as $key => $item){
-                    ?>
+                <?php
+                if(isset($data)){
+                if (empty($data)){?>
+                    <li class="minicart-product">
+                        <p class="product-item_title">Không có sản phẩm nào trong giỏ hàng</p>
+                    </li>
+                <?php } else
+                    { foreach ($data as $key => $item){ ?>
                 <li class="minicart-product">
                     <a class="product-item_remove" href="<?= \yii\helpers\Url::toRoute(['/cart/delete','id'=>$key ])?>"><i
                             class="ion-android-close"></i></a>
@@ -22,7 +27,7 @@
                         </span>
                     </div>
                 </li>
-                <?php }}?>
+                <?php }}}?>
             </ul>
         </div>
         <div class="minicart-item_total">
@@ -30,10 +35,10 @@
             <span class="ammount"><?= number_format($total,0,',','.') ?> đ</span>
         </div>
         <div class="minicart-btn_area">
-            <a href="<?= '/cart'?>" class="kenne-btn kenne-btn_fullwidth">Giỏ hàng</a>
+            <a href="<?= \yii\helpers\Url::toRoute('/cart')?>" class="kenne-btn kenne-btn_fullwidth">Giỏ hàng</a>
         </div>
         <div class="minicart-btn_area">
-            <a href="checkout.html" class="kenne-btn kenne-btn_fullwidth">Thanh toán</a>
+            <a href="<?= \yii\helpers\Url::toRoute('/checkout')?>" class="kenne-btn kenne-btn_fullwidth">Thanh toán</a>
         </div>
     </div>
 </div>
