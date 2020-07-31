@@ -541,8 +541,8 @@ use yii\helpers\Url;
                 <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
                 <!-- Begin Offcanvas Search Area -->
                 <div class="offcanvas-search">
-                    <form action="#" class="hm-searchbox">
-                        <input type="text" placeholder="Search for item...">
+                    <form action="<?= Url::toRoute(['/shop'])?>" class="hm-searchbox">
+                        <input type="text" placeholder="Search for item..." name="key">
                         <button class="search_btn" type="submit"><i
                                 class="ion-ios-search-strong"></i></button>
                     </form>

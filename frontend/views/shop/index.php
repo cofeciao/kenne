@@ -52,6 +52,7 @@ $this->title = "Shop";
                     </div>
                 </div>
                 <div class="shop-product-wrap grid gridview-3 row">
+                    <?php if (!empty($data->getModels())){?>
                     <?php foreach ($data->getModels() as $item){?>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="product-item">
@@ -148,7 +149,10 @@ $this->title = "Shop";
                             </div>
                         </div>
                     </div>
-
+                    <?php }} else {?>
+                        <div style="text-align: center">
+                            <h6>Không tìm thấy sản phẩm nào!</h6>
+                        </div>
                     <?php }?>
                 </div>
                 <div class="row">

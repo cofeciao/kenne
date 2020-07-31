@@ -23,4 +23,6 @@ class HeaderWidget extends \yii\base\Widget
             'total'=>$total
         ]);
     }
+
+
 }
