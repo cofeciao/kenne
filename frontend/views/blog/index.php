@@ -1,6 +1,9 @@
 <?php
 use yii\widgets\LinkPager;
+$this->title = "Blogs";
 ?>
+
+
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
@@ -44,14 +47,13 @@ use yii\widgets\LinkPager;
                         <?php foreach ($RecentPost as $item)  : ?>
                         <div class="recent-post">
                             <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="<?='/backend/web/uploads/'.$item['image']?>" alt="Kenne's Blog Image">
+                                <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail','id' => $item['id']]);?>">
+                                        <img class="img-full" src="<?php if(count($item->image) == 1) echo '/backend/web/uploads/'.$item->image[0] ?>" alt="Kenne's Blog Image">
                                 </a>
                             </div>
                             <div class="recent-post_desc">
                                 <span><a href="blog-details.html"><?=$item['title']?></a></span>
                                 <span class="post-date"><?= $item['date'] ?></span>
-
                             </div>
                         </div>
                         <?php endforeach; ?>
@@ -113,19 +115,45 @@ use yii\widgets\LinkPager;
             </div>
 <!--/////////////////////////////////////////////// End Tags ////////////////////////////////////////////////////////-->
 
-
-
 <!--///////////////////////////////////////////////////////  Gallery ////////////////////////////////////////////////-->
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="row blog-item_wrap">
-                    <?php foreach($pages->models as $item): ?>
+                    <?php foreach ($data as $item) : ?>
                     <div class="col-lg-6">
                         <div class="blog-item">
-                            <div class="blog-img">
-                                <a href="blog-details.html">
-                                    <img src="<?='/backend/web/uploads/'.$item->image?>" alt="Blog Image"/>
-                                </a>
-                            </div>
+                            <?php if(count($item->image) > 1) {
+                                echo '<div class="kenne-element-carousel single-blog_slider arrow-style-2 overflow-hidden" data-slick-options=\'{
+                                    "slidesToShow": 1,
+                                    "slidesToScroll": 1,
+                                    "infinite": false,
+                                    "arrows": true,
+                                    "dots": false,
+                                    "spaceBetween": 30
+                                    }\' data-slick-responsive=\'[
+                                    {"breakpoint":768, "settings": {
+                                    "slidesToShow": 1
+                                    }},
+                                    {"breakpoint":575, "settings": {
+                                    "slidesToShow": 1
+                                    }}
+                                ]\'>';
+                                foreach ($item->image as $value){?>
+                                <div class="single-item">
+                                    <div class="blog-img">
+                                        <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail', 'id' => $item['id']]);?>">
+                                            <img src="<?php echo '/backend/web/uploads/'.$value?>" alt="Blog Image"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php }
+                                echo '</div>';
+                            } else { ?>
+                                <div class="blog-img">
+                                    <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail', 'id' => $item['id']]);?>">
+                                        <img src="<?php echo '/backend/web/uploads/'.$item->image[0]?>" alt="Blog Image"/>
+                                    </a>
+                                </div>
+                            <?php } ?>
                             <div class="blog-content">
                                 <h3 class="heading">
                                     <a href="blog-details.html"><?=$item['title'];?></a>
@@ -134,7 +162,6 @@ use yii\widgets\LinkPager;
                                     <?=$item['descriptions']?>
                                 </p>
                                 <div class="blog-meta">
-
                                     <ul>
                                         <li><?=$item['date'] ?></li>
                                         <li>
@@ -145,57 +172,7 @@ use yii\widgets\LinkPager;
                             </div>
                         </div>
                     </div>
-                  <?php endforeach ;?>
-
-<!--                    <div class="col-lg-6">-->
-<!--                        <div class="blog-item">-->
-<!--                            <div class="kenne-element-carousel single-blog_slider arrow-style-2 overflow-hidden" data-slick-options='{-->
-<!--                                    "slidesToShow": 1,-->
-<!--                                    "slidesToScroll": 1,-->
-<!--                                    "infinite": false,-->
-<!--                                    "arrows": true,-->
-<!--                                    "dots": false,-->
-<!--                                    "spaceBetween": 30-->
-<!--                                    }' data-slick-responsive='[-->
-<!--                                    {"breakpoint":768, "settings": {-->
-<!--                                    "slidesToShow": 1-->
-<!--                                    }},-->
-<!--                                    {"breakpoint":575, "settings": {-->
-<!--                                    "slidesToShow": 1-->
-<!--                                    }}-->
-<!--                                ]'>-->
-<!--                                < ?php //foreach ($data as $item) :?>-->
-<!--                                <div class="single-item">-->
-<!--                                    <div class="blog-img">-->
-<!--                                        <a href="blog-details.html">-->
-<!--                                            <img src="< ?//='./backend/web/uploads/'.$item['image']?>" alt="Blog Image">-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                < ?php //endforeach;?>
--->
-<!--                            </div>-->
-<!--                            <div class="blog-content">-->
-<!--                                <h3 class="heading">-->
-<!--                                    <a href="blog-details.html">Post With Gallery</a>-->
-<!--                                </h3>-->
-<!--                                <p class="short-desc">-->
-<!--                                    The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a-->
-<!--                                    line in section 1.10.32.-->
-<!--                                </p>-->
-<!--                                <div class="blog-meta">-->
-<!--                                    <ul>-->
-<!--                                        <li>Oct.20.2019</li>-->
-<!--                                        <li>-->
-<!--                                            <a href="javascript:void(0)">02 Comments</a>-->
-<!--                                        </li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!---->
-<!--                </div>-->
+                    <?php endforeach; ?>
 <!--//////////////////////////////////////////////////// End Gallery //////////////////////////////////////////////////////-->
 
 

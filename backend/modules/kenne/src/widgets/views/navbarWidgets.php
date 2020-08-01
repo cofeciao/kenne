@@ -5,6 +5,15 @@ use modava\kenne\KenneModule;
 ?>
 
 <ul class="nav nav-tabs nav-sm nav-light mb-25">
+
+    <?php if (Yii::$app->controller->id == 'blogs'){?>
+    <li class="nav-item mb-5">
+        <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'blogs') echo ' active' ?>"
+           href="<?= Url::toRoute(['/kenne/blogs']); ?>">
+            <i class="ion ion-ios-locate"></i><?= KenneModule::t('kenne', 'blogs'); ?>
+        </a>
+    </li>
+
     <?php if (Yii::$app->controller->id == 'categories'){?>
         <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'categories') echo ' active' ?>"
@@ -12,24 +21,24 @@ use modava\kenne\KenneModule;
             <i class="ion ion-ios-locate"></i><?= KenneModule::t('kenne', 'Categories'); ?>
         </a>
     </li>
-    <?php } elseif (Yii::$app->controller->id == 'products'){?>
+
+    <?php } if (Yii::$app->controller->id == 'products'){?>
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'products') echo ' active' ?>"
            href="<?= Url::toRoute(['/kenne/products']); ?>">
             <i class="ion ion-ios-locate"></i><?= KenneModule::t('kenne', 'Products'); ?>
         </a>
     </li>
-    <?php } elseif (Yii::$app->controller->id == 'transactions'){?>
 
-
+    <?php } if (Yii::$app->controller->id == 'transactions'){?>
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'transactions') echo ' active' ?>"
            href="<?= Url::toRoute(['/kenne/transactions']); ?>">
             <i class="ion ion-ios-locate"></i><?= KenneModule::t('kenne', 'Transactions'); ?>
         </a>
     </li>
-    <?php } else {?>
 
+    <?php } else {?>
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'orders') echo ' active' ?>"
            href="<?= Url::toRoute(['/kenne/orders']); ?>">
@@ -37,4 +46,6 @@ use modava\kenne\KenneModule;
         </a>
     </li>
     <?php } ?>
+<?php } ?>
+
 </ul>
