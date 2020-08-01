@@ -37,6 +37,7 @@ if (empty($data)){ ?>
         </div>
         <div class="row">
             <div class="col-12">
+
                 <form action="<?= '/cart/update-quantity'?>" method="post">
                     <?= \yii\helpers\Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken());?>
                     <div class="table-content table-responsive">
@@ -98,7 +99,7 @@ if (empty($data)){ ?>
                                     <li>Tổng tiền <span><?= isset($total) ? number_format($total,0,',','.'): 0?> đ</span></li>
                                     <li>Thành tiền <span><?= isset($total) ? number_format($total,0,',','.'): 0?> đ</span></li>
                                 </ul>
-                                <a href="<?= \yii\helpers\Url::toRoute('/checkout')?>">Tiến hành thanh toán</a>
+                                <a href="<?= \yii\helpers\Url::toRoute('/checkout')?>" onclick="">Tiến hành thanh toán</a>
                             </div>
                         </div>
                     </div>

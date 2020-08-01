@@ -8,7 +8,7 @@ $this->beginContent('@frontend/views/layouts/common.php');
 ?>
 
     <div class="main-wrapper">
-<?= \frontend\widgets\LoadingWidget::widget()?>
+<?/*= \frontend\widgets\LoadingWidget::widget()*/?>
 <?= HeaderWidget::widget() ?>
 <?= $content; ?>
 <?php echo \frontend\widgets\BrandWidget::widget()?>
@@ -20,7 +20,7 @@ $this->beginContent('@frontend/views/layouts/common.php');
 
 
 <?= \frontend\widgets\ScrollWidget::widget()?>
-
+<?= \frontend\widgets\ModalAlertWidget::widget() ?>
 <?php
 $this->endContent();
 ?>

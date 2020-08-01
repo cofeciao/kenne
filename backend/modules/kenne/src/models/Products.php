@@ -66,6 +66,7 @@ class Products extends ProductsTable
     public function rules()
     {
         return [
+            [['pro_name','pro_slug'],'unique'],
 			[['cat_id', 'pro_name', 'pro_slug'], 'required'],
 			[['cat_id', 'pro_quantity', 'pro_price', 'pro_status', 'pro_sale', 'pro_number'], 'integer'],
 			[['created_at', 'updated_at'], 'safe'],

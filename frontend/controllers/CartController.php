@@ -35,17 +35,16 @@ class CartController extends MyController
 
     public function actionAddCart()
     {
-
        $queryParams = Yii::$app->request->queryParams;
         $slug = $queryParams['slug'];
         isset($queryParams['qtt']) ? $quantity = $queryParams['qtt']: $quantity = 1;
         $cart = new Cart();
         $cart->add($slug,$quantity);
-
         //__PHP_Incomplete_Class Object with cookie.
         //Need unserialize , serialize to transfer
+        return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
 
-        return $this->redirect(['/cart']);
+        //return $this->redirect(['/cart']);
     }
 
     public function actionDelete($id){
@@ -78,6 +77,9 @@ class CartController extends MyController
         Component::setCookies('cart',$kq);
 
         return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
+
+    }
+    public function actionValidate(){
 
     }
 }

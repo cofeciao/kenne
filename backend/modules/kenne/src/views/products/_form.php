@@ -27,13 +27,17 @@ use modava\kenne\KenneModule;
 
     <?= $form->field($model, 'pro_price')->label('Giá')->textInput() ?>
 
-    <?php /*  \modava\tiny\FileManager::widget([
-            'model' => $model,
-            'attribute' => 'pro_image',
-            'label' => ProductsModule::t('products', 'Hình ảnh ') . ': ' . Yii::$app->params['product-size'],
-            ]);
-        */ ?>
-    <?= $form->field($model, 'file')->fileInput() ?>
+    <?php
+    if (empty($model->getErrors()))
+        $path = Yii::$app->params['kenne']['150x150']['folder'];
+    else
+        $path = null;
+    echo \modava\tiny\FileManager::widget([
+        'model' => $model,
+        'attribute' => 'pro_image',
+        'path' => $path,
+        'label' => KenneModule::t('kenne', 'Hình ảnh') . ': ',
+    ]); ?>
 
     <?php if (Yii::$app->controller->action->id == 'create')
         $model->pro_status = 1;

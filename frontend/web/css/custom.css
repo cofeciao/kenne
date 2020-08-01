@@ -13,3 +13,17 @@
 .cart-div{
     margin-bottom: 2%;
 }
+button.close-modal {
+    background-color: grey;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+
+a.modal-cart {
+    background-color: green;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}

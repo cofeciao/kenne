@@ -47,6 +47,24 @@ return [
             'height' => 150
         ],
     ],
+    'kenne' => [
+        '150x150' => [
+            'folder' => '/uploads/kenne/150x150/',
+            'width' => 150,
+            'height' => 150
+        ],
+        '300x300' => [
+            'folder' => '/uploads/kenne/300x300/',
+            'width' => 300,
+            'height' => 300
+        ],
+        '600x600' => [
+            'folder' => '/uploads/kenne/600x600/',
+            'width' => 600,
+            'height' => 600
+        ],
+
+    ],
     'article-type' => [
         '150x150' => [
             'folder' => '/uploads/article-type/150x150/',

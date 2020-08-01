@@ -66,14 +66,14 @@ $this->title = 'WEB_NAME';
                                             </li>
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                             </li>
-                                            <li><a href="<?= '/cart/add-cart?slug='.$item->pro_slug ?>" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                            <li><a class="add-cart" href="<?= '/cart/add-cart?slug='.$item->pro_slug ?>" data-toggle="tooltip" data-name="<?= $item->pro_name?>" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="product-content">
                                     <div class="product-desc_info">
-                                        <h3 class="product-name"><a href="single-product.html"><?= $item->pro_name ?></a></h3>
+                                        <h3 class="product-name"><a href="<?= Url::toRoute(['/detail-product','slug'=>$item->pro_slug])?>"><?= $item->pro_name ?></a></h3>
                                         <div class="price-box">
                                             <span class="old-price"><?= number_format(($item->pro_price - ($item->pro_price*$item->pro_sale/100)),0,',','.' ) ?> đ</span>
                                             <span class="new-price"><?= number_format($item->pro_price,0,',','.' ) ?> đ</span>
@@ -163,7 +163,7 @@ $this->title = 'WEB_NAME';
                                                             </li>
                                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                                             </li>
-                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                                            <li><a href="<?= Url::toRoute(['/cart/add-cart','slug'=>$item->pro_slug])?>" class="add-cart" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
                                                             </li>
                                                         </ul>
                                                     </div>

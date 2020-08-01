@@ -54,6 +54,13 @@ $this->params['breadcrumbs'][] = $this->title;
 						'pro_description',
 						'pro_quantity',
 						'pro_price',
+						[
+						    'attribute'=>'pro_image',
+                            'format'=>'html',
+                            'value'=>function($model){
+                               return Html::img(Url::to('/uploads/kenne/150x150/'.$model->pro_image));
+                            }
+                        ],
 						'pro_image',
 						'pro_status',
 						'pro_sale',

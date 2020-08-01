@@ -123,8 +123,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'attribute' => 'pro_image',
                                                 'label' => 'Hình ảnh',
-                                                'content'=>function($model){
+                                                'format'=> 'html',
+                                                'value'=>function($model){
                                                     return Html::img($model->pro_image,['width'=>'100px','height'=>'100px']);
+                                                    //return Html::img(\yii\helpers\Url::to('/uploads/kenne/150x150/'.$model->pro_image));
                                                 }
                                             ],
                                             [

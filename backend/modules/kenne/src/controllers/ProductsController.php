@@ -3,12 +3,12 @@
 namespace modava\kenne\controllers;
 
 use common\helpers\MyHelper;
+use modava\kenne\components\MyUpload;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\kenne\KenneModule;
 use backend\components\MyController;
 use modava\kenne\models\Products;
 use modava\kenne\models\search\ProductsSearch;
@@ -74,18 +74,31 @@ class ProductsController extends MyController
         $model = new Products();
 
         if ($model->load(Yii::$app->request->post())) {
+            if ($model->pro_image != "") {
+            $pathImage = FRONTEND_HOST_INFO . $model->pro_image;
+            $path = Yii::getAlias('@frontend/web/uploads/kenne/');
+            $imageName = null;
+            foreach (Yii::$app->params['kenne'] as $key => $value) {
+                $pathSave = $path . $key;
+                if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                    mkdir($pathSave);
+                }
+                $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+            }
+
+        }
             $model->created_at =  date('Y-m-d H:i:s');
             $model->updated_at =  date('Y-m-d H:i:s');
             $model->pro_slug = MyHelper::createAlias($model->pro_name);
             $model->cat_id = Yii::$app->request->post()['Products']['cat_id'];
-            $model->pro_image = UploadedFile::getInstance($model,'file');
-            $tempName = explode('/',$model->pro_image->tempName);
-            $extension = explode('/',$model->pro_image->type);
+            $model->pro_image = $imageName;
+           /* $tempName = explode('/',$model->pro_image->tempName);
+            $extension = explode('/',$model->pro_image->type);*/
             /* echo "<pre>";
              print_r($extension);
              echo "</pre>";
              die;*/
-            if($model->pro_image){
+           /* if($model->pro_image){
                 $path = Yii::getAlias('@frontend/web');
                 $pathImage = '/uploads/';
                 $image = $tempName[2].'.'.$extension[1];
@@ -96,7 +109,7 @@ class ProductsController extends MyController
                     $model->pro_image->saveAs($path.$pathImage.$image);
                 }
             }
-            $model->pro_image =$pathImage.$image;
+            $model->pro_image =$pathImage.$image;*/
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
@@ -133,8 +146,26 @@ class ProductsController extends MyController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+
+            if ($model->load(Yii::$app->request->post())) {
+
+                if ($model->pro_image != "") {
+                    $pathImage = FRONTEND_HOST_INFO . $model->pro_image;
+                    $path = Yii::getAlias('@frontend/web/uploads/kenne/');
+                    $imageName = null;
+                    foreach (Yii::$app->params['kenne'] as $key => $value) {
+                        $pathSave = $path . $key;
+                        if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                            mkdir($pathSave);
+                        }
+                        $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                    }
+
+                }
+                
+                $model->pro_image = $imageName;
+
+                if($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
