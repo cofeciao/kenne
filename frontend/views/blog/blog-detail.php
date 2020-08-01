@@ -1,5 +1,6 @@
 <?php
 $this->title = "Chi tiết bài viết";
+
 ?>
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">
@@ -38,10 +39,12 @@ $this->title = "Chi tiết bài viết";
                     </div>
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Recent Posts</h4>
+<!--///////////////////////////////////////////////End Recent Post//////////////////////////////////////////////////////////-->
+                        <?php foreach ($recentPost as $item)  : ?>
                         <div class="recent-post">
                             <div class="recent-post_thumb">
                                 <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/1.jpg" alt="Kenne's Blog Image">
+                                    <img class="img-full" src="<?php if(count($item->image) == 1) echo '/backend/web/uploads/'.$item->image[0]; ?>" alt="Kenne's Blog Image">
                                 </a>
                             </div>
                             <div class="recent-post_desc">
@@ -49,52 +52,8 @@ $this->title = "Chi tiết bài viết";
                                 <span class="post-date">October 25,2019</span>
                             </div>
                         </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/2.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="#">Soluta ad tempore</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/3.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Possimus reiciendis</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/4.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Tortor Posuere</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                        <div class="recent-post">
-                            <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="/images/blog/5.jpg" alt="Kenne's Blog Image">
-                                </a>
-                            </div>
-                            <div class="recent-post_desc">
-                                <span><a href="blog-details.html">Hello World!</a></span>
-                                <span class="post-date">October 24,2019</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kenne-blog-sidebar">
+                        <?php endforeach;?>
+<!--///////////////////////////////////////////////End Recent Post//////////////////////////////////////////////////////////-->
                         <h4 class="kenne-blog-sidebar-title">Comments</h4>
                         <div class="recent-comment">
                             <div class="user-img">
@@ -145,30 +104,39 @@ $this->title = "Chi tiết bài viết";
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="blog-item">
+
+
                     <div class="blog-img">
                         <a href="blog-details.html">
-                            <img src="/images/blog/1.jpg" alt="Blog Image">
+
+                                <img src="<?php  echo '/backend/web/uploads/'.$data->image[0]?>" alt="Blog Image">
                         </a>
                     </div>
                     <div class="blog-content">
                         <h3 class="heading">
-                            <a href="blog-details.html">Blog Image Post</a>
+                            <a href="blog-details.html"><?php echo $data->title?></a>
                         </h3>
                         <p class="short-desc">
-                            The first line of lorem Ipsum: "Lorem ipsum dolor sit amet..", comes from a
-                            line in section 1.10.32.
+                            <?php echo $data->descriptions?>
                         </p>
                         <div class="blog-meta">
                             <ul>
-                                <li>Oct.20.2019</li>
+                                <li><?php echo $data->date?></li>
                                 <li>
                                     <a href="javascript:void(0)">02 Comments</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+
                 </div>
                 <div class="kenne-blog-blockquote">
                     <blockquote>
@@ -289,7 +257,7 @@ $this->title = "Chi tiết bài viết";
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <label>Name</label>
-                                    <input type="text" class="coment-field" placeholder="Name">
+                                    <input type="text" class="coment-field" placeholder="Name" formmethod="post">
                                 </div>
                                 <div class="col-lg-4 col-md-4">
                                     <label>Email</label>

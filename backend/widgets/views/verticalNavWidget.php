@@ -131,11 +131,21 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
+                
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('orders')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'orders') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/kenne/orders']); ?>">
                             <i class="icon ion-ios-briefcase"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Chi tiết đơn hàng'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('blogs')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'blogs') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/kenne/blogs']); ?>">
+                            <i class="icon ion-ios-briefcase"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Blogs'); ?></span>
                         </a>
                     </li>
                 <?php } ?>

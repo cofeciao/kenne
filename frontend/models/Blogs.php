@@ -10,15 +10,20 @@ class Blogs extends BlogsTable
 {
     public function getAllBLogsRecord()
     {
-        $data = self::find()
-            ->where(['status' => self::ACTIVE_STATUS]);
-        return $data;
+        return self::find()
+            ->where(['status' => self::ACTIVE_STATUS])
+            ->all();
     }
-
+    public function getOneBLogDetail($id)
+    {
+        return self::find()
+            ->where(['id' => $id])
+            ->one();
+    }
     public function getAllRecentPost()
     {
         return self::find()
-            ->where(['status' => self::STATUS_PUBLISHED])
+            ->where(['status' => self::ACTIVE_STATUS])
             ->limit(5)
             ->orderBy(['date' => SORT_DESC])
             ->all();

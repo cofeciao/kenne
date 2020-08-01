@@ -8,8 +8,8 @@ $this->beginContent('@frontend/views/layouts/common.php');
 ?>
 
     <div class="main-wrapper">
-<?/*= \frontend\widgets\LoadingWidget::widget()*/?>
-<?= HeaderWidget::widget() ?>
+
+<?= \frontend\widgets\Header2Widget::widget() ?>
 <?= $content; ?>
 <?php echo \frontend\widgets\BrandWidget::widget()?>
     </div>

@@ -1,26 +1,25 @@
 <?php
 
-namespace modava\blogs\controllers;
+namespace modava\kenne\controllers;
 
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\blogs\BlogsModule;
+use modava\kenne\KenneModule;
 use backend\components\MyController;
-use modava\blogs\models\Blogs;
-use modava\blogs\models\search\BlogsSearch;
+use modava\kenne\models\Blogs;
+use modava\kenne\models\search\BlogsSearch;
 use yii\web\UploadedFile;
-
 /**
  * BlogsController implements the CRUD actions for Blogs model.
  */
 class BlogsController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -34,28 +33,27 @@ class BlogsController extends MyController
     }
 
     /**
-    * Lists all Blogs models.
-    * @return mixed
-    */
+     * Lists all Blogs models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new BlogsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Blogs model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Blogs model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -64,48 +62,47 @@ class BlogsController extends MyController
     }
 
     /**
-    * Creates a new Blogs model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
-
-
+     * Creates a new Blogs model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Blogs();
 
         if ($model->load(Yii::$app->request->post())) {
-
             $model->date = date('Y-m-d H:i:s');
 
-            ////////////////////////// Upload Hình Ảnh /////////////////////////////////////////////////
-
-            $file = UploadedFile::getInstance($model,'file');
-            if($file != null)
-            {
-                $file->saveAs('./uploads/'. $file->baseName.'.'.$file->extension);
-                $model->image = $file->name;
-            }
-
-            if ($model->validate() && $model->save()) {
-
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                    'title' => 'Thông báo',
-                    'text' => 'Tạo mới thành công',
-                    'type' => 'success'
-                ]);
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                $errors = Html::tag('p', 'Tạo mới thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
+//////////////////////////////////////// Upload Hình Ảnh ///////////////////////////////////////////////////////////////
+            $file = UploadedFile::getInstances($model, 'file');
+            $imgNames = array();
+            if ($file != null) {
+                foreach ($file as $item) {
+                    $item->saveAs('./uploads/'.$item->baseName.'.'.$item->extension);
+                    $imgNames[] = $item->baseName.'.'.$item->extension;
                 }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
+                $model->image = $imgNames;
             }
+        }
+////////////////////////////////////////// End Upload Hình Ảnh /////////////////////////////////////////////////////////
+
+        if ($model->validate() && $model->save()) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                'title' => 'Thông báo',
+                'text' => 'Tạo mới thành công',
+                'type' => 'success'
+            ]);
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            $errors = Html::tag('p', 'Tạo mới thất bại');
+            foreach ($model->getErrors() as $error) {
+                $errors .= Html::tag('p', $error[0]);
+            }
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                'title' => 'Thông báo',
+                'text' => $errors,
+                'type' => 'warning'
+            ]);
         }
 
         return $this->render('create', [
@@ -205,6 +202,6 @@ class BlogsController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('blogs', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('kenne', 'The requested page does not exist.'));
     }
 }

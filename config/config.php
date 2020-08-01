@@ -104,9 +104,9 @@ $config = [
 //Cấu hình kết nối CSDL
 $config['components']['db'] = [
     'class' => yii\db\Connection::class,
-    'dsn' => 'mysql:host=localhost;dbname=dev',
+    'dsn' => 'mysql:host=localhost;dbname=caominh',
     'username' => 'root',
-    'password' => '12081986',
+    'password' => '',
     'tablePrefix' => '',
     'charset' => 'utf8mb4',
     'enableSchemaCache' => YII_ENV_PROD,

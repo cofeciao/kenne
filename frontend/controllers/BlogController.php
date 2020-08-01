@@ -13,14 +13,25 @@ class BlogController extends MyController
     {
         $modelBlogs = new Blogs();
         $data = $modelBlogs->getAllBLogsRecord();
-        $RecentPost = $modelBlogs->getAllRecentPost();
+        $recentPost = $modelBlogs->getAllRecentPost();
         $pages = $modelBlogs->getAllPagination();
         $tags = $modelBlogs->getAllTags();
 
         return $this->render('index',[
-            'RecentPost' => $RecentPost,
+            'RecentPost' => $recentPost,
             'pages' => $pages,
             'tags' => $tags,
+            'data' => $data
+        ]);
+    }
+    public function actionBlogDetail($id)
+    {
+        $modelBlogs = new Blogs();
+        $data = $modelBlogs->getOneBLogDetail($id);
+        $recentPost = $modelBlogs->getAllRecentPost();
+        return $this->render('blog-detail',[
+            'data' => $data,
+            'recentPost' => $recentPost
         ]);
     }
 }
