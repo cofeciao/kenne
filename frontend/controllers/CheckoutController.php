@@ -8,6 +8,7 @@ use frontend\components\MyController;
 use frontend\models\LocationDistrict;
 use frontend\models\LocationProvince;
 use frontend\models\Orders;
+use frontend\models\Products;
 use frontend\models\Transaction;
 use yii\helpers\Json;
 use Yii;
@@ -67,6 +68,7 @@ class CheckoutController extends MyController
 
         //Lưu chi tiết đơn hàng Orders
         $dataCart = unserialize(serialize(Component::getCookies('cart')));
+
         foreach ($dataCart as $key => $item){
             $modelOrder = new Orders();
             $modelOrder->id_tr = $data['idDH'];

@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use modava\categories\models\Categories;
 use modava\products\models\table\ProductsTable;
 use yii\data\ActiveDataProvider;
 
@@ -21,7 +20,7 @@ class Products extends ProductsTable
     }
 
     public function getProductsByCategories($id = null){
-        $query = Products::find()->where(['cat_id' => $id]);
+        $query = self::find()->where(['cat_id' => $id]);
 
         return $query->all();
     }
@@ -42,7 +41,7 @@ class Products extends ProductsTable
     }
 
     public function getProductByCategory($slug){
-        $model = new \frontend\models\Categories();
+        $model = new Categories();
         $query = $model->find();
         $query = $query->where(['cat_slug' => $slug])->one();
         $data = $query->getProducts();

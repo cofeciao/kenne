@@ -64,6 +64,7 @@ if (empty($data)){ ?>
                                 <td class="kenne-product-name"><a href="javascript:void(0)"><?= $item['name']?></a></td>
                                 <td class="kenne-product-price"><span class="amount"><?= number_format($item['price'],0,',','.') ?> đ</span></td>
                                 <td class="quantity">
+                                    <label>Còn lại:&nbsp;</label><b><?= $item['pro_quantity']?></b> sp
                                     <div class="cart-plus-minus">
                                         <input class="cart-plus-minus-box" value="<?= $item['sl'] ?>" type="text" name="<?=$key?>[sl]">
                                         <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>

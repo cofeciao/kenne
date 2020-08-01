@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\components\Component;
 use frontend\components\MyController;
 use frontend\components\Cart;
+use frontend\models\Products;
 use Yii;
 
 class CartController extends MyController
@@ -12,17 +13,23 @@ class CartController extends MyController
     public function actionIndex()
     {
         $total = 0;
+        $pro_quantity = [];
         $data = unserialize(serialize(Component::getCookies('cart')));
         if (empty($data)){
             $data = "";
         } else {
-            foreach ($data as $item){
+            foreach ($data as $key => $item){
+                $slug = $item['slug'];
+                $product = Products::getDetailProduct($slug);
+                //$pro_quantity[$key]['pro_quantity'] = $product['pro_quantity'];
+                $data[$key]['pro_quantity']= $product['pro_quantity'];
                 $total += $item['price']*$item['sl'];
             }
         }
+
         return $this->render('index', [
             'data' => $data,
-            'total'=>$total
+            'total'=>$total,
         ]);
     }
 
@@ -56,6 +63,7 @@ class CartController extends MyController
         $data = unserialize(serialize(Component::getCookies('cart')));
 
         $data1 = Yii::$app->request->post();
+
         unset($data1['_csrf']);
 
         foreach ($data as $key => $value){

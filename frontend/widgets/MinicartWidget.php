@@ -13,7 +13,7 @@ class MinicartWidget extends \yii\base\Widget
             $data = "";
         } else {
             foreach ($data as $item){
-                $total += $item['price'];
+                $total += $item['price']*$item['sl'];
             }
         }
 
