@@ -1,0 +1,15 @@
+.delete-cart{
+    background-color: #242424;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white !important;
+    padding: 20px;
+    line-height: 42px
+}
+.cart-div:hover .delete-cart{
+    background-color: #a8741a;
+}
+
+.cart-div{
+    margin-bottom: 2%;
+}

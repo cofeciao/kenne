@@ -37,7 +37,8 @@ class Component
     }
 
     public static function removeCookies($name){
-        $cookies = \Yii::$app->response->cookies;
+        $cookies = Yii::$app->response->cookies;
         $cookies->remove($name);
+        return $cookies;
     }
 }

@@ -2,13 +2,13 @@
 
 namespace frontend\components;
 
-use common\models\ProductsCommon;
+use frontend\models\Products;
 use common\components\Component;
 
 class Cart
 {
     public function add($slug, $quantity = 1){
-        $data = ProductsCommon::findOne(['pro_slug'=>$slug]);
+        $data = Products::findOne(['pro_slug'=>$slug]);
         $id = $data['id'];
         $data1[$id] = $data;
         if(!Component::hasCookies('cart')){
@@ -42,21 +42,32 @@ class Cart
                 ];
             }
         }
-
         Component::setCookies('cart',$cartstore);
-
-
-
-        //$this->cartstore = unserialize (serialize (Component::getCookies('cart')));*/
-
+        /*//$this->cartstore = unserialize (serialize (Component::getCookies('cart')));*/
         /*if(!Component::hasCookies('cart')){
                   Component::setCookies('cart',$this->cartstore);
         }else{
             $this->cartstore = unserialize (serialize (Component::getCookies('cart')));
         }*/
-
 //        $cookies = \Yii::$app->response->cookies;
-//        $cookies->remove('cart');
+//        $cookies->remove('cart');*/
+    }
+    //Xóa 1 sản phẩm trong giỏ h
+    public static function delete($id){
+        $data = unserialize(serialize(Component::getCookies('cart')));
+
+        if (array_key_exists($id,$data)){
+            unset($data[$id]);
+        }
+        Component::setCookies('cart',$data);
+    }
+
+    //Xóa toàn bộ sản phẩm trong giỏ hàng
+    public static function deleteAll(){
+        $data = unserialize(serialize(Component::getCookies('cart')));
+        unset($data);
+        $data = null;
+        Component::setCookies('cart',$data);
 
     }
 }
