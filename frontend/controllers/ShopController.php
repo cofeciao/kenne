@@ -17,15 +17,20 @@ class ShopController extends  MyController
 
         if (empty($param)){
                 $query = $model->getAllProducts();
-                $data = $model->getPagination($query,9);
                 //Activequery
                 /*$count = $query->count();
                 $pagination = new Pagination(['totalCount'=> $count]);
                 $pagination->pageSize = 9;
                 $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();*/
         }else{
-            if (key($param) == 'slug'){
-                $query = $model->getProductByCategory(current($param));
+            if (isset($param['slug'])){
+               if (isset($param['sort']) && isset($param['slug']) ){
+                   $query = $model->getProductByCategory($param['slug']);
+                   $query = $model->sortProduct($query,$param['sort']);
+               }else{
+                   $query = $model->getProductByCategory(current($param));
+               }
+
                 /*$query = Categories::find();
                $query = $query->where(['cat_slug' => $slug])->one();
                $query = $query->getProducts();
@@ -35,11 +40,19 @@ class ShopController extends  MyController
                $pagination = new Pagination(['totalCount'=> $count]);
                $pagination->pageSize = 6;
                $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();*/
+            } elseif(isset($param['key'])){
+                $query = $modelSearch->search($param['key']);
+                if (isset($param['sort'])){
+                    $query = $model->sortProduct($query,$param['sort']);
+                }
             }else{
-                $query = $modelSearch->search(\Yii::$app->request->queryParams['key']);
+                $query = $model->getAllProducts();
+                $query = $model->sortProduct($query,$param['sort']);
+
             }
-            $data = $model->getPagination($query,6);
         }
+
+        $data = $model->getPagination($query,9);
         return $this->render('index',[
             'data'=>$data,
         ]);

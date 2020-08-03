@@ -18,8 +18,8 @@ use yii\helpers\Url;
                                         </li>
                                         <li><a href="javascript:void(0)">Language <i class="ion-chevron-down"></i></a>
                                             <ul class="ht-dropdown">
-                                                <li class="active"><a href="javascript:void(0)"><img src="assets/images/menu/icon/1.jpg" alt="Kenne Language Icon">English</a></li>
-                                                <li><a href="javascript:void(0)"><img src="assets/images/menu/icon/2.jpg" alt="Kenne Language Icon">Français</a>
+                                                <li class="active"><a href="javascript:void(0)"><img src="/images/menu/icon/1.jpg" alt="Kenne Language Icon">English</a></li>
+                                                <li><a href="javascript:void(0)"><img src="/images/menu/icon/2.jpg" alt="Kenne Language Icon">Français</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -54,7 +54,7 @@ use yii\helpers\Url;
                         <div class="col-lg-12">
                             <div class="header-middle_nav">
                                 <div class="header-logo_area">
-                                    <a href="index.html">
+                                    <a href="<?= Url::home()?>">
                                         <img src="/images/menu/logo/1.png" alt="Header Logo">
                                     </a>
                                 </div>
@@ -62,15 +62,15 @@ use yii\helpers\Url;
                                     <i class="fa fa-headphones-alt"></i>
                                     <div class="contact-content">
                                         <p>
-Call us
-<br>
-                                        Free Support: (012) 800 456 789
-</p>
+                                        Gọi cho chúng tôi
+                                        <br>
+                                        Hỗ trợ miễn phí: (0938) 800 456
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="header-search_area d-none d-lg-block">
-                                    <form class="search-form" action="#">
-                                        <input type="text" placeholder="Search">
+                                    <form class="search-form" action="<?= Url::toRoute(['/shop'])?>">
+                                        <input type="text" placeholder="Search" name="key">
                                         <button class="search-button"><i class="ion-ios-search"></i></button>
                                     </form>
                                 </div>
@@ -84,12 +84,18 @@ Call us
                                         <li class="minicart-wrap">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <div class="minicart-count_area">
-                                                    <span class="item-count">03</span>
+                                                    <?php if(isset($total)){?>
+                                                        <span class="item-count"><?= $total?></span>
+                                                    <?php } else { ?>
+                                                         <span class="item-count">0</span>
+                                                    <?php }?>
                                                     <i class="ion-bag"></i>
                                                 </div>
                                                 <div class="minicart-front_text">
                                                     <span>Cart:</span>
-                                                    <span class="total-price">462.4</span>
+                                                    <span class="total-price">
+                                        <?= isset($totalPrice) ? number_format($totalPrice,0,',','.') : '0' ?> đ
+                                                    </span>
                                                 </div>
                                             </a>
                                         </li>
@@ -141,9 +147,10 @@ Call us
                                                 <i class="ion-chevron-down"></i>
                                             </a>
                                             <ul class="kenne-dropdown">
+                                                <?php if (isset($data)) {?>
                                                 <?php foreach ($data as $item){?>
                                                     <li><a href="<?=Url::toRoute(['/shop/','slug'=> $item['cat_slug']])?>"> <?= $item['cat_name']?></a></li>
-                                                <?php } ?>
+                                                <?php } }?>
 
                                             </ul>
                                         </li>
@@ -176,7 +183,11 @@ Call us
                                 <div class="row align-items-center justify-content-between">
                                     <div class="col-lg-2 col-sm-6">
                                         <div class="header-logo_area">
+<<<<<<< HEAD
                                             <a href="index.html">
+=======
+                                            <a href="<?= Url::home() ?>">
+>>>>>>> 4d7172e06f2fcbb24c2b016500c0d8346249070d
                                                 <img src="/images/menu/logo/1.png" alt="Header Logo">
                                             </a>
                                         </div>
@@ -185,9 +196,13 @@ Call us
                                         <div class="main-menu_area">
                                             <nav class="main-nav d-flex justify-content-center">
                                                 <ul>
-                                                    <li class="dropdown-holder"><a href="javascript:void(0)">Home <i
-                                                            class="ion-chevron-down"></i></a>
+                                                    <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
+                                                    <li class="dropdown-holder">
+                                                        <a href="<?= Url::toRoute(['/shop']) ?>">Shop
+                                                            <i class="ion-chevron-down"></i>
+                                                        </a>
                                                         <ul class="kenne-dropdown">
+<<<<<<< HEAD
                                                             <li><a href="index.html">Home One</a></li>
                                                             <li><a href="index-2.html">Home Two</a></li>
                                                             <li><a href="index-3.html">Home Three</a></li>
@@ -272,26 +287,27 @@ Call us
                                                                     <li><a href="compare.html">Compare</a></li>
                                                                 </ul>
                                                             </li>
+=======
+                                                            <?php foreach ($data as $item){?>
+                                                                <li><a href="<?=Url::toRoute(['/shop/','slug'=>$item->cat_slug])?>"> <?= $item['cat_name']?></a></li>
+                                                            <?php } ?>
+>>>>>>> 4d7172e06f2fcbb24c2b016500c0d8346249070d
                                                         </ul>
                                                     </li>
-                                                    <li><a href="javascript:void(0)">Pages <i
-                                                            class="ion-chevron-down"></i></a>
+                                                    <li><a href="<?= Url::toRoute(['/blog']) ?>">Blog</a>
+                                                        <!--<li><a href="blog-details.html">Blog Details</a></li>-->
+                                                    </li>
+                                                    <li><a href="<?= Url::toRoute('/contact-us')?>">Contact Us</a></li>
+                                                    <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
+                                                    <li><a href="">My Account <i class="ion-chevron-down"></i></a>
                                                         <ul class="kenne-dropdown">
-                                                            <li><a href="coming-soon_page.html">Coming Soon</a></li>
-                                                            <li><a href="404.html">Error 404</a></li>
-                                                            <li><a href="faq.html">FAQ</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/sign']) ?>">Login | Register</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist']) ?>">Wishlist</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/cart']) ?>">Cart</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/checkout']) ?>">Checkout</a></li>
                                                         </ul>
                                                     </li>
-                                                    <li><a href="javascript:void(0)">Blog <i
-                                                            class="ion-chevron-down"></i></a>
-                                                        <ul class="kenne-dropdown">
-                                                            <li><a href="blog-grid_view.html">Grid View</a></li>
-                                                            <li><a href="blog-list_view.html">List View</a></li>
-                                                            <li><a href="blog-details.html">Blog Details</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="contact-us.html">Contact Us</a></li>
-                                                    <li><a href="about-us.html">About Us</a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -307,14 +323,16 @@ Call us
                                                 <li class="minicart-wrap">
                                                     <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                         <div class="minicart-count_area">
-                                                            <span class="item-count">03</span>
+                                                            <?php if(isset($total)){?>
+                                                                <span class="item-count"><?= $total?></span>
+                                                            <?php }?>
                                                             <i class="ion-bag"></i>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#searchBar" class="search-btn toolbar-btn">
-                                                        <i class="ion-android-search"></i>
+                                                        <i class="ion-ios-search"></i>
                                                     </a>
                                                 </li>
                                                 <li class="d-none d-lg-inline-block">
@@ -331,64 +349,9 @@ Call us
                     </div>
                 </div>
             </div>
-            <div class="offcanvas-minicart_wrapper" id="miniCart">
-                <div class="offcanvas-menu-inner">
-                    <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
-                    <div class="minicart-content">
-                        <div class="minicart-heading">
-                            <h4>Shopping Cart</h4>
-                        </div>
-                        <ul class="minicart-list">
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="javascript:void(0)"><i
-                                    class="ion-android-close"></i></a>
-                                <div class="product-item_img">
-                                    <img src="assets/images/product/1-1.jpg" alt="Kenne's Product Image">
-                                </div>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop-left-sidebar.html">Autem ipsa ad</a>
-                                    <span class="product-item_quantity">1 x $145.80</span>
-                                </div>
-                            </li>
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="javascript:void(0)"><i
-                                    class="ion-android-close"></i></a>
-                                <div class="product-item_img">
-                                    <img src="assets/images/product/2-1.jpg" alt="Kenne's Product Image">
-                                </div>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop-left-sidebar.html">Tenetur illum
-                                        amet</a>
-                                    <span class="product-item_quantity">1 x $150.80</span>
-                                </div>
-                            </li>
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="javascript:void(0)"><i
-                                    class="ion-android-close"></i></a>
-                                <div class="product-item_img">
-                                    <img src="assets/images/product/3-1.jpg" alt="Kenne's Product Image">
-                                </div>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop-left-sidebar.html">Non doloremque
-                                        placeat</a>
-                                    <span class="product-item_quantity">1 x $165.80</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="minicart-item_total">
-                        <span>Subtotal</span>
-                        <span class="ammount">$462.4‬0</span>
-                    </div>
-                    <div class="minicart-btn_area">
-                        <a href="cart.html" class="kenne-btn kenne-btn_fullwidth">Minicart</a>
-                    </div>
-                    <div class="minicart-btn_area">
-                        <a href="checkout.html" class="kenne-btn kenne-btn_fullwidth">Checkout</a>
-                    </div>
-                </div>
-            </div>
-            <div class="mobile-menu_wrapper" id="mobileMenu">
+    <?= \frontend\widgets\MinicartWidget::widget()?>
+
+    <div class="mobile-menu_wrapper" id="mobileMenu">
                 <div class="offcanvas-menu-inner">
                     <div class="container">
                         <a href="#" class="btn-close white-close_btn"><i class="ion-android-close"></i></a>

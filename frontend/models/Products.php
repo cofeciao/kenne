@@ -58,4 +58,24 @@ class Products extends ProductsTable
         ]);
         return $data;
     }
+
+    public function sortProduct($query='', $sort = 1){
+        switch ($sort){
+            case 1:
+                return $query;
+                break;
+            case 2:
+                return $query->orderBy(['pro_name'=> SORT_ASC]);
+                break;
+            case 3:
+                return $query->orderBy(['pro_name'=> SORT_DESC]);
+                break;
+            case 4:
+                return $query->orderBy(['pro_price'=> SORT_ASC]);
+                break;
+            case 5:
+                return $query->orderBy(['pro_price'=> SORT_DESC]);
+                break;
+        }
+    }
 }

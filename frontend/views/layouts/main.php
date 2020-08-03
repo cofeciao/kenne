@@ -8,8 +8,10 @@ $this->beginContent('@frontend/views/layouts/common.php');
 ?>
 
     <div class="main-wrapper">
-
-<?= \frontend\widgets\Header2Widget::widget() ?>
+<?php if (Yii::$app->controller->id == 'site'){
+    echo HeaderWidget::widget();
+}else{?>
+<?= \frontend\widgets\Header2Widget::widget(); }?>
 <?= $content; ?>
 <?php echo \frontend\widgets\BrandWidget::widget()?>
     </div>
