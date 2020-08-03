@@ -58,4 +58,5 @@ return [
     'Other' => 'Khác',
     'Converted' => 'Đã chuyển đổi',
     'Convert' => 'Chuyển đổi',
+    'Detail' => 'Chi tiết',
 ];

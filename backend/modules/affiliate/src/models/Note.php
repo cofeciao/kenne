@@ -4,6 +4,7 @@ namespace modava\affiliate\models;
 
 use common\models\User;
 use modava\affiliate\AffiliateModule;
+use modava\affiliate\helpers\Utils;
 use modava\affiliate\models\table\NoteTable;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
@@ -66,7 +67,7 @@ class Note extends NoteTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['call_time',],
                     ],
                     'value' => function ($event) {
-                        return date('Y-m-d H:i:s', strtotime($this->call_time));
+                        return Utils::convertDateToDBFormat($this->call_time);
                     },
                 ],
                 [
@@ -76,7 +77,7 @@ class Note extends NoteTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['recall_time'],
                     ],
                     'value' => function ($event) {
-                        return date('Y-m-d H:i:s', strtotime($this->recall_time));
+                        return Utils::convertDateToDBFormat($this->recall_time);
                     },
                 ],
             ]
@@ -89,7 +90,7 @@ class Note extends NoteTable
     public function rules()
     {
         return [
-			[['title', 'slug', 'customer_id', 'call_time', 'recall_time',], 'required'],
+			[['title', 'slug', 'customer_id', 'call_time',], 'required'],
 			[['customer_id',], 'integer'],
 			[['call_time', 'recall_time'], 'safe'],
 			[['description'], 'string'],
@@ -142,5 +143,11 @@ class Note extends NoteTable
 
     public function getCustomer() {
         return $this->hasOne(Customer::class, ['id' => 'customer_id']);
+    }
+
+    public static function countByCustomer ($customerId) {
+        return (int) self::find()
+            ->where(['customer_id' => $customerId])
+            ->count();
     }
 }

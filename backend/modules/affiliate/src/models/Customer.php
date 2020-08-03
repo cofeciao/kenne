@@ -148,11 +148,11 @@ class Customer extends CustomerTable
         return $this->hasOne(Partner::class, ['id' => 'partner_id']);
     }
 
-    /*public function getNotes() {
-        return $this->hasMany(Note::class, ['id' => 'customer_id']);
+    public function getNotes() {
+        return $this->hasMany(Note::class, ['customer_id' => 'id']);
     }
 
     public function getCoupons() {
-        return $this->hasMany(Coupon::class, ['id' => 'customer_id']);
-    }*/
+        return $this->hasMany(Coupon::class, ['customer_id' => 'id']);
+    }
 }

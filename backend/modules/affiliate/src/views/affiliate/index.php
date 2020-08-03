@@ -9,6 +9,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use modava\affiliate\models\search\PartnerSearch;
 use \modava\affiliate\models\table\CustomerTable;
+use modava\affiliate\models\Note;
+use \modava\affiliate\models\Coupon;
 
 $this->title = AffiliateModule::t('affiliate', 'Customer');
 $this->params['breadcrumbs'][] = $this->title;
@@ -90,6 +92,21 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                             [
                                                 'attribute' => 'full_name',
                                                 'label' => AffiliateModule::t('affiliate', 'Full Name'),
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    $message = AffiliateModule::t('affiliate', 'Converted');
+                                                    $tick = '';
+
+                                                    if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
+                                                        $tick = Html::tag('span', '', [
+                                                            'title' => $message,
+                                                            'alia-label' => $message,
+                                                            'class' => 'glyphicon glyphicon-ok text-success m-1',
+                                                        ]);
+                                                    }
+
+                                                    return $model['full_name'] . $tick;
+                                                }
                                             ],
                                             [
                                                 'attribute' => 'sex',
@@ -118,6 +135,61 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                                     ]);
                                                     return $content;
                                                 }
+                                            ],
+
+                                            [
+                                                'class' => 'yii\grid\ActionColumn',
+                                                'header' => AffiliateModule::t('affiliate', 'Related Record'),
+                                                'template' => '{list-coupon} {list-note}',
+                                                'buttons' => [
+                                                    'list-coupon' => function ($url, $model) {
+                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        if ($record) {
+                                                            $count = Coupon::countByCustomer($record['id']);
+
+                                                            $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+
+                                                            return Html::a('<i class="icon dripicons-ticket"></i> ' . $bage , Url::toRoute(['/affiliate/coupon', 'CouponSearch[customer_id]' => $record['id']]),[
+                                                                'title' => AffiliateModule::t('affiliate', 'List Tickets'),
+                                                                'alia-label' => AffiliateModule::t('affiliate', 'List Tickets'),
+                                                                'data-pjax' => 0,
+                                                                'class' => 'btn btn-info btn-xs list-relate-record m-1',
+                                                                'data-related-id' => $record['id'],
+                                                                'data-related-field' => 'customer_id',
+                                                                'data-model' => 'Coupon',
+                                                                'target' => '_blank'
+                                                            ]);
+                                                        }
+
+                                                        return '';
+                                                    },
+                                                    'list-note' => function ($url, $model) {
+                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+
+                                                        if ($record) {
+                                                            $count = Note::countByCustomer($record['id']);
+
+                                                            $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+
+                                                            return Html::a('<i class="icon dripicons-to-do"></i>' . $bage, Url::toRoute(['/affiliate/note', 'NoteSearch[customer_id]' => $record['id']]),[
+                                                                'title' => AffiliateModule::t('affiliate', 'List Notes'),
+                                                                'alia-label' => AffiliateModule::t('affiliate', 'List Notes'),
+                                                                'data-pjax' => 0,
+                                                                'class' => 'btn btn-success btn-xs list-relate-record m-1',
+                                                                'data-related-id' => $record['id'],
+                                                                'data-related-field' => 'customer_id',
+                                                                'data-model' => 'Note',
+                                                                'target' => '_blank'
+                                                            ]);
+                                                        }
+
+                                                        return '';
+
+                                                    },
+                                                ],
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
@@ -155,14 +227,10 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                                     'create-customer' => function ($url, $model) {
                                                         $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
                                                         if ($record) {
-                                                            $message = AffiliateModule::t('affiliate', 'Converted');
+                                                            $message = AffiliateModule::t('affiliate', 'Detail');
 
-                                                            return Html::tag('span', '', [
-                                                                'title' => $message,
-                                                                'alia-label' => $message,
-                                                                'class' => 'glyphicon glyphicon-ok text-success m-1',
-                                                            ]) . Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
-                                                                    Url::toRoute(['/affiliate/customer', 'CustomerSearch[id]' => $record['id']]),
+                                                            return Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
+                                                                    Url::toRoute(['/affiliate/customer/view', 'id' => $record['id']]),
                                                                     [
                                                                         'title' => $message,
                                                                         'alia-label' => $message,

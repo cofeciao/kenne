@@ -189,7 +189,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'template' => '{list-coupon} {list-note}',
                                             'buttons' => [
                                                 'list-coupon' => function ($url, $model) {
-                                                    return Html::a('<i class="icon dripicons-ticket"></i>', Url::toRoute(['/affiliate/coupon', 'Coupon[customer_id]' => $model->primaryKey]),[
+                                                    $count = count($model->coupons);
+
+                                                    $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+
+                                                    return Html::a('<i class="icon dripicons-ticket"></i> ' . $bage , Url::toRoute(['/affiliate/coupon', 'CouponSearch[customer_id]' => $model->primaryKey]),[
                                                         'title' => AffiliateModule::t('affiliate', 'List Tickets'),
                                                         'alia-label' => AffiliateModule::t('affiliate', 'List Tickets'),
                                                         'data-pjax' => 0,
@@ -201,7 +205,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 },
                                                 'list-note' => function ($url, $model) {
-                                                    return Html::a('<i class="icon dripicons-to-do"></i>', Url::toRoute(['/affiliate/note', 'Note[customer_id]' => $model->primaryKey]),[
+                                                    $count = count($model->notes);
+
+                                                    $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+
+                                                    return Html::a('<i class="icon dripicons-to-do"></i>' . $bage, Url::toRoute(['/affiliate/note', 'NoteSearch[customer_id]' => $model->primaryKey]),[
                                                         'title' => AffiliateModule::t('affiliate', 'List Notes'),
                                                         'alia-label' => AffiliateModule::t('affiliate', 'List Notes'),
                                                         'data-pjax' => 0,
