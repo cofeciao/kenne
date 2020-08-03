@@ -39,12 +39,15 @@ $this->title = "Chi tiết bài viết";
                     </div>
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Recent Posts</h4>
-<!--///////////////////////////////////////////////End Recent Post//////////////////////////////////////////////////////////-->
-                        <?php foreach ($recentPost as $item)  : ?>
+
+
+<!--///////////////////////////////////////////////Recent Post//////////////////////////////////////////////////////////-->
+                        <?php foreach ($recentPost as $item) : ?>
+                        <?php if(isset($item->image)) { ?>
                         <div class="recent-post">
                             <div class="recent-post_thumb">
-                                <a href="blog-details.html">
-                                    <img class="img-full" src="<?php if(count($item->image) == 1) echo '/backend/web/uploads/'.$item->image[0]; ?>" alt="Kenne's Blog Image">
+                                <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail','id' => $item['id']]);?>">
+                                    <img class="img-full" src="<?php echo '/backend/web/uploads/'.$item->image[0]; ?>" alt="Kenne's Blog Image">
                                 </a>
                             </div>
                             <div class="recent-post_desc">
@@ -52,8 +55,11 @@ $this->title = "Chi tiết bài viết";
                                 <span class="post-date">October 25,2019</span>
                             </div>
                         </div>
+                        <?php } ?>
                         <?php endforeach;?>
 <!--///////////////////////////////////////////////End Recent Post//////////////////////////////////////////////////////////-->
+
+
                         <h4 class="kenne-blog-sidebar-title">Comments</h4>
                         <div class="recent-comment">
                             <div class="user-img">
@@ -112,11 +118,8 @@ $this->title = "Chi tiết bài viết";
 
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="blog-item">
-
-
                     <div class="blog-img">
                         <a href="blog-details.html">
-
                                 <img src="<?php  echo '/backend/web/uploads/'.$data->image[0]?>" alt="Blog Image">
                         </a>
                     </div>

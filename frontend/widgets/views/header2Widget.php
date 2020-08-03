@@ -30,16 +30,16 @@ use yii\helpers\Url;
                                 <div class="header-top_right">
                                     <ul>
                                         <li>
-                                            <a href="my-account.html">My Account</a>
+                                            <a href="<?= Url::toRoute('/account') ?>">My Account</a>
                                         </li>
                                         <li>
-                                            <a href="wishlist.html">Wishlist</a>
+                                            <a href="<?= Url::toRoute('/wishlist') ?>">Wishlist</a>
                                         </li>
                                         <li>
-                                            <a href="login-register.html">Register or Sign in</a>
+                                            <a href="<?= Url::toRoute('/sign') ?>">Register or Sign in</a>
                                         </li>
                                         <li>
-                                            <a href="checkout.html">Checkout</a>
+                                            <a href="<?= Url::toRoute('/checkout') ?>">Checkout</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -152,7 +152,7 @@ Call us
                                         </li>
                                         <li><a href="<?= Url::toRoute('/contact-us')?>">Contact Us</a></li>
                                         <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
-                                        <li><a href="">My Account <i class="ion-chevron-down"></i></a>
+                                        <li><a href="<?php Url::toRoute('/account') ?>">My Account <i class="ion-chevron-down"></i></a>
                                             <ul class="kenne-dropdown">
                                                 <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
                                                 <li><a href="<?= Url::toRoute(['/sign']) ?>">Login | Register</a></li>
@@ -177,7 +177,7 @@ Call us
                                     <div class="col-lg-2 col-sm-6">
                                         <div class="header-logo_area">
                                             <a href="index.html">
-                                                <img src="assets/images/menu/logo/1.png" alt="Header Logo">
+                                                <img src="/images/menu/logo/1.png" alt="Header Logo">
                                             </a>
                                         </div>
                                     </div>
@@ -266,7 +266,7 @@ Call us
                                                                     <li><a href="my-account.html">My Account</a></li>
                                                                     <li><a href="login-register.html">Login | Register</a>
                                                                     </li>
-                                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                                    <li><a href="<?php Url::toRoute(['/wishlist']) ?>">Wishlist</a></li>
                                                                     <li><a href="cart.html">Cart</a></li>
                                                                     <li><a href="checkout.html">Checkout</a></li>
                                                                     <li><a href="compare.html">Compare</a></li>

@@ -1,4 +1,5 @@
-<?php ?>
+<?php
+?>
 <!-- Begin Brand Area -->
 <div class="brand-area ">
     <div class="container">
@@ -24,47 +25,13 @@
                                     }}
                                 ]'>
 
+                        <?php foreach ($logo as $item) : ?>
                         <div class="brand-item">
-                            <a href="https://google.com.vn">
-                                <img src="/images/brand/1.png" alt="Brand Images">
+                            <a href="<?php echo $item->link_logo ?>">
+                                <img src="<?php echo 'backend/uploads/'.$item->logo ?>" alt="Brand Images">
                             </a>
                         </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/2.png" alt="Brand Images">
-                            </a>
-                        </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/3.png" alt="Brand Images">
-                            </a>
-                        </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/4.png" alt="Brand Images">
-                            </a>
-                        </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/5.png" alt="Brand Images">
-                            </a>
-                        </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/6.png" alt="Brand Images">
-                            </a>
-                        </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/1.png" alt="Brand Images">
-                            </a>
-                        </div>
-                        <div class="brand-item">
-                            <a href="javascript:void(0)">
-                                <img src="/images/brand/2.png" alt="Brand Images">
-                            </a>
-                        </div>
-
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>

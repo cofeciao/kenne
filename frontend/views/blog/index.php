@@ -42,13 +42,15 @@ $this->title = "Blogs";
                     <div class="kenne-blog-sidebar">
 
 
-<!--////////////////////////////////////////   Recent Post //////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////// Recent Post //////////////////////////////////////////////////////////-->
                         <h4 class="kenne-blog-sidebar-title">Recent Posts</h4>
-                        <?php foreach ($RecentPost as $item)  : ?>
+
+                        <?php foreach ($recentPost as $item)  : ?>
+                        <?php if(isset($item->image)){ ?>
                         <div class="recent-post">
                             <div class="recent-post_thumb">
                                 <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail','id' => $item['id']]);?>">
-                                        <img class="img-full" src="<?php if(count($item->image) == 1) echo '/backend/web/uploads/'.$item->image[0] ?>" alt="Kenne's Blog Image">
+                                        <img class="img-full" src="<?php echo '/backend/web/uploads/'.$item->image[0] ?>" alt="Kenne's Blog Image">
                                 </a>
                             </div>
                             <div class="recent-post_desc">
@@ -56,6 +58,7 @@ $this->title = "Blogs";
                                 <span class="post-date"><?= $item['date'] ?></span>
                             </div>
                         </div>
+                        <?php }?>
                         <?php endforeach; ?>
                     </div>
 <!--//////////////////////////////////////// End Recent Post ////////////////////////////////////////////////////////-->
@@ -115,13 +118,23 @@ $this->title = "Blogs";
             </div>
 <!--/////////////////////////////////////////////// End Tags ////////////////////////////////////////////////////////-->
 
+
+
+
+
+
 <!--///////////////////////////////////////////////////////  Gallery ////////////////////////////////////////////////-->
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="row blog-item_wrap">
-                    <?php foreach ($data as $item) : ?>
+                    <?php foreach ($pages->models as $item) : ?>
                     <div class="col-lg-6">
                         <div class="blog-item">
-                            <?php if(count($item->image) > 1) {
+                            <?php if($item->image == null){ ?>
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <?php echo $item->link; ?>
+                                </div>
+                            <?php } ?>
+                            <?php  if(isset($item->image) && count($item->image) > 1) {
                                 echo '<div class="kenne-element-carousel single-blog_slider arrow-style-2 overflow-hidden" data-slick-options=\'{
                                     "slidesToShow": 1,
                                     "slidesToScroll": 1,
@@ -147,7 +160,7 @@ $this->title = "Blogs";
                                 </div>
                             <?php }
                                 echo '</div>';
-                            } else { ?>
+                            } if(isset($item->image) && count($item->image) == 1) { ?>
                                 <div class="blog-img">
                                     <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail', 'id' => $item['id']]);?>">
                                         <img src="<?php echo '/backend/web/uploads/'.$item->image[0]?>" alt="Blog Image"/>
@@ -184,6 +197,7 @@ $this->title = "Blogs";
                             <div class="row">
                                 <div class="col-lg-12">
                                     <?php
+
                                         if (isset($pages)){
                                             echo LinkPager::widget([
                                                 'pagination' => $pages->pagination,

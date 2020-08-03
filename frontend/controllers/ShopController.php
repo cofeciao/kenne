@@ -40,7 +40,6 @@ class ShopController extends  MyController
             }
             $data = $model->getPagination($query,6);
         }
-
         return $this->render('index',[
             'data'=>$data,
         ]);
