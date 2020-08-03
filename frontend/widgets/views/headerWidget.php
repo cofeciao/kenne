@@ -23,9 +23,10 @@ use yii\helpers\Url;
                                             <i class="ion-chevron-down"></i>
                                         </a>
                                         <ul class="kenne-dropdown">
+                                            <?php if(isset($data)) {?>
                                             <?php foreach ($data as $item){?>
                                             <li><a href="<?=Url::toRoute(['/shop/','slug'=> $item['cat_slug']])?>"> <?= $item['cat_name']?></a></li>
-                                            <?php } ?>
+                                            <?php }} ?>
 
                                         </ul>
                                     </li>
@@ -34,7 +35,7 @@ use yii\helpers\Url;
                                     </li>
                                     <li><a href="<?= Url::toRoute('/contact-us')?>">Contact Us</a></li>
                                     <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
-                                    <li><a href="">My Account <i class="ion-chevron-down"></i></a>
+                                    <li><a href="<?= Url::toRoute(['/account']) ?>">My Account <i class="ion-chevron-down"></i></a>
                                         <ul class="kenne-dropdown">
                                             <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
                                             <li><a href="<?= Url::toRoute(['/sign']) ?>">Login | Register</a></li>
@@ -542,7 +543,7 @@ use yii\helpers\Url;
                 <!-- Begin Offcanvas Search Area -->
                 <div class="offcanvas-search">
                     <form action="<?= Url::toRoute(['/shop'])?>" class="hm-searchbox">
-                        <input type="text" placeholder="Search for item..." name="key">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm..." name="key">
                         <button class="search_btn" type="submit"><i
                                 class="ion-ios-search-strong"></i></button>
                     </form>
