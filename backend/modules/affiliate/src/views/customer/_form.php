@@ -1,11 +1,13 @@
 <?php
 
+use modava\affiliate\widgets\JsCreateModalWidget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\affiliate\AffiliateModule;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model modava\affiliate\models\Customer */
@@ -32,6 +34,26 @@ use modava\affiliate\AffiliateModule;
                 <?= $form->field($model, 'face_customer')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-6">
+                <?= $form->field($model, 'sex')->dropDownList(Yii::$app->controller->module->params['sex'], [
+                    'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
+                    'id' => 'sex'
+                ]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'birthday')->widget(DatePicker::class, [
+                    'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy',
+                        'todayHighlight' => true,
+                        'endDate' => '+0d'
+                    ]
+                ])  ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'partner_customer_id')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-6">
                 <?= $form->field($model, 'partner_id')->dropDownList(
                     ArrayHelper::map(\modava\affiliate\models\table\PartnerTable::getAllRecords(), 'id', 'title'),
                     [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
@@ -52,3 +74,5 @@ use modava\affiliate\AffiliateModule;
 
     <?php ActiveForm::end(); ?>
 </div>
+
+<?= JsCreateModalWidget::widget(['formClassName' => 'customer_form', 'modelName' => 'Customer']) ?>

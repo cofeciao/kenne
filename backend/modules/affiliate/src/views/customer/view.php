@@ -53,6 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
 						'phone',
 						'email:email',
                         'face_customer',
+                        'birthday:date',
+                        [
+                            'attribute' => 'sex',
+                            'value' => function ($model) {
+                                return Yii::$app->controller->module->params['sex'][$model->sex];
+                            }
+                        ],
                         [
                             'attribute' => 'partner_id',
                             'format' => 'raw',

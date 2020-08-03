@@ -13,6 +13,11 @@ return [
         '0' => AffiliateModule::t('affiliate', 'Tạm ngưng'),
         '1' => AffiliateModule::t('affiliate', 'Hiển thị'),
     ],
+    'sex' => [
+        '0' => AffiliateModule::t('affiliate', 'Female'),
+        '1' => AffiliateModule::t('affiliate', 'Male'),
+        '2' => AffiliateModule::t('affiliate', 'Other'),
+    ],
     'promotion_type' => [
         '0' => AffiliateModule::t('affiliate', 'Discount Percent In Order'),
         '1' => AffiliateModule::t('affiliate', 'Discount Amount In Order'),

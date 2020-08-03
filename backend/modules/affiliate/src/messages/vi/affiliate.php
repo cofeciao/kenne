@@ -49,4 +49,13 @@ return [
     'Customer Called' => 'KH Đã gọi',
     'Related Record' => 'Danh sách liên quan',
     'List' => 'Danh sách',
+    'Birthday' => 'Ngày sinh',
+    'Update : {name}' => 'Cập nhật : {name}',
+    'Female' => 'Nữ',
+    'Male' => 'Nam',
+    'Sex' => 'Giới tính',
+    'Partner Customer Id' => 'Id KH (hệ thống partner)',
+    'Other' => 'Khác',
+    'Converted' => 'Đã chuyển đổi',
+    'Convert' => 'Chuyển đổi',
 ];

@@ -18,8 +18,8 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['id', 'partner_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['slug', 'full_name', 'phone', 'email', 'face_customer', 'description'], 'safe'],
+            [['id', 'partner_id', 'created_at', 'updated_at', 'created_by', 'updated_by', ], 'integer'],
+            [['slug', 'full_name', 'phone', 'email', 'face_customer', 'description', 'sex', 'birthday', 'phone'], 'safe'],
         ];
     }
 

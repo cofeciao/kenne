@@ -6,10 +6,11 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\table\CustomerTable;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
-use Yii;
+use modava\affiliate\helpers\Utils;
 
 /**
 * This is the model class for table "affiliate_customer".
@@ -21,11 +22,14 @@ use Yii;
     * @property string $email Email khách hàng - không quan tâm trùng
     * @property string $face_customer Link facebook của KH
     * @property int $partner_id Partner tích hợp affiliate
+    * @property int $partner_customer_id id Customer trên hệ thống partner
     * @property string $description Mô tả
     * @property int $created_at
     * @property int $updated_at
     * @property int $created_by Người gọi
     * @property int $updated_by
+    * @property int $sex
+    * @property date $birthday
     *
             * @property AffiliateCoupon[] $affiliateCoupons
             * @property User $createdBy
@@ -62,6 +66,16 @@ class Customer extends CustomerTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['birthday'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['birthday'],
+                    ],
+                    'value' => function ($event) {
+                        return Utils::convertDateToDBFormat($this->birthday);
+                    },
+                ],
             ]
         );
     }
@@ -72,14 +86,14 @@ class Customer extends CustomerTable
     public function rules()
     {
         return [
-			[['full_name', 'phone', 'partner_id',], 'required'],
-			[['partner_id',], 'integer'],
+			[['full_name', 'phone', 'partner_id', 'partner_customer_id'], 'required'],
+			[['partner_id', 'sex', 'partner_customer_id'], 'integer'],
 			[['description'], 'string'],
 			[['full_name', 'email', 'face_customer'], 'string', 'max' => 255],
 			[['phone'], 'string', 'max' => 15],
-			[['slug'], 'unique'],
-			[['phone'], 'unique'],
+			[['slug', 'partner_customer_id', 'phone'], 'unique'],
 			[['email'], 'email'],
+			[['birthday'], 'safe'],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
 			[['partner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Partner::class, 'targetAttribute' => ['partner_id' => 'id']],
@@ -104,6 +118,9 @@ class Customer extends CustomerTable
             'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
             'created_by' => AffiliateModule::t('affiliate', 'Created By'),
             'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
+            'birthday' => AffiliateModule::t('affiliate', 'Birthday'),
+            'sex' => AffiliateModule::t('affiliate', 'Sex'),
+            'partner_customer_id' => AffiliateModule::t('affiliate', 'Partner Customer Id'),
         ];
     }
 
