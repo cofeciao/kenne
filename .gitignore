@@ -69,7 +69,13 @@ phpunit.phar
 /frontend/web/assets/*
 !/frontend/web/assets/index.html
 
-/frontend/web/uploads/
+!/frontend/web/uploads/
+/frontend/web/uploads/*
+!/frontend/web/uploads/document/
+/frontend/web/uploads/document/*
+!/frontend/web/uploads/document/60x64/
+/frontend/web/uploads/document/60x64/*
+!/frontend/web/uploads/document/60x64/no-image.png
 
 # Git
 /backend/modules/auth/composer.json

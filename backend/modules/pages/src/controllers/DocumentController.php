@@ -2,6 +2,8 @@
 
 namespace modava\pages\controllers;
 
+use modava\imagick\Helper;
+use modava\pages\components\MyUpload;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -11,6 +13,7 @@ use modava\pages\PagesModule;
 use modava\pages\components\MyPagesController;
 use modava\pages\models\Document;
 use modava\pages\models\search\DocumentSearch;
+use yii\web\UploadedFile;
 
 /**
  * DocumentController implements the CRUD actions for Document model.
@@ -18,8 +21,8 @@ use modava\pages\models\search\DocumentSearch;
 class DocumentController extends MyPagesController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +36,9 @@ class DocumentController extends MyPagesController
     }
 
     /**
-    * Lists all Document models.
-    * @return mixed
-    */
+     * Lists all Document models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new DocumentSearch();
@@ -45,16 +48,15 @@ class DocumentController extends MyPagesController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Document model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Document model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,22 +65,48 @@ class DocumentController extends MyPagesController
     }
 
     /**
-    * Creates a new Document model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Document model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Document();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                    'title' => 'Thông báo',
-                    'text' => 'Tạo mới thành công',
-                    'type' => 'success'
-                ]);
-                return $this->redirect(['view', 'id' => $model->id]);
+
+            $fileUpload = UploadedFile::getInstance($model, 'fileUpload');
+            $filename = Helper::createAlias($fileUpload->baseName);
+            $pathFile = '/uploads/document/file/' . $filename . '.' . $fileUpload->extension;
+            $fileUpload->saveAs(Yii::getAlias('@frontend/web'.$pathFile));
+            $model->fileUpload = $pathFile;
+
+            if ($model->validate()) {
+                $model->file = $pathFile;
+                if ($model->save()) {
+                    $imageName = null;
+                    if ($model->imageUpload != "") {
+                        $pathImage = FRONTEND_HOST_INFO . $model->imageUpload;
+                        $path = Yii::getAlias('@frontend/web/uploads/document/60x64/');
+                        foreach (Yii::$app->params['document'] as $key => $value) {
+                            $pathSave = $path . $key;
+                            if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                                mkdir($pathSave);
+                            }
+                            $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                        }
+
+                    }
+
+                    $model->image = $imageName;
+                    $model->updateAttributes(['image']);
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                        'title' => 'Thông báo',
+                        'text' => 'Tạo mới thành công',
+                        'type' => 'success'
+                    ]);
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             } else {
                 $errors = Html::tag('p', 'Tạo mới thất bại');
                 foreach ($model->getErrors() as $error) {
@@ -98,18 +126,18 @@ class DocumentController extends MyPagesController
     }
 
     /**
-    * Updates an existing Document model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Document model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +165,12 @@ class DocumentController extends MyPagesController
     }
 
     /**
-    * Deletes an existing Document model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Document model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,12 +203,12 @@ class DocumentController extends MyPagesController
     }
 
     /**
-    * Finds the Document model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Document the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the Document model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Document the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
