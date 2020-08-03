@@ -20,8 +20,8 @@ use yii\web\UploadedFile;
 class ProductsController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -35,9 +35,9 @@ class ProductsController extends MyController
     }
 
     /**
-    * Lists all Products models.
-    * @return mixed
-    */
+     * Lists all Products models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new ProductsSearch();
@@ -47,16 +47,15 @@ class ProductsController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Products model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Products model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -65,51 +64,58 @@ class ProductsController extends MyController
     }
 
     /**
-    * Creates a new Products model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Products model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Products();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->pro_image != "") {
-            $pathImage = FRONTEND_HOST_INFO . $model->pro_image;
-            $path = Yii::getAlias('@frontend/web/uploads/kenne/');
-            $imageName = null;
-            foreach (Yii::$app->params['kenne'] as $key => $value) {
-                $pathSave = $path . $key;
-                if (!file_exists($pathSave) && !is_dir($pathSave)) {
-                    mkdir($pathSave);
-                }
-                $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
-            }
+                $pathImage = FRONTEND_HOST_INFO . $model->pro_image;
+                $path = Yii::getAlias('@frontend/web/uploads/kenne/');
+                /*
+                * $path: /var/www/mongdaovan86/frontend/web/uploads/kenne/
+                * Yii::$app->params['kenne'] : mảng chứa thư mục ảnh 150x150,300x300
+                * pathimage: http://project.tm/uploads/filemanager/source/Screenshot%20from%202020-07-30%2015-42-43.png
+                *        [FRONTEND_HOST_INFO][                      $model->pro_image                               ]
+                */
 
-        }
-            $model->created_at =  date('Y-m-d H:i:s');
-            $model->updated_at =  date('Y-m-d H:i:s');
+                $imageName = null;
+                foreach (Yii::$app->params['kenne'] as $key => $value) {
+                    $pathSave = $path . $key;
+                    if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                        mkdir($pathSave);
+                    }
+                    $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                }
+
+            }
+            $model->created_at = date('Y-m-d H:i:s');
+            $model->updated_at = date('Y-m-d H:i:s');
             $model->pro_slug = MyHelper::createAlias($model->pro_name);
             $model->cat_id = Yii::$app->request->post()['Products']['cat_id'];
             $model->pro_image = $imageName;
-           /* $tempName = explode('/',$model->pro_image->tempName);
-            $extension = explode('/',$model->pro_image->type);*/
+            /* $tempName = explode('/',$model->pro_image->tempName);
+             $extension = explode('/',$model->pro_image->type);*/
             /* echo "<pre>";
              print_r($extension);
              echo "</pre>";
              die;*/
-           /* if($model->pro_image){
-                $path = Yii::getAlias('@frontend/web');
-                $pathImage = '/uploads/';
-                $image = $tempName[2].'.'.$extension[1];
-                if (!file_exists($path.$pathImage)){
-                    mkdir($path.$pathImage,0755,true);
-                    $model->pro_image->saveAs($path.$pathImage.$image);
-                }else{
-                    $model->pro_image->saveAs($path.$pathImage.$image);
-                }
-            }
-            $model->pro_image =$pathImage.$image;*/
+            /* if($model->pro_image){
+                 $path = Yii::getAlias('@frontend/web');
+                 $pathImage = '/uploads/';
+                 $image = $tempName[2].'.'.$extension[1];
+                 if (!file_exists($path.$pathImage)){
+                     mkdir($path.$pathImage,0755,true);
+                     $model->pro_image->saveAs($path.$pathImage.$image);
+                 }else{
+                     $model->pro_image->saveAs($path.$pathImage.$image);
+                 }
+             }
+             $model->pro_image =$pathImage.$image;*/
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
@@ -136,36 +142,44 @@ class ProductsController extends MyController
     }
 
     /**
-    * Updates an existing Products model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Products model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $pathImage = FRONTEND_HOST_INFO . $model->pro_image;
+                $path = Yii::getAlias('@frontend/web/uploads/kenne/');
+                $imageName = null;
 
+                $oldImage = $model->getOldAttribute('pro_image');
 
-            if ($model->load(Yii::$app->request->post())) {
-
-                if ($model->pro_image != "") {
-                    $pathImage = FRONTEND_HOST_INFO . $model->pro_image;
-                    $path = Yii::getAlias('@frontend/web/uploads/kenne/');
-                    $imageName = null;
+                if ($model->updateAttributes(['pro_image'])) {
                     foreach (Yii::$app->params['kenne'] as $key => $value) {
                         $pathSave = $path . $key;
-                        if (!file_exists($pathSave) && !is_dir($pathSave)) {
-                            mkdir($pathSave);
+                        if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
+                            unlink($pathSave . '/' . $oldImage);
                         }
-                        $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                     }
-
                 }
-                
+
+                foreach (Yii::$app->params['kenne'] as $key => $value) {
+                    $pathSave = $path . $key;
+                    if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                        mkdir($pathSave);
+                    }
+                    $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                }
                 $model->pro_image = $imageName;
 
-                if($model->validate()) {
+
+
+
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -193,12 +207,12 @@ class ProductsController extends MyController
     }
 
     /**
-    * Deletes an existing Products model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Products model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -231,12 +245,12 @@ class ProductsController extends MyController
     }
 
     /**
-    * Finds the Products model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Products the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the Products model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Products the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

@@ -12,6 +12,7 @@ class MyUpload extends Component
     public static function uploadFromOnline($width, $height, $pathImage, $pathSave, $fileName = null)
     {
         $imagick = new Imagick($pathImage, true);
+
         if ($fileName != null) {
             $imagick->filename = $fileName;
         }

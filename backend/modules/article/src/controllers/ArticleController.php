@@ -131,7 +131,7 @@ class ArticleController extends MyArticleController
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                $oldImage = $model->getOldAttribute('image');
+                $oldImage = $model->getAttribute('image');
                 if ($model->save()) {
                     if ($model->getAttribute('image') !== $oldImage) {
                         if ($model->getAttribute('image') == '') {
