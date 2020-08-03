@@ -37,16 +37,12 @@ $this->title = "Shop";
                     <div class="product-item-selection_area">
                         <div class="product-short">
                             <label class="select-label">Short By:</label>
-                            <select class="nice-select myniceselect">
+                                <select class="nice-select myniceselect" name ="sort" id="sort">
                                 <option value="1">Default sorting</option>
                                 <option value="2">Name, A to Z</option>
                                 <option value="3">Name, Z to A</option>
                                 <option value="4">Price, low to high</option>
                                 <option value="5">Price, high to low</option>
-                                <option value="5">Rating (Highest)</option>
-                                <option value="5">Rating (Lowest)</option>
-                                <option value="5">Model (A - Z)</option>
-                                <option value="5">Model (Z - A)</option>
                             </select>
                         </div>
                     </div>
@@ -196,5 +192,8 @@ $this->title = "Shop";
         </div>
     </div>
 </div>
+
 <!-- Kenne's Content Wrapper Area End Here -->
 <?php } ?>
+
+

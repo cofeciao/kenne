@@ -147,9 +147,10 @@ use yii\helpers\Url;
                                                 <i class="ion-chevron-down"></i>
                                             </a>
                                             <ul class="kenne-dropdown">
+                                                <?php if (isset($data)) {?>
                                                 <?php foreach ($data as $item){?>
                                                     <li><a href="<?=Url::toRoute(['/shop/','slug'=> $item['cat_slug']])?>"> <?= $item['cat_name']?></a></li>
-                                                <?php } ?>
+                                                <?php } }?>
 
                                             </ul>
                                         </li>
@@ -182,8 +183,8 @@ use yii\helpers\Url;
                                 <div class="row align-items-center justify-content-between">
                                     <div class="col-lg-2 col-sm-6">
                                         <div class="header-logo_area">
-                                            <a href="index.html">
-                                                <img src="assets/images/menu/logo/1.png" alt="Header Logo">
+                                            <a href="<?= Url::home() ?>">
+                                                <img src="/images/menu/logo/1.png" alt="Header Logo">
                                             </a>
                                         </div>
                                     </div>
@@ -191,113 +192,31 @@ use yii\helpers\Url;
                                         <div class="main-menu_area">
                                             <nav class="main-nav d-flex justify-content-center">
                                                 <ul>
-                                                    <li class="dropdown-holder"><a href="javascript:void(0)">Home <i
-                                                            class="ion-chevron-down"></i></a>
+                                                    <li class="dropdown-holder"><a href="<?= Url::home()?>">Home</a>
+                                                    <li class="dropdown-holder">
+                                                        <a href="<?= Url::toRoute(['/shop']) ?>">Shop
+                                                            <i class="ion-chevron-down"></i>
+                                                        </a>
                                                         <ul class="kenne-dropdown">
-                                                            <li><a href="index.html">Home One</a></li>
-                                                            <li><a href="index-2.html">Home Two</a></li>
-                                                            <li><a href="index-3.html">Home Three</a></li>
+                                                            <?php foreach ($data as $item){?>
+                                                                <li><a href="<?=Url::toRoute(['/shop/','slug'=>$item->cat_slug])?>"> <?= $item['cat_name']?></a></li>
+                                                            <?php } ?>
                                                         </ul>
                                                     </li>
-                                                    <li class="megamenu-holder position-static"><a href="shop-left-sidebar.html">Shop <i
-                                                            class="ion-chevron-down"></i></a>
-                                                        <ul class="kenne-megamenu">
-                                                            <li><span class="megamenu-title">Shop Page Layout</span>
-                                                                <ul>
-                                                                    <li><a href="shop-fullwidth.html">Grid Fullwidth</a>
-                                                                    </li>
-                                                                    <li><a href="shop-left-sidebar.html">Left Sidebar</a>
-                                                                    </li>
-                                                                    <li><a href="shop-right-sidebar.html">Right Sidebar</a>
-                                                                    </li>
-                                                                    <li><a href="shop-list-fullwidth.html">List
-        Fullwidth</a></li>
-                                                                    <li><a href="shop-list-left-sidebar.html">List Left
-                                                                            Sidebar</a>
-                                                                    </li>
-                                                                    <li><a href="shop-list-right-sidebar.html">List Right
-                                                                            Sidebar</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li><span class="megamenu-title">Single Product Style</span>
-                                                                <ul>
-                                                                    <li><a href="single-product-gallery-left.html">Gallery
-                                                                            Left</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-gallery-right.html">Gallery
-                                                                            Right</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-tab-style-left.html">Tab
-                                                                            Style
-                                                                            Left</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-tab-style-right.html">Tab
-                                                                            Style
-                                                                            Right</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-sticky-left.html">Sticky
-                                                                            Left</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-sticky-right.html">Sticky
-                                                                            Right</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li><span class="megamenu-title">Single Product Type</span>
-                                                                <ul>
-                                                                    <li><a href="single-product.html">Single Product</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-sale.html">Single Product
-                                                                            Sale</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-group.html">Single Product
-                                                                            Group</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-variable.html">Single
-                                                                            Product
-                                                                            Variable</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-affiliate.html">Single
-                                                                            Product
-                                                                            Affiliate</a>
-                                                                    </li>
-                                                                    <li><a href="single-product-slider.html">Single Product
-                                                                            Slider</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li><span class="megamenu-title">Shop Related Pages</span>
-                                                                <ul>
-                                                                    <li><a href="my-account.html">My Account</a></li>
-                                                                    <li><a href="login-register.html">Login | Register</a>
-                                                                    </li>
-                                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                                    <li><a href="cart.html">Cart</a></li>
-                                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                                    <li><a href="compare.html">Compare</a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
+                                                    <li><a href="<?= Url::toRoute(['/blog']) ?>">Blog</a>
+                                                        <!--<li><a href="blog-details.html">Blog Details</a></li>-->
                                                     </li>
-                                                    <li><a href="javascript:void(0)">Pages <i
-                                                            class="ion-chevron-down"></i></a>
+                                                    <li><a href="<?= Url::toRoute('/contact-us')?>">Contact Us</a></li>
+                                                    <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
+                                                    <li><a href="">My Account <i class="ion-chevron-down"></i></a>
                                                         <ul class="kenne-dropdown">
-                                                            <li><a href="coming-soon_page.html">Coming Soon</a></li>
-                                                            <li><a href="404.html">Error 404</a></li>
-                                                            <li><a href="faq.html">FAQ</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/sign']) ?>">Login | Register</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist']) ?>">Wishlist</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/cart']) ?>">Cart</a></li>
+                                                            <li><a href="<?= Url::toRoute(['/checkout']) ?>">Checkout</a></li>
                                                         </ul>
                                                     </li>
-                                                    <li><a href="javascript:void(0)">Blog <i
-                                                            class="ion-chevron-down"></i></a>
-                                                        <ul class="kenne-dropdown">
-                                                            <li><a href="blog-grid_view.html">Grid View</a></li>
-                                                            <li><a href="blog-list_view.html">List View</a></li>
-                                                            <li><a href="blog-details.html">Blog Details</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="contact-us.html">Contact Us</a></li>
-                                                    <li><a href="about-us.html">About Us</a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -313,14 +232,16 @@ use yii\helpers\Url;
                                                 <li class="minicart-wrap">
                                                     <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                         <div class="minicart-count_area">
-                                                            <span class="item-count">03</span>
+                                                            <?php if(isset($total)){?>
+                                                                <span class="item-count"><?= $total?></span>
+                                                            <?php }?>
                                                             <i class="ion-bag"></i>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#searchBar" class="search-btn toolbar-btn">
-                                                        <i class="ion-android-search"></i>
+                                                        <i class="ion-ios-search"></i>
                                                     </a>
                                                 </li>
                                                 <li class="d-none d-lg-inline-block">
