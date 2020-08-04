@@ -1,16 +1,15 @@
 <?php
 
-
 namespace frontend\controllers;
 
 use common\helpers\MyHelper;
 use frontend\models\Products;
 use frontend\components\MyController;
-use frontend\models\ProductsSearch;
 
 class ShopController extends  MyController
 {
     public function actionIndex(){
+
         $data = '';
         $model = new Products();
         $param = \Yii::$app->request->queryParams;

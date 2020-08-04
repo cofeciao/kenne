@@ -105,9 +105,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'cat_status',
                                                 'content' => function($model){
                                                     if($model->cat_status == 1){
-                                                        return '<span class="badge badge-success" style="font-size: 15px">Hiển thị</span>';
+                                                        return Html::a('Hiển thị',['/kenne/categories','update'=>$model->id, 'action'=>'update'],['class'=>'badge badge-success']);
+                                                        //return '<span class="badge badge-success" style="font-size: 15px">Hiển thị</span>';
                                                     }else{
-                                                        return '<span class="badge badge-secondary">Không hiển thị<pan>';
+                                                        return Html::a('Không hiển thị',['/kenne/categories','update'=>$model->id, 'action'=>'update'],['class'=>'badge badge-secondary']);
+                                                        //return '<span class="badge badge-secondary">Không hiển thị<pan>';
                                                     }
                                                 }
                                             ],

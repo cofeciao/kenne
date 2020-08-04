@@ -40,7 +40,7 @@ class OrdersSearch extends Orders
      */
     public function search($params)
     {
-        $query = Orders::find();
+        $query = Orders::find()->joinWith(['products']);
 
         // add conditions that should always apply here
 

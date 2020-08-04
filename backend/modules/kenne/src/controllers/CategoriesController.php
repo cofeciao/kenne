@@ -39,14 +39,21 @@ class CategoriesController extends MyController
     public function actionIndex()
     {
         $searchModel = new CategoriesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $param = Yii::$app->request->queryParams;
 
+        if (isset($param['update']) && isset($param['action'])){
+            $model = Categories::findOne($param['update']);
+            $model->cat_status = $model->cat_status == $model::DISABLE_STATUS ?  $model::ACTIVE_STATUS : $model::DISABLE_STATUS ;
+            $model->save();
+
+        }
+        $dataProvider = $searchModel->search($param);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
+    }
 
 
 

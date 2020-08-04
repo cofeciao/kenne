@@ -131,11 +131,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'attribute' => 'pro_status',
-                                                'content'=>function($model){
+                                                'content' => function($model){
                                                     if($model->pro_status == 1){
-                                                        return '<span class="badge badge-success">Kích hoạt</span>';
+                                                        return Html::a('Kích hoạt',['/kenne/products','update'=>$model->id, 'action'=>'update'],['class'=>'badge badge-success']);
+                                                        //return '<span class="badge badge-success" style="font-size: 15px">Hiển thị</span>';
                                                     }else{
-                                                        return '<span class="badge badge-secondary">Chưa kích hoạt</span>';
+                                                        return Html::a('Không kích hoạt',['/kenne/products','update'=>$model->id, 'action'=>'update'],['class'=>'badge badge-secondary']);
+                                                        //return '<span class="badge badge-secondary">Không hiển thị<pan>';
                                                     }
                                                 },
                                                 'label' => 'Trạng thái',

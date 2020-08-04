@@ -113,7 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'attribute' => 'tr_status',
-                                            'label' => 'SĐT',
                                             'content'=>function($model){
                                                 if($model->tr_status == \modava\kenne\models\Transactions::DISACTIVE_TRANSACTION){
                                                     return '<span class="badge badge-secondary">Chưa Thanh Toán</span>';
@@ -131,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => KenneModule::t('kenne', 'Actions'),
-                                            'template' => '{update} {delete}',
+                                            'template' => '{update} {delete} {view}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [

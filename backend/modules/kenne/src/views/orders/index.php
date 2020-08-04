@@ -12,6 +12,7 @@ use yii\widgets\Pjax;
 
 $this->title = KenneModule::t('kenne', 'Orders');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -102,7 +103,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'attribute' => 'id_pro',
                                             'label' => 'Tên sản phẩm',
-                                            'value'=>function($model){
+                                            'value'=>   function($model){
+                                                return $model->products[0]['pro_name'];
 
                                             }
                                         ],
