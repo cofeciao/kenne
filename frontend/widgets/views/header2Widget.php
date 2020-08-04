@@ -183,11 +183,7 @@ use yii\helpers\Url;
                                 <div class="row align-items-center justify-content-between">
                                     <div class="col-lg-2 col-sm-6">
                                         <div class="header-logo_area">
-<<<<<<< HEAD
-                                            <a href="index.html">
-=======
                                             <a href="<?= Url::home() ?>">
->>>>>>> 4d7172e06f2fcbb24c2b016500c0d8346249070d
                                                 <img src="/images/menu/logo/1.png" alt="Header Logo">
                                             </a>
                                         </div>

@@ -95,11 +95,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                    
-										'id_tr',
+                                        [
+                                            'attribute' => 'id_tr',
+                                            'label' => 'Mã đơn hàng'
+                                        ],
+                                        [
+                                            'attribute' => 'id_pro',
+                                            'label' => 'Tên sản phẩm',
+                                            'value'=>function($model){
+
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'or_quantity',
+                                            'label' => 'Số lượng (cái)'
+                                        ],
+                                        [
+                                            'attribute' => 'or_price',
+                                            'label' => 'Giá',
+                                            'value' => function($model){
+                                                return number_format($model->or_price,0,',','.')." đ";
+                                            }
+                                        ],
+										/*'id_tr',
 										'id_pro',
 										'or_quantity',
-										'or_price',
+										'or_price',*/
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => KenneModule::t('kenne', 'Actions'),

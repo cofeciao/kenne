@@ -76,11 +76,13 @@ class BlogsController extends MyController
 //////////////////////////////////////// Upload Hình Ảnh ///////////////////////////////////////////////////////////////
             $file = UploadedFile::getInstances($model, 'file');
             $imgNames = array();
+
             if ($file != null) {
                 foreach ($file as $item) {
                     $item->saveAs('./uploads/'.$item->baseName.'.'.$item->extension);
                     $imgNames[] = $item->baseName.'.'.$item->extension;
                 }
+
                 $model->image = $imgNames;
             }
         }
