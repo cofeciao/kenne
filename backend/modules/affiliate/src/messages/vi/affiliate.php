@@ -65,4 +65,6 @@ return [
     'Final Total' => 'Tổng tiền (sau chiết khấu)',
     'Select an action...' => 'Chọn một thao tác',
     'Search' => 'Tìm kiếm',
+    'Date Range' => 'Khoảng ngày',
+    'Action' => 'Thao tác',
 ];

@@ -35,23 +35,30 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                 <form action="<?=Url::toRoute(['/affiliate/affiliate'])?>" method="get" width="100%">
                 <div class="hk-sec-wrapper">
                     <div class="row">
-                        <div class="col-md-4 col-sm-6 col-lg-3">
-                            <div class="form-group">
-                                <input type="text" name="ClinicSearch[appointment_time]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Date')?>" value="<?=$payload['ClinicSearch[appointment_time]']?>">
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <div class="form-group row">
+                                <div class="col-4"><?=AffiliateModule::t('affiliate', 'Date Range')?>: </div>
+                                <div class="col-8">
+                                    <input type="text" name="ClinicSearch[appointment_time]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Date')?>" value="<?=$payload['ClinicSearch[appointment_time]']?>"></div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6 col-lg-3">
-                            <div class="form-group">
-                                <select name="ClinicSearch[thao_tac]" id="" class="form-control">
-                                    <option value=""><?=AffiliateModule::t('affiliate', 'Select an action...')?></option>
-                                <?php foreach($listThaotac as $id => $name): ?>
-                                    <option value="<?=$id?>" <?php if ($payload['ClinicSearch[thao_tac]'] == $id && $payload['ClinicSearch[thao_tac]']) echo 'selected';?> ><?=$name?></option>
-                                <?php endforeach;?>
-                                </select>
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <div class="form-group row">
+                                <div class="col-4">
+                                    <?=AffiliateModule::t('affiliate', 'Action')?>:
+                                </div>
+                                <div class="col-6">
+                                    <select name="ClinicSearch[thao_tac]" id="" class="form-control">
+                                        <option value=""><?=AffiliateModule::t('affiliate', 'Select an action...')?></option>
+                                        <?php foreach($listThaotac as $id => $name): ?>
+                                            <option value="<?=$id?>" <?php if ($payload['ClinicSearch[thao_tac]'] === (string) $id) echo 'selected';?> ><?=$name?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn-primary btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
+                            <button type="submit" class="btn-success btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
                         </div>
                     </div>
                 </div>
