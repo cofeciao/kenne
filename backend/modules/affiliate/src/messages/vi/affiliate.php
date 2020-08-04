@@ -59,4 +59,8 @@ return [
     'Converted' => 'Đã chuyển đổi',
     'Convert' => 'Chuyển đổi',
     'Detail' => 'Chi tiết',
+    'Coupon ID' => 'Coupon',
+    'Pre Total' => 'Tổng tiền (trước chiết khấu)',
+    'Discount' => 'Chiếu khấu',
+    'Final Total' => 'Tổng tiền (sau chiết khấu)',
 ];

@@ -30,6 +30,12 @@ $routeInfos = [
     ],
     [
         'module' => 'affiliate',
+        'controllerId' => 'order',
+        'label' => AffiliateModule::t('affiliate', 'Order'),
+        'icon' => '<i class="glyphicon glyphicon-ok-circle"></i>',
+    ],
+    [
+        'module' => 'affiliate',
         'controllerId' => 'coupon-type',
         'label' => AffiliateModule::t('affiliate', 'Coupon Type'),
         'icon' => '<i class="ion ion-md-analytics"></i>',
