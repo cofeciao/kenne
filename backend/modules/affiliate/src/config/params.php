@@ -23,7 +23,11 @@ return [
         '1' => AffiliateModule::t('affiliate', 'Discount Amount In Order'),
     ],
     'myauris_config' => [
-        'api_endpoint' => "http://dashboard.myauris.vn/api/v2/affiliate/complete-customer-service",
+        'uri' => "http://dashboard.myauris.vn/api/v2/affiliate/",
+        'endpoint' => [
+            'complete_customer_service' => "complete-customer-service",
+            'list_thao_tac' => "list-thao-tac",
+        ],
         'header' => ['X-Api-Key: qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'],
         'row_per_page' => 10
     ]

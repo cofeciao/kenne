@@ -63,4 +63,6 @@ return [
     'Pre Total' => 'Tổng tiền (trước chiết khấu)',
     'Discount' => 'Chiếu khấu',
     'Final Total' => 'Tổng tiền (sau chiết khấu)',
+    'Select an action...' => 'Chọn một thao tác',
+    'Search' => 'Tìm kiếm',
 ];
