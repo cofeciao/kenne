@@ -14,7 +14,19 @@ use modava\kenne\KenneModule;
 <div class="blogs-form">
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-       <?= $form->field($model, 'file[]')->fileInput(['multiple'=>'multiple']) ?>
+<!--            < ?= $form->field($model, 'file[]')->fileInput(['multiple'=>'multiple']) ?>-->
+
+            <?php
+            if (empty($model->getErrors()))
+                $path = Yii::$app->params['kenne']['150x150']['folder'];
+            else
+                $path = null;
+            echo \modava\tiny\FileManager::widget([
+                'model' => $model,
+                'attribute' => 'image',
+                'path' => $path,
+                'label' => KenneModule::t('kenne', 'Hình ảnh') . ': ',
+            ]); ?>
 
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

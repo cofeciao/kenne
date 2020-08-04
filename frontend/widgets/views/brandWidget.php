@@ -24,11 +24,10 @@
                                     "slidesToShow": 2
                                     }}
                                 ]'>
-
                         <?php foreach ($logo as $item) : ?>
                         <div class="brand-item">
                             <a href="<?php echo $item->link_logo ?>">
-                                <img src="<?php echo 'backend/uploads/'.$item->logo ?>" alt="Brand Images">
+                                <img src="<?php echo '/backend/uploads/'.$item->logo ?>" alt="Brand Images">
                             </a>
                         </div>
                         <?php endforeach; ?>

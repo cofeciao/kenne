@@ -2,6 +2,7 @@
 
 namespace modava\kenne\controllers;
 
+use modava\kenne\components\MyUpload;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -12,6 +13,8 @@ use backend\components\MyController;
 use modava\kenne\models\Blogs;
 use modava\kenne\models\search\BlogsSearch;
 use yii\web\UploadedFile;
+
+
 /**
  * BlogsController implements the CRUD actions for Blogs model.
  */
@@ -71,44 +74,62 @@ class BlogsController extends MyController
         $model = new Blogs();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->date = date('Y-m-d H:i:s');
+
 
 //////////////////////////////////////// Upload Hình Ảnh ///////////////////////////////////////////////////////////////
-            $file = UploadedFile::getInstances($model, 'file');
-            $imgNames = array();
-            if ($file != null) {
-                foreach ($file as $item) {
-                    $item->saveAs('./uploads/'.$item->baseName.'.'.$item->extension);
-                    $imgNames[] = $item->baseName.'.'.$item->extension;
+            if ($model->image != "") {
+                $pathImage = FRONTEND_HOST_INFO . $model->image;
+                $path = Yii::getAlias('@frontend/web/uploads/kenne/');
+                $imageName = null;
+                foreach (Yii::$app->params['kenne'] as $key => $value) {
+                    $pathSave = $path . $key;
+                    if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                        mkdir($pathSave);
+                    }
+                    $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                 }
-                $model->image = $imgNames;
             }
-        }
+
+            $model->image = $imageName;
+            $model->date = date('Y-m-d H:i:s');
+//            $file = UploadedFile::getInstances($model, 'file');
+//            $imgNames = array();
+//            if ($file != null) {
+//                foreach ($file as $item) {
+//                    $item->saveAs('./uploads/'.$item->baseName.'.'.$item->extension);
+//                    $imgNames[] = $item->baseName.'.'.$item->extension;
+//                }
+//                $model->image = $imgNames;
+//            }
+
+
+
 ////////////////////////////////////////// End Upload Hình Ảnh /////////////////////////////////////////////////////////
 
-        if ($model->validate() && $model->save()) {
-            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                'title' => 'Thông báo',
-                'text' => 'Tạo mới thành công',
-                'type' => 'success'
-            ]);
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            $errors = Html::tag('p', 'Tạo mới thất bại');
-            foreach ($model->getErrors() as $error) {
-                $errors .= Html::tag('p', $error[0]);
-            }
-            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                'title' => 'Thông báo',
-                'text' => $errors,
-                'type' => 'warning'
+            if ($model->validate() && $model->save()) {
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                    'title' => 'Thông báo',
+                    'text' => 'Tạo mới thành công',
+                    'type' => 'success'
+                ]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $errors = Html::tag('p', 'Tạo mới thất bại');
+                foreach ($model->getErrors() as $error) {
+                    $errors .= Html::tag('p', $error[0]);
+                }
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
+                    'text' => $errors,
+                    'type' => 'warning'
+                ]);
+            } }
+
+            return $this->render('create', [
+                'model' => $model,
             ]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
 
     /**
     * Updates an existing Blogs model.

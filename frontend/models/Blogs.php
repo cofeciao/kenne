@@ -20,6 +20,7 @@ class Blogs extends BlogsTable
         return self::find()
             ->where(['id' => $id])
             ->one();
+
     }
 
     public function getAllRecentPost()
@@ -51,5 +52,12 @@ class Blogs extends BlogsTable
             ]
         ]);
         return $dataProvider;
+    }
+
+    public function Search($param)
+    {
+
+            $query = self::find()->andFilterWhere(['like','title',$param]);
+            return $query;
     }
 }

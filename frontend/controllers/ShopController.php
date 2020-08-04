@@ -44,11 +44,11 @@ class ShopController extends  MyController
                 $query = $modelSearch->search($param['key']);
                 if (isset($param['sort'])){
                     $query = $model->sortProduct($query,$param['sort']);
+
                 }
             }else{
                 $query = $model->getAllProducts();
                 $query = $model->sortProduct($query,$param['sort']);
-
             }
         }
 
