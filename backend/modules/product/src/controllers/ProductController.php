@@ -189,6 +189,14 @@ class ProductController extends MyProductController
         ]);
     }
 
+    public function actionImages($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('images', [
+            'model' => $model
+        ]);
+    }
+
     /**
      * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
