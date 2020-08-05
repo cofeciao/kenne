@@ -74,11 +74,32 @@ phpunit.phar
 
 !/frontend/web/uploads/
 /frontend/web/uploads/*
+
 !/frontend/web/uploads/document/
 /frontend/web/uploads/document/*
+
 !/frontend/web/uploads/document/60x64/
 /frontend/web/uploads/document/60x64/*
 !/frontend/web/uploads/document/60x64/no-image.png
+
+!/frontend/web/uploads/video/
+/frontend/web/uploads/video/*
+
+!/frontend/web/uploads/video/150x150/
+/frontend/web/uploads/video/150x150/*
+!/frontend/web/uploads/video/150x150/no-image.png
+
+!/frontend/web/uploads/video-type/
+/frontend/web/uploads/video-type/*
+!/frontend/web/uploads/video-type/150x150/
+/frontend/web/uploads/video-type/150x150/*
+!/frontend/web/uploads/video-type/150x150/no-image.png
+
+!/frontend/web/uploads/video-category/
+/frontend/web/uploads/video-category/*
+!/frontend/web/uploads/video-category/150x150/
+/frontend/web/uploads/video-category/150x150/*
+!/frontend/web/uploads/video-category/150x150/no-image.png
 
 # Git
 
