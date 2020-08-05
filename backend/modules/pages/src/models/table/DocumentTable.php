@@ -14,7 +14,7 @@ class DocumentTable extends \yii\db\ActiveRecord
 
     public static function tableName()
     {
-        return 'document';
+        return 'pages_document';
     }
 
     public static function find()

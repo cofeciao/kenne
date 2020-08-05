@@ -76,6 +76,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
 						'promotion_value',
+                        [
+                            'attribute' => 'partner_id',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
+                            }
+                        ],
 						'created_at:datetime',
 						'updated_at:datetime',
                         [

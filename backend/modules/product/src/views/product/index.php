@@ -141,6 +141,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'width' => 120,
                                             ],
                                         ],
+                                        [
+                                            'attribute' => 'language',
+                                            'value' => function ($model) {
+                                                return Yii::$app->getModule('product')->params['availableLocales'][$model->language];
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
                                         //'price_sale',
                                         //'so_luong',
                                         //'description:ntext',

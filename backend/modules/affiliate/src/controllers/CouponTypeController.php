@@ -7,10 +7,11 @@ use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\affiliate\AffiliateModule;
 use backend\components\MyController;
 use modava\affiliate\models\CouponType;
 use modava\affiliate\models\search\CouponTypeSearch;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * CouponTypeController implements the CRUD actions for CouponType model.
@@ -172,6 +173,21 @@ class CouponTypeController extends MyController
             ]);
         }
         return $this->redirect(['index']);
+    }
+
+    public function actionValidate($id = null)
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new CouponType();
+
+            if ($id != null) $model = $this->findModel($id);
+
+            if ($model->load(Yii::$app->request->post())) {
+                return ActiveForm::validate($model);
+            }
+        }
     }
 
     /**

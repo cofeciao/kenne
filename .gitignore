@@ -9,6 +9,9 @@ composer.lock
 # phpstorm project files
 .idea
 
+.gitignore
+composer.json
+
 
 # netbeans project files
 nbproject
@@ -69,9 +72,20 @@ phpunit.phar
 /frontend/web/assets/*
 !/frontend/web/assets/index.html
 
-/frontend/web/uploads/
+!/frontend/web/uploads/
+/frontend/web/uploads/*
+!/frontend/web/uploads/document/
+/frontend/web/uploads/document/*
+!/frontend/web/uploads/document/60x64/
+/frontend/web/uploads/document/60x64/*
+!/frontend/web/uploads/document/60x64/no-image.png
 
 # Git
+
+/backend/modules/video/composer.json
+/backend/modules/video/README.md
+/backend/modules/video/.git
+
 /backend/modules/auth/composer.json
 /backend/modules/auth/README.md
 /backend/modules/auth/.git
@@ -135,6 +149,14 @@ phpunit.phar
 /backend/widgets/voip24h/composer.json
 /backend/widgets/voip24h/README.md
 /backend/widgets/voip24h/.git
+
+/backend/widgets/datetime/composer.json
+/backend/widgets/datetime/README.md
+/backend/widgets/datetime/.git
+
+/backend/widgets/giaohang/composer.json
+/backend/widgets/giaohang/README.md
+/backend/widgets/giaohang/.git
 
 #package
 /package/imagick/.git

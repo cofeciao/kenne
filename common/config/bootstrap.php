@@ -37,6 +37,7 @@ Yii::setAlias('modava/log', dirname(dirname(__DIR__)) . '/backend/modules/log/sr
 Yii::setAlias('modava/iway', dirname(dirname(__DIR__)) . '/backend/modules/iway/src');
 Yii::setAlias('modava/affiliate', dirname(dirname(__DIR__)) . '/backend/modules/affiliate/src');
 Yii::setAlias('modava/pages', dirname(dirname(__DIR__)) . '/backend/modules/pages/src');
+Yii::setAlias('modava/video', dirname(dirname(__DIR__)) . '/backend/modules/video/src');
 Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
 //Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
 
@@ -45,6 +46,7 @@ Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/
 Yii::setAlias('modava/select2', dirname(dirname(__DIR__)) . '/common/widgets/select2/src');
 Yii::setAlias('modava/imagick', dirname(dirname(__DIR__)) . '/package/imagick/src');
 Yii::setAlias('modava/giaohang', dirname(dirname(__DIR__)) . '/package/giaohang/src');
+Yii::setAlias('modava/datetime', dirname(dirname(__DIR__)) . '/backend/widgets/datetime/src');
 
 
 Yii::setAlias('modava/generators', dirname(dirname(__DIR__)) . '/backend/modava/src/generators');

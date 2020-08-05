@@ -20,5 +20,9 @@ return [
     'Language' => 'Ngôn ngữ',
     'Name' => 'Tên',
     'Description' => 'Mô tả',
+    'Title' => 'Tiêu đề',
+    'Image' => 'Hình ảnh',
+    'Document' => 'Tài liệu',
+    'Documents' => 'Tài liệu',
 
 ];
