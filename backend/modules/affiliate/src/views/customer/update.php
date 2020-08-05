@@ -4,7 +4,6 @@ use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use modava\affiliate\AffiliateModule;
-use modava\affiliate\helpers\Utils;
 
 /* @var $this yii\web\View */
 /* @var $model modava\affiliate\models\Customer */
@@ -15,8 +14,6 @@ $this->title = AffiliateModule::t('affiliate', 'Update : {name}', [
 $this->params['breadcrumbs'][] = ['label' => AffiliateModule::t('affiliate', 'Customers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = AffiliateModule::t('affiliate', 'Update');
-
-$model->birthday = Utils::convertDateToDisplayFormat($model->birthday);
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>

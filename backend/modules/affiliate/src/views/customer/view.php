@@ -60,6 +60,32 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->controller->module->params['sex'][$model->sex];
                             }
                         ],
+                        'date_accept_do_service:date',
+                        'date_checkin:date',
+                        [
+                            'attribute' => 'country_id',
+                            'value' => function ($model) {
+                                return $model->country_id ? $model->country->CommonName : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'province_id',
+                            'value' => function ($model) {
+                                return $model->province_id ? $model->province->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'district_id',
+                            'value' => function ($model) {
+                                return $model->district_id ? $model->district->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'ward_id',
+                            'value' => function ($model) {
+                                return $model->ward_id ? $model->ward->name : null;
+                            }
+                        ],
                         [
                             'attribute' => 'partner_id',
                             'format' => 'raw',

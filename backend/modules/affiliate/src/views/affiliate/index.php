@@ -11,7 +11,7 @@ use modava\affiliate\models\search\PartnerSearch;
 use \modava\affiliate\models\table\CustomerTable;
 use modava\affiliate\models\Note;
 use \modava\affiliate\models\Coupon;
-use \modava\select2\Select2;
+use \modava\affiliate\helpers\Utils;
 
 $this->title = AffiliateModule::t('affiliate', 'Customer');
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,21 +42,21 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                     <input type="text" name="ClinicSearch[appointment_time]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Date')?>" value="<?=$payload['ClinicSearch[appointment_time]']?>"></div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6 col-lg-4">
-                            <div class="form-group row">
-                                <div class="col-4">
-                                    <?=AffiliateModule::t('affiliate', 'Action')?>:
-                                </div>
-                                <div class="col-6">
-                                    <select name="ClinicSearch[thao_tac]" id="" class="form-control">
-                                        <option value=""><?=AffiliateModule::t('affiliate', 'Select an action...')?></option>
-                                        <?php foreach($listThaotac as $id => $name): ?>
-                                            <option value="<?=$id?>" <?php if ($payload['ClinicSearch[thao_tac]'] === (string) $id) echo 'selected';?> ><?=$name?></option>
-                                        <?php endforeach;?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+<!--                        <div class="col-md-4 col-sm-6 col-lg-4">-->
+<!--                            <div class="form-group row">-->
+<!--                                <div class="col-4">-->
+<!--                                    --><?//=AffiliateModule::t('affiliate', 'Action')?><!--:-->
+<!--                                </div>-->
+<!--                                <div class="col-6">-->
+<!--                                    <select name="ClinicSearch[thao_tac]" id="" class="form-control">-->
+<!--                                        <option value="">--><?//=AffiliateModule::t('affiliate', 'Select an action...')?><!--</option>-->
+<!--                                        --><?php //foreach($listThaotac as $id => $name): ?>
+<!--                                            <option value="--><?//=$id?><!--" --><?php //if ($payload['ClinicSearch[thao_tac]'] === (string) $id) echo 'selected';?><!-- >--><?//=$name?><!--</option>-->
+<!--                                        --><?php //endforeach;?>
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="col-12">
                             <button type="submit" class="btn-success btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
                         </div>
@@ -183,6 +183,8 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                                 'template' => '{list-coupon} {list-note}',
                                                 'buttons' => [
                                                     'list-coupon' => function ($url, $model) {
+                                                        if (!Utils::isReleaseObject('Coupon')) return '';
+
                                                         $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
                                                         if ($record) {
                                                             $count = Coupon::countByCustomer($record['id']);
@@ -237,6 +239,8 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                                 'template' => '{create-customer} {create-coupon} {create-call-note} {hidden-input-customer-partner-info} {hidden-input-customer-info}',
                                                 'buttons' => [
                                                     'create-coupon' => function ($url, $model) {
+                                                        if (!Utils::isReleaseObject('Coupon')) return '';
+
                                                         if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
                                                             return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
                                                                 'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
@@ -335,15 +339,23 @@ $('.create-call-note').on('click', function() {
 
 $('.create-customer').on('click', function() {
     let customerInfo = JSON.parse($(this).closest('td').find('[name="customer_partner_info[]"]').val());
+    console.log('birday:', customerInfo.birthday);
+    debugger;
+    
     openCreateModal({
         model: 'Customer',
-        'Customer[full_name]' : customerInfo.name,
+        'Customer[full_name]' : customerInfo.full_name,
         'Customer[phone]' : customerInfo.phone,
         'Customer[face_customer]' : customerInfo.face_customer,
         'Customer[partner_id]' : $myAuris->primaryKey,
         'Customer[partner_customer_id]' : customerInfo.id,
-        'Customer[birthday]' : customerInfo.birthday,
-        'Customer[sex]' : customerInfo.sex
+        'Customer[birthday]' : customerInfo.birthday ? moment(customerInfo.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD') : '',
+        'Customer[sex]' : customerInfo.sex,
+        'Customer[province_id]' : customerInfo.province,
+        'Customer[district_id]' : customerInfo.district,
+        'Customer[address]' : customerInfo.address,
+        'Customer[date_accept_do_service]' : customerInfo.customer_come_date ? moment.unix(customerInfo.customer_come_date).format("YYYY-MM-DD") : '', 
+        'Customer[date_checkin]' : customerInfo.time_lichhen ? moment.unix(customerInfo.time_lichhen).format("YYYY-MM-DD") : ''
     });
 });
 

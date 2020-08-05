@@ -6,6 +6,10 @@ use common\helpers\MyHelper;
 use common\models\User;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\table\CustomerTable;
+use modava\location\models\LocationCountry;
+use modava\location\models\LocationDistrict;
+use modava\location\models\LocationProvince;
+use modava\location\models\LocationWard;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -30,6 +34,8 @@ use modava\affiliate\helpers\Utils;
     * @property int $updated_by
     * @property int $sex
     * @property date $birthday
+    * @property date $date_checkin
+    * @property date $date_accept_do_service
     *
             * @property AffiliateCoupon[] $affiliateCoupons
             * @property User $createdBy
@@ -40,6 +46,7 @@ use modava\affiliate\helpers\Utils;
 class Customer extends CustomerTable
 {
     public $toastr_key = 'customer';
+
     public function behaviors()
     {
         return array_merge(
@@ -76,6 +83,26 @@ class Customer extends CustomerTable
                         return Utils::convertDateToDBFormat($this->birthday);
                     },
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['date_checkin'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['date_checkin'],
+                    ],
+                    'value' => function ($event) {
+                        return Utils::convertDateToDBFormat($this->date_checkin);
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['date_accept_do_service'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['date_accept_do_service'],
+                    ],
+                    'value' => function ($event) {
+                        return Utils::convertDateToDBFormat($this->date_accept_do_service);
+                    },
+                ],
             ]
         );
     }
@@ -87,16 +114,20 @@ class Customer extends CustomerTable
     {
         return [
 			[['full_name', 'phone', 'partner_id', 'partner_customer_id'], 'required'],
-			[['partner_id', 'sex', 'partner_customer_id'], 'integer'],
-			[['description'], 'string'],
+			[['partner_id', 'sex', 'partner_customer_id', 'country_id', 'province_id', 'district_id', 'ward_id'], 'integer'],
+			[['description', 'address'], 'string'],
 			[['full_name', 'email', 'face_customer'], 'string', 'max' => 255],
 			[['phone'], 'string', 'max' => 15],
 			[['slug', 'partner_customer_id', 'phone'], 'unique'],
 			[['email'], 'email'],
-			[['birthday'], 'safe'],
+			[['birthday', 'date_accept_do_service', 'date_checkin'], 'safe'],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
 			[['partner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Partner::class, 'targetAttribute' => ['partner_id' => 'id']],
+			[['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationCountry::class, 'targetAttribute' => ['country_id' => 'id']],
+			[['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationProvince::class, 'targetAttribute' => ['province_id' => 'id']],
+			[['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationDistrict::class, 'targetAttribute' => ['district_id' => 'id']],
+			[['ward_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationWard::class, 'targetAttribute' => ['ward_id' => 'id']],
 		];
     }
 
@@ -121,6 +152,13 @@ class Customer extends CustomerTable
             'birthday' => AffiliateModule::t('affiliate', 'Birthday'),
             'sex' => AffiliateModule::t('affiliate', 'Sex'),
             'partner_customer_id' => AffiliateModule::t('affiliate', 'Partner Customer Id'),
+            'date_accept_do_service' => AffiliateModule::t('affiliate', 'Date Accept Do Service'),
+            'date_checkin' => AffiliateModule::t('affiliate', 'Date Checkin'),
+            'country_id' => AffiliateModule::t('affiliate', 'Country'),
+            'province_id' => AffiliateModule::t('affiliate', 'Province'),
+            'district_id' => AffiliateModule::t('affiliate', 'District'),
+            'ward_id' => AffiliateModule::t('affiliate', 'Ward'),
+            'address' => AffiliateModule::t('affiliate', 'Address'),
         ];
     }
 
@@ -154,5 +192,21 @@ class Customer extends CustomerTable
 
     public function getCoupons() {
         return $this->hasMany(Coupon::class, ['customer_id' => 'id']);
+    }
+
+    public function getCountry() {
+        return $this->hasOne(LocationCountry::class, ['id' => 'country_id']);
+    }
+
+    public function getProvince() {
+        return $this->hasOne(LocationProvince::class, ['id' => 'province_id']);
+    }
+
+    public function getDistrict() {
+        return $this->hasOne(LocationDistrict::class, ['id' => 'district_id']);
+    }
+
+    public function getWard() {
+        return $this->hasOne(LocationWard::class, ['id' => 'ward_id']);
     }
 }

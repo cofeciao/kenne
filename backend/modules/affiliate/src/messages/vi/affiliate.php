@@ -67,4 +67,12 @@ return [
     'Search' => 'Tìm kiếm',
     'Date Range' => 'Khoảng ngày',
     'Action' => 'Thao tác',
+    'Date Accept Do Service' => 'Ngày đồng ý làm dịch vụ',
+    'Date Checkin' => 'Ngày khách hàng đến cơ sở',
+    'Country' => 'Quốc gia',
+    'Province' => 'Tỉnh/Thành phố',
+    'District' => 'Quận/Huyện',
+    'Ward' => 'Phường/Xã',
+    'Address' => 'Địa chỉ',
+    'Object is not released' => 'Đối tượng đang được phát triển',
 ];

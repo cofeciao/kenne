@@ -8,6 +8,8 @@ namespace modava\affiliate\helpers;
  * Date:    2020-07-29
  * Purpose: Provide a Util class*/
 
+use Yii;
+
 class Utils
 {
     const DB_DATE_FORMART = 'Y-m-d';
@@ -41,5 +43,9 @@ class Utils
         if ($datetime == '') return '';
 
         return date(self::DISPLAY_DATETIME_FORMART, strtotime($datetime));
+    }
+
+    public static function isReleaseObject ($obj) {
+        return !in_array($obj, Yii::$app->controller->module->params['not_release_object']);
     }
 }

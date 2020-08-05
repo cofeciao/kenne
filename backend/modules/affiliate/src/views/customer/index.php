@@ -1,6 +1,7 @@
 <?php
 
 use modava\affiliate\AffiliateModule;
+use modava\affiliate\helpers\Utils;
 use modava\affiliate\widgets\JsUtils;
 use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
@@ -168,6 +169,44 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'header-100',
                                             ],
                                         ],
+                                        [
+                                            'attribute' => 'date_accept_do_service',
+                                            'format' => 'date',
+                                            'headerOptions' => [
+                                                'class' => 'header-100',
+                                            ],
+                                        ],
+                                        [
+                                            'attribute' => 'date_checkin',
+                                            'format' => 'date',
+                                            'headerOptions' => [
+                                                'class' => 'header-100',
+                                            ],
+                                        ],
+                                        [
+                                            'attribute' => 'country_id',
+                                            'value' => function ($model) {
+                                                return $model->country_id ? $model->country->CommonName : null;
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'province_id',
+                                            'value' => function ($model) {
+                                                return $model->province_id ? $model->province->name : null;
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'district_id',
+                                            'value' => function ($model) {
+                                                return $model->district_id ? $model->district->name : null;
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'ward_id',
+                                            'value' => function ($model) {
+                                                return $model->ward_id ? $model->ward->name : null;
+                                            }
+                                        ],
                                         //'description:ntext',
                                         [
                                             'attribute' => 'created_by',
@@ -189,6 +228,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'template' => '{list-coupon} {list-note}',
                                             'buttons' => [
                                                 'list-coupon' => function ($url, $model) {
+                                                    if (!Utils::isReleaseObject('Coupon')) return '';
+
                                                     $count = count($model->coupons);
 
                                                     $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
@@ -251,6 +292,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 },
                                                 'create-coupon' => function ($url, $model) {
+                                                    if (!Utils::isReleaseObject('Coupon')) return '';
+
                                                     return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
                                                         'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
                                                         'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),

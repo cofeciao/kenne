@@ -30,5 +30,10 @@ return [
         ],
         'header' => ['X-Api-Key: qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'],
         'row_per_page' => 10
+    ],
+    'not_release_object' => [
+        'Coupon',
+        'CouponType',
+        'Order',
     ]
 ];
