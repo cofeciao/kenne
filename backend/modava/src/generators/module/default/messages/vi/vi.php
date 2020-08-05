@@ -13,17 +13,5 @@ return [
     'Next' => 'Tiếp',
     'Status' => 'Trạng thái',
     'Created At' => 'Ngày tạo',
-    'Actions' => 'Hành động',
-    'Updated At' => 'Thời gian cập nhật',
-    'Created By' => 'Người tạo',
-    'Updated By' => 'Người cập nhật',
-    'Update : {name}' => 'Cập nhật : {name}',
-    'Update type: {name}' => 'Cập nhật thể loại: {name}',
-    'Content' => 'Nội dung',
-    'Language' => 'Ngôn ngữ',
-    'Name' => 'Tên',
-    'Title' => 'Tiêu đề',
-    'Image' => 'Hình ảnh',
-    'Description' => 'Mô tả',
-    'Position' => 'Vị trí',
+    'Actions' => 'Hành động'
 ];

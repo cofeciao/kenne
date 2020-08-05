@@ -5,7 +5,6 @@ $ns = explode('\\', $generator->moduleClass)[0];
 <?= "<?php" ?>
 
 \<?= $ns ?>\<?= $generator->moduleID ?>\assets\<?= ucfirst($generator->moduleID) ?>Asset::register($this);
-\<?= $ns ?>\<?= $generator->moduleID ?>\assets\<?= ucfirst($generator->moduleID) ?>CustomAsset::register($this);
 ?>
 <?= "<?php" ?> $this->beginContent('@backend/views/layouts/main.php'); ?>
 <?= "<?php" ?> echo $content ?>
