@@ -193,6 +193,6 @@ phpunit.phar
 /backend/modava/README.md
 /backend/modava/.git
 
-/common/widgets/select2/composer.json
-/common/widgets/select2/README.md
-/common/widgets/select2/.git
+/backend/widgets/select2/composer.json
+/backend/widgets/select2/README.md
+/backend/widgets/select2/.git
