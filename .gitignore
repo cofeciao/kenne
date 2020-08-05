@@ -10,6 +10,7 @@ composer.lock
 .idea
 
 .gitignore
+composer.json
 
 
 # netbeans project files
