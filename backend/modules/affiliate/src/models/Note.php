@@ -63,11 +63,11 @@ class Note extends NoteTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
-                        ActiveRecord::EVENT_BEFORE_INSERT => ['call_time', ],
-                        ActiveRecord::EVENT_BEFORE_UPDATE => ['call_time',],
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['call_time'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['call_time'],
                     ],
                     'value' => function ($event) {
-                        return Utils::convertDateToDBFormat($this->call_time);
+                        return Utils::convertDateTimeToDBFormat($this->call_time);
                     },
                 ],
                 [
@@ -77,7 +77,7 @@ class Note extends NoteTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['recall_time'],
                     ],
                     'value' => function ($event) {
-                        return Utils::convertDateToDBFormat($this->recall_time);
+                        return Utils::convertDateTimeToDBFormat($this->recall_time);
                     },
                 ],
             ]

@@ -217,7 +217,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'attribute' => 'created_at',
-                                            'format' => 'date',
+                                            'format' => 'datetime',
                                             'headerOptions' => [
                                                 'class' => 'header-100',
                                             ],
