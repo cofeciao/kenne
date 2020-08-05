@@ -78,6 +78,11 @@ phpunit.phar
 !/frontend/web/uploads/document/60x64/no-image.png
 
 # Git
+
+/backend/modules/video/composer.json
+/backend/modules/video/README.md
+/backend/modules/video/.git
+
 /backend/modules/auth/composer.json
 /backend/modules/auth/README.md
 /backend/modules/auth/.git
