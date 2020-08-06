@@ -127,17 +127,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'language',
-                                                'value' => function ($model) {
-                                                    if ($model->language == null)
-                                                        return null;
-                                                    return Yii::$app->getModule('product')->params['availableLocales'][$model->language];
-                                                },
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            [
                                                 'attribute' => 'type_id',
                                                 'value' => 'type.title',
                                                 'label' => 'Loại Sp',
@@ -145,20 +134,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'width' => 120,
                                                 ],
                                             ],
-                                            //'slug',
                                             [
                                                 'attribute' => 'price',
                                                 'headerOptions' => [
                                                     'width' => 120,
                                                 ],
                                             ],
-                                            //'price_sale',
-                                            //'so_luong',
-                                            //'description:ntext',
-                                            //'content:ntext',
-                                            //'position',
-                                            //'ads_pixel:ntext',
-                                            //'ads_session:ntext',
                                             [
                                                 'attribute' => 'status',
                                                 'value' => function ($model) {
