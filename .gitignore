@@ -42,13 +42,7 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-/common/config/_log.php
-/common/config/_db.php
-/common/config/_db2.php
-/common/config/_mailer.php
-/common/config/_console.php
-/common/config/_api.php
-/common/config/config.php
+/common/config/configparams.php
 
 /log
 
