@@ -9,6 +9,9 @@ composer.lock
 # phpstorm project files
 .idea
 
+.gitignore
+composer.json
+
 
 # netbeans project files
 nbproject
@@ -39,13 +42,7 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-/common/config/_log.php
-/common/config/_db.php
-/common/config/_db2.php
-/common/config/_mailer.php
-/common/config/_console.php
-/common/config/_api.php
-/common/config/config.php
+/common/config/configparams.php
 
 /log
 
@@ -71,13 +68,39 @@ phpunit.phar
 
 !/frontend/web/uploads/
 /frontend/web/uploads/*
+
 !/frontend/web/uploads/document/
 /frontend/web/uploads/document/*
+
 !/frontend/web/uploads/document/60x64/
 /frontend/web/uploads/document/60x64/*
 !/frontend/web/uploads/document/60x64/no-image.png
 
+!/frontend/web/uploads/video/
+/frontend/web/uploads/video/*
+
+!/frontend/web/uploads/video/150x150/
+/frontend/web/uploads/video/150x150/*
+!/frontend/web/uploads/video/150x150/no-image.png
+
+!/frontend/web/uploads/video-type/
+/frontend/web/uploads/video-type/*
+!/frontend/web/uploads/video-type/150x150/
+/frontend/web/uploads/video-type/150x150/*
+!/frontend/web/uploads/video-type/150x150/no-image.png
+
+!/frontend/web/uploads/video-category/
+/frontend/web/uploads/video-category/*
+!/frontend/web/uploads/video-category/150x150/
+/frontend/web/uploads/video-category/150x150/*
+!/frontend/web/uploads/video-category/150x150/no-image.png
+
 # Git
+
+/backend/modules/video/composer.json
+/backend/modules/video/README.md
+/backend/modules/video/.git
+
 /backend/modules/auth/composer.json
 /backend/modules/auth/README.md
 /backend/modules/auth/.git
@@ -164,6 +187,6 @@ phpunit.phar
 /backend/modava/README.md
 /backend/modava/.git
 
-/common/widgets/select2/composer.json
-/common/widgets/select2/README.md
-/common/widgets/select2/.git
+/backend/widgets/select2/composer.json
+/backend/widgets/select2/README.md
+/backend/widgets/select2/.git

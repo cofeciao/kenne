@@ -50,9 +50,29 @@ $this->params['breadcrumbs'][] = $this->title;
 						'id',
 						'title',
 						'slug',
-						'description:ntext',
-						'image',
-						'file',
+						'description:html',
+                        [
+                            'attribute' => 'image',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                if ($model->image == null) {
+                                    return Html::img('/uploads/document/60x64/no-image.png');
+                                }
+                                return Html::img('/uploads/document/60x64/' . $model->image);
+                            },
+                        ],
+                        [
+                            'attribute' => 'file',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                if ($model->file == null) {
+                                    return null;
+                                }
+                                return Html::a('Download', \yii\helpers\Url::toRoute(['download-file', 'file' => $model->file]), ['target' => '_blank', 'data-pjax' => 0]);
+
+
+                            },
+                        ],
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
@@ -62,11 +82,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
+                                if ($model->language == null)
+                                    return null;
                                 return Yii::$app->getModule('pages')->params['availableLocales'][$model->language];
                             },
                         ],
-						'created_at',
-						'updated_at',
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => PagesModule::t('pages', 'Created By')

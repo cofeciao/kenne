@@ -9,7 +9,9 @@ use yii\web\AssetBundle;
  */
 class ContactAsset extends AssetBundle
 {
+
     public $sourcePath = '@backendWeb';
+
     public $css = [
         'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
         'vendors/bootstrap/dist/css/bootstrap.min.css',

@@ -38,14 +38,16 @@ use modava\pages\PagesModule;
 
             echo \modava\tiny\FileManager::widget([
                 'model' => $model,
-                'attribute' => 'imageUpload',
+                'attribute' => 'image',
                 'path' => $path,
                 'label' => PagesModule::t('pages', 'Hình ảnh') . ': ',
             ]); ?>
         </div>
         <div class="col-6">
             <?php
-                echo $form->field($model, 'fileUpload')->fileInput();
+                echo $form->field($model, 'file')->fileInput();
+                if($model->file != null)
+                    echo Html::a(PagesModule::t('pages', 'File đã upload'), \yii\helpers\Url::toRoute(['download-file', 'file' => $model->file]), ['target' => '_blank', 'data-pjax' => 0]);
             ?>
         </div>
     </div>

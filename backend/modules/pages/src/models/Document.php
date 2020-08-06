@@ -10,6 +10,7 @@ use yii\behaviors\SluggableBehavior;
 use common\helpers\MyHelper;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "document".
@@ -33,9 +34,6 @@ use Yii;
 class Document extends DocumentTable
 {
     public $toastr_key = 'pages_document';
-
-    public $imageUpload;
-    public $fileUpload;
 
     public function behaviors()
     {
@@ -73,13 +71,13 @@ class Document extends DocumentTable
     public function rules()
     {
         return [
-            [['title', 'slug', 'fileUpload'], 'required'],
+            [['title', 'slug'], 'required'],
             [['description', 'language'], 'string'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug', 'image', 'file'], 'string', 'max' => 255],
-            ['imageUpload', 'file', 'extensions' => ['png', 'jpg', 'gif'],
+            ['image', 'file', 'extensions' => ['png', 'jpg', 'gif'],
                 'maxSize' => 1024 * 1024],
-            ['fileUpload', 'file', 'extensions' => ['PDF'],
+            ['file', 'file', 'extensions' => ['PDF'],
                 'maxSize' => 10 * 1024 * 1024],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -97,9 +95,7 @@ class Document extends DocumentTable
             'slug' => PagesModule::t('pages', 'Slug'),
             'description' => PagesModule::t('pages', 'Description'),
             'image' => PagesModule::t('pages', 'Image'),
-            'imageUpload' => PagesModule::t('pages', 'Hình upload'),
             'file' => PagesModule::t('pages', 'File'),
-            'fileUpload' => PagesModule::t('pages', 'File upload'),
             'status' => PagesModule::t('pages', 'Status'),
             'language' => PagesModule::t('pages', 'Language'),
             'created_at' => PagesModule::t('pages', 'Created At'),

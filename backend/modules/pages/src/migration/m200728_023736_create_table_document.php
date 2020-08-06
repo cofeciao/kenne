@@ -23,7 +23,7 @@ class m200728_023736_create_table_document extends Migration
             'slug' => $this->string(255)->notNull(),
             'description' => $this->text()->null(),
             'image' => $this->string(255)->null(),
-            'file' => $this->string(255)->notNull(),
+            'file' => $this->string(255)->null(),
             'status' => $this->smallInteger(1)->notNull()->defaultValue(1),
             'created_at' => $this->integer(11)->null(),
             'updated_at' => $this->integer(11)->null(),
