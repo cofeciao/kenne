@@ -54,6 +54,9 @@ return [
     'pages' => [
         'class' => 'modava\pages\PagesModule',
     ],
+    'video' => [
+        'class' => 'modava\video\VideoModule',
+    ],
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],

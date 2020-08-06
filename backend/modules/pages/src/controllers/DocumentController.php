@@ -50,6 +50,15 @@ class DocumentController extends MyPagesController
         ]);
     }
 
+    public function actionDownloadFile($file)
+    {
+        ini_set('max_execution_time', 5 * 60);
+        $pathFile = Yii::getAlias('@frontend/web') . $file;
+        if (file_exists($pathFile)) {
+            return Yii::$app->response->xSendFile($pathFile, $file);
+        }
+    }
+
 
     /**
      * Displays a single Document model.
@@ -75,19 +84,21 @@ class DocumentController extends MyPagesController
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $fileUpload = UploadedFile::getInstance($model, 'fileUpload');
-            $filename = Helper::createAlias($fileUpload->baseName);
-            $pathFile = '/uploads/document/file/' . $filename . '.' . $fileUpload->extension;
-            $fileUpload->saveAs(Yii::getAlias('@frontend/web'.$pathFile));
-            $model->fileUpload = $pathFile;
+            $fileUpload = UploadedFile::getInstance($model, 'file');
+            if ($fileUpload != null) {
+                $filename = Helper::createAlias($fileUpload->baseName);
+                $pathFile = '/uploads/document/file/' . $filename . '.' . $fileUpload->extension;
+                $fileUpload->saveAs(Yii::getAlias('@frontend/web' . $pathFile));
+                $model->file = $pathFile;
+            }
+
 
             if ($model->validate()) {
-                $model->file = $pathFile;
                 if ($model->save()) {
                     $imageName = null;
-                    if ($model->imageUpload != "") {
-                        $pathImage = FRONTEND_HOST_INFO . $model->imageUpload;
-                        $path = Yii::getAlias('@frontend/web/uploads/document/60x64/');
+                    if ($model->image != "") {
+                        $pathImage = FRONTEND_HOST_INFO . $model->image;
+                        $path = Yii::getAlias('@frontend/web/uploads/document/');
                         foreach (Yii::$app->params['document'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
@@ -137,8 +148,39 @@ class DocumentController extends MyPagesController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $fileUpload = UploadedFile::getInstance($model, 'file');
+
+            if ($fileUpload != null) {
+                if ($fileUpload != $model->getOldAttribute('file')) {
+                    $filename = Helper::createAlias($fileUpload->baseName);
+                    $pathFile = '/uploads/document/file/' . $filename . '.' . $fileUpload->extension;
+                    $fileUpload->saveAs(Yii::getAlias('@frontend/web' . $pathFile));
+                    $model->file = $pathFile;
+                }
+            } else {
+                $model->file = $model->getOldAttribute('file');
+            }
+
+            $imgOld = $model->getOldAttribute('image');
             if ($model->validate()) {
                 if ($model->save()) {
+                    $imageName = null;
+                    if ($model->image != "") {
+                        if ($model->image != $imgOld) {
+                            $pathImage = FRONTEND_HOST_INFO . $model->image;
+                            $path = Yii::getAlias('@frontend/web/uploads/document/');
+                            foreach (Yii::$app->params['document'] as $key => $value) {
+                                $pathSave = $path . $key;
+                                if (!file_exists($pathSave) && !is_dir($pathSave)) {
+                                    mkdir($pathSave);
+                                }
+                                $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                            }
+                            $model->image = $imageName;
+                            $model->updateAttributes(['image']);
+                        }
+                    }
+
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
                         'text' => 'Cập nhật thành công',

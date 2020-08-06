@@ -67,5 +67,26 @@ return [
             'width' => 60,
             'height' => 64
         ]
+    ],
+    'video' => [
+        '150x150' => [
+            'folder' => '/uploads/video/150x150/',
+            'width' => 150,
+            'height' => 150
+        ]
+    ],
+    'video-type' => [
+        '150x150' => [
+            'folder' => '/uploads/video/150x150/',
+            'width' => 150,
+            'height' => 150
+        ]
+    ],
+    'video-category' => [
+        '150x150' => [
+            'folder' => '/uploads/video/150x150/',
+            'width' => 150,
+            'height' => 150
+        ]
     ]
 ];

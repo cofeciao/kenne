@@ -1,19 +1,20 @@
 <?php
 
-namespace modava\select2\assets;
+namespace modava\video\assets;
 
 use yii\web\AssetBundle;
 
-class Select2Asset extends AssetBundle
+/**
+ * Main backend application asset bundle.
+ */
+class VideoCustomAsset extends AssetBundle
 {
-    public $sourcePath = '@backendWeb';
-
+    public $sourcePath = '@videoweb';
     public $css = [
-        'vendors/select2/dist/css/select2.min.css',
+        'css/customVideo.css',
     ];
-
     public $js = [
-        'vendors/select2/dist/js/select2.full.min.js'
+        'js/customVideo.js'
     ];
     public $jsOptions = array(
         'position' => \yii\web\View::POS_END

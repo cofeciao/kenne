@@ -121,6 +121,15 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
 
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('video')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'video') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/video']); ?>">
+                            <i class="ion ion-md-videocam"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Video'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('pages')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'pages') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/pages']); ?>">
