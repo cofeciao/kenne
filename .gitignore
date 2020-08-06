@@ -9,6 +9,9 @@ composer.lock
 # phpstorm project files
 .idea
 
+.gitignore
+composer.json
+
 
 # netbeans project files
 nbproject
@@ -39,28 +42,65 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-/common/config/_log.php
-/common/config/_db.php
-/common/config/_db2.php
-/common/config/_mailer.php
-/common/config/_console.php
-/common/config/_api.php
-/common/config/config.php
+/common/config/configparams.php
 
-/backend/runtime
-/backend/web/assets
+/log
+
+!/backend/runtime
+/backend/runtime/*
+!/backend/runtime/index.html
+
+!/backend/web/assets
+/backend/web/assets/*
+!/backend/web/assets/index.html
+
 /backend/web/img
 /backend/web/thumbs
 /backend/.htaccess
 
-/log
+!/frontend/runtime
+/frontend/runtime/*
+!/frontend/runtime/index.html
 
-/frontend/runtime
-/frontend/web/assets
-/frontend/web/uploads/
-/frontend/.htaccess
+!/frontend/web/assets
+/frontend/web/assets/*
+!/frontend/web/assets/index.html
+
+!/frontend/web/uploads/
+/frontend/web/uploads/*
+
+!/frontend/web/uploads/document/
+/frontend/web/uploads/document/*
+
+!/frontend/web/uploads/document/60x64/
+/frontend/web/uploads/document/60x64/*
+!/frontend/web/uploads/document/60x64/no-image.png
+
+!/frontend/web/uploads/video/
+/frontend/web/uploads/video/*
+
+!/frontend/web/uploads/video/150x150/
+/frontend/web/uploads/video/150x150/*
+!/frontend/web/uploads/video/150x150/no-image.png
+
+!/frontend/web/uploads/video-type/
+/frontend/web/uploads/video-type/*
+!/frontend/web/uploads/video-type/150x150/
+/frontend/web/uploads/video-type/150x150/*
+!/frontend/web/uploads/video-type/150x150/no-image.png
+
+!/frontend/web/uploads/video-category/
+/frontend/web/uploads/video-category/*
+!/frontend/web/uploads/video-category/150x150/
+/frontend/web/uploads/video-category/150x150/*
+!/frontend/web/uploads/video-category/150x150/no-image.png
 
 # Git
+
+/backend/modules/video/composer.json
+/backend/modules/video/README.md
+/backend/modules/video/.git
+
 /backend/modules/auth/composer.json
 /backend/modules/auth/README.md
 /backend/modules/auth/.git
@@ -89,6 +129,34 @@ phpunit.phar
 /backend/modules/website/README.md
 /backend/modules/website/.git
 
+/backend/modules/calendar/composer.json
+/backend/modules/calendar/README.md
+/backend/modules/calendar/.git
+
+/backend/modules/filemanager/composer.json
+/backend/modules/filemanager/README.md
+/backend/modules/filemanager/.git
+
+/backend/modules/log/composer.json
+/backend/modules/log/README.md
+/backend/modules/log/.git
+
+/backend/modules/affiliate/composer.json
+/backend/modules/affiliate/README.md
+/backend/modules/affiliate/.git
+
+/backend/modules/iway/composer.json
+/backend/modules/iway/README.md
+/backend/modules/iway/.git
+
+/backend/modules/pages/composer.json
+/backend/modules/pages/README.md
+/backend/modules/pages/.git
+
+/backend/modules/comment/composer.json
+/backend/modules/comment/README.md
+/backend/modules/comment/.git
+
 /backend/widgets/tiny/composer.json
 /backend/widgets/tiny/README.md
 /backend/widgets/tiny/.git
@@ -96,6 +164,14 @@ phpunit.phar
 /backend/widgets/voip24h/composer.json
 /backend/widgets/voip24h/README.md
 /backend/widgets/voip24h/.git
+
+/backend/widgets/datetime/composer.json
+/backend/widgets/datetime/README.md
+/backend/widgets/datetime/.git
+
+/backend/widgets/giaohang/composer.json
+/backend/widgets/giaohang/README.md
+/backend/widgets/giaohang/.git
 
 #package
 /package/imagick/.git
@@ -111,6 +187,6 @@ phpunit.phar
 /backend/modava/README.md
 /backend/modava/.git
 
-/common/widgets/select2/composer.json
-/common/widgets/select2/README.md
-/common/widgets/select2/.git
+/backend/widgets/select2/composer.json
+/backend/widgets/select2/README.md
+/backend/widgets/select2/.git

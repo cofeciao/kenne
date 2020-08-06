@@ -9,6 +9,8 @@
 return [
     'auth' => [
         'class' => 'modava\auth\AuthModule',
+        'shouldBeActivated' => false,
+        'enableLoginByPass' => false,
     ],
     'contact' => [
         'class' => 'modava\contact\ContactModule',
@@ -17,10 +19,10 @@ return [
         'class' => 'modava\article\ArticleModule',
     ],
     'filemanager' => [
-        'class' => 'backend\modules\filemanager\FilemanagerModule',
+        'class' => 'modava\filemanager\FilemanagerModule',
     ],
     'calendar' => [
-        'class' => 'backend\modules\calendar\CalendarModule',
+        'class' => 'modava\calendar\CalendarModule',
     ],
     'product' => [
         'class' => 'modava\product\ProductModule',
@@ -34,21 +36,28 @@ return [
     'website' => [
         'class' => 'modava\website\WebsiteModule',
     ],
-    'user' => [
-        'class' => 'backend\modules\user\User',
-        'shouldBeActivated' => false,
-        'enableLoginByPass' => false,
-    ],
     'location' => [
         'class' => 'modava\location\LocationModule',
     ],
-    'api' => [
-        'class' => 'backend\modules\api\Api',
-    ],
     'log' => [
-        'class' => 'backend\modules\log\Log',
+        'class' => 'modava\log\LogModule',
     ],
     'comment' => [
         'class' => 'modava\comment\CommentModule',
+    ],
+    'affiliate' => [
+        'class' => 'modava\affiliate\AffiliateModule',
+    ],
+    'iway' => [
+        'class' => 'modava\iway\IwayModule',
+    ],
+    'pages' => [
+        'class' => 'modava\pages\PagesModule',
+    ],
+    'video' => [
+        'class' => 'modava\video\VideoModule',
+    ],
+    'api' => [
+        'class' => 'backend\modules\api\Api',
     ],
 ];

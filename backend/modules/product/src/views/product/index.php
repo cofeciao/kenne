@@ -127,6 +127,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
+                                                'attribute' => 'language',
+                                                'value' => function ($model) {
+                                                    if ($model->language == null)
+                                                        return null;
+                                                    return Yii::$app->getModule('product')->params['availableLocales'][$model->language];
+                                                },
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
                                                 'attribute' => 'type_id',
                                                 'value' => 'type.title',
                                                 'label' => 'Loại Sp',

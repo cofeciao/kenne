@@ -48,7 +48,6 @@ return [
                     'backend' => 'backend.php',
                     'frontend' => 'frontend.php',
                 ],
-                'on missingTranslation' => [backend\modules\i18n\Module::class, 'missingTranslation']
             ],
         ],
     ],
@@ -60,5 +59,16 @@ return [
         'hashCallback' => function ($path) {
             return hash('md4', $path);
         }
-    ]
+    ],
+    'formatter' => [
+        'class' => 'yii\i18n\Formatter',
+        'nullDisplay' => '-',
+        'dateFormat' => 'php:d-m-Y',
+        'datetimeFormat' => 'php:d-m-Y H:i:s',
+        'timeFormat' => 'php:H:i:s',
+        'locale' => 'vi_VN',
+        'decimalSeparator' => ',',
+        'thousandSeparator' => ' ',
+//        'currencyCode' => '₫',
+    ],
 ];
