@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button"  class="close-modal" data-dismiss="modal">Close</button>
-                <a class="modal-cart" href="<?= \yii\helpers\Url::toRoute(['/cart'])?>" >Cart</a>
+                <a class="modal-cart" href="<?= \yii\helpers\Url::toRoute(['/wishlist'])?>" >Wishlist</a>
             </div>
         </div>
 

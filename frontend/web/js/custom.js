@@ -15,6 +15,29 @@ $('a.add-cart').click(function (event) {
     });
 
 });*/
+$('a.add-wishlist').click(function (event){
+   event.preventDefault();
+    var href = $(this).attr('href');
+    var name = $(this).data('name');
+    $.ajax({
+       url : href,
+       type: 'get',
+       data : {},
+       success:function (data){
+           if(data === 'fail'){
+               $('.modal-title').html('<span style="color:#d88f17">Thông báo</span>');
+               $('.modal-body').html('Sản phẩm <b>'+ name+ '</b> đã có trong danh sách yêu thích ');
+               $('#myModal').modal('show');
+           } else {
+               $('.modal-title').html('Thành công');
+               $('.modal-body').html('Sản phẩm <b>'+ name+ '</b> đã được thêm vào danh sách yêu thích thành công');
+               $('#myModal').modal('show');
+           }
+
+       }
+    });
+});
+
 var url3 = window.location;
 if(url3 == 'http://project.tm/shop' || url3['href'].indexOf('?sort') != -1){
     $(document).ready(function(){

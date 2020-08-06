@@ -42,9 +42,10 @@ class CartController extends MyController
         $cart->add($slug,$quantity);
         //__PHP_Incomplete_Class Object with cookie.
         //Need unserialize , serialize to transfer
-        return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
 
-        //return $this->redirect(['/cart']);
+        //return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionDelete($id){

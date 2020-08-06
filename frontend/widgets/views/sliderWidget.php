@@ -1,3 +1,4 @@
+
 <div class="slider-area">
 
     <div class="kenne-element-carousel home-slider arrow-style" data-slick-options='{
@@ -40,12 +41,11 @@
                     <h2>Stylist <br> Female Clothes</h2>
                     <p class="short-desc-2">Made from Soft, Durable, US-grown Supima cotton.</p>
                     <div class="slide-btn">
-                        <a class="kenne-btn" href="shop-left-sidebar.html">shop now</a>
+                        <a class="kenne-btn" href="<?= \yii\helpers\Url::toRoute('/shop')?>">shop now</a>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-
 </div>

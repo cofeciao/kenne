@@ -68,6 +68,64 @@ class Cart
         unset($data);
         $data = null;
         Component::setCookies('cart',$data);
+    }
 
+    public function addWishlist($slug){
+        $data = Products::findOne(['pro_slug'=>$slug]);
+        $id = $data['id'];
+        $data1[$id] = $data;
+        if(!Component::hasCookies('cartWishlist')){
+            Component::setCookies('cartWishlist',$data1);
+        }
+        $cartstore = unserialize (serialize (Component::getCookies('cartWishlist')));
+        if (empty($cartstore)){
+            $cartstore[$id] = [
+                'slug' => $data->pro_slug,
+                'price' => $data->pro_price,
+                'image' => $data->pro_image,
+                'name' => $data->pro_name,
+            ];
+            $notification = "success";
+        }else {
+            if (array_key_exists($id, $cartstore)) {
+                $notification = "fail";
+
+            } else {
+                $cartstore[$id] = [
+                    'slug' => $data->pro_slug,
+                    'price' => $data->pro_price,
+                    'image' => $data->pro_image,
+                    'name' => $data->pro_name,
+                ];
+                $notification = "success";
+
+            }
+        }
+        Component::setCookies('cartWishlist',$cartstore);
+        return $notification;
+        /*//$this->cartstore = unserialize (serialize (Component::getCookies('cart')));*/
+        /*if(!Component::hasCookies('cart')){
+                  Component::setCookies('cart',$this->cartstore);
+        }else{
+            $this->cartstore = unserialize (serialize (Component::getCookies('cart')));
+        }*/
+//        $cookies = \Yii::$app->response->cookies;
+//        $cookies->remove('cart');*/
+    }
+
+    public static function deleteWishlist($id){
+        $data = unserialize(serialize(Component::getCookies('cartWishlist')));
+
+        if (array_key_exists($id,$data)){
+            unset($data[$id]);
+        }
+        Component::setCookies('cartWishlist',$data);
+    }
+
+    public static function deleteAllWishlist(){
+        $data = unserialize(serialize(Component::getCookies('cartWishlist')));
+        unset($data);
+        $data = null;
+        Component::setCookies('cartWishlist',$data);
     }
 }

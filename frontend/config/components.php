@@ -50,8 +50,8 @@ return [
         'transport' => [
             'class' => 'Swift_SmtpTransport',
             'host' => 'smtp.gmail.com',
-            'username' => 'mongdao.wd@gmail.com',
-            'password' => 'qtlqfvknyclgfwbv',
+            'username' => 'runhitbtn2@gmail.com',
+            'password' => 'Soccer98987@',
             'port' => '587',
             'encryption' => 'tls',
             'streamOptions' => [
