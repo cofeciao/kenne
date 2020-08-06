@@ -60,5 +60,12 @@ return [
             'width' => 150,
             'height' => 150
         ],
+    ],
+    'document' => [
+        '60x64' => [
+            'folder' => '/uploads/document/60x64/',
+            'width' => 60,
+            'height' => 64
+        ]
     ]
 ];
