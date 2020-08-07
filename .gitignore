@@ -9,9 +9,6 @@ composer.lock
 # phpstorm project files
 .idea
 
-.gitignore
-composer.json
-
 
 # netbeans project files
 nbproject
@@ -43,6 +40,7 @@ phpunit.phar
 /.vagrant
 
 /common/config/configparams.php
+/common/config/config.php
 
 /log
 

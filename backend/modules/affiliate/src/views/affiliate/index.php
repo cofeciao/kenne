@@ -12,16 +12,26 @@ use \modava\affiliate\models\table\CustomerTable;
 use modava\affiliate\models\Note;
 use \modava\affiliate\models\Coupon;
 use \modava\affiliate\helpers\Utils;
+use modava\affiliate\helpers\AffiliateDisplayHelper;
+
+/* @var $listThaotac */
+/* @var $dataProvider */
+/* @var $payload */
 
 $this->title = AffiliateModule::t('affiliate', 'Customer');
 $this->params['breadcrumbs'][] = $this->title;
 $myAuris = PartnerSearch::getRecordBySlug('dashboard-myauris');
 Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAuris->primaryKey;
 
-/* @var $listThaotac */
-/* @var $dataProvider */
-/* @var $payload */
-
+$currentRoute = Url::toRoute(['/' . Yii::$app->requestedRoute]);
+$currentDate = date('d-m-Y');
+$timestapmtCurrentDate = strtotime($currentDate);
+$current1Month = date("d-m-Y", strtotime("-1 month", $timestapmtCurrentDate));
+$current3Months = date("d-m-Y", strtotime("-3 month", $timestapmtCurrentDate));
+$current6Months = date("d-m-Y", strtotime("-6 month", $timestapmtCurrentDate));
+$oneMonthRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[appointment_time]' => "$current1Month - $currentDate"]);
+$threeMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[appointment_time]' => "$current3Months - $currentDate"]);
+$sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[appointment_time]' => "$current6Months - $currentDate"]);
 ?>
 
 <?= ToastrWidget::widget(['key' => 'toastr-affiliate-list']) ?>
@@ -35,6 +45,13 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                 <form action="<?=Url::toRoute(['/affiliate/affiliate'])?>" method="get" width="100%">
                 <div class="hk-sec-wrapper">
                     <div class="row">
+                        <div class="col-md-4 col-sm-6 col-lg-4">
+                            <div class="form-group row">
+                                <div class="col-4"><?=AffiliateModule::t('affiliate', 'Date Range')?>: </div>
+                                <div class="col-8">
+                                    <input type="text" name="ClinicSearch[keyword]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Full Name, Phone, Code')?>" value="<?=$payload['ClinicSearch[keyword]']?>"></div>
+                            </div>
+                        </div>
                         <div class="col-md-4 col-sm-6 col-lg-4">
                             <div class="form-group row">
                                 <div class="col-4"><?=AffiliateModule::t('affiliate', 'Date Range')?>: </div>
@@ -58,7 +75,12 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
 <!--                            </div>-->
 <!--                        </div>-->
                         <div class="col-12">
-                            <button type="submit" class="btn-success btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
+                            <a href="<?=$currentRoute?>" type="button" class="btn-success btn"><?=AffiliateModule::t('affiliate', 'Default')?></a>
+                            <a href="<?=$oneMonthRoute?>" type="button" class="btn-info btn"><?=AffiliateModule::t('affiliate', 'Customer 1 Month')?></a>
+                            <a href="<?=$threeMonthsRoute?>" type="button" class="btn-pink btn"><?=AffiliateModule::t('affiliate', 'Customer 3 Month')?></a>
+                            <a href="<?=$sixMonthsRoute?>" type="button" class="btn-indigo btn"><?=AffiliateModule::t('affiliate', 'Customer 6 Month')?></a>
+                            <button type="submit" class="btn-primary btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
+                            <a href="<?=Url::toRoute(['clear-cache'])?>" class="btn btn-link btn-sm pull-right"><?=AffiliateModule::t('affiliate', 'Clear Cache')?></a>
                         </div>
                     </div>
                 </div>
@@ -70,13 +92,25 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
-                                <div class="dataTables_wrapper dt-bootstrap4">
+                                <div class="dataTables_wrapper dt-bootstrap4 ">
                                     <?= GridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
                                         {errors}
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" role="status" aria-live="polite">
+                                                    {pager}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    {summary}
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-12 table-responsive">
                                                 {items}
                                             </div>
                                         </div>
@@ -130,53 +164,82 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'full_name',
-                                                'label' => AffiliateModule::t('affiliate', 'Full Name'),
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    $message = AffiliateModule::t('affiliate', 'Converted');
-                                                    $tick = '';
+                                                'class' => 'yii\grid\ActionColumn',
+                                                'header' => AffiliateModule::t('affiliate', 'Actions'),
+                                                'template' => '{create-customer} {create-coupon} {create-call-note} {hidden-input-customer-partner-info} {hidden-input-customer-info}',
+                                                'buttons' => [
+                                                    'create-coupon' => function ($url, $model) {
+                                                        if (!Utils::isReleaseObject('Coupon')) return '';
 
-                                                    if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
-                                                        $tick = Html::tag('span', '', [
-                                                            'title' => $message,
-                                                            'alia-label' => $message,
-                                                            'class' => 'glyphicon glyphicon-ok text-success m-1',
-                                                        ]);
+                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
+                                                            return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
+                                                                'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
+                                                                'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),
+                                                                'data-pjax' => 0,
+                                                                'data-partner' => 'myaris',
+                                                                'class' => 'btn btn-info btn-xs create-coupon m-1'
+                                                            ]);
+                                                        }
+
+                                                        return '';
+
+                                                    },
+                                                    'create-call-note' => function ($url, $model) {
+                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
+                                                            return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
+                                                                'title' => AffiliateModule::t('affiliate', 'Create Call Note'),
+                                                                'alia-label' => AffiliateModule::t('affiliate', 'Create Call Note'),
+                                                                'data-pjax' => 0,
+                                                                'data-partner' => 'myaris',
+                                                                'class' => 'btn btn-success btn-xs create-call-note m-1'
+                                                            ]);
+                                                        }
+
+                                                        return '';
+
+                                                    },
+                                                    'create-customer' => function ($url, $model) {
+                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        if ($record) {
+                                                            $message = AffiliateModule::t('affiliate', 'Detail');
+
+                                                            return Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
+                                                                Url::toRoute(['/affiliate/customer/view', 'id' => $record['id']]),
+                                                                [
+                                                                    'title' => $message,
+                                                                    'alia-label' => $message,
+                                                                    'data-pjax' => 0,
+                                                                    'data-partner' => 'myaris',
+                                                                    'class' => 'btn btn-primary btn-xs m-1',
+                                                                    'target' => '_blank'
+                                                                ]);
+                                                        }
+                                                        else {
+                                                            $message = AffiliateModule::t('affiliate', 'Convert');
+
+                                                            return Html::a('<span class="glyphicon glyphicon-arrow-right"></span>', 'javascript:;', [
+                                                                'title' => $message,
+                                                                'alia-label' => $message,
+                                                                'data-pjax' => 0,
+                                                                'data-partner' => 'myaris',
+                                                                'class' => 'btn btn-primary btn-xs create-customer m-1',
+                                                            ]);
+                                                        }
+                                                    },
+                                                    'hidden-input-customer-partner-info' => function ($url, $model) {
+                                                        return Html::input('hidden', 'customer_partner_info[]', json_encode($model));
+                                                    },
+                                                    'hidden-input-customer-info' => function ($url, $model) {
+                                                        $customer = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        if ($customer) {
+                                                            return Html::input('hidden', 'customer_info[]', json_encode($customer));
+                                                        }
                                                     }
-
-                                                    return $model['full_name'] . $tick;
-                                                }
+                                                ],
+                                                'headerOptions' => [
+                                                    'width' => 250,
+                                                ],
                                             ],
-                                            [
-                                                'attribute' => 'sex',
-                                                'label' => AffiliateModule::t('affiliate', 'Sex'),
-                                                'value' => function ($model) {
-                                                    return Yii::$app->controller->module->params['sex'][$model['sex']];
-                                                }
-                                            ],
-                                            [
-                                                'attribute' => 'birthday',
-                                                'label' => AffiliateModule::t('affiliate', 'Birthday'),
-                                            ],
-                                            [
-                                                'label' => AffiliateModule::t('affiliate', 'Phone'),
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    $content = '';
-                                                    if (class_exists('modava\voip24h\CallCenter')) $content .= Html::a('<i class="fa fa-phone"></i>', 'javascript: void(0)', [
-                                                        'class' => 'btn btn-xs btn-success call-to',
-                                                        'title' => 'Gọi',
-                                                        'data-uri' => $model['phone']
-                                                    ]);
-                                                    $content .= Html::a('<i class="fa fa-paste"></i>', 'javascript: void(0)', [
-                                                        'class' => 'btn btn-xs btn-info copy ml-1',
-                                                        'title' => 'Copy'
-                                                    ]);
-                                                    return $content;
-                                                }
-                                            ],
-
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => AffiliateModule::t('affiliate', 'Related Record'),
@@ -234,81 +297,42 @@ Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAu
                                                 ],
                                             ],
                                             [
-                                                'class' => 'yii\grid\ActionColumn',
-                                                'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                                'template' => '{create-customer} {create-coupon} {create-call-note} {hidden-input-customer-partner-info} {hidden-input-customer-info}',
-                                                'buttons' => [
-                                                    'create-coupon' => function ($url, $model) {
-                                                        if (!Utils::isReleaseObject('Coupon')) return '';
-
-                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
-                                                            return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
-                                                                'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
-                                                                'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),
-                                                                'data-pjax' => 0,
-                                                                'data-partner' => 'myaris',
-                                                                'class' => 'btn btn-info btn-xs create-coupon m-1'
-                                                            ]);
-                                                        }
-
-                                                        return '';
-
-                                                    },
-                                                    'create-call-note' => function ($url, $model) {
-                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
-                                                            return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
-                                                                'title' => AffiliateModule::t('affiliate', 'Create Call Note'),
-                                                                'alia-label' => AffiliateModule::t('affiliate', 'Create Call Note'),
-                                                                'data-pjax' => 0,
-                                                                'data-partner' => 'myaris',
-                                                                'class' => 'btn btn-success btn-xs create-call-note m-1'
-                                                            ]);
-                                                        }
-
-                                                        return '';
-
-                                                    },
-                                                    'create-customer' => function ($url, $model) {
-                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
-                                                        if ($record) {
-                                                            $message = AffiliateModule::t('affiliate', 'Detail');
-
-                                                            return Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
-                                                                    Url::toRoute(['/affiliate/customer/view', 'id' => $record['id']]),
-                                                                    [
-                                                                        'title' => $message,
-                                                                        'alia-label' => $message,
-                                                                        'data-pjax' => 0,
-                                                                        'data-partner' => 'myaris',
-                                                                        'class' => 'btn btn-primary btn-xs m-1',
-                                                                        'target' => '_blank'
-                                                                    ]);
-                                                        }
-                                                        else {
-                                                            $message = AffiliateModule::t('affiliate', 'Convert');
-
-                                                            return Html::a('<span class="glyphicon glyphicon-arrow-right"></span>', 'javascript:;', [
-                                                                'title' => $message,
-                                                                'alia-label' => $message,
-                                                                'data-pjax' => 0,
-                                                                'data-partner' => 'myaris',
-                                                                'class' => 'btn btn-primary btn-xs create-customer m-1',
-                                                            ]);
-                                                        }
-                                                    },
-                                                    'hidden-input-customer-partner-info' => function ($url, $model) {
-                                                        return Html::input('hidden', 'customer_partner_info[]', json_encode($model));
-                                                    },
-                                                    'hidden-input-customer-info' => function ($url, $model) {
-                                                        $customer = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
-                                                        if ($customer) {
-                                                            return Html::input('hidden', 'customer_info[]', json_encode($customer));
-                                                        }
-                                                    }
-                                                ],
+                                                'label' => AffiliateModule::t('affiliate', 'Customer Infomation'),
+                                                'format' => 'raw',
                                                 'headerOptions' => [
-                                                    'width' => 250,
+                                                    'class' => 'header-300'
                                                 ],
+                                                'value' => function ($model) {
+                                                    return AffiliateDisplayHelper::getCustomerInformation($model);
+                                                }
+                                            ],
+                                            [
+                                                'label' => AffiliateModule::t('affiliate', 'Images Before/After'),
+                                                'format' => 'raw',
+                                                'headerOptions' => [
+                                                    'class' => 'header-300'
+                                                ],
+                                                'value' => function ($model) {
+                                                    return AffiliateDisplayHelper::getImages($model);
+                                                }
+                                            ],
+                                            [
+                                                'label' => AffiliateModule::t('affiliate', 'Order Infomation'),
+                                                'format' => 'raw',
+                                                'headerOptions' => ['class' => 'header-300'],
+                                                'contentOptions' => ['class' => 'header-400'],
+                                                'value' => function ($model) use ($listThaotac) {
+                                                    return AffiliateDisplayHelper::getOrderInformation($model, $listThaotac);
+                                                }
+                                            ],
+                                            [
+                                                'label' => AffiliateModule::t('affiliate', 'Thông tin lịch điều trị'),
+                                                'format' => 'raw',
+                                                'headerOptions' => ['class' => 'header-300'],
+                                                'contentOptions' => ['class' => 'header-400 pr'],
+                                                'value' => function ($model) use ($listThaotac) {
+                                                    return AffiliateDisplayHelper::getTreatmentSchedule($model, $listThaotac);
+                                                }
                                             ],
                                         ],
                                     ]); ?>
@@ -374,5 +398,6 @@ $('[name="ClinicSearch[appointment_time]"]').daterangepicker({
 }, function(start, end, label) {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 });
+$('.customer-img-container').lightGallery();
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);
