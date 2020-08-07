@@ -26,15 +26,37 @@ define('BACKEND_COOKIE_VALIDATION_KEY', 'hXxYdJJVHPJjqDfFvY0DW4_FDYIa5RcS');
 define('INFORMATION_EMAIL', 'mongdaovan86@yahoo.com || mongdaovan86.wd@gmail.com');
 define('INFORMATION_PHONE', '0906.904.884');
 
-define('MINUTE_IN_SECONDS', 60);
-define('HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
-define('DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
-define('WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
-define('MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
-define('YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
-define('NOIMAGE', 'no-image.png');
+$config = [
+    'vendorPath' => __DIR__ . '/../../vendor',
+    'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
+    'sourceLanguage' => 'en-US',
+    'language' => 'vi',
+//    'bootstrap' => ['devicedetect', 'assetsAutoCompress'],
+    'bootstrap' => ['log', 'devicedetect'],
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm' => '@vendor/npm-asset',
+    ],
+    'controllerMap' => [
+    ],
+    'timeZone' => 'Asia/Ho_Chi_Minh',
+    'modules' => require __DIR__ . '/modules.php',
+    'components' => require __DIR__ . '/components.php',
+    'params' => require __DIR__ . '/params.php',
+];
 
+//Cấu hình kết nối CSDL
+$config['components']['db'] = [
+    'class' => yii\db\Connection::class,
+    'dsn' => 'mysql:host=localhost;dbname=dev',
+    'username' => 'root',
+    'password' => '12081986',
+    'tablePrefix' => '',
+    'charset' => 'utf8mb4',
+    'enableSchemaCache' => YII_ENV_PROD,
+];
 
+//Cấu hình gửi mail và ghi log
 if (YII2_MAIL) {
     $config['components']['mailer'] = [
         'class' => 'yii\swiftmailer\Mailer',
@@ -81,36 +103,6 @@ if (YII2_MAIL) {
         ],
     ];
 }
-
-$config = [
-    'vendorPath' => __DIR__ . '/../../vendor',
-    'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
-    'sourceLanguage' => 'en-US',
-    'language' => 'vi',
-//    'bootstrap' => ['devicedetect', 'assetsAutoCompress'],
-    'bootstrap' => ['log', 'devicedetect'],
-    'aliases' => [
-        '@bower' => '@vendor/bower-asset',
-        '@npm' => '@vendor/npm-asset',
-    ],
-    'controllerMap' => [
-    ],
-    'timeZone' => 'Asia/Ho_Chi_Minh',
-    'modules' => require __DIR__ . '/modules.php',
-    'components' => require __DIR__ . '/components.php',
-    'params' => require __DIR__ . '/params.php',
-];
-
-//Cấu hình kết nối CSDL
-$config['components']['db'] = [
-    'class' => yii\db\Connection::class,
-    'dsn' => 'mysql:host=localhost;dbname=dev',
-    'username' => 'root',
-    'password' => '12081986',
-    'tablePrefix' => '',
-    'charset' => 'utf8mb4',
-    'enableSchemaCache' => YII_ENV_PROD,
-];
 
 
 if (YII2_DEBUG && ISCLI == false) {
