@@ -106,7 +106,7 @@ $config['components']['db'] = [
     'class' => yii\db\Connection::class,
     'dsn' => 'mysql:host=localhost;dbname=dev',
     'username' => 'root',
-    'password' => '12081986',
+    'password' => '',
     'tablePrefix' => '',
     'charset' => 'utf8mb4',
     'enableSchemaCache' => YII_ENV_PROD,
@@ -128,7 +128,7 @@ if (YII2_ENV_DEV) {
     ];
 }
 
-if (YII2_CACHE && ISCLI == false) {
+if (YII2_CACHE) {
     $config['components']['redis'] = [
         'class' => 'yii\redis\Connection',
         'hostname' => 'localhost',
