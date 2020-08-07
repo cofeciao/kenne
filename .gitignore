@@ -43,6 +43,7 @@ phpunit.phar
 /.vagrant
 
 /common/config/configparams.php
+/common/config/config.php
 
 /log
 
