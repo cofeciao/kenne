@@ -25,6 +25,9 @@ use Yii;
     */
 class Slides extends SlidesTable
 {
+
+    const ACTIVE_STATUS = 1;
+    const DISABLE_STATUS = 0;
     public $toastr_key = 'slides';
     public function behaviors()
     {

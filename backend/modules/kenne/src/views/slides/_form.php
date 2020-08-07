@@ -17,6 +17,8 @@ use modava\kenne\KenneModule;
     ); ?>
     <?= $form->field($model, 'sld_title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'sld_cat_id')->dropDownList(\yii\helpers\ArrayHelper::map($model->getCategory(), 'id', 'cat_name'), ['prompt' => 'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
+
     <?= $form->field($model, 'sld_description')->widget(\modava\tiny\TinyMce::class, [
         'options' => ['rows' => 6],
     ]) ?>
@@ -31,9 +33,6 @@ use modava\kenne\KenneModule;
         'attribute' => 'sld_image',
         'path' => $path,
     ]); ?>
-
-    <?= $form->field($model, 'sld_cat_id')->dropDownList(\yii\helpers\ArrayHelper::map($model->getCategory(), 'id', 'cat_name'), ['prompt' => 'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
-
 
     <?= $form->field($model, 'sld_status')->checkbox(['checked' => 'checked']); ?>
 

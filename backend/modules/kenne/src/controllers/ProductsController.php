@@ -44,7 +44,7 @@ class ProductsController extends MyController
         $param =  Yii::$app->request->queryParams;
 
         if (isset($param['update']) && isset($param['action'])){
-            $model = Products::findOne($param['update']);
+            $model = self::findOne($param['update']);
             $model->pro_status = $model->pro_status == $model::DISABLE_STATUS ? $model::ACTIVE_STATUS : $model::DISABLE_STATUS ;
             $model->save();
 

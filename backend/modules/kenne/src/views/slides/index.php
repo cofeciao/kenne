@@ -111,7 +111,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                         ],
 										'sld_cat_id',
-										'sld_status',
+                                        [
+                                            'attribute'=>'sld_status',
+                                            'content' => function($model){
+                                                if($model->sld_status == 1){
+                                                    return Html::a('Kích hoạt',['/kenne/slides','update'=>$model->id, 'action'=>'update'],['class'=>'badge badge-success']);
+                                                    //return '<span class="badge badge-success" style="font-size: 15px">Hiển thị</span>';
+                                                }else{
+                                                    return Html::a('Không kích hoạt',['/kenne/slides','update'=>$model->id, 'action'=>'update'],['class'=>'badge badge-secondary']);
+                                                    //return '<span class="badge badge-secondary">Không hiển thị<pan>';
+                                                }
+                                            },
+                                        ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => KenneModule::t('kenne', 'Actions'),

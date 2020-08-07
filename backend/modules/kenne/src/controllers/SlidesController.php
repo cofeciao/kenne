@@ -8,7 +8,6 @@ use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\kenne\KenneModule;
 use backend\components\MyController;
 use modava\kenne\models\Slides;
 use modava\kenne\models\search\SlidesSearch;
@@ -42,12 +41,18 @@ class SlidesController extends MyController
         $searchModel = new SlidesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        if (isset($param['update']) && isset($param['action'])){
+            $model = Slides::findOne($param['update']);
+            $model->sld_status = $model->sld_status == $model::DISABLE_STATUS ? $model::ACTIVE_STATUS : $model::DISABLE_STATUS ;
+            $model->save();
+
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
