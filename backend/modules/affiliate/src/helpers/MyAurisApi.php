@@ -10,6 +10,9 @@ namespace modava\affiliate\helpers;
 
 class MyAurisApi
 {
+    static $CACHE_TIME = 7200; // 2 hours
+    static $CACHE_MANAGE_KEY = 'redis-affiliate-dashboard-myauris-list-home-key';
+
     public static function getListThaoTac () {
         $cache = \Yii::$app->cache;
         $cacheKey = 'redis-affiliate-dashboard-myauris-list-thao-tac';
@@ -23,7 +26,9 @@ class MyAurisApi
         $response2 = $curlHelper2->execute();
 
         $listThaoTac = json_decode($response2['result'], true);
-        $cache->set($cacheKey, $listThaoTac, 86400); // Cache 1 day
+        $cache->set($cacheKey, $listThaoTac, self::$CACHE_TIME);
+
+        self::manageCacheKey($cacheKey);
 
         return $listThaoTac;
     }
@@ -45,8 +50,24 @@ class MyAurisApi
         $curlHelper->setHeader($apiParam['header']);
         $response = $curlHelper->execute();
 
-        $cache->set($cacheKey, $response, 86400); // Cache 1 day
+        $cache->set($cacheKey, $response, self::$CACHE_TIME);
+
+        self::manageCacheKey($cacheKey);
 
         return $response;
+    }
+
+    private static function manageCacheKey ($cacheKey) {
+        $cache = \Yii::$app->cache;
+
+        if ($cache->exists(self::$CACHE_MANAGE_KEY)) {
+            $listKey = $cache->get(self::$CACHE_MANAGE_KEY);
+            if (!array_key_exists($cacheKey, $listKey)) $listKey[] = $cacheKey;
+        }
+        else {
+            $listKey = [$cacheKey];
+        }
+
+        $cache->set(self::$CACHE_MANAGE_KEY, $listKey);
     }
 }

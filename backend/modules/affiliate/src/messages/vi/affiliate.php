@@ -83,4 +83,6 @@ return [
     'Full Name, Phone, Code' => 'Tên, SĐT, Mã KH',
     'Order Infomation' => 'Thông tin HĐ',
     'Customer Infomation' => 'Thông tin KH',
+    'Delete cache successfully' => 'Xoá cache thành công!',
+    'Notification' => 'Thông báo',
 ];
