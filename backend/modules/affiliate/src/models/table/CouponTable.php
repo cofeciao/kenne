@@ -33,4 +33,8 @@ class CouponTable extends \yii\db\ActiveRecord
         }
         parent::afterSave($insert, $changedAttributes);
     }
+
+    public static function getAll() {
+        return self::find()->all();
+    }
 }

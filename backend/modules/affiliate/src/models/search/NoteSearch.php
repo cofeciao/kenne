@@ -18,7 +18,7 @@ class NoteSearch extends Note
     public function rules()
     {
         return [
-            [['id', 'partner_id', 'customer_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'customer_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug', 'call_time', 'recall_time', 'description'], 'safe'],
         ];
     }
@@ -61,7 +61,6 @@ class NoteSearch extends Note
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'partner_id' => $this->partner_id,
             'customer_id' => $this->customer_id,
             'call_time' => $this->call_time,
             'recall_time' => $this->recall_time,

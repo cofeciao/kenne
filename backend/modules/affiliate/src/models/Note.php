@@ -4,6 +4,7 @@ namespace modava\affiliate\models;
 
 use common\models\User;
 use modava\affiliate\AffiliateModule;
+use modava\affiliate\helpers\Utils;
 use modava\affiliate\models\table\NoteTable;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
@@ -18,7 +19,6 @@ use Yii;
     * @property int $id
     * @property string $title
     * @property string $slug
-    * @property int $partner_id Partner tích hợp affiliate
     * @property int $customer_id Mã khách hàng
     * @property string $call_time Thời gian gọi
     * @property string $recall_time Thời gian gọi lại
@@ -30,7 +30,6 @@ use Yii;
     *
             * @property User $createdBy
             * @property User $updatedBy
-            * @property Partner $partner
     */
 class Note extends NoteTable
 {
@@ -64,11 +63,11 @@ class Note extends NoteTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
-                        ActiveRecord::EVENT_BEFORE_INSERT => ['call_time', ],
-                        ActiveRecord::EVENT_BEFORE_UPDATE => ['call_time',],
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['call_time'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['call_time'],
                     ],
                     'value' => function ($event) {
-                        return date('Y-m-d H:i:s', strtotime($this->call_time));
+                        return Utils::convertDateTimeToDBFormat($this->call_time);
                     },
                 ],
                 [
@@ -78,7 +77,7 @@ class Note extends NoteTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['recall_time'],
                     ],
                     'value' => function ($event) {
-                        return date('Y-m-d H:i:s', strtotime($this->recall_time));
+                        return Utils::convertDateTimeToDBFormat($this->recall_time);
                     },
                 ],
             ]
@@ -91,15 +90,14 @@ class Note extends NoteTable
     public function rules()
     {
         return [
-			[['title', 'slug', 'partner_id', 'customer_id', 'call_time', 'recall_time',], 'required'],
-			[['partner_id', 'customer_id',], 'integer'],
+			[['title', 'slug', 'customer_id', 'call_time',], 'required'],
+			[['customer_id',], 'integer'],
 			[['call_time', 'recall_time'], 'safe'],
 			[['description'], 'string'],
 			[['title', 'slug'], 'string', 'max' => 255],
 			[['slug'], 'unique'],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-			[['partner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Partner::class, 'targetAttribute' => ['partner_id' => 'id']],
 		];
     }
 
@@ -112,7 +110,6 @@ class Note extends NoteTable
             'id' => AffiliateModule::t('affiliate', 'ID'),
             'title' => AffiliateModule::t('affiliate', 'Title'),
             'slug' => AffiliateModule::t('affiliate', 'Slug'),
-            'partner_id' => AffiliateModule::t('affiliate', 'Partner ID'),
             'customer_id' => AffiliateModule::t('affiliate', 'Customer ID'),
             'call_time' => AffiliateModule::t('affiliate', 'Call Time'),
             'recall_time' => AffiliateModule::t('affiliate', 'Recall Time'),
@@ -144,7 +141,13 @@ class Note extends NoteTable
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    public function getPartner() {
-        return $this->hasOne(Partner::class, ['id' => 'partner_id']);
+    public function getCustomer() {
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
+    }
+
+    public static function countByCustomer ($customerId) {
+        return (int) self::find()
+            ->where(['customer_id' => $customerId])
+            ->count();
     }
 }
