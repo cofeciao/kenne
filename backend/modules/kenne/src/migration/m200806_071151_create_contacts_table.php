@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%contacts}}`.
  */
-class m200806_030258_create_contacts_table extends Migration
+class m200806_071151_create_contacts_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -22,7 +22,7 @@ class m200806_030258_create_contacts_table extends Migration
             'con_email' => $this->string(255),
             'con_subject' => $this->string(255),
             'con_content' => $this->string(255),
-            'con_status' => $this->string(255)->defaultValue(1),
+            'con_status' => $this->tinyInteger(1)->defaultValue(1),
             'created_at' => $this->integer(11)
         ],$tableOptions);
     }
@@ -35,4 +35,3 @@ class m200806_030258_create_contacts_table extends Migration
         $this->dropTable('{{%contacts}}');
     }
 }
-

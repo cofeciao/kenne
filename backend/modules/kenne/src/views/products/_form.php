@@ -11,9 +11,7 @@ use modava\kenne\KenneModule;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="products-form">
-    <?php
 
-    ?>
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     <?= $form->field($model, 'pro_name')->label('Tên sp')->textInput(['maxlength' => true]) ?>
 

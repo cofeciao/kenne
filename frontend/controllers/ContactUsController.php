@@ -15,9 +15,7 @@ class ContactUsController extends MyController
     public function actionCreate()
     {
         $model = new Contacts();
-
         $data = \Yii::$app->request->post();
-
         $model->con_name = $data['con_name'];
         $model->con_content = $data['con_message'];
         $model->con_email = $data['con_email'];

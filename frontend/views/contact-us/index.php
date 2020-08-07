@@ -40,8 +40,8 @@
                     </div>
                     <div class="single-contact-block last-child">
                         <h4><i class="fa fa-envelope-o"></i> Email</h4>
-                        <p>yourmail@domain.com</p>
-                        <p>support@hastech.company</p>
+                        <p>thiennhan6677@domain.com</p>
+                        <p>bestbtn@bestbtn.com</p>
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@
                     <h2>Accessories <br> Explore Trending</h2>
                     <p class="short-desc">Aliquam error eos cumque aut repellat quasi accusantium inventore necessitatibus. Vel quisquam distinctio in inventore dolorum.</p>
                     <div class="slide-btn">
-                        <a class="kenne-btn" href="shop-left-sidebar.html">shop now</a>
+                        <a class="kenne-btn" href="<?= \yii\helpers\Url::toRoute('/shop')?>">shop now</a>
                     </div>
                 </div>
             </div>
@@ -46,6 +46,35 @@
                 </div>
             </div>
         </div>
+
+        <div class="slide-item bg-3 animation-style-01">
+            <div class="slider-progress"></div>
+            <div class="container">
+                <div class="slide-content">
+                    <span>Exclusive Offer -10% Off This Week</span>
+                    <h2>Stylist  Female Clothes</h2>
+                    <p class="short-desc-2">Made from Soft, Durable, US-grown Supima cotton.</p>
+                    <div class="slide-btn">
+                        <a class="kenne-btn" href="<?= \yii\helpers\Url::toRoute('/shop')?>">shop now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-item bg-4 animation-style-01">
+            <div class="slider-progress"></div>
+            <div class="container">
+                <div class="slide-content">
+                    <span>Exclusive Offer -10% Off This Week</span>
+                    <h2>Stylist <br> Female Clothes</h2>
+                    <p class="short-desc-2">Made from Soft, Durable, US-grown Supima cotton.</p>
+                    <div class="slide-btn">
+                        <a class="kenne-btn" href="<?= \yii\helpers\Url::toRoute('/shop')?>">shop now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

@@ -38,6 +38,14 @@ use modava\kenne\KenneModule;
         </a>
     </li>
 
+    <?php } elseif (Yii::$app->controller->id == 'slides'){?>
+        <li class="nav-item mb-5">
+            <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'slides') echo ' active' ?>"
+               href="<?= Url::toRoute(['/kenne/slides']); ?>">
+                <i class="ion ion-ios-locate"></i><?= KenneModule::t('kenne', 'Slides'); ?>
+            </a>
+        </li>
+
     <?php } else {?>
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'orders') echo ' active' ?>"
