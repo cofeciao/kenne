@@ -38,6 +38,14 @@ use modava\kenne\KenneModule;
         </a>
     </li>
 
+    <?php } elseif (Yii::$app->controller->id == 'subcribes'){?>
+    <li class="nav-item mb-5">
+        <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'subcribes') echo ' active' ?>"
+           href="<?= Url::toRoute(['/kenne/subcribes']); ?>">
+            <i class="ion ion-ios-locate"></i><?= KenneModule::t('kenne', 'Subcribes'); ?>
+        </a>
+    </li>
+
     <?php } elseif (Yii::$app->controller->id == 'slides'){?>
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'slides') echo ' active' ?>"
@@ -54,5 +62,7 @@ use modava\kenne\KenneModule;
         </a>
     </li>
     <?php } ?>
+
+
 
 </ul>

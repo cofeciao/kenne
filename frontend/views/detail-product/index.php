@@ -103,7 +103,7 @@
                         <div class="sp-essential_stuff">
                             <ul>
                                 <?php if($data['pro_quantity'] != 0) {?>
-                                <li>Có hàng</li>
+                                <li>Còn <?= $data['pro_quantity'] ?> sản phẩm</li>
                                 <?php }else{?>
                                 <li>Hết hàng</li>
                                 <?php } ?>
@@ -138,6 +138,14 @@
                                 <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                 <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                             </div>
+                             <?php  if (Yii::$app->session->hasFlash('error')){
+                                        ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?= Yii::$app->session->getFlash('error') ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                    </div>
+                                    <?php  }?>
                         </div>
                         <div class="qty-btn_area">
                             <ul>

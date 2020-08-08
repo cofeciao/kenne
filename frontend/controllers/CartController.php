@@ -15,6 +15,7 @@ class CartController extends MyController
         $total = 0;
         $pro_quantity = [];
         $data = unserialize(serialize(Component::getCookies('cart')));
+
         if (empty($data)){
             $data = "";
         } else {
@@ -26,6 +27,7 @@ class CartController extends MyController
                 $total += $item['price']*$item['sl'];
             }
         }
+        Component::setCookies('cart',$data);
 
         return $this->render('index', [
             'data' => $data,
@@ -37,7 +39,12 @@ class CartController extends MyController
     {
        $queryParams = Yii::$app->request->queryParams;
         $slug = $queryParams['slug'];
+        $product = Products::getDetailProduct($slug);
         isset($queryParams['qtt']) ? $quantity = $queryParams['qtt']: $quantity = 1;
+        if ($quantity > $product['pro_quantity']){
+            Yii::$app->session->setFlash('error','<b>Số lượng không đủ</b>');
+            return $this->redirect(Yii::$app->request->referrer);
+        }
         $cart = new Cart();
         $cart->add($slug,$quantity);
         //__PHP_Incomplete_Class Object with cookie.
@@ -45,7 +52,7 @@ class CartController extends MyController
 
         //return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect('/cart');
     }
 
     public function actionDelete($id){
@@ -61,15 +68,19 @@ class CartController extends MyController
     public function actionUpdateQuantity(){
         $kq = [];
         $data = unserialize(serialize(Component::getCookies('cart')));
-
         $data1 = Yii::$app->request->post();
 
         unset($data1['_csrf']);
-
+        $session = Yii::$app->session;
         foreach ($data as $key => $value){
             foreach($data1 as $k => $v){
                 if ( $k == $key ){
-                    $value['sl'] = $v['sl'];;
+                    if($value['pro_quantity'] >= $v['sl']){
+                        $value['sl'] = $v['sl'];
+                        Yii::$app->session->setFlash('success'.$k,'<b>Đã cập nhật</b>');
+                    }else{
+                        Yii::$app->session->setFlash('error'.$k,'<b>Số lượng không đủ.</b>');
+                    }
                 }
             }
             $kq[$key] = $value;

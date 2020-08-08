@@ -5,7 +5,6 @@ namespace frontend\controllers;
 use frontend\models\Products;
 use frontend\components\MyController;
 
-
 class SiteController extends MyController
 {
     public function actionIndex()

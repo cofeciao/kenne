@@ -4,6 +4,7 @@
 namespace frontend\widgets;
 
 
+use common\components\Component;
 use yii\base\Widget;
 
 class AlertWidget extends Widget
@@ -15,6 +16,10 @@ class AlertWidget extends Widget
 
     public function run()
     {
-        return $this->render('alertWidget',[]);
+        $data = unserialize(serialize(Component::getCookies('cart')));
+
+        return $this->render('alertWidget',[
+            'data'=>$data
+        ]);
     }
 }
