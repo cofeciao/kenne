@@ -27,8 +27,8 @@ $this->title = "Blogs";
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Search</h4>
                         <div class="search-form_area">
-                            <form class="search-form" action="javascript:void(0)">
-                                <input type="text" class="search-field" placeholder="search here">
+                            <form class="search-form" action="<?php \yii\helpers\Url::toRoute(['/blog']) ?>">
+                                <input type="text" class="search-field" placeholder="search here" name="search">
                                 <button type="submit" class="search-btn"><i class="ion-ios-search"></i></button>
                             </form>
                         </div>
@@ -128,7 +128,6 @@ $this->title = "Blogs";
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="row blog-item_wrap">
                     <?php if(isset($pages)){ ?>
-
                     <?php foreach ($pages->models as $item) : ?>
                     <div class="col-lg-6">
                         <div class="blog-item">
@@ -172,7 +171,7 @@ $this->title = "Blogs";
                             <?php } ?>
                             <div class="blog-content">
                                 <h3 class="heading">
-                                    <a href="<?= \yii\helpers\Url::toRoute(['detail-blog','id'=>$item['id']])?>"><?=$item['title'];?></a>
+                                    <a href="<?php echo \yii\helpers\Url::toRoute(['/blog/blog-detail', 'id' => $item['id']]);?>"><?=$item['title'];?></a>
                                 </h3>
                                 <p class="short-desc">
                                     <?=$item['descriptions']?>

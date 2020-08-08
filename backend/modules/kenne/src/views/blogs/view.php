@@ -49,6 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attributes' => [
 						'id',
 //						'image',
+                        ['attribute'=>'image',
+                            'format'=>'html',
+                            'value'=>function($model){
+                               return Html::img(Url::to('/uploads/kenne/150x150/'.$model->image));
+                            }
+                        ],
 						'title',
 						'descriptions',
 						'date',

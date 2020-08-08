@@ -108,16 +108,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'attribute' =>'image',
-                                            'content' => function($model){
-                                                if($model->image == null)
-                                                    {
-                                                        return null;
-                                                    }
-                                                $str = '';
-                                                foreach ($model->image as $key){
-                                                   $str.=Html::img('/backend/uploads/'.$key,['width' => '200px']);
-                                                }
-                                                return $str;
+//                                            'content' => function($model){
+//                                                if($model->image == null)
+//                                                    {
+//                                                        return null;
+//                                                    }
+//                                                $str = '';
+//                                                foreach ($model->image as $key){
+//                                                   $str.=Html::img('/backend/uploads/'.$key,['width' => '200px']);
+//                                                }
+//                                                return $str;
+                                            'format' => 'html',
+                                            'content'=>function($model){
+                                                return Html::img($model->image,['width'=>'100px','height'=>'100px']);
                                             }
                                         ],
                                         'title',
