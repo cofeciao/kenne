@@ -96,21 +96,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                         ],
                                     
-										'username',
-										'auth_key',
-										'password_hash',
-										'oauth_client',
-										'oauth_client_user_id',
-										//'password_reset_token',
+										'first_name',
+										'last_name',
+//										'password_hash',
+//										'oauth_client',
+//										'oauth_client_user_id',
+										'access_token',
 										//'email:email',
 										//'logged_at',
-                                        [
-                                            'attribute' => 'created_by',
-                                            'value' => 'userCreated.userProfile.fullname',
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                        ],
+
                                         [
                                             'attribute' => 'created_at',
                                             'format' => 'date',

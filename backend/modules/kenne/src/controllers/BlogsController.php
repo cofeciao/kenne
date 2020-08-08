@@ -100,7 +100,6 @@ class BlogsController extends MyController
 //                $model->image = $imgNames;
 //            }
 
-
 ////////////////////////////////////////// End Upload Hình Ảnh /////////////////////////////////////////////////////////
 
             if ($model->validate() && $model->save()) {
@@ -120,7 +119,8 @@ class BlogsController extends MyController
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
-            } }
+            }
+        }
 
             return $this->render('create', [
                 'model' => $model,

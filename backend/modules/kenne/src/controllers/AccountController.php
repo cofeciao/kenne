@@ -72,6 +72,9 @@ class AccountController extends MyController
         $model = new Account();
 
         if ($model->load(Yii::$app->request->post())) {
+
+            $model->first_name = $this->firstname;
+
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',

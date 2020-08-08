@@ -33,22 +33,11 @@ class Account extends AccountTable
     public $toastr_key = 'account';
     public function behaviors()
     {
+
         return array_merge(
             parent::behaviors(),
             [
-                [
-                    'class' => BlameableBehavior::class,
-                    'createdByAttribute' => 'created_by',
-                    'updatedByAttribute' => 'updated_by',
-                ],
-                'timestamp' => [
-                    'class' => 'yii\behaviors\TimestampBehavior',
-                    'preserveNonEmptyValues' => true,
-                    'attributes' => [
-                        ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                        ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                    ],
-                ],
+
             ]
         );
     }
@@ -59,16 +48,17 @@ class Account extends AccountTable
     public function rules()
     {
         return [
-			[['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-			[['status', 'created_by', 'updated_by'], 'integer'],
-			[['created_at', 'updated_at', 'logged_at'], 'safe'],
-			[['username', 'password_hash', 'oauth_client', 'oauth_client_user_id', 'password_reset_token', 'email'], 'string', 'max' => 255],
-			[['auth_key'], 'string', 'max' => 32],
-			[['username'], 'unique'],
+			[['password', 'email', 'first_name','last_name'], 'required'],
+			[['status'], 'integer'],
+            [['password' , 'confirm_password'], 'string', 'min' => 6 , 'max' => 10],
+			[['email'], 'string', 'max' => 255],
+			[['auth_key','access_token','first_name','last_name'], 'string', 'max' => 32],
 			[['email'], 'unique'],
-			[['password_reset_token'], 'unique'],
+			[['access_token'], 'unique'],
+            array('password', 'compare', 'compareAttribute'=> 'confirm_password' , 'message' => "password không trùng khớp"),
 		];
     }
+
 
     /**
     * {@inheritdoc}
@@ -77,19 +67,12 @@ class Account extends AccountTable
     {
         return [
             'id' => KenneModule::t('kenne', 'ID'),
-            'username' => KenneModule::t('kenne', 'Username'),
             'auth_key' => KenneModule::t('kenne', 'Auth Key'),
-            'password_hash' => KenneModule::t('kenne', 'Password Hash'),
-            'oauth_client' => KenneModule::t('kenne', 'Oauth Client'),
-            'oauth_client_user_id' => KenneModule::t('kenne', 'Oauth Client User ID'),
-            'password_reset_token' => KenneModule::t('kenne', 'Password Reset Token'),
+            'access_token' => KenneModule::t('kenne', 'Password Reset Token'),
             'email' => KenneModule::t('kenne', 'Email'),
             'status' => KenneModule::t('kenne', 'Status'),
-            'created_at' => KenneModule::t('kenne', 'Created At'),
-            'updated_at' => KenneModule::t('kenne', 'Updated At'),
-            'logged_at' => KenneModule::t('kenne', 'Logged At'),
-            'created_by' => KenneModule::t('kenne', 'Created By'),
-            'updated_by' => KenneModule::t('kenne', 'Updated By'),
+            'first_name' => KenneModule::t('kenne', 'First name'),
+            'last_name' => KenneModule::t('kenne', 'Last name'),
         ];
     }
 
@@ -100,7 +83,7 @@ class Account extends AccountTable
     */
     public function getUserCreated()
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+//        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
@@ -111,5 +94,18 @@ class Account extends AccountTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getLogin($email,$password)
+    {
+        $dong = self::find()->where(['email' => $email, 'password' => $password])->count();
+        if($dong == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
