@@ -18,8 +18,8 @@ class AccountSearch extends Account
     public function rules()
     {
         return [
-            [['id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'oauth_client', 'oauth_client_user_id', 'password_reset_token', 'email', 'created_at', 'updated_at', 'logged_at'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['username', 'auth_key', 'oauth_client', 'access_token', 'email'], 'safe'],
         ];
     }
 
@@ -64,17 +64,16 @@ class AccountSearch extends Account
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'logged_at' => $this->logged_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
+        $query
+//            ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'oauth_client', $this->oauth_client])
-            ->andFilterWhere(['like', 'oauth_client_user_id', $this->oauth_client_user_id])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
+//            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
+////            ->andFilterWhere(['like', 'oauth_client', $this->oauth_client])
+//            ->andFilterWhere(['like', 'oauth_client_user_id', $this->oauth_client_user_id])
+            ->andFilterWhere(['like', 'access_token', $this->access_token])
             ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;

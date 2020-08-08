@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 $this->title = 'Đăng nhập - Đăng ký'
 ?>
 <!-- Begin Kenne's Breadcrumb Area -->
@@ -22,17 +23,23 @@ $this->title = 'Đăng nhập - Đăng ký'
         <div class="row">
             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
                 <!-- Login Form s-->
-                <form action="#">
+                <form action="<?= Url::toRoute('/sign/index') ?>" method="post">
+                    <?php $form = ActiveForm::begin(); ?>
+                    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
                     <div class="login-form">
                         <h4 class="login-title">Login</h4>
+                        <?php if(Yii::$app->session->hasFlash('loginOK')) {?>
+                        <div class="alert alert-success text-center">Đăng nhập thành công</div>
+                        <?php }
+                        if(Yii::$app->session->hasFlash('loginFail')) { ?>
+                        <div class="alert alert-danger text-center">Đăng nhập thất bại</div>
+                        <?php } ?>
                         <div class="row">
                             <div class="col-md-12 col-12">
-                                <label>Email Address*</label>
-                                <input type="email" placeholder="Email Address">
+                                <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-12 mb--20">
-                                <label>Password</label>
-                                <input type="password" placeholder="Password">
+                                <?= $form->field($model, 'password')->textInput()?>
                             </div>
                             <div class="col-md-8">
                                 <div class="check-box">
@@ -50,38 +57,44 @@ $this->title = 'Đăng nhập - Đăng ký'
                             </div>
                         </div>
                     </div>
+                    <?php ActiveForm::end();?>
                 </form>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
-                <form action="#">
+                <form action="<?= Url::toRoute('/sign/register') ?>" method="post">
+                    <?php $form = ActiveForm::begin(); ?>
                     <div class="login-form">
                         <h4 class="login-title">Register</h4>
                         <div class="row">
                             <div class="col-md-6 col-12 mb--20">
-                                <label>First Name</label>
-                                <input type="text" placeholder="First Name">
+                            <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-md-6 col-12 mb--20">
-                                <label>Last Name</label>
-                                <input type="text" placeholder="Last Name">
+                            <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-md-12">
-                                <label>Email Address*</label>
-                                <input type="email" placeholder="Email Address">
+                            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-md-6">
-                                <label>Password</label>
-                                <input type="password" placeholder="Password">
+                            <?= $form->field($model, 'password')->textInput() ?>
                             </div>
                             <div class="col-md-6">
-                                <label>Confirm Password</label>
-                                <input type="password" placeholder="Confirm Password">
+                            <?= $form->field($model, 'confirm_password')->textInput() ?>
                             </div>
+                            <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+                            <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
                             <div class="col-12">
+                                <?php if(Yii::$app->session->hasFlash('toastr-' . $model->toastr_key . '-view')) {?>
+                                    <div class="alert alert-success text-center">Đăng ký thành công</div>
+                                <?php }
+                                if(Yii::$app->session->hasFlash('toastr-' . $model->toastr_key . '-form')) { ?>
+                                    <div class="alert alert-danger text-center">Đăng ký thất bại</div>
+                                <?php } ?>
                                 <button class="kenne-register_btn">Register</button>
                             </div>
                         </div>
                     </div>
+                    <?php ActiveForm::end(); ?>
                 </form>
             </div>
         </div>
