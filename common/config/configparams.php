@@ -102,6 +102,12 @@ return [
             'width' => 150,
             'height' => 150
         ]
+    ],
+    'partner' => [
+        '150x150' => [
+            'folder' => '/uploads/partner/150x150/',
+            'width' => 150,
+            'height' => 150
+        ]
     ]
-
 ];

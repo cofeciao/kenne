@@ -67,6 +67,12 @@ phpunit.phar
 !/frontend/web/uploads/
 /frontend/web/uploads/*
 
+!/frontend/web/uploads/partner/
+/frontend/web/uploads/partner/*
+!/frontend/web/uploads/partner/150x150/
+/frontend/web/uploads/partner/150x150/*
+!/frontend/web/uploads/partner/150x150/no-image.png
+
 !/frontend/web/uploads/slide/
 /frontend/web/uploads/slide/*
 !/frontend/web/uploads/slide/150x150/

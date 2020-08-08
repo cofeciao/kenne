@@ -4,14 +4,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
-use modava\slide\widgets\NavbarWidgets;
-use modava\slide\SlideModule;
+use modava\website\widgets\NavbarWidgets;
+use modava\website\WebsiteModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\slide\models\Slide */
+/* @var $model modava\website\models\WebsitePartner */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => SlideModule::t('slide', 'Slides'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => WebsiteModule::t('website', 'Website Partners'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-               title="<?= SlideModule::t('slide', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= SlideModule::t('slide', 'Create'); ?></a>
-            <?= Html::a(SlideModule::t('slide', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(SlideModule::t('slide', 'Delete'), ['delete', 'id' => $model->id], [
+                title="<?= WebsiteModule::t('website', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
+            <?= Html::a(WebsiteModule::t('website', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(WebsiteModule::t('website', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => SlideModule::t('slide', 'Are you sure you want to delete this item?'),
+                    'confirm' => WebsiteModule::t('website', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -47,47 +47,44 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'id',
-                        'title',
-                        'slug',
+						'id',
+						'title',
                         [
                             'attribute' => 'image',
                             'format' => 'html',
                             'value' => function ($model) {
                                 if ($model->image == null)
                                     return null;
-                                return Html::img(Yii::$app->params['slide']['150x150']['folder'] . $model->image, ['width' => 150, 'height' => 150]);
+                                return Html::img(Yii::$app->params['partner']['150x150']['folder'] . $model->image, ['width' => 150, 'height' => 150]);
                             },
                             'headerOptions' => [
                                 'width' => 150,
                             ],
                         ],
-                        'link',
-                        'description:html',
-                        'position',
-                        [
-                            'attribute' => 'status',
-                            'value' => function ($model) {
-                                return Yii::$app->getModule('slide')->params['status'][$model->status];
-                            }
-                        ],
+						'link',
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
                                 if ($model->language == null)
                                     return null;
-                                return Yii::$app->getModule('slide')->params['availableLocales'][$model->language];
+                                return Yii::$app->getModule('website')->params['availableLocales'][$model->language];
                             },
                         ],
-                        'created_at:datetime',
-                        'updated_at:datetime',
+                        [
+                            'attribute' => 'status',
+                            'value' => function ($model) {
+                                return Yii::$app->getModule('website')->params['status'][$model->status];
+                            }
+                        ],
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => SlideModule::t('slide', 'Created By')
+                            'label' => WebsiteModule::t('website', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => SlideModule::t('slide', 'Updated By')
+                            'label' => WebsiteModule::t('website', 'Updated By')
                         ],
                     ],
                 ]) ?>

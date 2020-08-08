@@ -1,26 +1,22 @@
 <?php
 
-namespace modava\video\controllers;
+namespace modava\website\controllers;
 
-use modava\video\components\MyUpload;
-use modava\video\models\table\VideoCategoryTable;
-use modava\video\models\table\VideoTypeTable;
+use modava\website\components\MyUpload;
 use yii\db\Exception;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\video\VideoModule;
-use modava\video\components\MyVideoController;
-use modava\video\models\Video;
-use modava\video\models\search\VideoSearch;
-use yii\web\Response;
+use modava\website\WebsiteModule;
+use modava\website\components\MyWebsiteController;
+use modava\website\models\WebsitePartner;
+use modava\website\models\search\PartnerSearch;
 
 /**
- * VideoController implements the CRUD actions for Video model.
+ * PartnerController implements the CRUD actions for WebsitePartner model.
  */
-class VideoController extends MyVideoController
+class PartnerController extends MyWebsiteController
 {
     /**
      * {@inheritdoc}
@@ -38,12 +34,12 @@ class VideoController extends MyVideoController
     }
 
     /**
-     * Lists all Video models.
+     * Lists all WebsitePartner models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new VideoSearch();
+        $searchModel = new PartnerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -52,21 +48,9 @@ class VideoController extends MyVideoController
         ]);
     }
 
-    public function actionLoadCategoryByLang($lang = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ArrayHelper::map(VideoCategoryTable::getAllVideoCategory($lang), 'id', 'title');
-    }
-
-    public function actionLoadTypeByLang($lang = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ArrayHelper::map(VideoTypeTable::getAllVideoType($lang), 'id', 'title');
-    }
-
 
     /**
-     * Displays a single Video model.
+     * Displays a single WebsitePartner model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -79,13 +63,13 @@ class VideoController extends MyVideoController
     }
 
     /**
-     * Creates a new Video model.
+     * Creates a new WebsitePartner model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Video();
+        $model = new WebsitePartner();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -93,8 +77,8 @@ class VideoController extends MyVideoController
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
-                        $path = Yii::getAlias('@frontend/web/uploads/video/');
-                        foreach (Yii::$app->params['video'] as $key => $value) {
+                        $path = Yii::getAlias('@frontend/web/uploads/partner/');
+                        foreach (Yii::$app->params['partner'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
                                 mkdir($pathSave);
@@ -103,6 +87,8 @@ class VideoController extends MyVideoController
                         }
 
                     }
+                    $model->image = $imageName;
+                    $model->updateAttributes(['image']);
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
                         'text' => 'Tạo mới thành công',
@@ -129,7 +115,7 @@ class VideoController extends MyVideoController
     }
 
     /**
-     * Updates an existing Video model.
+     * Updates an existing WebsitePartner model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -140,27 +126,31 @@ class VideoController extends MyVideoController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $imgOld = $model->getOldAttribute('image');
             if ($model->validate()) {
+                $oldImage = $model->getOldAttribute('image');
                 if ($model->save()) {
-                    $imageName = null;
-                    if ($model->image != "") {
-                        if ($model->image != $imgOld) {
+                    if ($model->getAttribute('image') !== $oldImage) {
+                        if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
-                            $path = Yii::getAlias('@frontend/web/uploads/video/');
-                            foreach (Yii::$app->params['video'] as $key => $value) {
+                            $path = Yii::getAlias('@frontend/web/uploads/partner/');
+                            $imageName = null;
+                            foreach (Yii::$app->params['partner'] as $key => $value) {
                                 $pathSave = $path . $key;
                                 if (!file_exists($pathSave) && !is_dir($pathSave)) {
                                     mkdir($pathSave);
                                 }
-                                $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                                $resultName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
+                                if ($imageName == null) {
+                                    $imageName = $resultName;
+                                }
                             }
+
                             $model->image = $imageName;
                             if ($model->updateAttributes(['image'])) {
-                                foreach (Yii::$app->params['video'] as $key => $value) {
+                                foreach (Yii::$app->params['partner'] as $key => $value) {
                                     $pathSave = $path . $key;
-                                    if (file_exists($pathSave . '/' . $imgOld) && $imgOld != null) {
-                                        unlink($pathSave . '/' . $imgOld);
+                                    if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
+                                        unlink($pathSave . '/' . $oldImage);
                                     }
 
                                 }
@@ -193,7 +183,7 @@ class VideoController extends MyVideoController
     }
 
     /**
-     * Deletes an existing Video model.
+     * Deletes an existing WebsitePartner model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -231,20 +221,20 @@ class VideoController extends MyVideoController
     }
 
     /**
-     * Finds the Video model based on its primary key value.
+     * Finds the WebsitePartner model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Video the loaded model
+     * @return WebsitePartner the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
 
 
     protected function findModel($id)
     {
-        if (($model = Video::findOne($id)) !== null) {
+        if (($model = WebsitePartner::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('video', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('website', 'The requested page does not exist.'));
     }
 }

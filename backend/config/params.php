@@ -47,4 +47,5 @@ return [
     'product-size' => '150x150px',
     'article-size' => '150x150px',
     'slide-size' => '150x150px',
+    'partner-size' => '150x150px',
 ];
