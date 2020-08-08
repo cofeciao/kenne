@@ -57,6 +57,9 @@ return [
     'video' => [
         'class' => 'modava\video\VideoModule',
     ],
+    'slide' => [
+        'class' => 'modava\slide\SlideModule',
+    ],
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],

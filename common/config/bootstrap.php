@@ -38,6 +38,7 @@ Yii::setAlias('modava/iway', dirname(dirname(__DIR__)) . '/backend/modules/iway/
 Yii::setAlias('modava/affiliate', dirname(dirname(__DIR__)) . '/backend/modules/affiliate/src');
 Yii::setAlias('modava/pages', dirname(dirname(__DIR__)) . '/backend/modules/pages/src');
 Yii::setAlias('modava/video', dirname(dirname(__DIR__)) . '/backend/modules/video/src');
+Yii::setAlias('modava/slide', dirname(dirname(__DIR__)) . '/backend/modules/slide/src');
 Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
 //Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
 

@@ -171,6 +171,10 @@ phpunit.phar
 /backend/widgets/giaohang/README.md
 /backend/widgets/giaohang/.git
 
+/backend/modules/slide/composer.json
+/backend/modules/slide/README.md
+/backend/modules/slide/.git
+
 #package
 /package/imagick/.git
 /package/imagick/README.md
