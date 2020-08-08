@@ -6,6 +6,7 @@ use yii\helpers\Url;
 $this->title = 'WEB_NAME';
 ?>
 
+
     <!-- Begin Slider Area -->
     <?= \frontend\widgets\SliderWidget::widget()?>
     <!-- Slider Area End Here -->
@@ -48,11 +49,12 @@ $this->title = 'WEB_NAME';
                         "slidesToShow": 1
                         }}
                     ]'>
+                        <?php if (isset($data)){ ?>
                     <?php foreach ($data as $item){?>
                         <div class="product-item">
                             <div class="single-product">
                                 <div class="product-img">
-                                    <a href="<?= \yii\helpers\Url::toRoute(['/detail-product/','slug' => $item->pro_slug])?>">
+                                    <a href="<?= Url::toRoute(['/detail-product/','slug' => $item->pro_slug])?>">
                                         <img class="primary-img" src="<?= $item->pro_image ?>" alt="<?= $item->pro_slug ?>">
                                         <img class="secondary-img" src="<?= $item->pro_image ?>" alt="<?= $item->pro_slug ?>">
                                     </a>
@@ -62,7 +64,9 @@ $this->title = 'WEB_NAME';
                                             <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Quick View"><i
                                                             class="ion-ios-search"></i></a>
                                             </li>
-                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                            <li><a class="add-wishlist" data-name="<?= $item->pro_name?>" href="<?= Url::toRoute(['/wishlist/add-to-wishlist','slug'=>$item->pro_slug]) ?>" data-toggle="tooltip" data-placement="right" title="Add To Wishlist">
+                                                    <i class="ion-ios-heart-outline"></i>
+                                                </a>
                                             </li>
                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                             </li>
@@ -92,7 +96,7 @@ $this->title = 'WEB_NAME';
                             </div>
                         </div>
 
-                    <?php }?>
+                    <?php }}?>
 
                     </div>
                 </div>
@@ -146,6 +150,7 @@ $this->title = 'WEB_NAME';
 
                                 <?php if (isset($proBags)){?>
                                 <?php foreach ($proBags as $item){?>
+
                                         <div class="product-item">
                                             <div class="single-product">
                                                 <div class="product-img">
@@ -159,7 +164,7 @@ $this->title = 'WEB_NAME';
                                                             <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Quick View"><i
                                                                             class="ion-ios-search"></i></a>
                                                             </li>
-                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist/add-to-wishlist','slug'=>$item->pro_slug]) ?>" data-name="<?= $item->pro_name ?>" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
                                                             </li>
                                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                                             </li>
@@ -170,7 +175,7 @@ $this->title = 'WEB_NAME';
                                                 </div>
                                                 <div class="product-content">
                                                     <div class="product-desc_info">
-                                                        <h3 class="product-name"><a href="single-product.html"><?= $item->pro_name ?></a></h3>
+                                                        <h3 class="product-name"><a href="<?= Url::toRoute(['/detail-product','slug'=>$item->pro_slug])?>"><?= $item->pro_name ?></a></h3>
                                                         <div class="price-box">
                                                             <span class="old-price"><?= number_format(($item->pro_price - ($item->pro_price*$item->pro_sale/100)),0,',','.' ) ?> đ</span>
                                                             <span class="new-price"><?= number_format($item->pro_price,0,',','.' ) ?> đ</span>
@@ -225,18 +230,19 @@ $this->title = 'WEB_NAME';
                                                             <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Quick View"><i
                                                                             class="ion-ios-search"></i></a>
                                                             </li>
-                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist/add-to-wishlist','slug'=>$item->pro_slug]) ?>" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
                                                             </li>
                                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                                             </li>
-                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist/add-to-cart','slug'=>$item->pro_slug]) ?>" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                                 <div class="product-content">
                                                     <div class="product-desc_info">
-                                                        <h3 class="product-name"><a href="single-product.html"><?= $item->pro_name ?></a></h3>
+                                                        <h3 class="product-name"><a href="<?= Url::toRoute(['/detail-product','slug'=>$item->pro_slug])?>">
+                                                                <?= $item->pro_name ?></a></h3>
                                                         <div class="price-box">
                                                             <span class="old-price"><?= number_format(($item->pro_price - ($item->pro_price*$item->pro_sale/100)),0,',','.' ) ?> đ</span>
                                                             <span class="new-price"><?= number_format($item->pro_price,0,',','.' ) ?> đ</span>
@@ -291,18 +297,18 @@ $this->title = 'WEB_NAME';
                                                             <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Quick View"><i
                                                                             class="ion-ios-search"></i></a>
                                                             </li>
-                                                            <li><a href="wishlist.html" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist/add-to-wishlist','slug'=>$item->pro_slug]) ?>" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
                                                             </li>
                                                             <li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
                                                             </li>
-                                                            <li><a href="cart.html" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                                            <li><a href="<?= Url::toRoute(['/wishlist/add-to-cart','slug'=>$item->pro_slug]) ?>" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                                 <div class="product-content">
                                                     <div class="product-desc_info">
-                                                        <h3 class="product-name"><a href="single-product.html"><?= $item->pro_name ?></a></h3>
+                                                        <h3 class="product-name"><a href="<?= Url::toRoute(['/detail-product','slug'=>$item->pro_slug])?>"><?= $item->pro_name ?></a></h3>
                                                         <div class="price-box">
                                                             <span class="old-price"><?= number_format(($item->pro_price - ($item->pro_price*$item->pro_sale/100)),0,',','.' ) ?> đ</span>
                                                             <span class="new-price"><?= number_format($item->pro_price,0,',','.' ) ?> đ</span>

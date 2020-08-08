@@ -10,7 +10,7 @@ $this->title = "Blogs";
         <div class="breadcrumb-content">
             <h2>Grid View</h2>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="<?= \yii\helpers\Url::home() ?>">Home</a></li>
                 <li class="active">Left Sidebar</li>
             </ul>
         </div>
@@ -44,7 +44,7 @@ $this->title = "Blogs";
 
 <!--//////////////////////////////////////// Recent Post //////////////////////////////////////////////////////////-->
                         <h4 class="kenne-blog-sidebar-title">Recent Posts</h4>
-
+                        <?php if(isset($recentPost)){?>
                         <?php foreach ($recentPost as $item)  : ?>
                         <?php if(isset($item->image)){ ?>
                         <div class="recent-post">
@@ -54,12 +54,12 @@ $this->title = "Blogs";
                                 </a>
                             </div>
                             <div class="recent-post_desc">
-                                <span><a href="blog-details.html"><?=$item['title']?></a></span>
+                                <span><a href="<?= \yii\helpers\Url::toRoute(['blog-detail','id'=>$item->id])?>"><?=$item['title']?></a></span>
                                 <span class="post-date"><?= $item['date'] ?></span>
                             </div>
                         </div>
                         <?php }?>
-                        <?php endforeach; ?>
+                        <?php endforeach; }?>
                     </div>
 <!--//////////////////////////////////////// End Recent Post ////////////////////////////////////////////////////////-->
 
@@ -107,11 +107,12 @@ $this->title = "Blogs";
                     <div class="kenne-blog-sidebar">
                         <h4 class="kenne-blog-sidebar-title">Tags</h4>
                         <ul class="kenne-tags_list">
+                            <?php if(isset($tags)){ ?>
                             <?php foreach($tags as $item) : ?>
                                 <li>
                                     <a href="javascript:void(0)"><?=$item['tags']?></a>
                                 </li>
-                            <?php endforeach; ?>
+                            <?php endforeach; }?>
                         </ul>
                     </div>
                 </div>
@@ -126,7 +127,7 @@ $this->title = "Blogs";
 <!--///////////////////////////////////////////////////////  Gallery ////////////////////////////////////////////////-->
             <div class="col-lg-9 order-lg-2 order-1">
                 <div class="row blog-item_wrap">
-
+                    <?php if(isset($pages)){ ?>
                     <?php foreach ($pages->models as $item) : ?>
                     <div class="col-lg-6">
                         <div class="blog-item">
@@ -186,7 +187,7 @@ $this->title = "Blogs";
                             </div>
                         </div>
                     </div>
-                    <?php endforeach; ?>
+                    <?php endforeach;} ?>
 <!--//////////////////////////////////////////////////// End Gallery //////////////////////////////////////////////////////-->
 
 

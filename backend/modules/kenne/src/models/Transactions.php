@@ -27,6 +27,8 @@ use Yii;
     */
 class Transactions extends TransactionsTable
 {
+    const ACTIVE_TRANSACTION = 2;
+    const DISACTIVE_TRANSACTION = 1;
     public $toastr_key = 'transactions';
     public function behaviors()
     {

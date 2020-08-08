@@ -11,14 +11,15 @@
                                 <img src="/images/footer/logo/1.png" alt="Logo">
                             </a>
                         </div>
-                        <p class="short-desc">Subscribe to our newsleter, Enter your emil address</p>
+                        <p class="short-desc">Nhận thông tin khuyến mãi mới nhất, để lại email của bạn</p>
                         <div class="newsletter-form_wrap">
-                            <form action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="newsletters-form validate" target="_blank" novalidate>
+                            <form action="<?= \yii\helpers\Url::toRoute('/news-letter/subcribe')?>" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="newsletters-form validate" target="_blank" novalidate>
                                 <div id="mc_embed_signup_scroll">
                                     <div id="mc-form" class="mc-form subscribe-form">
-                                        <input id="mc-email" class="newsletter-input" type="email" autocomplete="off" placeholder="Enter email address" />
+                                        <?= \yii\helpers\Html::hiddenInput(Yii::$app->request->csrfParam,Yii::$app->request->csrfToken)?>
+                                        <input required id="mc-email" class="newsletter-input" type="email" name="emailSubcribe" autocomplete="off" placeholder="Enter email address" />
                                         <button class="newsletter-btn" id="mc-submit"><i
-                                                class="ion-android-mail"></i></button>
+                                                class="ion-android-mail" type="submit"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -33,10 +34,9 @@
                             </div>
                             <div class="footer-widgets">
                                 <ul>
-                                    <li><a href="javascript:void(0)">Product</a></li>
-                                    <li><a href="javascript:void(0)">My Cart</a></li>
-                                    <li><a href="javascript:void(0)">Wishlist</a></li>
-                                    <li><a href="javascript:void(0)">Cart</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::toRoute('/shop')?>">Product</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::toRoute('/cart')?>">My Cart</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::toRoute('/wishlist')?>">Wishlist</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -46,23 +46,21 @@
                             </div>
                             <div class="footer-widgets">
                                 <ul>
-                                    <li><a href="javascript:void(0)">Login</a></li>
-                                    <li><a href="javascript:void(0)">Register</a></li>
-                                    <li><a href="javascript:void(0)">Help</a></li>
-                                    <li><a href="javascript:void(0)">Support</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::toRoute('/sign')?>">Login</a></li>
+                                    <li><a href="<?= \yii\helpers\Url::toRoute('/sign')?>">Register</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <div class="footer-widgets_title">
-                                <h4>Categories</h4>
+                                <h4>Loại sản phẩm</h4>
                             </div>
                             <div class="footer-widgets">
                                 <ul>
-                                    <li><a href="javascript:void(0)">Men</a></li>
-                                    <li><a href="javascript:void(0)">Women</a></li>
-                                    <li><a href="javascript:void(0)">Jeans</a></li>
-                                    <li><a href="javascript:void(0)">Shoes</a></li>
+                                    <?php if(isset($data)) {?>
+                                        <?php foreach ($data as $item){?>
+                                            <li><a href="<?=\yii\helpers\Url::toRoute(['/shop/','slug'=> $item['cat_slug']])?>"> <?= $item['cat_name']?></a></li>
+                                        <?php }} ?>
                                 </ul>
                             </div>
                         </div>

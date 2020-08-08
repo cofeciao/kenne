@@ -150,6 +150,15 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
 
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('slides')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'slides') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/kenne/slides']); ?>">
+                            <i class="icon ion-ios-briefcase"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Slides'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
 
             </ul>
             <hr class="nav-separator">

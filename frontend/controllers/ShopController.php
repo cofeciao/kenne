@@ -1,18 +1,17 @@
 <?php
 
-
 namespace frontend\controllers;
 
+use common\helpers\MyHelper;
 use frontend\models\Products;
 use frontend\components\MyController;
-use frontend\models\ProductsSearch;
 
 class ShopController extends  MyController
 {
     public function actionIndex(){
+
         $data = '';
         $model = new Products();
-        $modelSearch = new ProductsSearch();
         $param = \Yii::$app->request->queryParams;
 
         if (empty($param)){
@@ -41,14 +40,17 @@ class ShopController extends  MyController
                $pagination->pageSize = 6;
                $data = $query->offset($pagination->offset)->limit($pagination->limit)->all();*/
             } elseif(isset($param['key'])){
-                $query = $modelSearch->search($param['key']);
+                $param1 = MyHelper::createAlias($param['key']);
+                $query = $model->search($param1);
                 if (isset($param['sort'])){
                     $query = $model->sortProduct($query,$param['sort']);
 
                 }
             }else{
                 $query = $model->getAllProducts();
-                $query = $model->sortProduct($query,$param['sort']);
+                if(isset($param['sort'])){
+                    $query = $model->sortProduct($query,$param['sort']);
+                }
             }
         }
 

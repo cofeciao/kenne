@@ -95,17 +95,42 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                    
-										'tr_id_customer',
-										'tr_name',
+                                        [
+                                            'attribute' => 'tr_id_customer',
+                                            'label' => 'KH'
+                                        ],
+                                        [
+                                            'attribute' => 'tr_name',
+                                            'label' => 'Họ và tên'
+                                        ],
+                                        [
+                                            'attribute' => 'tr_address',
+                                            'label' => 'Địa chỉ'
+                                        ],
+                                        [
+                                            'attribute' => 'tr_phone',
+                                            'label' => 'SĐT'
+                                        ],
+                                        [
+                                            'attribute' => 'tr_status',
+                                            'content'=>function($model){
+                                                if($model->tr_status == \modava\kenne\models\Transactions::DISACTIVE_TRANSACTION){
+                                                    return '<span class="badge badge-secondary">Chưa Thanh Toán</span>';
+                                                    } else {
+                                                    return '<span class="badge badge-success">Đã Thanh Toán</span>';
+                                                }
+                                            },
+                                            'label' => 'Trạng thái',
+                                        ],
+										/*'tr_name',
 										'tr_address',
 										'tr_phone',
 										'tr_status',
-										//'tr_total',
+										'tr_total',*/
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'header' => KenneModule::t('kenne', 'Actions'),
-                                            'template' => '{update} {delete}',
+                                            'template' => '{update} {delete} {view}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [

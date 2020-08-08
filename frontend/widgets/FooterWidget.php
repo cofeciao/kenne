@@ -4,12 +4,18 @@
 namespace frontend\widgets;
 
 
+use frontend\models\Categories;
 use yii\base\Widget;
 
 class FooterWidget extends Widget
 {
     public function run()
     {
-        return $this->render('footerWidget',[]);
+        $data = Categories::find()->all();
+
+        return $this->render('footerWidget',[
+            'data'=>$data
+        ]);
     }
+
 }

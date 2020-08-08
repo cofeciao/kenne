@@ -14,6 +14,9 @@ $this->title = "Giỏ hàng";
         </div>
     </div>
 </div>
+
+<?/*= \frontend\widgets\AlertWidget::widget()*/?>
+
 <!-- Kenne's Breadcrumb Area End Here -->
 <!-- Begin Uren's Cart Area -->
 <?php
@@ -65,14 +68,29 @@ if (empty($data)){ ?>
                                 <td class="kenne-product-name"><a href="javascript:void(0)"><?= $item['name']?></a></td>
                                 <td class="kenne-product-price"><span class="amount"><?= number_format($item['price'],0,',','.') ?> đ</span></td>
                                 <td class="quantity">
-                                    <label>Còn lại:&nbsp;</label><b><?= $item['pro_quantity']?></b> sp
+                                    <label>Còn lại:&nbsp;</label><b><span class="remain-quantity-<?= $key?>"><?= $item['pro_quantity']?></span></b> sp
                                     <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="<?= $item['sl'] ?>" type="text" name="<?=$key?>[sl]">
+                                        <input class="cart-plus-minus-box" value="<?= $item['sl'] ?>" type="text" data-name="<?= $key?>" name="<?=$key?>[sl]">
                                         <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                     </div>
+                                    <?php  if (Yii::$app->session->hasFlash('success'.$key)){
+                                        ?>
+                                    <div class="alert alert-success" role="alert">
+                                        <?= Yii::$app->session->getFlash('success'.$key) ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                    </div>
+                                    <?php  } elseif (Yii::$app->session->hasFlash('error'.$key)){ ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            <?= Yii::$app->session->getFlash('error'.$key) ?>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                        </div>
+                                    <?php }?>
                                 </td>
                                 <td class="product-subtotal"><span class="amount"><?= number_format($item['price']*$item['sl'],0,',','.') ?> đ</span></td>
+
                             </tr>
                             <?php }?>
                             </tbody>

@@ -75,7 +75,6 @@ class BlogsController extends MyController
 
         if ($model->load(Yii::$app->request->post())) {
 
-
 //////////////////////////////////////// Upload Hình Ảnh ///////////////////////////////////////////////////////////////
             if ($model->image != "") {
                 $pathImage = FRONTEND_HOST_INFO . $model->image;
@@ -89,7 +88,6 @@ class BlogsController extends MyController
                     $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                 }
             }
-
             $model->image = $imageName;
             $model->date = date('Y-m-d H:i:s');
 //            $file = UploadedFile::getInstances($model, 'file');

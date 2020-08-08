@@ -24,7 +24,7 @@ return [
             'folder' => '/uploads/product/300x300/',
             'width' => 300,
             'height' => 300
-        ]
+        ],
     ],
     'product-category' => [
         '150x150' => [
@@ -63,6 +63,11 @@ return [
             'width' => 600,
             'height' => 600
         ],
+        '1920x950' => [
+            'folder' => '/uploads/product/1920x950/',
+            'width' => 1920,
+            'height' => 950
+        ]
 
     ],
     'article-type' => [

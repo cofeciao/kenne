@@ -60,5 +60,8 @@ class Orders extends OrdersTable
         ];
     }
 
+    public function getProducts(){
+        return $this->hasMany(Products::className(),['id'=>'id_pro']);
+    }
 
 }

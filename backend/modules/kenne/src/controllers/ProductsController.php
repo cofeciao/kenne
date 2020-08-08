@@ -41,7 +41,15 @@ class ProductsController extends MyController
     public function actionIndex()
     {
         $searchModel = new ProductsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $param =  Yii::$app->request->queryParams;
+
+        if (isset($param['update']) && isset($param['action'])){
+            $model = self::findOne($param['update']);
+            $model->pro_status = $model->pro_status == $model::DISABLE_STATUS ? $model::ACTIVE_STATUS : $model::DISABLE_STATUS ;
+            $model->save();
+
+        }
+        $dataProvider = $searchModel->search($param);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

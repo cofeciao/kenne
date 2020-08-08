@@ -32,6 +32,8 @@ use Yii;
     */
 class Products extends ProductsTable
 {
+    const ACTIVE_STATUS = 1;
+    const DISABLE_STATUS = 0;
     public $toastr_key = 'products';
     public $file;
 

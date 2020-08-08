@@ -24,6 +24,8 @@ use Yii;
     */
 class Categories extends CategoriesTable
 {
+    const ACTIVE_STATUS = 1;
+    const DISABLE_STATUS = 0;
     public $toastr_key = 'categories';
     public function behaviors()
     {

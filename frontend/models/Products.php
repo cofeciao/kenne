@@ -78,4 +78,13 @@ class Products extends ProductsTable
                 break;
         }
     }
+
+    public function search($param){
+        $query = Products::find()
+            ->andFilterWhere([
+                'or',
+                ['like','pro_slug',$param],
+            ]);
+        return $query;
+    }
 }
