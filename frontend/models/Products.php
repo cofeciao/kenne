@@ -13,7 +13,19 @@ class Products extends ProductsTable
         return $this->hasOne(Categories::class,['id'=>"cat_id"]);
     }
 
-    public static function getDetailProduct($slug){
+    public function getDetailProductById($id){
+        $data = self::find()->where(['id'=>$id])->one();
+        return $data;
+    }
+
+    public function getBestSellerProduct(){
+        $data = self::find()
+            ->orderBy(['pro_number'=>SORT_DESC])
+            ->limit(6);
+        return $data->all();
+    }
+
+    public function getDetailProduct($slug){
         $data = self::find()->where(['pro_slug'=>$slug]);
         $data = $data->asArray()->one();
         return $data;

@@ -25,30 +25,20 @@ $this->title = 'WEB_NAME';
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <h3>New Product</h3>
+                        <h3>Sản phẩm mới</h3>
                         <div class="product-arrow"></div>
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="kenne-element-carousel product-slider slider-nav" data-slick-options='{
+                    <div class="kenne-element-carousel product-slider" data-slick-options='{
                         "slidesToShow": 4,
                         "slidesToScroll": 1,
                         "infinite": false,
-                        "arrows": true,
+                        "arrows": false,
                         "dots": false,
                         "spaceBetween": 30,
                         "appendArrows": ".product-arrow"
-                        }' data-slick-responsive='[
-                        {"breakpoint":992, "settings": {
-                        "slidesToShow": 3
-                        }},
-                        {"breakpoint":768, "settings": {
-                        "slidesToShow": 2
-                        }},
-                        {"breakpoint":575, "settings": {
-                        "slidesToShow": 1
-                        }}
-                    ]'>
+                        }'>
                         <?php if (isset($data)){ ?>
                     <?php foreach ($data as $item){?>
                         <div class="product-item">
@@ -104,6 +94,90 @@ $this->title = 'WEB_NAME';
         </div>
     </div>
     <!-- Product Area End Here -->
+
+    <!-- Begin Product Area -->
+    <div class="product-area pb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h3>Sản phẩm bán chạy</h3>
+                        <div class="product-arrow"></div>
+                    </div>
+                </div>
+                <?php if (isset($dataBestSeller)) {?>
+                    <div class="col-lg-12">
+                        <div class="kenne-element-carousel product-slider slider-nav" data-slick-options='{
+                            "slidesToShow": 4,
+                            "slidesToScroll": 1,
+                            "infinite": false,
+                            "arrows": true,
+                            "dots": false,
+                            "spaceBetween": 30,
+                            "appendArrows": ".product-arrow"
+                            }' data-slick-responsive='[
+                            {"breakpoint":992, "settings": {
+                            "slidesToShow": 3
+                            }},
+                            {"breakpoint":768, "settings": {
+                            "slidesToShow": 2
+                            }},
+                            {"breakpoint":575, "settings": {
+                            "slidesToShow": 1
+                            }}
+                        ]'>
+                            <?php  foreach ($dataBestSeller as $item){?>
+                                <div class="product-item">
+                                    <div class="single-product">
+                                        <div class="product-img">
+                                            <a href="<?= \yii\helpers\Url::toRoute(['detail-product','slug'=>$item->pro_slug])?>">
+                                                <img class="primary-img" src="<?= \yii\helpers\Url::to($item->pro_image)?>" alt="Kenne's Product Image">
+                                                <img class="secondary-img" src="/images/product/1-2.jpg" alt="Kenne's Product Image">
+                                            </a>
+                                            <span class="sticker">Best Seller</span>
+                                            <div class="add-actions">
+                                                <ul>
+                                                    <!--<li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Quick View"><i
+                                                                class="ion-ios-search"></i></a>
+                                                    </li>-->
+                                                    <li><a href="<?= \yii\helpers\Url::toRoute(['/wishlist/add-to-wishlist','slug'=>$item->pro_slug])?>" data-toggle="tooltip" data-placement="right" title="Add To Wishlist"><i class="ion-ios-heart-outline"></i></a>
+                                                    </li>
+                                                    <!--<li><a href="compare.html" data-toggle="tooltip" data-placement="right" title="Add To Compare"><i class="ion-ios-reload"></i></a>
+                                                    </li>-->
+                                                    <li><a href="<?= \yii\helpers\Url::toRoute(['/wishlist/add-to-cart','slug'=>$item->pro_slug])?>" data-toggle="tooltip" data-placement="right" title="Add To cart"><i class="ion-bag"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <div class="product-desc_info">
+                                                <h3 class="product-name"><a href="<?= \yii\helpers\Url::toRoute(['detail-product','slug'=>$item->pro_slug])?>"><?= $item->pro_name?></a></h3>
+                                                <div class="price-box">
+                                                    <span class="new-price"><?= number_format($item->pro_price*(100-$item->pro_sale)/100,0,',','.')?> đ</span>
+                                                    <span class="old-price"><?= number_format($item->pro_price,0,',','.')?> đ</span>
+                                                </div>
+                                                <div class="rating-box">
+                                                    <ul>
+                                                        <li><i class="ion-ios-star"></i></li>
+                                                        <li><i class="ion-ios-star"></i></li>
+                                                        <li><i class="ion-ios-star"></i></li>
+                                                        <li class="silver-color"><i class="ion-ios-star-half"></i></li>
+                                                        <li class="silver-color"><i class="ion-ios-star-outline"></i></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+    <!-- Product Area End Here -->
+
 
     <!-- Begin Banner Area Two -->
     <?= \frontend\widgets\BannerWidget::widget()?>

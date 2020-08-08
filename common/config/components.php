@@ -64,5 +64,24 @@ return [
     'request' => [
         //'cookieValidationKey' => FRONTEND_HOST_INFO,
         //Lấy key là domain
-    ]
+    ],
+    'mailer' => [
+        'class' => 'yii\swiftmailer\Mailer',
+        'viewPath' => '@frontend/mail',
+        'useFileTransport' => false,
+        'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.gmail.com',
+            'username' => 'runhitbtn2@gmail.com',
+            'password' => 'Soccer98987@',
+            'port' => '587',
+            'encryption' => 'tls',
+            'streamOptions' => [
+                'ssl' => [
+                    'verify_peer' => false,
+                    'allow_self_signed' => true
+                ],
+            ]
+        ],
+    ],
 ];

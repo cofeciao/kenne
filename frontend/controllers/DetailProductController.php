@@ -8,9 +8,12 @@ use frontend\components\MyController;
 class DetailProductController extends MyController
 {
     public function actionIndex($slug=''){
-        $data = Products::getDetailProduct($slug);
+        $model = new Products();
+        $data = $model->getDetailProduct($slug);
+        $dataBestSeller = $model->getBestSellerProduct();
         return $this->render('index',[
             'data' => $data,
+            'dataBestSeller'=>$dataBestSeller
         ]);
     }
 

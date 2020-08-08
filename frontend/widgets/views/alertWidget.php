@@ -7,11 +7,11 @@
     </div>
 <?php endif; ?>
 
-<?php if (Yii::$app->session->hasFlash('error'.$key)): ?>
+<?php if (Yii::$app->session->hasFlash('error')): ?>
     <div class="alert alert-danger alert-dismissable text-center">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
         <h4><i class="icon fa fa-check"></i>Lỗi!</h4>
-        <?= Yii::$app->session->getFlash('error'.$key) ?>
+        <?= Yii::$app->session->getFlash('error') ?>
     </div>
 <?php endif; ?>
 

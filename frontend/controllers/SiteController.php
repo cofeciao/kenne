@@ -14,11 +14,13 @@ class SiteController extends MyController
         $proBags = $model->getProductsByCategories(7);
         $proShirts =$model->getProductsByCategories(6);
         $proShoes = $model->getProductsByCategories(8);
+        $dataBestSeller = $model->getBestSellerProduct();
         return $this->render('index', [
             'data' => $proNew,
             'proBags' => $proBags,
             'proShirts' => $proShirts,
-            'proShoes' => $proShoes
+            'proShoes' => $proShoes,
+            'dataBestSeller'=>$dataBestSeller
         ]);
     }
 }
