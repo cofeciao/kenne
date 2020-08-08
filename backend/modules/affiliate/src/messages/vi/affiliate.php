@@ -85,4 +85,5 @@ return [
     'Customer Infomation' => 'Thông tin KH',
     'Delete cache successfully' => 'Xoá cache thành công!',
     'Notification' => 'Thông báo',
+    'More Information' => 'Thông tin thêm',
 ];
