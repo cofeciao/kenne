@@ -67,6 +67,24 @@ phpunit.phar
 !/frontend/web/uploads/
 /frontend/web/uploads/*
 
+!/frontend/web/uploads/slide/
+/frontend/web/uploads/slide/*
+!/frontend/web/uploads/slide/150x150/
+/frontend/web/uploads/slide/150x150/*
+!/frontend/web/uploads/slide/150x150/no-image.png
+
+!/frontend/web/uploads/slide-category/
+/frontend/web/uploads/slide-category/*
+!/frontend/web/uploads/slide-category/150x150/
+/frontend/web/uploads/slide-category/150x150/*
+!/frontend/web/uploads/slide-category/150x150/no-image.png
+
+!/frontend/web/uploads/slide-type/
+/frontend/web/uploads/slide-type/*
+!/frontend/web/uploads/slide-type/150x150/
+/frontend/web/uploads/slide-type/150x150/*
+!/frontend/web/uploads/slide-type/150x150/no-image.png
+
 !/frontend/web/uploads/article/
 /frontend/web/uploads/article/*
 !/frontend/web/uploads/article/150x150/
