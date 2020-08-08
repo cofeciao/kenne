@@ -114,7 +114,7 @@ use yii\helpers\Url;
                                                 <!--<li><a href="blog-details.html">Blog Details</a></li>-->
                                             </li>
                                             <li><a href="<?= Url::toRoute('/contact-us')?>">Contact Us</a></li>
-                                            <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
+                                            <!--<li><a href="<?/*= Url::toRoute(['/about-us']) */?>">About Us</a></li>-->
                                             <li><a href="">My Account <i class="ion-chevron-down"></i></a>
                                                 <ul class="kenne-dropdown">
                                                     <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>

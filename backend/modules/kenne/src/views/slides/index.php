@@ -112,6 +112,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
 										'sld_cat_id',
                                         [
+                                            'attribute'=>'sld_type',
+                                            'content'=>function($model){
+                                                if($model->sld_type == 1){
+                                                    return "Slide";
+                                                }elseif($model->sld_type == 0){
+                                                    return "Banner nhỏ";
+                                                } else{
+                                                    return "Banner lớn";
+                                                }
+                                            }
+                                        ],
+                                        [
                                             'attribute'=>'sld_status',
                                             'content' => function($model){
                                                 if($model->sld_status == 1){

@@ -91,6 +91,7 @@ class SlidesController extends MyController
                 }
             }
             $model->sld_image = $imageName;
+
             if ($model->validate() && $model->save()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',

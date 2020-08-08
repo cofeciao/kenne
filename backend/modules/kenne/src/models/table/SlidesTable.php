@@ -9,6 +9,10 @@ use yii\db\ActiveRecord;
 
 class SlidesTable extends \yii\db\ActiveRecord
 {
+    const ACTIVE_SLIDE = 1;
+    const ACTIVE_BANNER_SMALL = 0;
+    const ACTIVE_BANNER_BIG = 2;
+
     public static function tableName()
     {
         return 'slides';

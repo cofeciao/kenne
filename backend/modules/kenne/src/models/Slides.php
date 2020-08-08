@@ -52,7 +52,7 @@ class Slides extends SlidesTable
     public function rules()
     {
         return [
-			[['sld_title', 'sld_image', 'sld_cat_id'], 'required'],
+			[['sld_title', 'sld_image', 'sld_cat_id','sld_type'], 'required'],
 			[['sld_cat_id', 'sld_status', 'created_at', 'updated_at'], 'integer'],
 			[['sld_title', 'sld_description', 'sld_image'], 'string', 'max' => 255],
 			[['sld_cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['sld_cat_id' => 'id']],
@@ -73,6 +73,7 @@ class Slides extends SlidesTable
             'sld_status' => KenneModule::t('kenne', 'Trạng thái'),
             'created_at' => KenneModule::t('kenne', 'Created At'),
             'updated_at' => KenneModule::t('kenne', 'Updated At'),
+            'sld_type' => KenneModule::t('kenne', 'Loại ảnh'),
         ];
     }
 

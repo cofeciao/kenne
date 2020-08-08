@@ -16,12 +16,27 @@ use modava\kenne\KenneModule;
         ['options' => ['enctype' => 'multipart/form-data']]
     ); ?>
     <?= $form->field($model, 'sld_title')->textInput(['maxlength' => true]) ?>
-
+    <div class="row">
+        <div class="col-6">
     <?= $form->field($model, 'sld_cat_id')->dropDownList(\yii\helpers\ArrayHelper::map($model->getCategory(), 'id', 'cat_name'), ['prompt' => 'Chọn loại sản phẩm'])->label('Loại sản phẩm') ?>
+        </div>
 
+        <div class="col-6">
+    <?= $form->field($model, 'sld_type')->dropDownList(
+        [
+            '1'=>'Slide',
+            '0'=>'Banner Nhỏ',
+            '2'=>'Banner Lớn'
+        ],
+        ['prompt' => 'Chọn loại ảnh']
+    ); ?>
+        </div>
+    </div>
     <?= $form->field($model, 'sld_description')->widget(\modava\tiny\TinyMce::class, [
         'options' => ['rows' => 6],
     ]) ?>
+
+
 
     <?php
     if (empty($model->getErrors()))

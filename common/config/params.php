@@ -53,20 +53,20 @@ return [
             'width' => 150,
             'height' => 150
         ],
-        '300x300' => [
-            'folder' => '/uploads/kenne/300x300/',
-            'width' => 300,
-            'height' => 300
-        ],
-        '600x600' => [
-            'folder' => '/uploads/kenne/600x600/',
-            'width' => 600,
-            'height' => 600
-        ],
         '1920x950' => [
             'folder' => '/uploads/product/1920x950/',
             'width' => 1920,
             'height' => 950
+        ],
+        '370x250' => [
+            'folder' => '/uploads/product/370x250/',
+            'width' => 370,
+            'height' => 250
+        ],
+        '570x810' => [
+            'folder' => '/uploads/product/570x810/',
+            'width' => 570,
+            'height' => 810
         ]
 
     ],

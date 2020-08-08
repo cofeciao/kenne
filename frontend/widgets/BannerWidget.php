@@ -4,12 +4,17 @@
 namespace frontend\widgets;
 
 
+use frontend\models\Slides;
 use yii\base\Widget;
 
 class BannerWidget extends Widget
 {
     public function run()
     {
-        return $this->render('bannerWidget',[]);
+        $model = new Slides();
+        $data = $model->getAllBannerBig();
+        return $this->render('bannerWidget',[
+            'data'=>$data
+        ]);
     }
 }
