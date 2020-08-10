@@ -57,7 +57,6 @@ phpunit.phar
 
 /frontend/runtime
 /frontend/web/assets
-/frontend/web/uploads/
 /frontend/.htaccess
 
 # Git
