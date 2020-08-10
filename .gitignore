@@ -67,6 +67,12 @@ phpunit.phar
 !/frontend/web/uploads/
 /frontend/web/uploads/*
 
+!/frontend/web/uploads/faq/
+/frontend/web/uploads/faq/*
+!/frontend/web/uploads/faq/150x150/
+/frontend/web/uploads/faq/150x150/*
+!/frontend/web/uploads/faq/150x150/no-image.png
+
 !/frontend/web/uploads/partner/
 /frontend/web/uploads/partner/*
 !/frontend/web/uploads/partner/150x150/
@@ -154,6 +160,10 @@ phpunit.phar
 !/frontend/web/uploads/video-category/150x150/no-image.png
 
 # Git
+
+/backend/modules/faq/composer.json
+/backend/modules/faq/README.md
+/backend/modules/faq/.git
 
 /backend/modules/video/composer.json
 /backend/modules/video/README.md

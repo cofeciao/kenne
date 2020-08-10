@@ -33,7 +33,7 @@ class LoginTimestampBehavior extends Behavior
     {
         //Set thời gian online của User
         $cache = \Yii::$app->cache;
-        $key = 'redis-user-online-' . \Yii::$app->user->id;
+        $key = 'redis-user-online-' . \Yii::$app->user->identity->getId();
         $valueUser = true;
         $cache->set($key, $valueUser, time() + 600);
 

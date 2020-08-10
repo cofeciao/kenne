@@ -60,6 +60,9 @@ return [
     'slide' => [
         'class' => 'modava\slide\SlideModule',
     ],
+    'faq' => [
+        'class' => 'modava\faq\FaqModule',
+    ],
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],
