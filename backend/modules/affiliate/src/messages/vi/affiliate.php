@@ -94,4 +94,5 @@ return [
     'Place a question...' => 'Câu hỏi ...',
     'Place a short answer...' => 'Câu trả lời ngắn ...',
     'Topic' => 'Chủ đề',
+    'Faq Category' => 'Chủ đề',
 ];
