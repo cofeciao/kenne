@@ -1,10 +1,13 @@
 <?php
 
+use kartik\select2\Select2;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\widgets\NavbarWidgets;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
+use yii\web\JsExpression;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\FaqSearch */
@@ -39,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
                                 <?= GridView::widget([
                                     'dataProvider' => $dataProvider,
+                                    'filterModel' => $searchModel,
                                     'layout' => '
                                         {errors}
                                         <div class="row">
@@ -95,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                                                            [
+                                         [
                                             'attribute' => 'title',
                                             'format' => 'raw',
                                             'value' => function ($model) {
@@ -105,17 +109,54 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-                                    
-										'title',
-										'short_content',
-										'publish',
-										'faq_category_id',
+                                        [
+                                            'attribute' => 'short_content',
+                                        ],
+                                        [
+                                            'attribute' => 'publish',
+                                            'filter'=> Select2::widget([
+                                                'model' => $searchModel,
+                                                'name' => 'FaqSearch[publish]',
+                                                'theme' => Select2::THEME_BOOTSTRAP,
+                                                'data' => [0, 1],
+                                                'value' => $searchModel->getAttribute('publish'),
+                                                'options' => [
+                                                    'placeholder' => '....',
+                                                ],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true,
+                                                ],
+                                            ]),
+                                            'headerOptions' => [
+                                                'class' => 'header-200',
+                                            ],
+                                        ],
+                                        [
+                                            'attribute' => 'faq_category_id',
+                                            'value' => function ($model) {
+                                                return $model->faqCategory->title;
+                                            },
+                                            'filter'=> Select2::widget([
+                                                'model' => $searchModel,
+                                                'name' => 'FaqSearch[faq_category_id]',
+                                                'theme' => Select2::THEME_BOOTSTRAP,
+                                                'data' => ArrayHelper::map(\modava\affiliate\models\table\FaqCategoryTable::getAllRecordsPublished(), 'id', 'title'),
+                                                'value' => $searchModel->getAttribute('faq_category_id'),
+                                                'options' => [
+                                                    'placeholder' => '....',
+                                                ],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true
+                                                ],
+                                            ]),
+                                        ],
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
                                             'headerOptions' => [
                                                 'width' => 150,
                                             ],
+                                            'filter' => false
                                         ],
                                         [
                                             'attribute' => 'created_at',
@@ -123,6 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'headerOptions' => [
                                                 'width' => 150,
                                             ],
+                                            'filter' => false
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
@@ -156,7 +198,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                     ],
                                 ]); ?>
-                                                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>

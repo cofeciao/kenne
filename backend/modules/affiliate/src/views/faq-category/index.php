@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     
 										'title',
 										'publish',
-										'description:ntext',
+										'description:raw',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'attribute' => 'created_at',
-                                            'format' => 'date',
+                                            'format' => 'datetime',
                                             'headerOptions' => [
                                                 'width' => 150,
                                             ],

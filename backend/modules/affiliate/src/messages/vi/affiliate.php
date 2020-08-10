@@ -89,4 +89,5 @@ return [
     'Faq Category ID' => 'Loại FAQ',
     'Answer' => 'Câu trả lời',
     'Short Answer' => 'Câu trả lời ngắn',
+    'Question' => 'Câu hỏi',
 ];

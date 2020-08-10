@@ -87,7 +87,7 @@ class Faq extends FaqTable
     {
         return [
             'id' => AffiliateModule::t('affiliate', 'ID'),
-            'title' => AffiliateModule::t('affiliate', 'Title'),
+            'title' => AffiliateModule::t('affiliate', 'Question'),
             'slug' => AffiliateModule::t('affiliate', 'Slug'),
             'content' => AffiliateModule::t('affiliate', 'Answer'),
             'short_content' => AffiliateModule::t('affiliate', 'Short Answer'),
@@ -118,5 +118,9 @@ class Faq extends FaqTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getFaqCategory() {
+        return $this->hasOne(FaqCategory::class, ['id' => 'faq_category_id']);
     }
 }
