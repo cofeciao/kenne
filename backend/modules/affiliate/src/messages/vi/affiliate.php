@@ -86,4 +86,7 @@ return [
     'Delete cache successfully' => 'Xoá cache thành công!',
     'Notification' => 'Thông báo',
     'More Information' => 'Thông tin thêm',
+    'Faq Category ID' => 'Loại FAQ',
+    'Answer' => 'Câu trả lời',
+    'Short Answer' => 'Câu trả lời ngắn',
 ];
