@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use \modava\affiliate\AffiliateModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\affiliate\models\search\FaqSearch */
@@ -18,31 +19,18 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'slug') ?>
-
-    <?= $form->field($model, 'content') ?>
-
-    <?= $form->field($model, 'short_content') ?>
-
-    <?php // echo $form->field($model, 'publish') ?>
-
-    <?php // echo $form->field($model, 'faq_category_id') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('affiliate', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('affiliate', 'Reset'), ['class' => 'btn btn-default']) ?>
+    <div class="row">
+        <div class="col-3">
+            <?= $form->field($model, 'title')->input('text', ['placeholder' => AffiliateModule::t('affiliate', 'Place a question...')])->label(false) ?>
+        </div>
+        <div class="col-3">
+            <?= $form->field($model, 'short_content')->input('text', ['placeholder' => AffiliateModule::t('affiliate', 'Place a short answer...')])->label(false) ?>
+        </div>
+        <div class="col-1">
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('affiliate', 'Search'), ['class' => 'btn btn-primary']) ?>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

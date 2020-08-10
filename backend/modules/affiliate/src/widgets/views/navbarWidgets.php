@@ -67,7 +67,7 @@ $routeInfos = [
         'controllerId' => 'faq',
         'model' => 'Partner',
         'label' => AffiliateModule::t('affiliate', 'Faq'),
-        'icon' => '<i class="fa fa-share-alt"></i>',
+        'icon' => '<i class="icon dripicons-question"></i>',
     ],
 ];
 ?>

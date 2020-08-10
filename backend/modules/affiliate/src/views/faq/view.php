@@ -53,7 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
 						'short_content',
                         'content:raw',
 						'publish',
-						'faq_category_id',
+						[
+						    'attribute' => 'faq_category_id',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return Html::a($model->faqCategory->title, Url::toRoute(['faq-category/view', 'id' => $model->faq_category_id]));
+                            }
+                        ],
 						'created_at:datetime',
 						'updated_at:datetime',
                         [

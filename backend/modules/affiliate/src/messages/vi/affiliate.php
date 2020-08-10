@@ -90,4 +90,8 @@ return [
     'Answer' => 'Câu trả lời',
     'Short Answer' => 'Câu trả lời ngắn',
     'Question' => 'Câu hỏi',
+    'Create A Question' => 'Đặt câu hỏi',
+    'Place a question...' => 'Câu hỏi ...',
+    'Place a short answer...' => 'Câu trả lời ngắn ...',
+    'Topic' => 'Chủ đề',
 ];

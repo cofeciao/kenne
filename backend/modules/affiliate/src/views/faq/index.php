@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\web\JsExpression;
+use yii\widgets\ListView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\FaqSearch */
@@ -17,6 +18,8 @@ $this->title = AffiliateModule::t('affiliate', 'Faqs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
+<style>a:hover{text-decoration: underline!important;}</style>
+
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
 
@@ -27,42 +30,35 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
            title="<?= AffiliateModule::t('affiliate', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= AffiliateModule::t('affiliate', 'Create'); ?></a>
+            <i class="fa fa-plus"></i> <?= AffiliateModule::t('affiliate', 'Create A Question'); ?></a>
     </div>
 
     <!-- Row -->
+    <?php Pjax::begin(); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel])?>
+
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
-
-                <?php Pjax::begin(); ?>
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
-                            <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
-                                <?= GridView::widget([
+                            <div class="dataTables_wrapper dt-bootstrap4 table-responsive px-4">
+                                <?= ListView::widget([
                                     'dataProvider' => $dataProvider,
-                                    'filterModel' => $searchModel,
-                                    'layout' => '
-                                        {errors}
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                {items}
-                                            </div>
+                                    'summaryOptions' => [
+                                            'class' => 'mb-4'
+                                    ],
+                                    'itemView' => function ($model, $key, $index, $widget) {
+                                        return "
+                                         <div class='mb-4'>
+                                            <h5 class='py-1'><a href='" . \yii\helpers\Url::toRoute(['view', 'id' => $model->primaryKey]) . "'>{$model->title}</a></h5>
+                                            <p>{$model->short_content}</p>
+                                            <p>{$model->faqCategory->title}</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-5">
-                                                <div class="dataTables_info" role="status" aria-live="polite">
-                                                    {pager}
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers">
-                                                    {summary}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ',
+                                        
+                                    ";
+                                    },
                                     'pager' => [
                                         'firstPageLabel' => AffiliateModule::t('affiliate', 'First'),
                                         'lastPageLabel' => AffiliateModule::t('affiliate', 'Last'),
@@ -87,125 +83,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'firstPageCssClass' => 'paginate_button page-item',
                                         'lastPageCssClass' => 'paginate_button page-item',
                                     ],
-                                    'columns' => [
-                                        [
-                                            'class' => 'yii\grid\SerialColumn',
-                                            'header' => 'STT',
-                                            'headerOptions' => [
-                                                'width' => 60,
-                                                'rowspan' => 2
-                                            ],
-                                            'filterOptions' => [
-                                                'class' => 'd-none',
-                                            ],
-                                        ],
-                                         [
-                                            'attribute' => 'title',
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                    'title' => $model->title,
-                                                    'data-pjax' => 0,
-                                                ]);
-                                            }
-                                        ],
-                                        [
-                                            'attribute' => 'short_content',
-                                        ],
-                                        [
-                                            'attribute' => 'publish',
-                                            'filter'=> Select2::widget([
-                                                'model' => $searchModel,
-                                                'name' => 'FaqSearch[publish]',
-                                                'theme' => Select2::THEME_BOOTSTRAP,
-                                                'data' => [0, 1],
-                                                'value' => $searchModel->getAttribute('publish'),
-                                                'options' => [
-                                                    'placeholder' => '....',
-                                                ],
-                                                'pluginOptions' => [
-                                                    'allowClear' => true,
-                                                ],
-                                            ]),
-                                            'headerOptions' => [
-                                                'class' => 'header-200',
-                                            ],
-                                        ],
-                                        [
-                                            'attribute' => 'faq_category_id',
-                                            'value' => function ($model) {
-                                                return $model->faqCategory->title;
-                                            },
-                                            'filter'=> Select2::widget([
-                                                'model' => $searchModel,
-                                                'name' => 'FaqSearch[faq_category_id]',
-                                                'theme' => Select2::THEME_BOOTSTRAP,
-                                                'data' => ArrayHelper::map(\modava\affiliate\models\table\FaqCategoryTable::getAllRecordsPublished(), 'id', 'title'),
-                                                'value' => $searchModel->getAttribute('faq_category_id'),
-                                                'options' => [
-                                                    'placeholder' => '....',
-                                                ],
-                                                'pluginOptions' => [
-                                                    'allowClear' => true
-                                                ],
-                                            ]),
-                                        ],
-                                        [
-                                            'attribute' => 'created_by',
-                                            'value' => 'userCreated.userProfile.fullname',
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                            'filter' => false
-                                        ],
-                                        [
-                                            'attribute' => 'created_at',
-                                            'format' => 'datetime',
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                            'filter' => false
-                                        ],
-                                        [
-                                            'class' => 'yii\grid\ActionColumn',
-                                            'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                            'template' => '{update} {delete}',
-                                            'buttons' => [
-                                                'update' => function ($url, $model) {
-                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => AffiliateModule::t('affiliate', 'Update'),
-                                                        'alia-label' => AffiliateModule::t('affiliate', 'Update'),
-                                                        'data-pjax' => 0,
-                                                        'class' => 'btn btn-info btn-xs'
-                                                    ]);
-                                                },
-                                                'delete' => function ($url, $model) {
-                                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => AffiliateModule::t('affiliate', 'Delete'),
-                                                        'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => AffiliateModule::t('affiliate', 'Delete?'),
-                                                        'data-pjax' => 0,
-                                                        'data-url' => $url,
-                                                        'btn-success-class' => 'success-delete',
-                                                        'btn-cancel-class' => 'cancel-delete',
-                                                        'data-placement' => 'top'
-                                                    ]);
-                                                }
-                                            ],
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                        ],
-                                    ],
-                                ]); ?>
+                                ]);?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php Pjax::end(); ?>
             </section>
         </div>
     </div>
+    <?php Pjax::end(); ?>
 </div>
 <?php
 $script = <<< JS

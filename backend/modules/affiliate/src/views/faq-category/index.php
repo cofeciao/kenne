@@ -105,8 +105,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
-                                    
-										'title',
 										'publish',
 										'description:raw',
                                         [
