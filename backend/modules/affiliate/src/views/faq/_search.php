@@ -22,29 +22,16 @@ use \modava\affiliate\AffiliateModule;
     ]); ?>
 
     <div class="row">
-        <div class="col-3">
-            <?= $form->field($model, 'title')->input('text', ['placeholder' => AffiliateModule::t('affiliate', 'Place a question...')])->label(false) ?>
-        </div>
-        <div class="col-3">
-            <?= $form->field($model, 'short_content')->input('text', ['placeholder' => AffiliateModule::t('affiliate', 'Place a short answer...')])->label(false) ?>
-        </div>
-        <div class="col-3">
-            <?= $form->field($model, 'faq_category_id')->widget(Select2::class, [
-                'data' => ArrayHelper::map(\modava\affiliate\models\table\FaqCategoryTable::getAllRecordsPublished(), 'id', 'title'),
-                'value' => $model->getAttribute('faq_category_id'),
-                'pluginOptions' => [
-                    'allowClear' => true,
-                ],
-                'options' => [
-                    'placeholder' => AffiliateModule::t('affiliate', 'Faq Category')
-                ],
-                'theme' => Select2::THEME_BOOTSTRAP
-            ])->label(false) ?>
-        </div>
-        <div class="col-1">
-            <div class="form-group">
-                <?= Html::submitButton(Yii::t('affiliate', 'Search'), ['class' => 'btn btn-primary']) ?>
-            </div>
+        <div class="col-6">
+            <?= $form->field($model, 'title', [
+                'template' => '
+                <div class="input-group mb-3">
+                    {input}
+                    <div class="input-group-append">
+                      ' . Html::submitButton(Yii::t('affiliate', 'Search'), ['class' => 'btn btn-success']) . '
+                    </div>
+                 </div>'
+            ])->input('text', ['placeholder' => AffiliateModule::t('affiliate', 'Place a question...'),])->label(false) ?>
         </div>
     </div>
 
