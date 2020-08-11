@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'itemView' => function ($model, $key, $index, $widget) {
                                             return "
                                              <div class='mb-4'>
-                                                <h5 class='py-1'><a href='" . \yii\helpers\Url::toRoute(['view', 'id' => $model->primaryKey]) . "'>{$model->title}</a></h5>
+                                                <h5 class='py-1'><a href='javascript:openDetailViewModal({model: \"Faq\", id: {$model->primaryKey}})'>{$model->title}</a></h5>
                                                 <p>{$model->short_content}</p>
                                                 <p>{$model->faqCategory->title}</p>
                                             </div>

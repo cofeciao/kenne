@@ -40,11 +40,14 @@ if (in_array(Yii::$app->controller->action->id, ['create', 'get-create-modal']))
             ) ?>
         </div>
         <div class="col-12">
-            <?= $form->field($model, 'short_content')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'short_content')->widget(\modava\tiny\TinyMce::class, [
+                'options' => ['rows' => 6],
+            ]) ?>
         </div>
         <div class="col-12">
             <?= $form->field($model, 'content')->widget(\modava\tiny\TinyMce::class, [
                 'options' => ['rows' => 6],
+                'type' => 'content'
             ])->label(FaqModule::t('faq', 'Answer')) ?>
         </div>
     </div>

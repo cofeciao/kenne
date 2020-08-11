@@ -49,11 +49,32 @@ class HandleAjaxController extends MyFaqController
 
         $data = \Yii::$app->request->get('data');
 
-        return $this->renderAjax('create-modal', [
+        return $this->renderAjax('modal-container', [
             'modelName' => $this->modelName,
             'formView' => $formView,
             'model' => $model,
-            'formPath' => $filePath
+            'filePath' => $filePath,
+            'title' => FaqModule::t('faq', 'Create'),
+        ]);
+    }
+
+    public function actionGetDetailViewModal()
+    {
+        $formView = Utils::decamelize($this->modelName);
+        $filePath = \Yii::getAlias('@modava/faq/views/' . $formView . '/_detail.php');
+        if (!file_exists($filePath)) {
+            return $this->renderAjax('error-modal', [
+                'errorMessage' => FaqModule::t('faq', 'File is not existed'),
+            ]);
+        }$filePath = '@modava/faq/views/' . $formView . '/_detail.php';
+
+        $model = $this->classModelName::findOne(\Yii::$app->request->get('id'));
+
+        return $this->renderAjax('modal-container', [
+            'modelName' => $this->modelName,
+            'model' => $model,
+            'filePath' => $filePath,
+            'title' => FaqModule::t('faq', 'Detail'),
         ]);
     }
 
@@ -71,11 +92,11 @@ class HandleAjaxController extends MyFaqController
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true];
+                return ['success' => true];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true];
+                return ['success' => true];
             }
         }
     }
@@ -83,7 +104,9 @@ class HandleAjaxController extends MyFaqController
     public function beforeAction($action)
     {
         $modelName = \Yii::$app->request->get('model');
-        if (!$modelName) $modelName = \Yii::$app->request->post('model');
+        if (!$modelName) {
+            $modelName = \Yii::$app->request->post('model');
+        }
         $className = 'modava\faq\models\\' . $modelName;
         $classNameTable = 'modava\faq\models\table\\' . $modelName . 'Table';
         $classNameSearch = 'modava\faq\models\search\\' . $modelName . 'Search';
@@ -105,7 +128,8 @@ class HandleAjaxController extends MyFaqController
         return parent::beforeAction($action);
     }
 
-    public function actionGetListRelatedRecordsModal () {
+    public function actionGetListRelatedRecordsModal()
+    {
         $formView = Utils::decamelize($this->modelName);
         $filePath = \Yii::getAlias('@modava/faq/views/' . $formView . '/related-list.php');
         if (!file_exists($filePath)) {
@@ -118,7 +142,7 @@ class HandleAjaxController extends MyFaqController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderAjax('list-related-records-modal', [
-            'modelName' =>  $this->modelName,
+            'modelName' => $this->modelName,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'filePath' => $filePath
