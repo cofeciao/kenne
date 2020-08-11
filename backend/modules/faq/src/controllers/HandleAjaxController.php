@@ -58,6 +58,35 @@ class HandleAjaxController extends MyFaqController
         ]);
     }
 
+    public function actionGetUpdateModal()
+    {
+        $formView = Utils::decamelize($this->modelName);
+        $filePath = \Yii::getAlias('@modava/faq/views/' . $formView . '/_form.php');
+        if (!file_exists($filePath)) {
+            return $this->renderAjax('error-modal', [
+                'errorMessage' => FaqModule::t('faq', 'Form is not existed'),
+            ]);
+        }
+
+        $filePath = '@modava/faq/views/' . $formView . '/_form.php';
+
+        $model = $this->classModelName::findOne(\Yii::$app->request->get('id'));
+
+        if (!$model) {
+            return $this->renderAjax('error-modal', [
+                'errorMessage' => FaqModule::t('faq', 'Record is not existed'),
+            ]);
+        }
+
+        return $this->renderAjax('modal-container', [
+            'modelName' => $this->modelName,
+            'formView' => $formView,
+            'model' => $model,
+            'filePath' => $filePath,
+            'title' => FaqModule::t('faq', 'Create'),
+        ]);
+    }
+
     public function actionGetDetailViewModal()
     {
         $formView = Utils::decamelize($this->modelName);
