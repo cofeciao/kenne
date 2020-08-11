@@ -20,6 +20,7 @@ return [
     ],
     'filemanager' => [
         'class' => 'modava\filemanager\FilemanagerModule',
+        'upload_dir' => '../../../../../../frontend/web',
     ],
     'calendar' => [
         'class' => 'modava\calendar\CalendarModule',
