@@ -1,5 +1,8 @@
 <?php
+use kartik\social\FacebookPlugin;
+
     $this->title = "Chi tiết sản phẩm";
+
 ?>
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">
@@ -253,30 +256,7 @@
                         <div id="reviews" class="tab-pane" role="tabpanel">
                             <div class="tab-pane active" id="tab-review">
                                 <form class="form-horizontal" id="form-review">
-                                    <div id="review">
-                                        <table class="table table-striped table-bordered">
-                                            <tbody>
-                                            <tr>
-                                                <td style="width: 50%;"><strong>Customer</strong></td>
-                                                <td class="text-right">26/10/19</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    <p>Good product! Thank you very much</p>
-                                                    <div class="rating-box">
-                                                        <ul>
-                                                            <li><i class="ion-android-star"></i></li>
-                                                            <li><i class="ion-android-star"></i></li>
-                                                            <li><i class="ion-android-star"></i></li>
-                                                            <li><i class="ion-android-star"></i></li>
-                                                            <li><i class="ion-android-star"></i></li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <?php echo FacebookPlugin::widget(); ?>
                                     <h2>Write a review</h2>
                                     <div class="form-group required">
                                         <div class="col-sm-12 p-0">
@@ -284,7 +264,7 @@
                                             <input class="review-input" type="email" name="con_email" id="con_email" required>
                                         </div>
                                     </div>
-                                    <div class="form-group required second-child">
+                                    <div class="form-group required second-child"xx>
                                         <div class="col-sm-12 p-0">
                                             <label class="control-label">Share your opinion</label>
                                             <textarea class="review-textarea" name="con_message" id="con_message"></textarea>
