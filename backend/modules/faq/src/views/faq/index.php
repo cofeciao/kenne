@@ -51,17 +51,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'itemView' => function ($model, $key, $index, $widget) {
                                             $buttonAnswer = '';
                                             $buttonDelete = '';
+                                            $class = '';
 
                                             if (Yii::$app->user->can('faqFaqAnswer') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                                 if ($model->content) {
                                                     $message = FaqModule::t('faq', 'Update Answer');
+                                                    $class = 'text-success';
                                                 } else {
                                                     $message = FaqModule::t('faq', 'Answer the Question');
                                                 }
 
                                                 $buttonAnswer = Html::button($message,
                                                     [
-                                                        'class' => 'btn btn-sm float-right btn-link',
+                                                        'class' => "btn btn-sm float-right btn-link {$class}",
                                                         'onclick' => 'openUpdateModal({model: "Faq", id: ' . $model->primaryKey . '})'
                                                     ]);
                                             }
