@@ -34,4 +34,5 @@ return [
     'Select an option ...' => 'Chọn một giá trị',
     'Description' => 'Mô tả',
     'Search' => 'Tìm kiếm',
+    'Detail' => 'Chi tiết',
 ];
