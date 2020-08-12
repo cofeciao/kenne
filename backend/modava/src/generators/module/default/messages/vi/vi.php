@@ -22,8 +22,5 @@ return [
     'Content' => 'Nội dung',
     'Language' => 'Ngôn ngữ',
     'Name' => 'Tên',
-    'Title' => 'Tiêu đề',
-    'Image' => 'Hình ảnh',
-    'Description' => 'Mô tả',
-    'Position' => 'Vị trí',
+
 ];

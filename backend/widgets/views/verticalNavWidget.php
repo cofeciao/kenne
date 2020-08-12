@@ -130,6 +130,24 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
 
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('slide')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'slide') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/slide']); ?>">
+                            <i class="ion ion-ios-images"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Slide'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('faq')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'faq') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/faq']); ?>">
+                            <i class="icon dripicons-question"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Faq'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('pages')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'pages') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/pages']); ?>">

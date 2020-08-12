@@ -7,12 +7,6 @@
  */
 
 return [
-    'reCaptcha' => [
-        'name' => 'reCaptcha',
-        'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
-        'siteKeyV2' => RECAPTCHA_GOOGLE_SITEKEY,
-        'secretV2' => RECAPTCHA_GOOGLE_SECRETKEY,
-    ],
     'devicedetect' => [
         'class' => 'alexandernst\devicedetect\DeviceDetect',
     ],

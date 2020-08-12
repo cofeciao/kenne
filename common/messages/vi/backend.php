@@ -261,5 +261,7 @@ return [
     'Location' => 'Địa danh',
     'Contact' => 'Liên hệ',
     'Calendar' => 'Lịch biểu',
-
+    'Rbac Auth Item' => 'Quản lý vai trò',
+    'Role' => 'Phân quyền',
+    'Roles' => 'Phân quyền',
 ];

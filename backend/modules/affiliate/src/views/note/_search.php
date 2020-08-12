@@ -24,8 +24,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'slug') ?>
 
-    <?= $form->field($model, 'partner_id') ?>
-
     <?= $form->field($model, 'customer_id') ?>
 
     <?php // echo $form->field($model, 'call_time') ?>
