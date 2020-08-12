@@ -2,6 +2,7 @@
 
 namespace modava\kenne\controllers;
 
+use modava\kenne\models\Products;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -38,19 +39,14 @@ class SubcribesController extends MyController
 
     public function actionSendAll()
     {
+        $modelProduct = new Products();
         $model = new Subcribes();
-        $data = $model->getAllSubcribes();
-        $subject = "Đăng kí NewsLetter thành công";
-        $body = '<b>Cảm ơn đã đăng kí </b> '
-            . '<hr><p> Chúng tôi sẽ luôn cập nhật thông tin khuyến mãi cũng như sản phẩm cho bạn sớm nhất.</p>';
-        foreach ($data as $item){
-            \Yii::$app->mailer->compose()
-                ->setFrom('runhitbtn2@gmail.com')
-                ->setTo($item['sub_email'])
-                ->setSubject($subject)
-                ->setHtmlBody($body)
-                ->send();
-        }
+        $dataAll = $model->getAllSubcribes();
+        $data = $modelProduct->getNewProductSale();
+        return $this->render('@common/mail/layouts/html',[
+            'data'=>$data,
+            'dataAll'=>$dataAll
+        ]);
 //        /return $this->redirect('/subcribes');
     }
 

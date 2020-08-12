@@ -201,7 +201,7 @@
                                             <td height="8" ><img src="/images/spacer.gif" alt=" " height="1" width="1"/></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-family: Lato, Arial, Helvetica, sans-serif; line-height:36px; font-weight: 900; font-size: 36px;color:#343841;text-align: left; text-transform: uppercase;">'.$data[0]->category['cat_name'].'</td> 
+                                            <td style="font-family: Lato, Arial, Helvetica, sans-serif; line-height:36px; font-weight: 900; font-size: 36px;color:#343841;text-align: left; text-transform: uppercase;">'.$data[0]->categoryRelation['cat_name'].'</td> 
                                         </tr>
                                         <tr>
                                             <td height="33" ><img src="/images/spacer.gif" alt=" " height="1" width="1"/></td>
@@ -404,10 +404,22 @@
 </html>
     '?>
 <?php
-Yii::$app->mailer->compose()
-    ->setTo('thiennhan6677@gmail.com')
-    ->setFrom('runhitbtn2@gmail.com')
-    ->setHtmlBody($html)
-    ->setSubject("Test")
-    ->send();
+    if (isset($dataAll)){
+        $mail = Yii::$app->mailer->compose()
+                ->setFrom('runhitbtn2@gmail.com')
+                ->setHtmlBody($html)
+                ->setSubject("Test");
+        foreach ($dataAll as $item){
+            $mail->setTo($item['sub_email'])
+                ->send();
+        }
+        Yii::$app->session->setFlash('toastr-subcribes-index', [
+            'title' => 'Thông báo',
+            'text' => 'Gửi mail thành công',
+            'type' => 'success'
+        ]);
+        Yii::$app->response->redirect(['/kenne/subcribes']);
+    }
+
+
 ?>

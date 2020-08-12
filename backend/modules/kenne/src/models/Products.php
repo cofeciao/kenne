@@ -65,6 +65,15 @@ class Products extends ProductsTable
     /**
     * {@inheritdoc}
     */
+
+    public function getNewProductSale(){
+        $query = self::find()
+            ->where(['!=','pro_sale', 0])
+            ->orderBy(['id'=>SORT_DESC])
+            ->limit(1);
+        return $query->all();
+    }
+
     public function rules()
     {
         return [

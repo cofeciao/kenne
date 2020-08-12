@@ -14,6 +14,9 @@ class ProductsTable extends ActiveRecord
         return 'products';
     }
 
+    public function getCategoryRelation(){
+        return $this->hasOne(Categories::class,['id'=>"cat_id"]);
+    }
     public function getCategory()
     {
         //return $this->hasOne(Categories::class,['cat_id'=>'id'])->orderBy('id');

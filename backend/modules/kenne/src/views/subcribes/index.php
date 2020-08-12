@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 $this->title = KenneModule::t('kenne', 'Subcribes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
+<?= ToastrWidget::widget(['key' => 'toastr-subcribes-index']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
 
