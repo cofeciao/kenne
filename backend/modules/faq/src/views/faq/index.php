@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             if (Yii::$app->user->can('faqFaqAnswer') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                                 if ($model->content) {
                                                     $message = FaqModule::t('faq', 'Update Answer');
-                                                    $class = 'text-success';
+                                                    $class = 'text-info';
                                                 } else {
                                                     $message = FaqModule::t('faq', 'Answer the Question');
                                                 }
