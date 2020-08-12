@@ -16,6 +16,11 @@ use \yii\helpers\Url;
 
 $this->title = FaqModule::t('faq', 'Faqs');
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCss('   
+.hk-sec-wrapper {
+    padding: 1.5rem 0rem;
+}
+');
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
