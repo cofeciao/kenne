@@ -39,4 +39,5 @@ return [
     'Faq' => 'Câu hỏi thường gặp',
     'Faqs' => 'Câu hỏi thường gặp',
     'Faq Categories' => 'Chủ đề',
+    'Answer the Question' => 'Trả lời câu hỏi',
 ];

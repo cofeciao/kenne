@@ -16,6 +16,9 @@ class AffiliateDisplayHelper
         $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Sex') . ": </strong>" . self::getSex($model) . "<br>";
         $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Permission User') . ": </strong>{$model['permission_user']}<br>";
         $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Phone') . ": </strong>" . self::getPhone($model) . "<br>";
+        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Direct Sales') . ": </strong>{$model['directsale']}<br>";
+        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Service') . ": </strong>{$model['id_dich_vu']}<br>";
+        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Cơ sở') . ": </strong>{$model['co_so']}<br>";
 
         return $customerInfo;
     }
@@ -99,6 +102,7 @@ class AffiliateDisplayHelper
                     }
 
                     $content1 = "<strong>Mã HĐ: {$donhang['order_code']}</strong> <i>(" . date('d-m-Y', $donhang['ngay_tao']) . ")</i><br/>";
+                    $content1 .= '<strong>Phòng:</strong> '. $lichDieuTriInfo['room_id'] . '<br>';
                     $content1 .= '<strong>Thac tác: </strong>'. implode(', ', $arrThaoTac) . '<br>';
                     $content1 .= '<strong>Ekip:</strong> '. $lichDieuTriInfo['ekip'] . '<br>';
                     $content1 .= '<strong>Trợ thủ:</strong> '. implode(', ', $lichDieuTriInfo['tro_thu']) . '<br>';
