@@ -21,7 +21,7 @@ use modava\affiliate\helpers\AffiliateDisplayHelper;
 $this->title = AffiliateModule::t('affiliate', 'Customer');
 $this->params['breadcrumbs'][] = $this->title;
 $myAuris = PartnerSearch::getRecordBySlug('dashboard-myauris');
-Yii::$app->controller->module->params['partner_id']['dashboard-myauris'] = $myAuris->primaryKey;
+Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'] = $myAuris->primaryKey;
 
 $currentRoute = Url::toRoute(['/' . Yii::$app->requestedRoute]);
 $currentDate = date('d-m-Y');
@@ -171,7 +171,7 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
                                                     'create-coupon' => function ($url, $model) {
                                                         if (!Utils::isReleaseObject('Coupon')) return '';
 
-                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
+                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id'])) {
                                                             return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
                                                                 'title' => AffiliateModule::t('affiliate', 'Create Coupon'),
                                                                 'alia-label' => AffiliateModule::t('affiliate', 'Create Coupon'),
@@ -185,7 +185,7 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
 
                                                     },
                                                     'create-call-note' => function ($url, $model) {
-                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
+                                                        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id'])) {
                                                             return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
                                                                 'title' => AffiliateModule::t('affiliate', 'Create Call Note'),
                                                                 'alia-label' => AffiliateModule::t('affiliate', 'Create Call Note'),
@@ -199,7 +199,7 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
 
                                                     },
                                                     'create-customer' => function ($url, $model) {
-                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id']);
                                                         if ($record) {
                                                             $message = AffiliateModule::t('affiliate', 'Detail');
 
@@ -230,7 +230,7 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
                                                         return Html::input('hidden', 'customer_partner_info[]', json_encode($model));
                                                     },
                                                     'hidden-input-customer-info' => function ($url, $model) {
-                                                        $customer = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        $customer = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id']);
                                                         if ($customer) {
                                                             return Html::input('hidden', 'customer_info[]', json_encode($customer));
                                                         }
@@ -248,7 +248,7 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
                                                     'list-coupon' => function ($url, $model) {
                                                         if (!Utils::isReleaseObject('Coupon')) return '';
 
-                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id']);
                                                         if ($record) {
                                                             $count = Coupon::countByCustomer($record['id']);
 
@@ -269,7 +269,7 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
                                                         return '';
                                                     },
                                                     'list-note' => function ($url, $model) {
-                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id']);
+                                                        $record = CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id']);
 
                                                         if ($record) {
                                                             $count = Note::countByCustomer($record['id']);

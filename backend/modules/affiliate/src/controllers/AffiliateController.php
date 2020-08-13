@@ -13,7 +13,7 @@ class AffiliateController extends \backend\components\MyController
 {
     public function actionIndex()
     {
-        $apiParam = \Yii::$app->controller->module->params['myauris_config'];
+        $apiParam = \Yii::$app->getModule('affiliate')->params['myauris_config'];
 
         $page = (int) \Yii::$app->request->get('page');
         $page = $page > 0 ? $page : 1;
