@@ -1,16 +1,16 @@
 <?php
 
-namespace modava\website\models\search;
+namespace modava\pages\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use modava\website\models\WebsitePartner;
+use modava\pages\models\PagesPartner;
 
 /**
- * PartnerSearch represents the model behind the search form of `modava\website\models\WebsitePartner`.
+ * PagesPartnerSearch represents the model behind the search form of `modava\pages\models\PagesPartner`.
  */
-class PartnerSearch extends WebsitePartner
+class PagesPartnerSearch extends PagesPartner
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class PartnerSearch extends WebsitePartner
      */
     public function search($params)
     {
-        $query = WebsitePartner::find();
+        $query = PagesPartner::find();
 
         // add conditions that should always apply here
 

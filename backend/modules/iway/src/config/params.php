@@ -2,11 +2,6 @@
 use modava\iway\IwayModule;
 
 return [
-    'availableLocales' => [
-        'vi' => 'Tiếng Việt',
-        'en' => 'English',
-        'jp' => 'Japan',
-    ],
     'iwayName' => 'Iway',
     'iwayVersion' => '1.0',
     'status' => [

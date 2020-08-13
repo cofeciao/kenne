@@ -1,16 +1,16 @@
 <?php
 
-namespace modava\website\models;
+namespace modava\pages\models;
 
 use common\models\User;
-use modava\website\WebsiteModule;
-use modava\website\models\table\WebsitePartnerTable;
+use modava\pages\PagesModule;
+use modava\pages\models\table\PagesPartnerTable;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "website_partner".
+* This is the model class for table "pages_partner".
 *
     * @property int $id
     * @property string $title
@@ -26,9 +26,9 @@ use Yii;
             * @property User $createdBy
             * @property User $updatedBy
     */
-class WebsitePartner extends WebsitePartnerTable
+class PagesPartner extends PagesPartnerTable
 {
-    public $toastr_key = 'website-partner';
+    public $toastr_key = 'pages-partner';
     public function behaviors()
     {
         return array_merge(
@@ -72,16 +72,16 @@ class WebsitePartner extends WebsitePartnerTable
     public function attributeLabels()
     {
         return [
-            'id' => WebsiteModule::t('website', 'ID'),
-            'title' => WebsiteModule::t('website', 'Title'),
-            'image' => WebsiteModule::t('website', 'Image'),
-            'link' => WebsiteModule::t('website', 'Link'),
-            'status' => WebsiteModule::t('website', 'Status'),
-            'language' => WebsiteModule::t('website', 'Language'),
-            'created_at' => WebsiteModule::t('website', 'Created At'),
-            'updated_at' => WebsiteModule::t('website', 'Updated At'),
-            'created_by' => WebsiteModule::t('website', 'Created By'),
-            'updated_by' => WebsiteModule::t('website', 'Updated By'),
+            'id' => PagesModule::t('pages', 'ID'),
+            'title' => PagesModule::t('pages', 'Title'),
+            'image' => PagesModule::t('pages', 'Image'),
+            'link' => PagesModule::t('pages', 'Link'),
+            'status' => PagesModule::t('pages', 'Status'),
+            'language' => PagesModule::t('pages', 'Language'),
+            'created_at' => PagesModule::t('pages', 'Created At'),
+            'updated_at' => PagesModule::t('pages', 'Updated At'),
+            'created_by' => PagesModule::t('pages', 'Created By'),
+            'updated_by' => PagesModule::t('pages', 'Updated By'),
         ];
     }
 
