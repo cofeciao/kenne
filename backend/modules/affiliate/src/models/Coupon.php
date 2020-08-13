@@ -66,8 +66,13 @@ class Coupon extends CouponTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
+<<<<<<< HEAD
                         ActiveRecord::EVENT_BEFORE_INSERT => ['expired_date','expired_date'],
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['expired_date','expired_date'],
+=======
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['expired_date'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['expired_date'],
+>>>>>>> master
                     ],
                     'value' => function ($event) {
                         return date('Y-m-d H:i:s', strtotime($this->expired_date));
@@ -83,7 +88,11 @@ class Coupon extends CouponTable
     public function rules()
     {
         return [
+<<<<<<< HEAD
 			[['title', 'slug', 'coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
+=======
+			[['title', 'slug','coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
+>>>>>>> master
 			[['quantity', 'customer_id', 'coupon_type_id', 'quantity_used', 'promotion_type',], 'integer'],
             ['quantity_used', 'validateQuantityUsed'],
             [['quantity', 'promotion_value'], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
@@ -156,4 +165,17 @@ class Coupon extends CouponTable
     public function getCouponType() {
         return $this->hasOne(CouponType::class, ['id' => 'coupon_type_id']);
     }
+<<<<<<< HEAD
+=======
+
+    public function getCustomer() {
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
+    }
+
+    public static function countByCustomer ($customerId) {
+        return (int) self::find()
+            ->where(['customer_id' => $customerId])
+            ->count();
+    }
+>>>>>>> master
 }

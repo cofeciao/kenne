@@ -61,6 +61,10 @@ class UserAuth extends ActiveRecord
 
     public function getUserHasOne()
     {
+<<<<<<< HEAD
         return $this->hasOne(\backend\modules\user\models\User::class, ['id' => 'user_id']);
+=======
+        return $this->hasOne(\modava\auth\models\User::class, ['id' => 'user_id']);
+>>>>>>> master
     }
 }

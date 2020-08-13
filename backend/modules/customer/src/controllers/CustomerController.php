@@ -3,6 +3,10 @@
 namespace modava\customer\controllers;
 
 use modava\auth\models\User;
+<<<<<<< HEAD
+=======
+use modava\customer\models\table\CustomerTable;
+>>>>>>> master
 use modava\website\models\table\KeyValueTable;
 use yii\db\Exception;
 use Yii;
@@ -203,6 +207,24 @@ class CustomerController extends MyController
         return $this->redirect(['index']);
     }
 
+<<<<<<< HEAD
+=======
+    public function actionGetInfo($phone = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        try {
+            $customer = CustomerTable::getByPhone($phone);
+            if ($customer == null) return [];
+            return [
+                'ho_ten' => $customer->name,
+                'phu_trach' => $customer->permissionUserHasOne->userProfile->fullname
+            ];
+        } catch (\yii\base\Exception $ex) {
+            return [];
+        }
+    }
+
+>>>>>>> master
     /**
      * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -218,6 +240,10 @@ class CustomerController extends MyController
             return $model;
         }
 
+<<<<<<< HEAD
         throw new NotFoundHttpException(Yii::t('customer', 'The requested page does not exist.'));
+=======
+        throw new NotFoundHttpException(CustomerModule::t('customer', 'The requested page does not exist.'));
+>>>>>>> master
     }
 }

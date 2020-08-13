@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 define('WEB_NAME', 'Frontend');
 Yii::setAlias('@moduleBackend', realpath(__DIR__ . '/../backend/modules/'));
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/../backend/modules/api');
@@ -23,3 +24,6 @@ Yii::setAlias('modava/blogs', dirname(dirname(__DIR__)) . '/backend/modules/blog
 Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
 Yii::setAlias('modava/kenne', dirname(dirname(__DIR__)) . '/backend/modules/kenne/src');
 
+=======
+define('WEB_NAME', 'Frontend');
+>>>>>>> master

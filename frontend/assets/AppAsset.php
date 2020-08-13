@@ -12,6 +12,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+<<<<<<< HEAD
         '/css/vendor/bootstrap.min.css',
         '/css/vendor/font-awesome.min.css',
         '/css/vendor/fontawesome-stars.min.css',
@@ -42,6 +43,12 @@ class AppAsset extends AssetBundle
         '/js/plugins/timecircles.js',
         '/js/main.js',
         '/js/custom.js'
+=======
+
+    ];
+    public $js = [
+
+>>>>>>> master
     ];
     public $depends = [
         'yii\web\YiiAsset',

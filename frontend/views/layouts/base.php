@@ -23,7 +23,11 @@ $bundle = AppAsset::register($this);
         <title><?php echo Html::encode($this->title) ?></title>
         <link rel="canonical" href="<?= \Yii::$app->request->absoluteUrl; ?>"/>
         <?= Html::csrfMetaTags(); ?>
+<<<<<<< HEAD
         <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+=======
+
+>>>>>>> master
         <meta content="INDEX,FOLLOW" name="robots"/>
         <meta name="resource-type" content="Document"/>
         <meta name="distribution" content="Global"/>
@@ -35,6 +39,7 @@ $bundle = AppAsset::register($this);
         <?php $this->head() ?>
 
     </head>
+<<<<<<< HEAD
     <body class="template-color-1">
 
     <?php $this->beginBody() ?>
@@ -49,6 +54,12 @@ $bundle = AppAsset::register($this);
         }
     </script>
 
+=======
+    <body>
+    <?php $this->beginBody() ?>
+    <?= $content ?>
+    <?php $this->endBody() ?>
+>>>>>>> master
     </body>
     </html>
 <?php $this->endPage() ?>

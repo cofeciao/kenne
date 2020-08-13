@@ -13,6 +13,7 @@ use modava\pages\PagesModule;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="document-form">
     <?php $form = ActiveForm::begin(); ?>
+<<<<<<< HEAD
 		<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
 		<?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
@@ -40,6 +41,52 @@ use modava\pages\PagesModule;
         <div class="form-group">
             <?= Html::submitButton(PagesModule::t('pages', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
+=======
+
+    <div class="row">
+        <div class="col-8">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-4">
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
+        </div>
+
+    </div>
+
+    <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
+        'options' => ['rows' => 6],
+    ]); ?>
+
+    <div class="row">
+        <div class="col-6">
+            <?php
+            if (empty($model->getErrors()))
+                $path = Yii::$app->params['document']['60x64']['folder'];
+            else
+                $path = null;
+
+            echo \modava\tiny\FileManager::widget([
+                'model' => $model,
+                'attribute' => 'image',
+                'path' => $path,
+                'label' => PagesModule::t('pages', 'Hình ảnh') . ': ',
+            ]); ?>
+        </div>
+        <div class="col-6">
+            <?php
+                echo $form->field($model, 'file')->fileInput();
+                if($model->file != null)
+                    echo Html::a(PagesModule::t('pages', 'File đã upload'), \yii\helpers\Url::toRoute(['download-file', 'file' => $model->file]), ['target' => '_blank', 'data-pjax' => 0]);
+            ?>
+        </div>
+    </div>
+
+    <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+    <?= $form->field($model, 'status')->checkbox() ?>
+    <div class="form-group">
+        <?= Html::submitButton(PagesModule::t('pages', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
+>>>>>>> master
 
     <?php ActiveForm::end(); ?>
 </div>

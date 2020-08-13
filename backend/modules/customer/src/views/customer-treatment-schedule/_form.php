@@ -7,9 +7,15 @@ use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\customer\CustomerModule;
 use yii\helpers\ArrayHelper;
+<<<<<<< HEAD
 use modava\customer\components\CustomerDateTimePicker;
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerOrderTable;
+=======
+use modava\customer\models\table\CustomerTable;
+use modava\customer\models\table\CustomerOrderTable;
+use modava\datetime\DateTimePicker;
+>>>>>>> master
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerTreatmentSchedule */
@@ -56,7 +62,11 @@ if($model->time_end != null){
     <?php } ?>
     <div class="row">
         <div class="col-md-6 col-12">
+<<<<<<< HEAD
             <?= $form->field($model, 'time_start')->widget(CustomerDateTimePicker::class, [
+=======
+            <?= $form->field($model, 'time_start')->widget(DateTimePicker::class, [
+>>>>>>> master
                 'template' => '{input}{button}',
                 'pickButtonIcon' => 'btn btn-increment btn-light',
                 'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
@@ -69,7 +79,11 @@ if($model->time_end != null){
             ]) ?>
         </div>
         <div class="col-md-6 col-12">
+<<<<<<< HEAD
             <?= $form->field($model, 'time_end')->widget(CustomerDateTimePicker::class, [
+=======
+            <?= $form->field($model, 'time_end')->widget(DateTimePicker::class, [
+>>>>>>> master
                 'template' => '{input}{button}',
                 'pickButtonIcon' => 'btn btn-increment btn-light',
                 'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),

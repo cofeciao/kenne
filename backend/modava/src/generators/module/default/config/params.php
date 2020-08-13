@@ -7,11 +7,14 @@ $ns = explode('\\', $generator->moduleClass)[0];
 use <?= $ns ?>\<?= $generator->moduleID ?>\<?= ucfirst($generator->moduleID) ?>Module;
 
 return [
+<<<<<<< HEAD
     'availableLocales' => [
         'vi' => 'Tiếng Việt',
         'en' => 'English',
         'jp' => 'Japan',
     ],
+=======
+>>>>>>> master
     '<?= $generator->moduleID ?>Name' => '<?= ucfirst($generator->moduleID) ?>',
     '<?= $generator->moduleID ?>Version' => '1.0',
     'status' => [

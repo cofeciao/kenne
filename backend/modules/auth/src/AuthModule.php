@@ -20,6 +20,19 @@ class AuthModule extends Module implements BootstrapInterface
     public $controllerNamespace = 'modava\auth\controllers';
 
     /**
+<<<<<<< HEAD
+=======
+     * @var bool Is users should be activated by email
+     */
+    public $shouldBeActivated = false;
+    /**
+     * @var bool Enables login by pass from backend
+     */
+    public $enableLoginByPass = false;
+
+
+    /**
+>>>>>>> master
      * {@inheritdoc}
      */
     public function init()

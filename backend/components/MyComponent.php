@@ -8,6 +8,7 @@
 
 namespace backend\components;
 
+<<<<<<< HEAD
 use Yii;
 
 class MyComponent
@@ -39,4 +40,12 @@ class MyComponent
         $cookies = Yii::$app->request->cookies;
         return $cookies->has($name);
     }
+=======
+use common\components\Component;
+use Yii;
+
+class MyComponent extends Component
+{
+
+>>>>>>> master
 }

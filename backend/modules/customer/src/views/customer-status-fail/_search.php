@@ -1,5 +1,9 @@
 <?php
 
+<<<<<<< HEAD
+=======
+use modava\customer\CustomerModule;
+>>>>>>> master
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -37,8 +41,13 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
+<<<<<<< HEAD
         <?= Html::submitButton(Yii::t('customer', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('customer', 'Reset'), ['class' => 'btn btn-default']) ?>
+=======
+        <?= Html::submitButton(CustomerModule::t('customer', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(CustomerModule::t('customer', 'Reset'), ['class' => 'btn btn-default']) ?>
+>>>>>>> master
     </div>
 
     <?php ActiveForm::end(); ?>

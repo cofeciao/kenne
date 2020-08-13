@@ -9,12 +9,23 @@ use yii\web\AssetBundle;
  */
 class ContactAsset extends AssetBundle
 {
+<<<<<<< HEAD
     public $sourcePath = '@backendWeb';
     public $css = [
         'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
         'vendors/bootstrap/dist/css/bootstrap.min.css',
         "vendors/jquery-toggles/css/toggles.css",
         "vendors/jquery-toggles/css/themes/toggles-light.css",
+=======
+
+    public $sourcePath = '@backendWeb';
+
+    public $css = [
+        'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
+        'vendors/bootstrap/dist/css/bootstrap.min.css',
+        'vendors/jquery-toggles/css/toggles.css',
+        'vendors/jquery-toggles/css/themes/toggles-light.css',
+>>>>>>> master
     ];
     public $js = [
         "vendors/popper.js/dist/umd/popper.min.js",

@@ -3,7 +3,12 @@
 use yii\helpers\Url;
 use modava\customer\CustomerModule;
 use modava\customer\models\search\RemindCallSearch;
+<<<<<<< HEAD
 use backend\modules\user\models\User;
+=======
+
+use modava\auth\models\User;
+>>>>>>> master
 
 $is_dev = Yii::$app->user->can(User::DEV);
 ?>
@@ -29,7 +34,11 @@ $is_dev = Yii::$app->user->can(User::DEV);
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'remind-call') echo ' active' ?>"
                href="<?= Url::toRoute(['/customer/remind-call']); ?>">
+<<<<<<< HEAD
                 <i class="ion ion-ios-locate"></i><?= CustomerModule::t('remind-call', 'Remind Call'); ?>
+=======
+                <i class="ion ion-ios-locate"></i><?= CustomerModule::t('customer', 'Remind Call'); ?>
+>>>>>>> master
                 <div class="badge badge-danger badge-pill"><?= RemindCallSearch::getSalesOnlineRemindCall(isset($this->params['userRoleName']) && !in_array($this->params['userRoleName'], ['sales_online']) ? Yii::$app->user->id : null) ?></div>
             </a>
         </li>

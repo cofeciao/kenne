@@ -3,6 +3,10 @@
 
 namespace modava\auth\models;
 
+<<<<<<< HEAD
+=======
+use modava\auth\AuthModule;
+>>>>>>> master
 use modava\auth\models\query\UserTokenQuery;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -111,6 +115,7 @@ class UserToken extends ActiveRecord
     public function attributeLabels()
     {
         return [
+<<<<<<< HEAD
             'id' => Yii::t('common', 'ID'),
             'user_id' => Yii::t('common', 'User ID'),
             'type' => Yii::t('common', 'Type'),
@@ -118,6 +123,15 @@ class UserToken extends ActiveRecord
             'expire_at' => Yii::t('common', 'Expire At'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
+=======
+            'id' => AuthModule::t('auth', 'ID'),
+            'user_id' => AuthModule::t('auth', 'User ID'),
+            'type' => AuthModule::t('auth', 'Type'),
+            'token' => AuthModule::t('auth', 'Token'),
+            'expire_at' => AuthModule::t('auth', 'Expire At'),
+            'created_at' => AuthModule::t('auth', 'Created At'),
+            'updated_at' => AuthModule::t('auth', 'Updated At'),
+>>>>>>> master
         ];
     }
 

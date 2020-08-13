@@ -25,9 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
+<<<<<<< HEAD
             <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
                title="<?= AuthModule::t('auth', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= AuthModule::t('auth', 'Create'); ?></a>
+=======
+>>>>>>> master
         </div>
 
         <!-- Row -->
@@ -116,14 +119,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => \common\grid\EnumColumn::class,
                                                 'attribute' => 'ruleName',
                                                 'filter' => ArrayHelper::map(Yii::$app->getAuthManager()->getRules(), 'name', 'name'),
+<<<<<<< HEAD
                                                 'filterInputOptions' => ['class' => 'form-control', 'prompt' => Yii::t('rbac', 'Select Rule')],
+=======
+                                                'filterInputOptions' => ['class' => 'form-control', 'prompt' => AuthModule::t('auth', 'Select Rule')],
+>>>>>>> master
                                                 'headerOptions' => [
                                                     'width' => 60,
                                                     'rowspan' => 2
                                                 ],
+<<<<<<< HEAD
                                                 'filterOptions' => [
                                                     'class' => 'd-none'
                                                 ],
+=======
+>>>>>>> master
                                             ],
 //                                [
 //                                    'class' => \common\grid\EnumColumn::class,
@@ -135,7 +145,11 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                    'class' => \common\grid\EnumColumn::class,
 //                                    'attribute' => 'rule_name',
 //                                    'filter' => ArrayHelper::map(Yii::$app->getAuthManager()->getRules(), 'name', 'name'),
+<<<<<<< HEAD
 //                                    'filterInputOptions' => ['class' => 'form-control', 'prompt' => Yii::t('rbac', 'Select Rule')],
+=======
+//                                    'filterInputOptions' => ['class' => 'form-control', 'prompt' => AuthModule::t('auth', 'Select Rule')],
+>>>>>>> master
 //                                ],
 
                                         ],

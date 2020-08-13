@@ -115,7 +115,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'attribute' => 'created_at',
+<<<<<<< HEAD
                                             'format' => 'date',
+=======
+                                            'format' => 'datetime',
+>>>>>>> master
                                             'headerOptions' => [
                                                 'width' => 150,
                                             ],

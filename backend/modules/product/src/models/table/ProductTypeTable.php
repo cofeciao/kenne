@@ -53,7 +53,14 @@ class ProductTypeTable extends \yii\db\ActiveRecord
         $data = $cache->get($key);
 
         if ($data === false) {
+<<<<<<< HEAD
             $data = self::find()->where(['language' => $lang])->published()->sortDescById()->all();
+=======
+            $query = self::find();
+            if ($lang != null)
+                $query->where(['language' => $lang]);
+            $data = $query->published()->sortDescById()->all();
+>>>>>>> master
             $cache->set($key, $data, Time::SECONDS_IN_A_MONTH);
         }
 

@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+<<<<<<< HEAD
+=======
+use modava\auth\AuthModule;
+>>>>>>> master
 
 /* @var $this yii\web\View */
 /* @var $model modava\auth\models\search\RbacAuthItemSearch */
@@ -33,8 +37,13 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
+<<<<<<< HEAD
         <?= Html::submitButton(Yii::t('auth', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('auth', 'Reset'), ['class' => 'btn btn-default']) ?>
+=======
+        <?= Html::submitButton(AuthModule::t('auth', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(AuthModule::t('auth', 'Reset'), ['class' => 'btn btn-default']) ?>
+>>>>>>> master
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -2,6 +2,10 @@
 
 namespace modava\auth\models;
 
+<<<<<<< HEAD
+=======
+use modava\auth\AuthModule;
+>>>>>>> master
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -55,6 +59,7 @@ class UserProfile extends ActiveRecord
     public function attributeLabels()
     {
         return [
+<<<<<<< HEAD
             'user_id' => Yii::t('common', 'User ID'),
             'fullname' => Yii::t('common', 'Họ tên'),
             'bithday' => Yii::t('common', 'Ngày sinh'),
@@ -66,6 +71,19 @@ class UserProfile extends ActiveRecord
             'cover' => Yii::t('common', 'Cover'),
             'locale' => Yii::t('common', 'Locale'),
             'gender' => Yii::t('common', 'Gender'),
+=======
+            'user_id' => AuthModule::t('auth', 'User ID'),
+            'fullname' => AuthModule::t('auth', 'Họ tên'),
+            'bithday' => AuthModule::t('auth', 'Ngày sinh'),
+            'about' => AuthModule::t('auth', 'About me'),
+            'address' => AuthModule::t('auth', 'Address'),
+            'phone' => AuthModule::t('auth', 'Phone'),
+            'facebook' => AuthModule::t('auth', 'Facebook'),
+            'avatar' => AuthModule::t('auth', 'Avatar'),
+            'cover' => AuthModule::t('auth', 'Cover'),
+            'locale' => AuthModule::t('auth', 'Locale'),
+            'gender' => AuthModule::t('auth', 'Gender'),
+>>>>>>> master
         ];
     }
 

@@ -2,11 +2,14 @@
 use modava\contact\ContactModule;
 
 return [
+<<<<<<< HEAD
     'availableLocales' => [
         'vi' => 'Tiếng Việt',
         'en' => 'English',
         'jp' => 'Japan',
     ],
+=======
+>>>>>>> master
     'contactName' => 'Contact',
     'contactVersion' => '1.0',
     'status' => [

@@ -4,12 +4,18 @@ namespace common\components;
 
 use Yii;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 class Component
 {
     public static function setCookies($name, $value, $time = null)
     {
+<<<<<<< HEAD
         //Yii::$app->request->enableCookieValidation = true;
+=======
+>>>>>>> master
         $cookies = Yii::$app->response->cookies;
         if ($time == null) {
             $time = time() + 86400 * 365;
@@ -35,10 +41,13 @@ class Component
         $cookies = Yii::$app->request->cookies;
         return $cookies->has($name);
     }
+<<<<<<< HEAD
 
     public static function removeCookies($name){
         $cookies = Yii::$app->response->cookies;
         $cookies->remove($name);
         return $cookies;
     }
+=======
+>>>>>>> master
 }

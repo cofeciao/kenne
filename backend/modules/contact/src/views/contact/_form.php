@@ -13,6 +13,7 @@ use modava\contact\ContactModule;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="contact-form">
     <?php $form = ActiveForm::begin(); ?>
+<<<<<<< HEAD
     <div class="row">
         <div class="col-6">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
@@ -43,6 +44,31 @@ use modava\contact\ContactModule;
     <div class="form-group">
         <?= Html::submitButton(ContactModule::t('contact', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
+=======
+		<?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+
+		<?= $form->field($model, 'ip_address')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'status')->textInput() ?>
+
+		<?= $form->field($model, 'created_at')->textInput() ?>
+
+		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+		<?= $form->field($model, 'status')->checkbox() ?>
+        <div class="form-group">
+            <?= Html::submitButton(ContactModule::t('contact', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
+>>>>>>> master
 
     <?php ActiveForm::end(); ?>
 </div>

@@ -5,8 +5,14 @@
  * Date: 06-Jul-18
  * Time: 4:00 PM
  */
+<<<<<<< HEAD
 $config = [
     'defaultRoute' => 'auth/index',
+=======
+
+$config = [
+    'defaultRoute' => 'user/index',
+>>>>>>> master
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'aliases' => [
         '@authweb' => '@modava/auth/web',

@@ -20,5 +20,14 @@ return [
     'Language' => 'Ngôn ngữ',
     'Name' => 'Tên',
     'Description' => 'Mô tả',
+<<<<<<< HEAD
 
+=======
+    'Title' => 'Tiêu đề',
+    'Image' => 'Hình ảnh',
+    'Document' => 'Tài liệu',
+    'Documents' => 'Tài liệu',
+    'Partners' => 'Đối tác',
+    'Partner' => 'Đối tác',
+>>>>>>> master
 ];

@@ -10,17 +10,31 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\contact\models\search\ContactSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+<<<<<<< HEAD
 $this->title = ContactModule::t('contact', 'Contact');
+=======
+$this->title = ContactModule::t('contact', 'Contacts');
+>>>>>>> master
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
+<<<<<<< HEAD
+=======
+    <?= NavbarWidgets::widget(); ?>
+>>>>>>> master
 
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
+<<<<<<< HEAD
+=======
+        <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
+           title="<?= ContactModule::t('contact', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= ContactModule::t('contact', 'Create'); ?></a>
+>>>>>>> master
     </div>
 
     <!-- Row -->
@@ -91,7 +105,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
+<<<<<<< HEAD
                                         [
+=======
+                                                                            [
+>>>>>>> master
                                             'attribute' => 'title',
                                             'format' => 'raw',
                                             'value' => function ($model) {
@@ -101,10 +119,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
+<<<<<<< HEAD
+=======
+                                    
+>>>>>>> master
 										'fullname',
 										'phone',
 										'email:email',
 										'address',
+<<<<<<< HEAD
 										//'content',
 										//'ip_address:ntext',
                                         [
@@ -112,6 +135,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'header' => ContactModule::t('contact', 'Actions'),
                                             'template' => '{delete}',
                                             'buttons' => [
+=======
+										'title',
+										//'content:ntext',
+										//'ip_address',
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => ContactModule::t('contact', 'Actions'),
+                                            'template' => '{update} {delete}',
+                                            'buttons' => [
+                                                'update' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                        'title' => ContactModule::t('contact', 'Update'),
+                                                        'alia-label' => ContactModule::t('contact', 'Update'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-info btn-xs'
+                                                    ]);
+                                                },
+>>>>>>> master
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
                                                         'title' => ContactModule::t('contact', 'Delete'),

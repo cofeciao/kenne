@@ -109,9 +109,35 @@ class ProductTable extends \yii\db\ActiveRecord
      */
     public function getProductImage()
     {
+<<<<<<< HEAD
         return $this->hasMany(ProductImage::class, ['product_id' => 'id']);
     }
 
+=======
+        return $this->hasMany(ProductImageTable::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @param string|null $size
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getImage(string $size = null)
+    {
+        $image = $this->image;
+        if (!isset(Yii::$app->params['product'])) $image = 'no-image.png';
+        if (!array_key_exists($size, Yii::$app->params['product'])) $size = array_keys(Yii::$app->params['product'])[0];
+        $pathImage = Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'];
+        if (is_dir($pathImage . $image) || !file_exists($pathImage . $image)) $image = 'no-image.png';
+        return Yii::$app->assetManager->publish($pathImage . $image)[1];
+    }
+
+    /**
+     * @param $id
+     * @param null $language
+     * @return array|mixed|\yii\db\ActiveRecord|null
+     */
+>>>>>>> master
     public static function getById($id, $language = null)
     {
         $language = $language ?: Yii::$app->language;
@@ -125,6 +151,13 @@ class ProductTable extends \yii\db\ActiveRecord
         return $data;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @param null $language
+     * @return array|mixed|\yii\db\ActiveRecord[]
+     */
+>>>>>>> master
     public static function getAll($language = null)
     {
         $language = $language ?: Yii::$app->language;
@@ -138,6 +171,14 @@ class ProductTable extends \yii\db\ActiveRecord
         return $data;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @param $category_id
+     * @param null $language
+     * @return array|mixed|\yii\db\ActiveRecord[]
+     */
+>>>>>>> master
     public static function getProductsByCategory($category_id, $language = null)
     {
         $language = $language ?: Yii::$app->language;

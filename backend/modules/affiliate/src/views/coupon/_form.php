@@ -1,6 +1,11 @@
 <?php
 
+<<<<<<< HEAD
 use modava\customer\components\CustomerDateTimePicker;
+=======
+use modava\affiliate\widgets\JsCreateModalWidget;
+use modava\datetime\DateTimePicker;
+>>>>>>> master
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -18,8 +23,14 @@ $model->expired_date = $model->expired_date != null
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="coupon-form">
     <?php $form = ActiveForm::begin([
+<<<<<<< HEAD
         'enableAjaxValidation' => true,
         'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]), // Khi sử dụng cần test lại
+=======
+        'id' => 'coupon_form',
+        'enableAjaxValidation' => true,
+        'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]),
+>>>>>>> master
     ]); ?>
     <div class="row">
         <div class="col-6">
@@ -39,7 +50,11 @@ $model->expired_date = $model->expired_date != null
             <?= $form->field($model, 'quantity')->textInput() ?>
         </div>
         <div class="col-6">
+<<<<<<< HEAD
             <?= $form->field($model, 'expired_date')->widget(CustomerDateTimePicker::class, [
+=======
+            <?= $form->field($model, 'expired_date')->widget(DateTimePicker::class, [
+>>>>>>> master
                 'template' => '{input}{button}',
                 'pickButtonIcon' => 'btn btn-increment btn-light',
                 'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
@@ -51,11 +66,24 @@ $model->expired_date = $model->expired_date != null
             ]) ?>
         </div>
         <div class="col-6">
+<<<<<<< HEAD
             <?= $form->field($model, 'customer_id')->textInput() ?>
         </div>
         <div class="col-6">
             <?= $form->field($model, 'coupon_type_id')->dropDownList(
                     ArrayHelper::map(\modava\affiliate\models\CouponType::getAll(), 'id', 'title'),
+=======
+            <?= $form->field($model, 'customer_id')->dropDownList(
+                ArrayHelper::map(\modava\affiliate\models\table\CustomerTable::getAllRecords(), 'id', function($model) { return $model['full_name'] . ' - ' . $model['phone']; }),
+                [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
+                    'id' => 'customer-id'
+                ]
+            ) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'coupon_type_id')->dropDownList(
+                    ArrayHelper::map(\modava\affiliate\models\table\CouponTypeTable::getAllRecords(), 'id', 'title'),
+>>>>>>> master
                     [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...') ]
             ) ?>
         </div>
@@ -70,6 +98,10 @@ $model->expired_date = $model->expired_date != null
         <div class="col-6">
             <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true]) ?>
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
         <div class="col-12">
             <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
                 'options' => ['rows' => 6],
@@ -84,15 +116,32 @@ $model->expired_date = $model->expired_date != null
     <?php ActiveForm::end(); ?>
 </div>
 
+<<<<<<< HEAD
 <?php
 $script = <<< JS
 function generateCouponCode() {
     return Math.random(10).toString(36).substr(2);
+=======
+<?= JsCreateModalWidget::widget(['formClassName' => 'coupon_form', 'modelName' => 'Coupon']) ?>
+
+<?php
+$script = <<< JS
+function generateCouponCode(upperCase = false) {
+    let code = Math.random(10).toString(36).substr(2);
+    return upperCase ? code.toUpperCase() : code;
+>>>>>>> master
 }
 
 $('#js-generate-coupon-code').on('click', function() {
     $('#coupon-coupon_code').val(generateCouponCode()).trigger('change');
 });
 
+<<<<<<< HEAD
+=======
+$('#coupon-coupon_code').on('change keyup blur', function() {
+    $(this).val($(this).val().toUpperCase());  
+});
+
+>>>>>>> master
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

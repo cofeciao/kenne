@@ -8,6 +8,10 @@ use modava\customer\CustomerModule;
 use modava\location\models\table\LocationWardTable;
 use Yii;
 use yii\db\ActiveRecord;
+<<<<<<< HEAD
+=======
+use yii\db\Exception;
+>>>>>>> master
 
 class CustomerTable extends \yii\db\ActiveRecord
 {
@@ -91,7 +95,12 @@ class CustomerTable extends \yii\db\ActiveRecord
         $cache = Yii::$app->cache;
         $keys = [
             'redis-customer-table-get-customer-dong-y',
+<<<<<<< HEAD
             'redis-customer-table-get-by-id-' . $this->id
+=======
+            'redis-customer-table-get-by-id-' . $this->id,
+            'redis-customer-table-get-by-phone-' . $this->phone
+>>>>>>> master
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -104,7 +113,12 @@ class CustomerTable extends \yii\db\ActiveRecord
         $cache = Yii::$app->cache;
         $keys = [
             'redis-customer-table-get-customer-dong-y',
+<<<<<<< HEAD
             'redis-customer-table-get-by-id-' . $this->id
+=======
+            'redis-customer-table-get-by-id-' . $this->id,
+            'redis-customer-table-get-by-phone-' . $this->phone
+>>>>>>> master
         ];
         foreach ($keys as $key) {
             $cache->delete($key);
@@ -118,7 +132,28 @@ class CustomerTable extends \yii\db\ActiveRecord
         $key = 'redis-customer-table-get-by-id-' . $id;
         $data = $cache->get($key);
         if ($data == false) {
+<<<<<<< HEAD
             $data = self::find()->where(['id' => $id])->one();
+=======
+            $data = self::find()->where([self::tableName() . '.id' => $id])->one();
+            $cache->set($key, $data);
+        }
+        return $data;
+    }
+
+    public static function getByPhone($phone, $data_cache = YII2_CACHE)
+    {
+        $cache = Yii::$app->cache;
+        $key = 'redis-customer-table-get-by-phone-' . $phone;
+        $data = $cache->get($key);
+        if ($data == false || $data_cache === false) {
+            try {
+                $query = self::find()->where([self::tableName() . '.phone' => $phone]);
+                $data = $query->one();
+            } catch (Exception $ex) {
+                $data = null;
+            }
+>>>>>>> master
             $cache->set($key, $data);
         }
         return $data;

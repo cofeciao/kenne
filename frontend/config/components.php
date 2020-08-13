@@ -30,6 +30,7 @@ return [
         ],
     ],
 
+<<<<<<< HEAD
     /*'authManager' => [
         'class' => 'yii\rbac\DbManager',
         'defaultRoles' => ['user_users'],
@@ -39,10 +40,43 @@ return [
         'class' => yii\web\User::class,
         'identityClass' => frontend\models\Account::class,
         'loginUrl' => ['/site/login'],
+=======
+    'authManager' => [
+        'class' => 'yii\rbac\DbManager',
+        'defaultRoles' => ['user_users'],
+    ],
+
+    'user' => [
+        'class' => yii\web\User::class,
+        'identityClass' => common\models\User::class,
+        'loginUrl' => ['auth/login'],
+>>>>>>> master
         'enableAutoLogin' => true,
         'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
     ],
 
+<<<<<<< HEAD
+=======
+    'mailer' => [
+        'class' => 'yii\swiftmailer\Mailer',
+        'viewPath' => '@frontend/mail',
+        'useFileTransport' => false,
+        'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.gmail.com',
+            'username' => 'mongdao.wd@gmail.com',
+            'password' => 'qtlqfvknyclgfwbv',
+            'port' => '587',
+            'encryption' => 'tls',
+            'streamOptions' => [
+                'ssl' => [
+                    'verify_peer' => false,
+                    'allow_self_signed' => true
+                ],
+            ]
+        ],
+    ],
+>>>>>>> master
     'urlManager' => require(__DIR__ . '/_urlManager.php'),
     'cache' => require(__DIR__ . '/_cache.php'),
 ];

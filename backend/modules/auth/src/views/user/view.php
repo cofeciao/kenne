@@ -10,7 +10,11 @@ use modava\auth\AuthModule;
 /* @var $this yii\web\View */
 /* @var $model modava\auth\models\User */
 
+<<<<<<< HEAD
 $this->title = $model->id;
+=======
+$this->title = $model->userProfile->fullname;
+>>>>>>> master
 $this->params['breadcrumbs'][] = ['label' => AuthModule::t('auth', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -54,7 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'username',
                         'oauth_client',
                         'oauth_client_user_id',
+<<<<<<< HEAD
                         'email:email',
+=======
+                        'email',
+>>>>>>> master
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {

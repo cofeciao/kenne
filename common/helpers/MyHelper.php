@@ -271,6 +271,7 @@ class MyHelper
         }
         return $string ? implode(', ', $string) . ' trước' : 'vừa đây';
     }
+<<<<<<< HEAD
 
     public static function array_get($array,$key){
         if(is_array($array) && array_key_exists($key,$array)){
@@ -281,3 +282,6 @@ class MyHelper
 }
 
 
+=======
+}
+>>>>>>> master

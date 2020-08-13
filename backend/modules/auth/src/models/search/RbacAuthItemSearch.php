@@ -47,7 +47,11 @@ class RbacAuthItemSearch extends RbacAuthItem
     public function search($params)
     {
         $query = RbacAuthItem::find();
+<<<<<<< HEAD
         if(!Yii::$app->user->can(User::DEV)) $query->andWhere(['<>', 'type' => self::TYPE_ROLE]);
+=======
+        if(!Yii::$app->user->can(User::DEV)) $query->andWhere(['<>', 'type', self::TYPE_ROLE]);
+>>>>>>> master
 
         // add conditions that should always apply here
 

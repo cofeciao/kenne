@@ -1,6 +1,7 @@
 <?php
 
 define('VERSION', 'V1.33');
+<<<<<<< HEAD
 define('LOGIN_VERSION', 'v2.4');
 Yii::setAlias('@moduleBackend', realpath(__DIR__ . '/../backend/modules/'));
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/../backend/modules/api');
@@ -34,3 +35,6 @@ Yii::setAlias('modava/imagick', dirname(dirname(__DIR__)) . '/package/imagick/sr
 
 
 //Yii::setAlias('modava/generators', dirname(dirname(__DIR__)) . '/backend/modava/src/generators');
+=======
+define('LOGIN_VERSION', 'v2.4');
+>>>>>>> master

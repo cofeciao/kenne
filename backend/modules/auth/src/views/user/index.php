@@ -98,10 +98,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
+<<<<<<< HEAD
                                                 'attribute' => 'userProfile.fullname',
                                                 'label' => AuthModule::t('auth', 'User')
                                             ],
                                             'email:email',
+=======
+                                                'attribute' => 'fullname',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->userProfile->fullname, ['view', 'id' => $model->id], [
+                                                        'title' => $model->userProfile->fullname,
+                                                        'data-pjax' => 0,
+                                                    ]);
+                                                }
+                                            ],
+                                            'email',
+>>>>>>> master
                                             'userProfile.phone',
                                             [
                                                 'attribute' => 'status',

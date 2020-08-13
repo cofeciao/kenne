@@ -6,6 +6,7 @@ use yii\widgets\Breadcrumbs;
 
 $this->beginContent('@frontend/views/layouts/common.php');
 ?>
+<<<<<<< HEAD
 
     <div class="main-wrapper">
 <?php if (Yii::$app->controller->id == 'site'){
@@ -21,6 +22,9 @@ $this->beginContent('@frontend/views/layouts/common.php');
 
 <?= \frontend\widgets\ScrollWidget::widget()?>
 <?= \frontend\widgets\ModalAlertWidget::widget() ?>
+=======
+<?= $content; ?>
+>>>>>>> master
 <?php
 $this->endContent();
 ?>

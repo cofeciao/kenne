@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+<<<<<<< HEAD
 $this->title = 'WEB_NAME';
 ?>
         <?php if (Yii::$app->session->hasFlash('success')){
@@ -567,3 +568,8 @@ $this->title = 'WEB_NAME';
 
 
 
+=======
+$this->title = WEB_NAME;
+?>
+Đang cập nhật...
+>>>>>>> master

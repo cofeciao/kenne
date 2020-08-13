@@ -3,7 +3,11 @@
 namespace app\backend\models;
 
 use backend\modules\customer\models\Dep365CustomerOnline;
+<<<<<<< HEAD
 use backend\modules\user\models\User;
+=======
+use modava\auth\models\User;
+>>>>>>> master
 use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
 

@@ -3,6 +3,10 @@
 namespace modava\customer\controllers;
 
 use backend\components\MyController;
+<<<<<<< HEAD
+=======
+use modava\customer\CustomerModule;
+>>>>>>> master
 use modava\customer\models\Clinic;
 use modava\customer\models\search\ClinicSearch;
 use yii\db\Exception;
@@ -198,6 +202,10 @@ class ClinicController extends MyController
             return $model;
         }
 
+<<<<<<< HEAD
         throw new NotFoundHttpException(Yii::t('customer', 'The requested page does not exist.'));
+=======
+        throw new NotFoundHttpException(CustomerModule::t('customer', 'The requested page does not exist.'));
+>>>>>>> master
     }
 }

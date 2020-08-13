@@ -204,6 +204,10 @@ class RbacAuthItemController extends MyController
             return $model;
         }
 
+<<<<<<< HEAD
         throw new NotFoundHttpException(Yii::t('auth', 'The requested page does not exist.'));
+=======
+        throw new NotFoundHttpException(AuthModule::t('auth', 'The requested page does not exist.'));
+>>>>>>> master
     }
 }

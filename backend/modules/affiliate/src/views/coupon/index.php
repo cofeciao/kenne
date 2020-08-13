@@ -5,7 +5,13 @@ use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
+<<<<<<< HEAD
 use yii\widgets\Pjax;
+=======
+use yii\helpers\Url;
+use yii\widgets\Pjax;
+
+>>>>>>> master
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\CouponSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -95,7 +101,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
+<<<<<<< HEAD
                                                                             [
+=======
+                                         [
+>>>>>>> master
                                             'attribute' => 'title',
                                             'format' => 'raw',
                                             'value' => function ($model) {
@@ -106,7 +116,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                             }
                                         ],
 										'coupon_code',
+<<<<<<< HEAD
                                         'customer_id',
+=======
+                                        [
+                                            'attribute' => 'customer_id',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '';
+                                            }
+                                        ],
+>>>>>>> master
 										'quantity',
                                         'quantity_used',
                                         [
@@ -136,7 +156,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'attribute' => 'created_at',
+<<<<<<< HEAD
                                             'format' => 'date',
+=======
+                                            'format' => 'datetime',
+>>>>>>> master
                                             'headerOptions' => [
                                                 'width' => 150,
                                             ],

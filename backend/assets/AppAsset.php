@@ -18,7 +18,10 @@ class AppAsset extends AssetBundle
         'vendors/jquery-toast-plugin/dist/jquery.toast.min.css',
         'dist/css/style.css',
         'css/custom.css',
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     ];
     public $js = [
         'vendors/popper.js/dist/umd/popper.min.js',

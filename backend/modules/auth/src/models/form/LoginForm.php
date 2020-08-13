@@ -3,6 +3,10 @@
 namespace modava\auth\models\form;
 
 use cheatsheet\Time;
+<<<<<<< HEAD
+=======
+use modava\auth\AuthModule;
+>>>>>>> master
 use modava\auth\models\User;
 //use himiklab\yii2\recaptcha\ReCaptchaValidator2;
 use Yii;
@@ -38,7 +42,11 @@ class LoginForm extends Model
             ['password', 'validatePassword'],
 //            [['reCaptcha'], ReCaptchaValidator2::class,
 //                'secret' => RECAPTCHA_GOOGLE_SECRETKEY,
+<<<<<<< HEAD
 //                'uncheckedMessage' => \Yii::t('backend', 'Vui lòng đánh dấu vào ô trên')/*, 'on' => self::SCENARIO_SUBMIT_LOGIN*/]
+=======
+//                'uncheckedMessage' => \AuthModule::t('auth', 'Vui lòng đánh dấu vào ô trên')/*, 'on' => self::SCENARIO_SUBMIT_LOGIN*/]
+>>>>>>> master
         ];
     }
 
@@ -48,9 +56,15 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
+<<<<<<< HEAD
             'username' => Yii::t('backend', 'Tài Khoản'),
             'password' => Yii::t('backend', 'Mật Khẩu'),
             'rememberMe' => Yii::t('backend', 'Giữ Tôi Đăng Nhập'),
+=======
+            'username' => AuthModule::t('auth', 'Tài Khoản'),
+            'password' => AuthModule::t('auth', 'Mật Khẩu'),
+            'rememberMe' => AuthModule::t('auth', 'Giữ Tôi Đăng Nhập'),
+>>>>>>> master
         ];
     }
 
@@ -63,7 +77,11 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
+<<<<<<< HEAD
                 $this->addError('password', Yii::t('backend', 'Tài khoản hoặc mật khẩu sai.'));
+=======
+                $this->addError('password', AuthModule::t('auth', 'Tài khoản hoặc mật khẩu sai.'));
+>>>>>>> master
             }
         }
     }

@@ -23,7 +23,11 @@ if ($model->language == null) $model->language = Yii::$app->getModule('article')
 
         <div class="row">
             <div class="col-4">
+<<<<<<< HEAD
                 <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('article')->params['availableLocales'])->label(ArticleModule::t('article', 'Ngôn ngữ')) ?>
+=======
+                <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'])->label(ArticleModule::t('article', 'Ngôn ngữ')) ?>
+>>>>>>> master
             </div>
             <div class="col-4">
                 <?= $form->field($model, 'category_id')
