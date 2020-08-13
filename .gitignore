@@ -270,3 +270,7 @@ phpunit.phar
 /backend/widgets/select2/composer.json
 /backend/widgets/select2/README.md
 /backend/widgets/select2/.git
+
+/backend/widgets/input/composer.json
+/backend/widgets/input/README.md
+/backend/widgets/input/.git
