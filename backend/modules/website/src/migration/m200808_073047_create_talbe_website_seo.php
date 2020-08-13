@@ -30,8 +30,8 @@ class m200808_073047_create_talbe_website_seo extends Migration
             'updated_by' => $this->integer(11)->null(),
         ], $tableOptions);
 
-        $this->addForeignKey('fk-website_partner-created_by-user-id', 'website_seo', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('fk-website_partner-updated_by-user-id', 'website_seo', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('fk-website_seo-created_by-user-id', 'website_seo', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('fk-website_seo-updated_by-user-id', 'website_seo', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
     }
 
     /**
