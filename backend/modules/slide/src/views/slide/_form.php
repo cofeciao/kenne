@@ -23,7 +23,7 @@ use modava\slide\models\table\SlideTypeTable;
         </div>
         <div class="col-4">
             <?= $form->field($model, 'language')
-                ->dropDownList(Yii::$app->getModule('product')->params['availableLocales'], ['prompt' => SlideModule::t('slide', 'Chọn ngôn ngữ...')])
+                ->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => SlideModule::t('slide', 'Chọn ngôn ngữ...')])
                 ->label(SlideModule::t('slide', 'Ngôn ngữ')) ?>
 
         </div>

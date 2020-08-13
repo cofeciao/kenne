@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m200808_072938_create_talbe_partner
  */
-class m200808_072938_create_talbe_website_partner extends Migration
+class m200808_072938_create_talbe_pages_partner extends Migration
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class m200808_072938_create_talbe_website_partner extends Migration
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%website_partner}}', [
+        $this->createTable('{{%pages_partner}}', [
             'id' => $this->primaryKey(),
             'title' => $this->string(255)->notNull(),
             'image' => $this->string(255)->null(),
@@ -30,8 +30,8 @@ class m200808_072938_create_talbe_website_partner extends Migration
             'updated_by' => $this->integer(11)->null(),
         ], $tableOptions);
 
-        $this->addForeignKey('fk-website_partner-created_by-user-id', 'website_partner', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-        $this->addForeignKey('fk-website_partner-updated_by-user-id', 'website_partner', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('fk-pages_partner-created_by-user-id', 'pages_partner', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+        $this->addForeignKey('fk-pages_partner-updated_by-user-id', 'pages_partner', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
 
     }
 
@@ -40,6 +40,6 @@ class m200808_072938_create_talbe_website_partner extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%website_partner}}');
+        $this->dropTable('{{%pages_partner}}');
     }
 }

@@ -25,4 +25,8 @@ class SlideCategoryQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy([SlideCategory::tableName() . '.id' => SORT_DESC]);
     }
+    public function findByLanguage()
+    {
+        return $this->andWhere([SlideCategory::tableName() . '.language' => \Yii::$app->language]);
+    }
 }

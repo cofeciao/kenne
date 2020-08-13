@@ -1,25 +1,25 @@
 <?php
 
-namespace modava\website\models\table;
+namespace modava\pages\models\table;
 
 use cheatsheet\Time;
-use modava\website\models\query\WebsitePartnerQuery;
+use modava\pages\models\query\PagesPartnerQuery;
 use Yii;
 use yii\db\ActiveRecord;
 
-class WebsitePartnerTable extends \yii\db\ActiveRecord
+class PagesPartnerTable extends \yii\db\ActiveRecord
 {
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;
 
     public static function tableName()
     {
-        return 'website_partner';
+        return 'pages_partner';
     }
 
     public static function find()
     {
-        return new WebsitePartnerQuery(get_called_class());
+        return new PagesPartnerQuery(get_called_class());
     }
 
     public function afterDelete()

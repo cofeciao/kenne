@@ -1,22 +1,22 @@
 <?php
 
-namespace modava\website\controllers;
+namespace modava\pages\controllers;
 
-use modava\website\components\MyUpload;
+use modava\pages\components\MyUpload;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\website\WebsiteModule;
-use modava\website\components\MyWebsiteController;
-use modava\website\models\WebsitePartner;
-use modava\website\models\search\PartnerSearch;
+use modava\pages\PagesModule;
+use modava\pages\components\MyPagesController;
+use modava\pages\models\PagesPartner;
+use modava\pages\models\search\PagesPartnerSearch;
 
 /**
- * PartnerController implements the CRUD actions for WebsitePartner model.
+ * PartnerController implements the CRUD actions for PagesPartner model.
  */
-class PartnerController extends MyWebsiteController
+class PartnerController extends MyPagesController
 {
     /**
      * {@inheritdoc}
@@ -34,12 +34,12 @@ class PartnerController extends MyWebsiteController
     }
 
     /**
-     * Lists all WebsitePartner models.
+     * Lists all PagesPartner models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PartnerSearch();
+        $searchModel = new PagesPartnerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -50,7 +50,7 @@ class PartnerController extends MyWebsiteController
 
 
     /**
-     * Displays a single WebsitePartner model.
+     * Displays a single PagesPartner model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -69,7 +69,7 @@ class PartnerController extends MyWebsiteController
      */
     public function actionCreate()
     {
-        $model = new WebsitePartner();
+        $model = new PagesPartner();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -115,7 +115,7 @@ class PartnerController extends MyWebsiteController
     }
 
     /**
-     * Updates an existing WebsitePartner model.
+     * Updates an existing PagesPartner model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -183,7 +183,7 @@ class PartnerController extends MyWebsiteController
     }
 
     /**
-     * Deletes an existing WebsitePartner model.
+     * Deletes an existing PagesPartner model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -221,17 +221,17 @@ class PartnerController extends MyWebsiteController
     }
 
     /**
-     * Finds the WebsitePartner model based on its primary key value.
+     * Finds the PagesPartner model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return WebsitePartner the loaded model
+     * @return PagesPartner the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
 
 
     protected function findModel($id)
     {
-        if (($model = WebsitePartner::findOne($id)) !== null) {
+        if (($model = PagesPartner::findOne($id)) !== null) {
             return $model;
         }
 
