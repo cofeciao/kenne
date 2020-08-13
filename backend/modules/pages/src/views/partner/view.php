@@ -4,14 +4,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
-use modava\website\widgets\NavbarWidgets;
-use modava\website\WebsiteModule;
+use modava\pages\widgets\NavbarWidgets;
+use modava\pages\PagesModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\website\models\WebsitePartner */
+/* @var $model modava\pages\models\PagesPartner */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => WebsiteModule::t('website', 'Website Partners'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => PagesModule::t('pages', 'Partners'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= WebsiteModule::t('website', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
-            <?= Html::a(WebsiteModule::t('website', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(WebsiteModule::t('website', 'Delete'), ['delete', 'id' => $model->id], [
+                title="<?= PagesModule::t('pages', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= PagesModule::t('pages', 'Create'); ?></a>
+            <?= Html::a(PagesModule::t('pages', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(PagesModule::t('pages', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => WebsiteModule::t('website', 'Are you sure you want to delete this item?'),
+                    'confirm' => PagesModule::t('pages', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -67,24 +67,24 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                                 if ($model->language == null)
                                     return null;
-                                return Yii::$app->getModule('website')->params['availableLocales'][$model->language];
+                                return Yii::$app->params['availableLocales'][$model->language];
                             },
                         ],
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('website')->params['status'][$model->status];
+                                return Yii::$app->getModule('pages')->params['status'][$model->status];
                             }
                         ],
 						'created_at:datetime',
 						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => WebsiteModule::t('website', 'Created By')
+                            'label' => PagesModule::t('pages', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => WebsiteModule::t('website', 'Updated By')
+                            'label' => PagesModule::t('pages', 'Updated By')
                         ],
                     ],
                 ]) ?>

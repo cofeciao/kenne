@@ -1,19 +1,19 @@
 <?php
 
-use modava\website\widgets\NavbarWidgets;
+use modava\pages\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use modava\website\WebsiteModule;
+use modava\pages\PagesModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\website\models\WebsitePartner */
+/* @var $model modava\pages\models\PagesPartner */
 
-$this->title = WebsiteModule::t('website', 'Update : {name}', [
+$this->title = PagesModule::t('pages', 'Update : {name}', [
     'name' => $model->title,
 ]);
-$this->params['breadcrumbs'][] = ['label' => WebsiteModule::t('website', 'Website Partners'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => PagesModule::t('pages', 'Partners'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = WebsiteModule::t('website', 'Update');
+$this->params['breadcrumbs'][] = PagesModule::t('pages', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = WebsiteModule::t('website', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= WebsiteModule::t('website', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
+           title="<?= PagesModule::t('pages', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= PagesModule::t('pages', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

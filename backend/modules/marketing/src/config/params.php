@@ -2,11 +2,6 @@
 use modava\marketing\MarketingModule;
 
 return [
-    'availableLocales' => [
-        'vi' => 'Tiếng Việt',
-        'en' => 'English',
-        'jp' => 'Japan',
-    ],
     'marketingName' => 'Marketing',
     'marketingVersion' => '1.0',
     'status' => [

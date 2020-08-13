@@ -1,16 +1,16 @@
 <?php
 
-use modava\website\WebsiteModule;
-use modava\website\widgets\NavbarWidgets;
+use modava\pages\PagesModule;
+use modava\pages\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel modava\website\models\search\PartnerSearch */
+/* @var $searchModel modava\pages\models\search\PagesPartnerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = WebsiteModule::t('website', 'Website Partners');
+$this->title = PagesModule::t('pages', 'Partners');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= WebsiteModule::t('website', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
+           title="<?= PagesModule::t('pages', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= PagesModule::t('pages', 'Create'); ?></a>
     </div>
 
     <!-- Row -->
@@ -60,10 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                     'pager' => [
-                                        'firstPageLabel' => WebsiteModule::t('website', 'First'),
-                                        'lastPageLabel' => WebsiteModule::t('website', 'Last'),
-                                        'prevPageLabel' => WebsiteModule::t('website', 'Previous'),
-                                        'nextPageLabel' => WebsiteModule::t('website', 'Next'),
+                                        'firstPageLabel' => PagesModule::t('pages', 'First'),
+                                        'lastPageLabel' => PagesModule::t('pages', 'Last'),
+                                        'prevPageLabel' => PagesModule::t('pages', 'Previous'),
+                                        'nextPageLabel' => PagesModule::t('pages', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'value' => function ($model) {
                                                 if ($model->language == null)
                                                     return null;
-                                                return Yii::$app->getModule('website')->params['availableLocales'][$model->language];
+                                                return Yii::$app->params['availableLocales'][$model->language];
                                             },
                                         ],
                                         [
@@ -143,22 +143,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => WebsiteModule::t('website', 'Actions'),
+                                            'header' => PagesModule::t('pages', 'Actions'),
                                             'template' => '{update} {delete}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => WebsiteModule::t('website', 'Update'),
-                                                        'alia-label' => WebsiteModule::t('website', 'Update'),
+                                                        'title' => PagesModule::t('pages', 'Update'),
+                                                        'alia-label' => PagesModule::t('pages', 'Update'),
                                                         'data-pjax' => 0,
                                                         'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => WebsiteModule::t('website', 'Delete'),
+                                                        'title' => PagesModule::t('pages', 'Delete'),
                                                         'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => WebsiteModule::t('website', 'Delete?'),
+                                                        'data-title' => PagesModule::t('pages', 'Delete?'),
                                                         'data-pjax' => 0,
                                                         'data-url' => $url,
                                                         'btn-success-class' => 'success-delete',

@@ -2,13 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use modava\pages\PagesModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\website\models\search\PartnerSearch */
+/* @var $model modava\pages\models\search\PartnerSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="website-partner-search">
+<div class="pages-partner-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -39,8 +40,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('website', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('website', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(PagesModule::t('pages', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(PagesModule::t('pages', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
