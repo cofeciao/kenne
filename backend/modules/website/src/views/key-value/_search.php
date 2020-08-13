@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use modava\website\WebsiteModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\website\models\search\KeyValueSearch */
@@ -33,8 +34,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('website', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('website', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(WebsiteModule::t('website', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(WebsiteModule::t('website', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

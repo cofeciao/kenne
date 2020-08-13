@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use modava\comment\CommentModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\comment\models\search\CommentSearch */
@@ -31,8 +32,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'created_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('comment', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('comment', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(CommentModule::t('comment', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(CommentModule::t('comment', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

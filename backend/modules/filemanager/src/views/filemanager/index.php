@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use modava\filemanager\FilemanagerModule;
 
-$this->title = Yii::t('backend', 'File manager');
+$this->title = FilemanagerModule::t('backend', 'File manager');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

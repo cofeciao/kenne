@@ -189,6 +189,6 @@ class KeyValueController extends MyWebsiteController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('website', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(WebsiteModule::t('website', 'The requested page does not exist.'));
     }
 }
