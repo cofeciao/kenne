@@ -30,15 +30,15 @@ return [
         ],
     ],
 
-    'authManager' => [
+    /*'authManager' => [
         'class' => 'yii\rbac\DbManager',
         'defaultRoles' => ['user_users'],
-    ],
+    ],*/
 
     'user' => [
         'class' => yii\web\User::class,
-        'identityClass' => common\models\User::class,
-        'loginUrl' => ['auth/login'],
+        'identityClass' => frontend\models\Account::class,
+        'loginUrl' => ['/site/login'],
         'enableAutoLogin' => true,
         'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
     ],

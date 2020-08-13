@@ -10,13 +10,32 @@ use frontend\models\LocationProvince;
 use frontend\models\Orders;
 use frontend\models\Products;
 use frontend\models\Transaction;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 use Yii;
 
 class CheckoutController extends MyController
 {
+    /*public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['/site/login'],
+                        'allow' => true,
+                    ],
+                ],
+            ],
+        ];
+    }*/
+
     public function actionIndex()
     {
+        if (Yii::$app->user->isGuest){
+            return $this->redirect('/site/login');
+        } else {
         $province = new LocationProvince();
         $provinceNames = $province->getAllProvince();
 
@@ -34,6 +53,7 @@ class CheckoutController extends MyController
             'total' => $total,
             'provinceNames' => $provinceNames
         ]);
+        }
     }
 
     public function actionGetDistrict($id)

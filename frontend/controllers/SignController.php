@@ -6,6 +6,7 @@ namespace frontend\controllers;
 
 use frontend\components\MyController;
 use frontend\models\Sign;
+use modava\kenne\models\Account;
 use yii\helpers\Html;
 use Yii;
 class SignController extends MyController

@@ -37,11 +37,17 @@ use yii\helpers\Url;
                                     <li><a href="<?= Url::toRoute(['/about-us']) ?>">About Us</a></li>
                                     <li><a href="<?= Url::toRoute(['/account']) ?>">My Account <i class="ion-chevron-down"></i></a>
                                         <ul class="kenne-dropdown">
-                                            <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
-                                            <li><a href="<?= Url::toRoute(['/sign']) ?>">Login | Register</a></li>
-                                            <li><a href="<?= Url::toRoute(['/wishlist']) ?>">Wishlist</a></li>
+                                            <?php if (!Yii::$app->user->isGuest){ ?>
+                                                <li><a href="<?= Url::toRoute(['/account']) ?>">My Account</a></li>
+                                                <li><a href="<?= Url::toRoute(['/wishlist']) ?>">Wishlist</a></li>
+                                                <li><a href="<?= Url::toRoute(['/cart']) ?>">Cart</a></li>
+                                                <li><a href="<?= Url::toRoute(['/checkout']) ?>">Checkout</a></li>
+                                            <?php } else {?>
+                                            <li><a href="<?= Url::toRoute(['/site/login']) ?>">Login</a></li>
+                                            <li><a href="<?= Url::toRoute(['/site/signup']) ?>">Register</a></li>
                                             <li><a href="<?= Url::toRoute(['/cart']) ?>">Cart</a></li>
                                             <li><a href="<?= Url::toRoute(['/checkout']) ?>">Checkout</a></li>
+                                            <?php } ?>
                                         </ul>
                                     </li>
                                 </ul>

@@ -29,18 +29,27 @@ use yii\helpers\Url;
                             <div class="col-lg-6">
                                 <div class="header-top_right">
                                     <ul>
-                                        <li>
-                                            <a href="<?= Url::toRoute('/account') ?>">My Account</a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= Url::toRoute('/wishlist') ?>">Wishlist</a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= Url::toRoute('/sign') ?>">Register or Sign in</a>
-                                        </li>
-                                        <li>
-                                            <a href="<?= Url::toRoute('/checkout') ?>">Checkout</a>
-                                        </li>
+                                        <?php if (!Yii::$app->user->isGuest){?>
+                                            <li>
+                                                <a href="<?= Url::toRoute('/account') ?>">My Account</a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= Url::toRoute('/wishlist') ?>">Wishlist</a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= Url::toRoute('/checkout') ?>">Checkout</a>
+                                            </li>
+                                        <?php } else {?>
+                                            <li>
+                                                <a href="<?= Url::toRoute('/checkout') ?>">Checkout</a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= Url::toRoute('/site/singup') ?>">Register</a>
+                                            </li>
+                                            <li>
+                                                <a href="<?= Url::toRoute('/site/login') ?>">Sign in</a>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </div>

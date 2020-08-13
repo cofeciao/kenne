@@ -13,7 +13,7 @@ class CartController extends MyController
     public function actionIndex()
     {
         $total = 0;
-        $pro_quantity = [];
+        //$pro_quantity = [];
         $data = unserialize(serialize(Component::getCookies('cart')));
 
         if (empty($data)){
@@ -61,7 +61,7 @@ class CartController extends MyController
     }
 
     public function actionDeleteAll(){
-        Cart::deleteAll();;
+        Cart::deleteAll();
         return $this->redirect(['/cart']);
     }
 
@@ -71,7 +71,7 @@ class CartController extends MyController
         $data1 = Yii::$app->request->post();
 
         unset($data1['_csrf']);
-        $session = Yii::$app->session;
+        //$session = Yii::$app->session;
         foreach ($data as $key => $value){
             foreach($data1 as $k => $v){
                 if ( $k == $key ){

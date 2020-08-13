@@ -5,12 +5,14 @@ use yii\helpers\Url;
 
 $this->title = 'WEB_NAME';
 ?>
+        <?php if (Yii::$app->session->hasFlash('success')){
+            echo Yii::$app->session->getFlash('success');
+        } ?>
 
 
     <!-- Begin Slider Area -->
     <?= \frontend\widgets\SliderWidget::widget()?>
     <!-- Slider Area End Here -->
-
     <!-- Begin Service Area -->
     <?= \frontend\widgets\ServiceWidget::widget() ?>
     <!-- Service Area End Here -->
