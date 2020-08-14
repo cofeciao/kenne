@@ -6,24 +6,6 @@
  * Time: 10:39 AM
  */
 
-use backend\modules\clinic\controllers\ChupBanhMoiController;
-use backend\modules\clinic\controllers\ChupCuiController;
-use backend\modules\clinic\controllers\ChupFinalController;
-use backend\modules\clinic\controllers\ChupHinhController;
-use backend\modules\clinic\controllers\HinhFinalController;
-use backend\modules\clinic\controllers\TkncController;
-use backend\modules\clinic\controllers\UomRang1Controller;
-use backend\modules\clinic\controllers\UomRang2Controller;
-use backend\modules\clinic\models\PhongKhamChupBanhMoi;
-use backend\modules\clinic\models\PhongKhamChupCui;
-use backend\modules\clinic\models\PhongKhamChupFinal;
-use backend\modules\clinic\models\PhongKhamChupHinh;
-use backend\modules\clinic\models\PhongKhamHinhFinal;
-use backend\modules\clinic\models\PhongKhamHinhTknc;
-use backend\modules\clinic\models\PhongKhamUomRang1;
-use backend\modules\clinic\models\PhongKhamUomRang2;
-use backend\modules\clinic\models\UploadAudio;
-
 return [
     'menu-active' => [
 
