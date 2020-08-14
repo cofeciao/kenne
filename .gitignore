@@ -44,23 +44,31 @@ phpunit.phar
 
 /log
 
-!/backend/runtime
+!/backend/runtime/
 /backend/runtime/*
 !/backend/runtime/index.html
 
-!/backend/web/assets
+!/backend/web/assets/
 /backend/web/assets/*
 !/backend/web/assets/index.html
 
-/backend/web/img
-/backend/web/thumbs
-/backend/.htaccess
+!/backend/web/uploads/
+/backend/web/uploads/*
+!/backend/web/uploads/filemanager/
+/backend/web/uploads/filemanager/*
+!/backend/web/uploads/filemanager/source/
+/backend/web/uploads/filemanager/source/*
+!/backend/web/uploads/filemanager/source/index.html
 
-!/frontend/runtime
+!/backend/web/uploads/filemanager/thumbs/
+/backend/web/uploads/filemanager/thumbs/*
+!/backend/web/uploads/filemanager/thumbs/index.html
+
+!/frontend/runtime/
 /frontend/runtime/*
 !/frontend/runtime/index.html
 
-!/frontend/web/assets
+!/frontend/web/assets/
 /frontend/web/assets/*
 !/frontend/web/assets/index.html
 
@@ -262,3 +270,7 @@ phpunit.phar
 /backend/widgets/select2/composer.json
 /backend/widgets/select2/README.md
 /backend/widgets/select2/.git
+
+/backend/widgets/input/composer.json
+/backend/widgets/input/README.md
+/backend/widgets/input/.git

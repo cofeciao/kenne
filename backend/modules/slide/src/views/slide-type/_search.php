@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use modava\slide\SlideModule;
 
 /* @var $this yii\web\View */
 /* @var $model modava\slide\models\search\SlideTypeSearch */
@@ -43,8 +44,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('slide', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('slide', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(SlideModule::t('slide', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(SlideModule::t('slide', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -23,6 +23,7 @@ use Yii;
  * @property string|null $so_luong
  * @property string|null $description
  * @property string|null $content
+ * @property int $product_hot
  * @property string|null $product_tech
  * @property int|null $position
  * @property string|null $ads_pixel
@@ -120,11 +121,16 @@ class ProductTable extends \yii\db\ActiveRecord
     public function getImage(string $size = null)
     {
         $image = $this->image;
-        if (!isset(Yii::$app->params['product'])) $image = 'no-image.png';
+        if (!isset(Yii::$app->params['product'])) {
+            $size = '150x150';
+            $image = 'no-image.png';
+        }
         if (!array_key_exists($size, Yii::$app->params['product'])) $size = array_keys(Yii::$app->params['product'])[0];
-        $pathImage = Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'];
-        if (is_dir($pathImage . $image) || !file_exists($pathImage . $image)) $image = 'no-image.png';
-        return Yii::$app->assetManager->publish($pathImage . $image)[1];
+        if (is_dir(Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'] . $image) || !file_exists(Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'] . $image)) {
+            $size = '150x150';
+            $image = 'no-image.png';
+        }
+        return Yii::$app->assetManager->publish(Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'] . $image)[1];
     }
 
     /**

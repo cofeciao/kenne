@@ -81,33 +81,5 @@ return [
             'width' => 150,
             'height' => 150
         ]
-    ],
-    'slide' => [
-        '150x150' => [
-            'folder' => '/uploads/slide/150x150/',
-            'width' => 150,
-            'height' => 150
-        ]
-    ],
-    'slide-category' => [
-        '150x150' => [
-            'folder' => '/uploads/slide-category/150x150/',
-            'width' => 150,
-            'height' => 150
-        ]
-    ],
-    'slide-type' => [
-        '150x150' => [
-            'folder' => '/uploads/slide-type/150x150/',
-            'width' => 150,
-            'height' => 150
-        ]
-    ],
-    'partner' => [
-        '150x150' => [
-            'folder' => '/uploads/partner/150x150/',
-            'width' => 150,
-            'height' => 150
-        ]
     ]
 ];

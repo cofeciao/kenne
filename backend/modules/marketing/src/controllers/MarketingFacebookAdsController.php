@@ -3,6 +3,7 @@
 namespace modava\marketing\controllers;
 
 use backend\components\MyController;
+use modava\marketing\MarketingModule;
 use modava\marketing\models\MarketingFacebookAds;
 use modava\marketing\models\search\MarketingFacebookAdsSearch;
 use Yii;
@@ -210,6 +211,6 @@ class MarketingFacebookAdsController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('marketing', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(MarketingModule::t('marketing', 'The requested page does not exist.'));
     }
 }
