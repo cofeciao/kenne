@@ -189,6 +189,6 @@ class SlideCategoryController extends MySlideController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('slide', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(SlideModule::t('slide', 'The requested page does not exist.'));
     }
 }

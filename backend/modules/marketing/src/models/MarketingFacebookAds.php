@@ -94,7 +94,6 @@ class MarketingFacebookAds extends MarketingFacebookAdsTable
     {
         if (!$this->hasErrors()) {
             if (!is_numeric(str_replace([',', '.'], '', $this->$attribute))) {
-//                $this->addError($attribute, Yii::t('backend', $this->getAttributeLabel($attribute) . ' không đúng định dạng số'));
             }
         }
     }

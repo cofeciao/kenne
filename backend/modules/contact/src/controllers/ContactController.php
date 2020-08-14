@@ -189,6 +189,6 @@ class ContactController extends MyContactController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('contact', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(ContactModule::t('contact', 'The requested page does not exist.'));
     }
 }
