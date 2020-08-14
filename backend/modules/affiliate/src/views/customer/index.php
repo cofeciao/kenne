@@ -163,6 +163,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                             }
                                         ],
                                         [
+                                            'attribute' => 'status',
+                                            'headerOptions' => [
+                                                'class' => 'header-100',
+                                            ],
+                                            'value' => function ($model) {
+                                                return Yii::$app->getModule('affiliate')->params['customer_status'][$model->status];
+                                            }
+                                        ],
+                                        [
                                             'attribute' => 'birthday',
                                             'format' => 'date',
                                             'headerOptions' => [

@@ -50,6 +50,12 @@ $model->country_id = 237; // Viet Name
             ]) ?>
         </div>
         <div class="col-6">
+            <?= $form->field($model, 'status')->dropDownList(Yii::$app->getModule('affiliate')->params['customer_status'], [
+                'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
+                'id' => 'status'
+            ]) ?>
+        </div>
+        <div class="col-6">
             <?= $form->field($model, 'birthday')->widget(DatePicker::class, [
                 'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
                 'clientOptions' => [

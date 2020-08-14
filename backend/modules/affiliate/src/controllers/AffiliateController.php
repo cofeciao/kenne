@@ -25,6 +25,7 @@ class AffiliateController extends \backend\components\MyController
             'ClinicSearch[thao_tac]' => isset($clinicSearch['thao_tac']) ? $clinicSearch['thao_tac'] : null,
             'ClinicSearch[appointment_time]' => isset($clinicSearch['appointment_time']) ? $clinicSearch['appointment_time'] : null,
             'ClinicSearch[keyword]' => isset($clinicSearch['keyword']) ? $clinicSearch['keyword'] : null,
+            'ClinicSearch[last_dieu_tri]' => isset($clinicSearch['last_dieu_tri']) && in_array($clinicSearch['last_dieu_tri'], ['1', 'on']) ? 1 : 0,
         ];
 
         if (!$payload['ClinicSearch[appointment_time]']) {
