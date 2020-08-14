@@ -44,7 +44,7 @@ $model->country_id = 237; // Viet Name
             <?= $form->field($model, 'face_customer')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-6">
-            <?= $form->field($model, 'sex')->dropDownList(Yii::$app->controller->module->params['sex'], [
+            <?= $form->field($model, 'sex')->dropDownList(Yii::$app->getModule('affiliate')->params['sex'], [
                 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
                 'id' => 'sex'
             ]) ?>

@@ -24,13 +24,19 @@ return [
             'complete_customer_service' => "complete-customer-service",
             'list_thao_tac' => "list-thao-tac",
             'get_customer' => "get-customer",
+            'create_note' => "save-log-cskh",
         ],
-        'header' => ['X-Api-Key: qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'],
+        'header' => ['X-Api-Key: qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'], // @todo Refactor code here: chuyển MyAurisApi vào model
+        'headers' => ['X-Api-Key' => 'qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX 12321'],
         'row_per_page' => 10
     ],
     'not_release_object' => [
         'Coupon',
         'CouponType',
         'Order',
+    ],
+    'note_type' => [
+        '0' => AffiliateModule::t('affiliate', 'For This System'),
+        '1' => AffiliateModule::t('affiliate', 'For Partner System'),
     ]
 ];

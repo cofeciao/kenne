@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'sex',
                             'value' => function ($model) {
-                                return Yii::$app->controller->module->params['sex'][$model->sex];
+                                return Yii::$app->getModule('affiliate')->params['sex'][$model->sex];
                             }
                         ],
                         'date_accept_do_service:date',
