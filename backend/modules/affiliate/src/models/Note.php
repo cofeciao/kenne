@@ -113,12 +113,13 @@ class Note extends NoteTable
                             return $result['data'];
                         }
 
-                        Yii::$app->session->setFlash('toastr-' . $this->toastr_key . '-form', [
-                            'title' => 'Thông báo',
-                            'text' => AffiliateModule::t('affiliate',
-                                'Error connection was throw, please contact to IT to check this issue'),
-                            'type' => 'danger'
-                        ]);
+                        if (!Yii::$app->request->isAjax) {
+                            Yii::$app->session->setFlash('toastr-' . $this->toastr_key . '-form', [
+                                'title' => 'Thông báo',
+                                'text' => AffiliateModule::t('affiliate', 'Error connection was throw, please contact to IT to check this issue'),
+                                'type' => 'danger'
+                            ]);
+                        }
 
                         Yii::warning($result['error']);
 
@@ -259,7 +260,7 @@ class Note extends NoteTable
                 ]
             ]);
 
-            $result = \GuzzleHttp\json_decode($res->getBody());
+            $result = \GuzzleHttp\json_decode($res->getBody(), true);
 
             if (isset($result['code']) && $result['code'] == 200) {
                 return [

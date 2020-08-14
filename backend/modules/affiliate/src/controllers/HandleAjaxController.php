@@ -72,11 +72,11 @@ class HandleAjaxController extends MyAffiliateController
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true];
+                return [ 'success' => true ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true];
+                return [ 'success' => false ];
             }
         }
     }
