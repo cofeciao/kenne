@@ -30,4 +30,7 @@ return [
     'article-size' => '150x150px',
     'slide-size' => '150x150px',
     'partner-size' => '150x150px',
+    'video-size' => '150x150px',
+    'video-type-size' => '150x150px',
+    'video-category-size' => '150x150px',
 ];
