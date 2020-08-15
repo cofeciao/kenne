@@ -54,6 +54,7 @@ phpunit.phar
 
 !/backend/web/uploads/
 /backend/web/uploads/*
+
 !/backend/web/uploads/filemanager/
 /backend/web/uploads/filemanager/*
 !/backend/web/uploads/filemanager/source/
