@@ -17,8 +17,8 @@ class FilemanagerController extends MyFilemanagerController
 
         $configPath = [
             'upload_dir' => '/uploads/filemanager/source/',
-            'current_path' => '../../../../../../frontend/web/uploads/filemanager/source/',
-            'thumbs_base_path' => '../../../../../../frontend/web/uploads/filemanager/thumbs/',
+            'current_path' => \Yii::$app->getModule('filemanager')->upload_dir . '/uploads/filemanager/source/',
+            'thumbs_base_path' => \Yii::$app->getModule('filemanager')->upload_dir . '/uploads/filemanager/thumbs/',
             'base_url' => \Yii::getAlias('@frontendUrl'),
             'upload_path' => \Yii::$app->getModule('filemanager')->upload_dir,
             'FileManagerPermisstion' => \modava\tiny\components\FileManagerPermisstion::setPermissionFileAccess()
