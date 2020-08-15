@@ -1,7 +1,7 @@
 <?php
 
 use modava\kenne\KenneModule;
-use modava\products\widgets\NavbarWidgets;
+use modava\kenne\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
@@ -14,7 +14,6 @@ use yii\widgets\Pjax;
 $this->title = KenneModule::t('products', 'Products');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
         <?= NavbarWidgets::widget(); ?>

@@ -8,13 +8,8 @@
 
 namespace common\models\query;
 
-<<<<<<< HEAD
-use yii\db\ActiveQuery;
-use backend\modules\user\models\User;
-=======
 use modava\auth\models\User;
 use yii\db\ActiveQuery;
->>>>>>> master
 
 class UserQuery extends ActiveQuery
 {

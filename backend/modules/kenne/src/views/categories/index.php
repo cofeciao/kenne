@@ -1,17 +1,17 @@
 <?php
 
-use modava\categories\CategoriesModule;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 use modava\kenne\widgets\NavbarWidgets;
+use modava\kenne\KenneModule;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\categories\models\search\CategoriesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CategoriesModule::t('categories', 'Categories');
+$this->title = KenneModule::t('categories', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= CategoriesModule::t('categories', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CategoriesModule::t('categories', 'Create'); ?></a>
+               title="<?= KenneModule::t('categories', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= KenneModule::t('categories', 'Create'); ?></a>
         </div>
 
         <!-- Row -->
@@ -61,10 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                         'pager' => [
-                                            'firstPageLabel' => CategoriesModule::t('categories', 'First'),
-                                            'lastPageLabel' => CategoriesModule::t('categories', 'Last'),
-                                            'prevPageLabel' => CategoriesModule::t('categories', 'Previous'),
-                                            'nextPageLabel' => CategoriesModule::t('categories', 'Next'),
+                                            'firstPageLabel' => KenneModule::t('categories', 'First'),
+                                            'lastPageLabel' => KenneModule::t('categories', 'Last'),
+                                            'prevPageLabel' => KenneModule::t('categories', 'Previous'),
+                                            'nextPageLabel' => KenneModule::t('categories', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
@@ -115,13 +115,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'header' => CategoriesModule::t('categories', 'Actions'),
+                                                'header' => KenneModule::t('categories', 'Actions'),
                                                 'template' => '{update} {delete} {view}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                            'title' => CategoriesModule::t('categories', 'Update'),
-                                                            'alia-label' => CategoriesModule::t('categories', 'Update'),
+                                                            'title' => KenneModule::t('categories', 'Update'),
+                                                            'alia-label' => KenneModule::t('categories', 'Update'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-info btn-xs'
                                                         ]);
@@ -129,9 +129,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                                     'delete' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                            'title' => CategoriesModule::t('categories', 'Delete'),
+                                                            'title' => KenneModule::t('categories', 'Delete'),
                                                             'class' => 'btn btn-danger btn-xs btn-del',
-                                                            'data-title' => CategoriesModule::t('categories', 'Delete?'),
+                                                            'data-title' => KenneModule::t('categories', 'Delete?'),
                                                             'data-pjax' => 0,
                                                             'data-url' => $url,
                                                             'btn-success-class' => 'success-delete',

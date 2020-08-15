@@ -53,31 +53,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'accept',
                             'value' => function ($model) {
-<<<<<<< HEAD
-                                return Yii::$app->getModule('customer')->params['acceptDatHen'][$model->accept];
-=======
                                 return Yii::$app->params['acceptDatHen'][$model->accept];
->>>>>>> master
                             }
                         ],
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-<<<<<<< HEAD
-                                return Yii::$app->getModule('customer')->params['status'][$model->status];
-=======
                                 return Yii::$app->params['status'][$model->status];
->>>>>>> master
                             }
                         ],
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
-<<<<<<< HEAD
-                                return Yii::$app->getModule('customer')->params['availableLocales'][$model->language];
-=======
                                 return Yii::$app->params['availableLocales'][$model->language];
->>>>>>> master
                             },
                         ],
                         'created_at:datetime',

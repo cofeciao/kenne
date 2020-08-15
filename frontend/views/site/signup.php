@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-sm-12 col-md-12 col-lg-8 col-xs-12">
-                <?php $form = ActiveForm::begin(['action' => ['/site/signup'], 'method' => 'post']) ?>
+                <?php $form = ActiveForm::begin(['action' => ['/site/signup'], 'method' => 'post','enableClientScript' => false]) ?>
                 <div class="login-form">
                     <h4 class="login-title">Register</h4>
                     <div class="row">

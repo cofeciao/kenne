@@ -30,17 +30,6 @@ return [
         ],
     ],
 
-<<<<<<< HEAD
-    /*'authManager' => [
-        'class' => 'yii\rbac\DbManager',
-        'defaultRoles' => ['user_users'],
-    ],*/
-
-    'user' => [
-        'class' => yii\web\User::class,
-        'identityClass' => frontend\models\Account::class,
-        'loginUrl' => ['/site/login'],
-=======
     'authManager' => [
         'class' => 'yii\rbac\DbManager',
         'defaultRoles' => ['user_users'],
@@ -48,16 +37,13 @@ return [
 
     'user' => [
         'class' => yii\web\User::class,
-        'identityClass' => common\models\User::class,
+        'identityClass' => frontend\models\Account::class,
         'loginUrl' => ['auth/login'],
->>>>>>> master
         'enableAutoLogin' => true,
         'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
     ],
 
-<<<<<<< HEAD
-=======
-    'mailer' => [
+    /*'mailer' => [
         'class' => 'yii\swiftmailer\Mailer',
         'viewPath' => '@frontend/mail',
         'useFileTransport' => false,
@@ -75,8 +61,7 @@ return [
                 ],
             ]
         ],
-    ],
->>>>>>> master
+    ],*/
     'urlManager' => require(__DIR__ . '/_urlManager.php'),
     'cache' => require(__DIR__ . '/_cache.php'),
 ];

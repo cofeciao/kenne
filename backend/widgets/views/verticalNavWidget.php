@@ -40,8 +40,7 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
-<<<<<<< HEAD
-=======
+
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('affiliate')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'affiliate') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/affiliate']); ?>">
@@ -58,7 +57,7 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
->>>>>>> master
+
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('product')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'product') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/product']); ?>">
@@ -124,41 +123,24 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
 
-<<<<<<< HEAD
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('categories')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'categories') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/kenne/categories']); ?>">
                             <i class="icon ion-md-reorder"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Loại sản phẩm'); ?></span>
-=======
-                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('video')) { ?>
-                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'video') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/video']); ?>">
-                            <i class="ion ion-md-videocam"></i>
-                            <span class="nav-link-text"><?= Yii::t('backend', 'Video'); ?></span>
->>>>>>> master
                         </a>
                     </li>
                 <?php } ?>
 
-<<<<<<< HEAD
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('products')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'products') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/kenne/products']); ?>">
                             <i class="ion ion-md-cube"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Products'); ?></span>
-=======
-                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('slide')) { ?>
-                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'slide') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/slide']); ?>">
-                            <i class="ion ion-ios-images"></i>
-                            <span class="nav-link-text"><?= Yii::t('backend', 'Slide'); ?></span>
->>>>>>> master
                         </a>
                     </li>
                 <?php } ?>
 
-<<<<<<< HEAD
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('transactions')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'transactions') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/kenne/transactions']); ?>">
@@ -167,24 +149,16 @@ $is_dev = Yii::$app->user->can('develop');
                         </a>
                     </li>
                 <?php } ?>
-                
+
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('orders')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'orders') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/kenne/orders']); ?>">
                             <i class="icon ion-ios-briefcase"></i>
                             <span class="nav-link-text"><?= Yii::t('backend', 'Chi tiết đơn hàng'); ?></span>
-=======
-                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('faq')) { ?>
-                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'faq') echo ' active'; ?>">
-                        <a class="nav-link" href="<?= Url::toRoute(['/faq']); ?>">
-                            <i class="icon dripicons-question"></i>
-                            <span class="nav-link-text"><?= Yii::t('backend', 'Faq'); ?></span>
->>>>>>> master
                         </a>
                     </li>
                 <?php } ?>
 
-<<<<<<< HEAD
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('blogs')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'blogs') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/kenne/blogs']); ?>">
@@ -203,10 +177,35 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
 
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('video')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'video') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/video']); ?>">
+                            <i class="ion ion-md-videocam"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Video'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('slide')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'slide') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/slide']); ?>">
+                            <i class="ion ion-ios-images"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Slide'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('faq')) { ?>
+                    <li class="nav-item<?php if (Yii::$app->controller->module->id == 'faq') echo ' active'; ?>">
+                        <a class="nav-link" href="<?= Url::toRoute(['/faq']); ?>">
+                            <i class="icon dripicons-question"></i>
+                            <span class="nav-link-text"><?= Yii::t('backend', 'Faq'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
 
             </ul>
             <hr class="nav-separator">
-=======
                 <?php if (Yii::$app->user->can(User::DEV) || Yii::$app->user->can('pages')) { ?>
                     <li class="nav-item<?php if (Yii::$app->controller->module->id == 'pages') echo ' active'; ?>">
                         <a class="nav-link" href="<?= Url::toRoute(['/pages']); ?>">
@@ -232,7 +231,6 @@ $is_dev = Yii::$app->user->can('develop');
                     </li>
                 <?php } ?>
             </ul>
->>>>>>> master
         </div>
     </div>
 </nav>

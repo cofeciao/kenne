@@ -2,12 +2,14 @@
 
 namespace frontend\controllers;
 
-<<<<<<< HEAD
 use frontend\models\LoginForm;
 use frontend\models\Products;
 use frontend\components\MyController;
 use frontend\models\SignupForm;
 use modava\kenne\models\Account;
+use yii\helpers\Url;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class SiteController extends MyController
 {
@@ -49,8 +51,14 @@ class SiteController extends MyController
         }
         $model = new LoginForm();
         if ($model->load(\Yii::$app->request->post()) && $model->login()) {
-            \Yii::$app->session->setFlash('success', 'Đăng nhập thành công');
-            return $this->goBack();
+
+            \Yii::$app->session->setFlash('toastr-login-index', [
+                'title' => '<b>Thông báo</b>',
+                'text' => 'Đăng nhập thành công',
+                'type' => 'success'
+            ]);
+            //\Yii::$app->session->setFlash('success', 'Đăng nhập thành công');
+            return $this->redirect(Url::home());
         } else {
             $model->password = '';
             return $this->render('login', [
@@ -71,29 +79,27 @@ class SiteController extends MyController
             'model' => $model,
         ]);
     }
-=======
-use frontend\models\Activity;
-use frontend\models\ExHistory;
-use frontend\models\Exploration;
-use frontend\models\ExStory;
-use frontend\models\GalleryCategory;
-use frontend\models\News;
-use frontend\models\search\SearchNews;
-use frontend\models\search\SearchVideo;
-use frontend\models\TagSeo;
-use Yii;
-use frontend\components\MyController;
-use yii\helpers\Url;
 
-class SiteController extends MyController
-{
-
-    public function actionIndex()
+    public function actionLogout()
     {
-        return $this->render('index', [
-        ]);
+        if(!\Yii::$app->user->isGuest){
+            \Yii::$app->user->logout(true);
+            \Yii::$app->session->setFlash('toastr-logout-index', [
+                'title' => '<b>Thông báo</b>',
+                'text' => 'Đăng xuất thành công',
+                'type' => 'info'
+            ]);
+        }
+        return $this->redirect(Url::home());
     }
 
-
->>>>>>> master
+    public function actionValidate(){
+        if(\Yii::$app->request->isAjax){
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            $model = new LoginForm();
+            if($model->load(\Yii::$app->request->post())){
+                return ActiveForm::validate($model);
+            }
+        }
+    }
 }

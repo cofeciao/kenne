@@ -6,12 +6,13 @@ use yii\widgets\Breadcrumbs;
 
 $this->beginContent('@frontend/views/layouts/common.php');
 ?>
-<<<<<<< HEAD
 
     <div class="main-wrapper">
-<?php if (Yii::$app->controller->id == 'site'){
+<?php if (Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'signup'){
+    echo \frontend\widgets\Header2Widget::widget();
+} elseif (Yii::$app->controller->id == 'site' ){
     echo HeaderWidget::widget();
-}else{?>
+} else{?>
 <?= \frontend\widgets\Header2Widget::widget(); }?>
 <?= $content; ?>
 <?php echo \frontend\widgets\BrandWidget::widget()?>
@@ -22,9 +23,7 @@ $this->beginContent('@frontend/views/layouts/common.php');
 
 <?= \frontend\widgets\ScrollWidget::widget()?>
 <?= \frontend\widgets\ModalAlertWidget::widget() ?>
-=======
-<?= $content; ?>
->>>>>>> master
+
 <?php
 $this->endContent();
 ?>

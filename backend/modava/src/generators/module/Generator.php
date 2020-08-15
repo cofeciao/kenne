@@ -115,10 +115,7 @@ EOD;
     {
         return [
             'assets/assets.php',
-<<<<<<< HEAD
-=======
             'assets/custom_assets.php',
->>>>>>> master
             'components/controller.php',
             'components/errorHandler.php',
             'components/upload.php',
@@ -134,15 +131,6 @@ EOD;
             'views/layouts/layouts.php',
             'web/css/style.css',
             'web/js/script.js',
-<<<<<<< HEAD
-            'web/vendors/bootstrap/dist/css/bootstrap.min.css',
-            'web/vendors/jquery-toggles/css/toggles.css',
-            'web/vendors/jquery-toggles/css/themes/toggles-light.css',
-            'web/vendors/popper.js/dist/umd/popper.min.js',
-            'web/vendors/bootstrap/dist/js/bootstrap.min.js',
-            'web/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js',
-=======
->>>>>>> master
             'widgets/views/index.html',
             'module.php',
         ];
@@ -164,13 +152,10 @@ EOD;
             $this->render("assets/assets.php", $params)
         );
         $files[] = new CodeFile(
-<<<<<<< HEAD
-=======
             $modulePath . '/assets/' . ucfirst($this->moduleID) . 'CustomAsset.php',
             $this->render("assets/custom_assets.php", $params)
         );
         $files[] = new CodeFile(
->>>>>>> master
             $modulePath . '/components/My' . ucfirst($this->moduleID) . 'Controller.php',
             $this->render("components/controller.php", $params)
         );
@@ -231,33 +216,6 @@ EOD;
             $this->render("web/js/script.js", $params)
         );
         $files[] = new CodeFile(
-<<<<<<< HEAD
-            $modulePath . '/web/vendors/jquery-toggles/css/toggles.css',
-            $this->render("web/vendors/jquery-toggles/css/toggles.css", $params)
-        );
-        $files[] = new CodeFile(
-            $modulePath . '/web/vendors/jquery-toggles/css/themes/toggles-light.css',
-            $this->render("web/vendors/jquery-toggles/css/themes/toggles-light.css", $params)
-        );
-        $files[] = new CodeFile(
-            $modulePath . '/web/vendors/popper.js/dist/umd/popper.min.js',
-            $this->render("web/vendors/popper.js/dist/umd/popper.min.js", $params)
-        );
-        $files[] = new CodeFile(
-            $modulePath . '/web/vendors/bootstrap/dist/css/bootstrap.min.css',
-            $this->render("web/vendors/bootstrap/dist/css/bootstrap.min.css", $params)
-        );
-        $files[] = new CodeFile(
-            $modulePath . '/web/vendors/bootstrap/dist/js/bootstrap.min.js',
-            $this->render("web/vendors/bootstrap/dist/js/bootstrap.min.js", $params)
-        );
-        $files[] = new CodeFile(
-            $modulePath . '/web/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js',
-            $this->render("web/vendors/jasny-bootstrap/dist/js/jasny-bootstrap.min.js", $params)
-        );
-        $files[] = new CodeFile(
-=======
->>>>>>> master
             $modulePath . '/widgets/views/index.html',
             $this->render("widgets/views/index.html", $params)
         );

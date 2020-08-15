@@ -1,8 +1,8 @@
 <?php
 $this->title = 'Đăng nhập';
 
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+
 /* @var $model \frontend\models\LoginForm */
 
 ?>
@@ -29,7 +29,15 @@ use yii\widgets\ActiveForm;
             <div class="col-lg-2"></div>
             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-8">
                 <!-- Login Form s-->
-                <?php $form = ActiveForm::begin(['action'=>['/site/login'], 'method'=>'post']) ?>
+                <?php $form = ActiveForm::begin([
+                    'action'=>['/site/login'],
+                    'method'=>'post',
+                    'enableClientScript' => false,
+                    'enableAjaxValidation' => true,
+                    'validationUrl' => \yii\helpers\Url::toRoute('/site/validate'),
+                    'options' => ['enctype' => 'multipart/form-data']
+                ]) ?>
+
                     <div class="login-form">
                         <h4 class="login-title">Login</h4>
                         <div class="row">

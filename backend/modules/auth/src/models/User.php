@@ -2,10 +2,7 @@
 
 namespace modava\auth\models;
 
-<<<<<<< HEAD
-=======
 use modava\auth\AuthModule;
->>>>>>> master
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
@@ -40,14 +37,7 @@ class User extends ActiveRecord implements IdentityInterface
         self::STATUS_DELETED => 'Deleted',
         self::STATUS_INACTIVE => 'Inactive',
     ];
-<<<<<<< HEAD
     const DEV = 'develop';
-    const SALES_ONLINE = 'sales_online';
-    const CLINIC = 'clinic';
-=======
-
-    const DEV = 'develop';
->>>>>>> master
     const USERS = 'users'; //user frontend
 
     public $toastr_key = 'user';
@@ -90,9 +80,6 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-<<<<<<< HEAD
-=======
-
     /**
      * {@inheritdoc}
      */
@@ -115,7 +102,6 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
->>>>>>> master
     /**
      * {@inheritdoc}
      */

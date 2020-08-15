@@ -10,27 +10,13 @@ use frontend\models\LocationProvince;
 use frontend\models\Orders;
 use frontend\models\Products;
 use frontend\models\Transaction;
-use yii\filters\AccessControl;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\helpers\Json;
 use Yii;
 
 class CheckoutController extends MyController
 {
-    /*public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['/site/login'],
-                        'allow' => true,
-                    ],
-                ],
-            ],
-        ];
-    }*/
-
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest){
@@ -87,11 +73,14 @@ class CheckoutController extends MyController
 
         //Lưu thông tin khách hàng
         $model = new Transaction();
-        $model->tr_id_customer = 2;
+        $model->tr_id_customer = Yii::$app->user->getId();
         $model->tr_name = $data['name'];
         $model->tr_address = $address;
         $model->tr_phone = $data['phone'];
         $model->tr_total = $data['total'];
+        $model->tr_status = $model::DISABLE_STATUS;
+        $model->created_at = time();
+        $model->updated_at = time();
         $model->save();
         if ($model->save()) {
             $data['idDH'] = Yii::$app->db->getLastInsertID();

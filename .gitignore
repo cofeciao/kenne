@@ -206,8 +206,6 @@ phpunit.phar
 /backend/modules/website/README.md
 /backend/modules/website/.git
 
-<<<<<<< HEAD
-=======
 /backend/modules/calendar/composer.json
 /backend/modules/calendar/README.md
 /backend/modules/calendar/.git
@@ -236,7 +234,6 @@ phpunit.phar
 /backend/modules/comment/README.md
 /backend/modules/comment/.git
 
->>>>>>> master
 /backend/widgets/tiny/composer.json
 /backend/widgets/tiny/README.md
 /backend/widgets/tiny/.git
@@ -245,8 +242,6 @@ phpunit.phar
 /backend/widgets/voip24h/README.md
 /backend/widgets/voip24h/.git
 
-<<<<<<< HEAD
-=======
 /backend/widgets/datetime/composer.json
 /backend/widgets/datetime/README.md
 /backend/widgets/datetime/.git
@@ -259,7 +254,6 @@ phpunit.phar
 /backend/modules/slide/README.md
 /backend/modules/slide/.git
 
->>>>>>> master
 #package
 /package/imagick/.git
 /package/imagick/README.md
@@ -274,12 +268,6 @@ phpunit.phar
 /backend/modava/README.md
 /backend/modava/.git
 
-<<<<<<< HEAD
-/common/widgets/select2/composer.json
-/common/widgets/select2/README.md
-/common/widgets/select2/.git
-=======
 /backend/widgets/select2/composer.json
 /backend/widgets/select2/README.md
 /backend/widgets/select2/.git
->>>>>>> master

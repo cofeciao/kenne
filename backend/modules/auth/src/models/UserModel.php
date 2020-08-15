@@ -2,10 +2,7 @@
 
 namespace modava\auth\models;
 
-<<<<<<< HEAD
-=======
 use modava\auth\AuthModule;
->>>>>>> master
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
@@ -58,11 +55,7 @@ class UserModel extends User
                 'username',
                 'unique',
                 'targetClass' => '\common\models\User',
-<<<<<<< HEAD
-                'message' => Yii::t('frontend', 'This username has already been taken.'),
-=======
                 'message' => AuthModule::t('auth', 'This username has already been taken.'),
->>>>>>> master
                 'filter' => function ($query) {
                     $query->andWhere(['not', ['id' => $this->getId()]]);
                 },
@@ -77,11 +70,7 @@ class UserModel extends User
                 'email',
                 'unique',
                 'targetClass' => '\common\models\User',
-<<<<<<< HEAD
-                'message' => Yii::t('frontend', 'This email address has already been taken.'),
-=======
                 'message' => AuthModule::t('auth', 'This email address has already been taken.'),
->>>>>>> master
                 'filter' => function ($query) {
                     $query->andWhere(['not', ['id' => $this->getId()]]);
                 },
@@ -93,14 +82,6 @@ class UserModel extends User
         ];
     }
 
-<<<<<<< HEAD
-    public function attributeLabels()
-    {
-        return [];
-    }
-
-=======
->>>>>>> master
     public function getRoleName($id)
     {
         $cache = Yii::$app->cache;

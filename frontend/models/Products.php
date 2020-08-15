@@ -2,11 +2,12 @@
 
 namespace frontend\models;
 
-use modava\products\models\table\ProductsTable;
+use modava\kenne\models\table\ProductsTable;
 use yii\data\ActiveDataProvider;
 
 class Products extends ProductsTable
 {
+    const ACTIVE_STATUS = 1;
     public $qtt ;
 
     public function getCategory(){
@@ -25,7 +26,7 @@ class Products extends ProductsTable
         return $data->all();
     }
 
-    public function getDetailProduct($slug){
+    public static function getDetailProduct($slug){
         $data = self::find()->where(['pro_slug'=>$slug]);
         $data = $data->asArray()->one();
         return $data;
@@ -98,5 +99,9 @@ class Products extends ProductsTable
                 ['like','pro_slug',$param],
             ]);
         return $query;
+    }
+
+    public function getProductByOrder(){
+        return $this->hasMany(Orders::class,['id_pro'=>'id']);
     }
 }

@@ -16,8 +16,6 @@ Yii::setAlias('@console', realpath(__DIR__ . '/../../console'));
 Yii::setAlias('@web', realpath(__DIR__ . '/../../web'));
 Yii::setAlias('@frontendUrl', $domain . '/');
 Yii::setAlias('@backendUrl', $domain . '/backend/');
-<<<<<<< HEAD
-=======
 
 //Config package
 Yii::setAlias('@moduleBackend', realpath(__DIR__ . '/../backend/modules/'));
@@ -44,6 +42,8 @@ Yii::setAlias('modava/slide', dirname(dirname(__DIR__)) . '/backend/modules/slid
 Yii::setAlias('modava/faq', dirname(dirname(__DIR__)) . '/backend/modules/faq/src');
 Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
 //Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
+Yii::setAlias('modava/kenne', dirname(dirname(__DIR__)) . '/backend/modules/kenne/src');
+Yii::setAlias('modava/blog', dirname(dirname(__DIR__)) . '/backend/modules/kenne/src');
 
 //Widget
 Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
@@ -54,4 +54,4 @@ Yii::setAlias('modava/datetime', dirname(dirname(__DIR__)) . '/backend/widgets/d
 
 
 Yii::setAlias('modava/generators', dirname(dirname(__DIR__)) . '/backend/modava/src/generators');
->>>>>>> master
+

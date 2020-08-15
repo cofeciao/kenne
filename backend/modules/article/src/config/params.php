@@ -9,23 +9,11 @@
 use modava\article\ArticleModule;
 
 return [
-<<<<<<< HEAD
-    'availableLocales' => [
-        'vi' => 'Tiếng Việt',
-        'en' => 'English',
-        'jp' => 'Japan',
-    ],
-=======
->>>>>>> master
     'defaultLocales' => 'vi',
     'articleName' => 'Article',
     'articleVersion' => '1.0',
     'status' => [
         '0' => ArticleModule::t('article', 'Tạm ngưng'),
         '1' => ArticleModule::t('article', 'Hiển thị'),
-<<<<<<< HEAD
-    ]
-=======
     ],
->>>>>>> master
 ];

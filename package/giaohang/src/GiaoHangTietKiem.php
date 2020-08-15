@@ -13,23 +13,6 @@ class GiaoHangTietKiem
     /*
      * Token
      */
-<<<<<<< HEAD
-    public $token;
-
-    /*
-     * address
-     */
-    public $order;
-
-    public function __construct()
-    {
-
-    }
-
-
-
-}
-=======
     // public $token = '0c786A5454FfEdc5308a67c5C1273241b0A90c8d';
     private $token;
 
@@ -156,4 +139,3 @@ class GiaoHangTietKiem
         echo $response;
     }
 }
->>>>>>> master

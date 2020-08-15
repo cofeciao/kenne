@@ -2,11 +2,7 @@
 
 namespace backend\models\form;
 
-<<<<<<< HEAD
-use backend\modules\user\models\User;
-=======
 use modava\auth\models\User;
->>>>>>> master
 use Yii;
 
 class UserSettingsForm extends \yii\base\Model

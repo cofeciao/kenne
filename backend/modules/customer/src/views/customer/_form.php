@@ -13,10 +13,6 @@ use modava\location\models\table\LocationWardTable;
 use modava\customer\models\table\CustomerAgencyTable;
 use modava\customer\models\table\CustomerOriginTable;
 use modava\customer\models\table\CustomerFanpageTable;
-<<<<<<< HEAD
-use modava\customer\components\CustomerDateTimePicker;
-=======
->>>>>>> master
 use modava\customer\models\table\CustomerStatusFailTable;
 use modava\customer\models\table\CustomerCoSoTable;
 use modava\customer\models\table\CustomerStatusDatHenTable;
@@ -29,11 +25,8 @@ use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\customer\CustomerModule;
 use modava\select2\Select2;
-<<<<<<< HEAD
-=======
 use modava\datetime\DateTimePicker;
 
->>>>>>> master
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\Customer */
@@ -230,11 +223,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                             } else {
                                 $model->remind_call_time = date('d-m-Y H:i', $model->remind_call_time);
                             }
-<<<<<<< HEAD
-                            echo $form->field($model, 'remind_call_time')->widget(CustomerDateTimePicker::class, [
-=======
                             echo $form->field($model, 'remind_call_time')->widget(DateTimePicker::class, [
->>>>>>> master
                                 'template' => '{input}{button}',
                                 'pickButtonIcon' => 'btn btn-increment btn-light',
                                 'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
@@ -260,11 +249,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                     if ($model->time_lich_hen != null) {
                         $model->time_lich_hen = is_numeric($model->time_lich_hen) ? date('d-m-Y H:i', $model->time_lich_hen) : $model->time_lich_hen;
                     }
-<<<<<<< HEAD
-                    echo $form->field($model, 'time_lich_hen')->widget(CustomerDateTimePicker::class, [
-=======
                     echo $form->field($model, 'time_lich_hen')->widget(DateTimePicker::class, [
->>>>>>> master
                         'template' => '{input}{button}',
                         'pickButtonIcon' => 'btn btn-increment btn-light',
                         'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
@@ -309,11 +294,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                                     if ($model->time_come != null) {
                                         $model->time_come = date('d-m-Y H:i', $model->time_come);
                                     }
-<<<<<<< HEAD
-                                    echo $form->field($model, 'time_come')->widget(CustomerDateTimePicker::class, [
-=======
                                     echo $form->field($model, 'time_come')->widget(DateTimePicker::class, [
->>>>>>> master
                                         'template' => '{input}{button}',
                                         'pickButtonIcon' => 'btn btn-increment btn-light',
                                         'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),

@@ -35,10 +35,7 @@ class ContactModule extends Module implements BootstrapInterface
     }
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> master
     public function bootstrap($app)
     {
         $app->on(Application::EVENT_BEFORE_ACTION, function () {

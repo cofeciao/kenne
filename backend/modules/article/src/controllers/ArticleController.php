@@ -77,17 +77,10 @@ class ArticleController extends MyArticleController
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 if ($model->save()) {
-<<<<<<< HEAD
-                    if ($model->image != "") {
-                        $pathImage = FRONTEND_HOST_INFO . $model->image;
-                        $path = Yii::getAlias('@frontend/web/uploads/article/');
-                        $imageName = null;
-=======
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
                         $path = Yii::getAlias('@frontend/web/uploads/article/');
->>>>>>> master
                         foreach (Yii::$app->params['article'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
@@ -96,11 +89,6 @@ class ArticleController extends MyArticleController
                             $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                         }
 
-<<<<<<< HEAD
-                    } else {
-                        $imageName = NOIMAGE;
-=======
->>>>>>> master
                     }
                     $model->image = $imageName;
                     $model->updateAttributes(['image']);
@@ -141,20 +129,10 @@ class ArticleController extends MyArticleController
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-<<<<<<< HEAD
-                $oldImage = $model->getAttribute('image');
-                if ($model->save()) {
-                    if ($model->getAttribute('image') !== $oldImage) {
-                        if ($model->getAttribute('image') == '') {
-                            $model->image = 'no-image.png';
-                            $model->updateAttributes(['image']);
-                        } else {
-=======
                 $oldImage = $model->getOldAttribute('image');
                 if ($model->save()) {
                     if ($model->getAttribute('image') !== $oldImage) {
                         if ($model->getAttribute('image') != '') {
->>>>>>> master
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
                             $path = Yii::getAlias('@frontend/web/uploads/article/');
                             $imageName = null;
@@ -192,11 +170,7 @@ class ArticleController extends MyArticleController
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-<<<<<<< HEAD
-                Yii::$app->session->setFlash('toastr-product-form', [
-=======
                 Yii::$app->session->setFlash('toastr-article-form', [
->>>>>>> master
                     'title' => 'Cập nhật thất bại',
                     'text' => $errors,
                     'type' => 'warning'

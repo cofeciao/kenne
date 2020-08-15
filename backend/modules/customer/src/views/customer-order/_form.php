@@ -13,13 +13,8 @@ use modava\select2\Select2;
 use yii\helpers\ArrayHelper;
 use unclead\multipleinput\MultipleInput;
 use modava\customer\models\table\CustomerTable;
-<<<<<<< HEAD
-use modava\customer\components\CustomerDateTimePicker;
-use modava\customer\models\table\CustomerCoSoTable;
-=======
 use modava\customer\models\table\CustomerCoSoTable;
 use modava\datetime\DateTimePicker;
->>>>>>> master
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerOrder */
@@ -62,11 +57,7 @@ if (Yii::$app->controller->action->id == 'create') {
                 </div>
             <?php } ?>
             <div class="col-md-6 col-12">
-<<<<<<< HEAD
-                <?= $form->field($model, 'ordered_at')->widget(CustomerDateTimePicker::class, [
-=======
                 <?= $form->field($model, 'ordered_at')->widget(DateTimePicker::class, [
->>>>>>> master
                     'template' => '{input}{button}',
                     'pickButtonIcon' => 'btn btn-increment btn-light',
                     'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
@@ -79,11 +70,7 @@ if (Yii::$app->controller->action->id == 'create') {
             </div>
             <div class="col-md-6 col-12">
                 <?php
-<<<<<<< HEAD
-                if ($model->co_so == null && $model->customerHasOne != null) {
-=======
                 if ($model->co_so == null) {
->>>>>>> master
                     if (isset(Yii::$app->user->identity->co_so)) $model->co_so = Yii::$app->user->identity->co_so;
                     else $model->co_so = $model->customerHasOne->co_so;
                 }

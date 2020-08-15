@@ -7,15 +7,6 @@
  */
 
 return [
-<<<<<<< HEAD
-    'reCaptcha' => [
-        'name' => 'reCaptcha',
-        'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
-        'siteKeyV2' => RECAPTCHA_GOOGLE_SITEKEY,
-        'secretV2' => RECAPTCHA_GOOGLE_SECRETKEY,
-    ],
-=======
->>>>>>> master
     'devicedetect' => [
         'class' => 'alexandernst\devicedetect\DeviceDetect',
     ],
@@ -51,10 +42,6 @@ return [
                     'backend' => 'backend.php',
                     'frontend' => 'frontend.php',
                 ],
-<<<<<<< HEAD
-                'on missingTranslation' => [backend\modules\i18n\Module::class, 'missingTranslation']
-=======
->>>>>>> master
             ],
         ],
     ],
@@ -67,7 +54,6 @@ return [
             return hash('md4', $path);
         }
     ],
-<<<<<<< HEAD
     'request' => [
         //'cookieValidationKey' => FRONTEND_HOST_INFO,
         //Lấy key là domain
@@ -90,17 +76,16 @@ return [
                 ],
             ]
         ],
-=======
-    'formatter' => [
-        'class' => 'yii\i18n\Formatter',
-        'nullDisplay' => '-',
-        'dateFormat' => 'php:d-m-Y',
-        'datetimeFormat' => 'php:d-m-Y H:i:s',
-        'timeFormat' => 'php:H:i:s',
-        'locale' => 'vi_VN',
-        'decimalSeparator' => ',',
-        'thousandSeparator' => ' ',
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '-',
+            'dateFormat' => 'php:d-m-Y',
+            'datetimeFormat' => 'php:d-m-Y H:i:s',
+            'timeFormat' => 'php:H:i:s',
+            'locale' => 'vi_VN',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => ' ',
 //        'currencyCode' => '₫',
->>>>>>> master
-    ],
+        ],
+    ]
 ];

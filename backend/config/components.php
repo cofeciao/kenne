@@ -8,15 +8,12 @@
 
 return [
 //    'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
-<<<<<<< HEAD
-=======
     'reCaptcha' => [
         'name' => 'reCaptcha',
         'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
         'siteKeyV2' => RECAPTCHA_GOOGLE_SITEKEY,
         'secretV2' => RECAPTCHA_GOOGLE_SECRETKEY,
     ],
->>>>>>> master
     'errorHandler' => [
         'errorAction' => 'site/error',
     ],
@@ -113,18 +110,4 @@ return [
         'anonymizeIp' => true, // If you want to anonymize the sender’s IP address
         'asyncMode' => true, // Enables the asynchronous mode (see below)
     ],
-<<<<<<< HEAD
-    'formatter' => [
-        'class' => 'yii\i18n\Formatter',
-        'nullDisplay' => '-',
-        'dateFormat' => 'php:d-m-Y',
-        'datetimeFormat' => 'php:d-m-Y H:i',
-        'timeFormat' => 'php:H:i:s',
-        'locale' => 'vi_VN',
-        'decimalSeparator' => ',',
-        'thousandSeparator' => ' ',
-//        'currencyCode' => '₫',
-    ],
-=======
->>>>>>> master
 ];

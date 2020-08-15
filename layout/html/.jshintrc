@@ -12,7 +12,5 @@
 	"-W117": true,
     "eqnull": true,
     "boss": true,
-    "expr": true,
-    "noarg": true,
-    "node": true
+    "expr": true
 }

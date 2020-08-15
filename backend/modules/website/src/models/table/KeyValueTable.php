@@ -53,13 +53,9 @@ class KeyValueTable extends \yii\db\ActiveRecord
             $query = self::find()->where([self::tableName() . '.key' => $data_key])->published();
             if ($language != null) $query->andWhere([self::tableName() . '.language' => $language]);
             $row = $query->one();
-<<<<<<< HEAD
-            $data = $row->value ?: null;
-=======
 
             $data = $row != null ? $row->value : null;
 
->>>>>>> master
             $cache->set($key, $data);
         }
         return $data;

@@ -45,11 +45,9 @@ return [
     'change-password-error' => 'Bạn đã thay đổi mật khẩu không thành công, có thể mật khẩu cũ bạn nhập không chính xác.',
     'find-data-not-success' => 'Không tìm thấy dữ liệu trong hệ thống',
     'product-size' => '150x150px',
-<<<<<<< HEAD
-    'article-size' => '150x150px'
-=======
+    
     'article-size' => '150x150px',
     'slide-size' => '150x150px',
     'partner-size' => '150x150px',
->>>>>>> master
+
 ];

@@ -11,11 +11,8 @@ return [
     'class' => yii\web\UrlManager::class,
     'enablePrettyUrl' => true,
     'showScriptName' => false,
-<<<<<<< HEAD
+
     'suffix' => '',
-=======
-    'suffix' => '.html',
->>>>>>> master
     'rules' => [
         '' => '/site/index',
         'quy-tac-hoat-dong' => 'site/quy-tac-hoat-dong',
@@ -31,13 +28,6 @@ return [
         ['pattern' => 'tin-bat-dong-san', 'route' => 'news', 'suffix' => '.html'],
         ['pattern' => 'tin-bat-dong-san', 'route' => 'news/index', 'suffix' => '.html'],
 
-
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> master
         ['pattern' => 'robots', 'route' => 'robotsTxt/web/index', 'suffix' => '.txt'],
         ['pattern' => 'sitemap', 'route' => 'sitemap/default/index', 'suffix' => '.xml'],
     ],

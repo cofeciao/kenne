@@ -3,10 +3,13 @@
 use yii\db\Migration;
 
 /**
- * Class m200729_040813_create_table_transactions
+ * Handles the creation of table `{{%transactions}}`.
  */
-class m200729_040813_create_table_transactions extends Migration
+class m200813_075627_create_transactions_table extends Migration
 {
+    /**
+     * {@inheritdoc}
+     */
     /**
      * {@inheritdoc}
      */
@@ -27,7 +30,7 @@ class m200729_040813_create_table_transactions extends Migration
             'created_at' =>  $this->integer(11)->null(),
             'updated_at' =>  $this->integer(11)->null(),
         ],$tableOptions);
-        $this->addForeignKey('fk_transactions_customer','transactions','tr_id_customer','customer','id','RESTRICT','CASCADE');
+        $this->addForeignKey('fk_transactions_account','transactions','tr_id_customer','account','id','RESTRICT','CASCADE');
     }
 
     /**
@@ -37,19 +40,4 @@ class m200729_040813_create_table_transactions extends Migration
     {
         $this->dropTable('{{%transactions}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m200729_040813_create_table_transactions cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

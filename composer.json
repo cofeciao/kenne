@@ -29,10 +29,7 @@
     "yiisoft/yii2-httpclient": "~2.0.0",
     "yiisoft/yii2-apidoc": "~2.1.0",
     "yiisoft/yii2-redis": "~2.0.0",
-<<<<<<< HEAD
     "yiisoft/yii2-elasticsearch": "2.1.x-dev",
-=======
->>>>>>> master
     "trntv/cheatsheet": "^0.1@dev",
     "kartik-v/yii2-export": "dev-master",
     "kartik-v/yii2-social": "dev-master",
@@ -51,10 +48,7 @@
     "modava/imagick": "@dev",
     "modava/location": "@dev",
     "modava/generator": "@dev",
-<<<<<<< HEAD
-=======
     "modava/voip24h": "@dev",
->>>>>>> master
     "unclead/yii2-multiple-input": "~2.0",
     "2amigos/yii2-date-picker-widget" : "*",
     "2amigos/yii2-date-time-picker-widget" : "*",

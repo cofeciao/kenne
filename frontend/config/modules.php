@@ -62,7 +62,7 @@ return [
         'enableGzip' => true, // default is false
         'cacheExpire' => 1, // 1 second. Default is 24 hours
     ],
-<<<<<<< HEAD
+
     'social' => [
         // the module class
         'class' => 'kartik\social\Module',
@@ -102,6 +102,5 @@ return [
         ],
         // your other modules
     ]
-=======
->>>>>>> master
+
 ];

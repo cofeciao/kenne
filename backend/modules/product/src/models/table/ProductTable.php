@@ -109,11 +109,6 @@ class ProductTable extends \yii\db\ActiveRecord
      */
     public function getProductImage()
     {
-<<<<<<< HEAD
-        return $this->hasMany(ProductImage::class, ['product_id' => 'id']);
-    }
-
-=======
         return $this->hasMany(ProductImageTable::class, ['product_id' => 'id']);
     }
 
@@ -137,7 +132,6 @@ class ProductTable extends \yii\db\ActiveRecord
      * @param null $language
      * @return array|mixed|\yii\db\ActiveRecord|null
      */
->>>>>>> master
     public static function getById($id, $language = null)
     {
         $language = $language ?: Yii::$app->language;
@@ -151,13 +145,10 @@ class ProductTable extends \yii\db\ActiveRecord
         return $data;
     }
 
-<<<<<<< HEAD
-=======
     /**
      * @param null $language
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
->>>>>>> master
     public static function getAll($language = null)
     {
         $language = $language ?: Yii::$app->language;
@@ -171,14 +162,11 @@ class ProductTable extends \yii\db\ActiveRecord
         return $data;
     }
 
-<<<<<<< HEAD
-=======
     /**
      * @param $category_id
      * @param null $language
      * @return array|mixed|\yii\db\ActiveRecord[]
      */
->>>>>>> master
     public static function getProductsByCategory($category_id, $language = null)
     {
         $language = $language ?: Yii::$app->language;

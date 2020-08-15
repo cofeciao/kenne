@@ -2,10 +2,7 @@
 
 namespace frontend\models;
 
-use modava\blogs\models\table\BlogsTable;
-use yii\data\Pagination;
-use yii\elasticsearch\ActiveDataProvider;
-use function GuzzleHttp\Promise\all;
+use modava\kenne\models\table\BlogsTable;
 
 class Blogs extends BlogsTable
 {

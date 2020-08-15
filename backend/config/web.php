@@ -23,17 +23,6 @@ if (YII2_ENV_DEV) {
         'generators' => [
             'module' => [
                 'class' => \modava\generators\module\Generator::class,
-<<<<<<< HEAD
-                'templates' => ['generators' => '@app/backend/generators/module/Generator']
-            ],
-            'model' => [
-                'class' => \modava\generators\model\Generator::class,
-                'templates' => ['generators' => '@app/backend/generators/model/Generator']
-            ],
-            'crud' => [
-                'class' => \modava\generators\crud\Generator::class,
-                'templates' => ['generators' => '@app/backend/generators/crud/Generator']
-=======
 //                'templates' => ['generators' => '@app/backend/generators/module/Generator']
             ],
             'model' => [
@@ -43,7 +32,6 @@ if (YII2_ENV_DEV) {
             'crud' => [
                 'class' => \modava\generators\crud\Generator::class,
 //                'templates' => ['generators' => '@app/backend/generators/crud/Generator']
->>>>>>> master
             ],
         ]
     ];

@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m200729_040818_create_table_orders
+ * Handles the creation of table `{{%orders}}`.
  */
-class m200729_040818_create_table_orders extends Migration
+class m200813_075641_create_orders_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -35,19 +35,4 @@ class m200729_040818_create_table_orders extends Migration
     {
         $this->dropTable('{{%orders}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m200729_040818_create_table_orders cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

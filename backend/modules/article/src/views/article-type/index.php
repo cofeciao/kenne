@@ -119,13 +119,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'attribute' => 'language',
                                             'value' => function ($model) {
-<<<<<<< HEAD
-                                                return Yii::$app->getModule('article')->params['availableLocales'][$model->language];
-=======
                                                 if ($model->language == null)
                                                     return null;
                                                 return Yii::$app->params['availableLocales'][$model->language];
->>>>>>> master
                                             },
                                             'headerOptions' => [
                                                 'width' => 150,
@@ -155,28 +151,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-<<<<<<< HEAD
-                                                        'title' => ArticleModule::t('product', 'Update'),
-                                                        'alia-label' => ArticleModule::t('product', 'Update'),
-=======
                                                         'title' => ArticleModule::t('article', 'Update'),
                                                         'alia-label' => ArticleModule::t('article', 'Update'),
->>>>>>> master
                                                         'data-pjax' => 0,
                                                         'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-<<<<<<< HEAD
-                                                        'title' => ArticleModule::t('product', 'Delete'),
-                                                        'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => ArticleModule::t('product', 'Delete?'),
-=======
                                                         'title' => ArticleModule::t('article', 'Delete'),
                                                         'class' => 'btn btn-danger btn-xs btn-del',
                                                         'data-title' => ArticleModule::t('article', 'Delete?'),
->>>>>>> master
                                                         'data-pjax' => 0,
                                                         'data-url' => $url,
                                                         'btn-success-class' => 'success-delete',

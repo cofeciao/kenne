@@ -9,11 +9,8 @@
 return [
     'auth' => [
         'class' => 'modava\auth\AuthModule',
-<<<<<<< HEAD
-=======
         'shouldBeActivated' => false,
         'enableLoginByPass' => false,
->>>>>>> master
     ],
     'contact' => [
         'class' => 'modava\contact\ContactModule',
@@ -22,18 +19,11 @@ return [
         'class' => 'modava\article\ArticleModule',
     ],
     'filemanager' => [
-<<<<<<< HEAD
-        'class' => 'backend\modules\filemanager\FilemanagerModule',
-    ],
-    'calendar' => [
-        'class' => 'backend\modules\calendar\CalendarModule',
-=======
         'class' => 'modava\filemanager\FilemanagerModule',
         'upload_dir' => '../../../../../../frontend/web',
     ],
     'calendar' => [
         'class' => 'modava\calendar\CalendarModule',
->>>>>>> master
     ],
     'product' => [
         'class' => 'modava\product\ProductModule',
@@ -47,32 +37,15 @@ return [
     'website' => [
         'class' => 'modava\website\WebsiteModule',
     ],
-<<<<<<< HEAD
-    'user' => [
-        'class' => 'backend\modules\user\User',
-        'shouldBeActivated' => false,
-        'enableLoginByPass' => false,
-    ],
-    'location' => [
-        'class' => 'modava\location\LocationModule',
-    ],
-    'api' => [
-        'class' => 'backend\modules\api\Api',
-    ],
-    'log' => [
-        'class' => 'backend\modules\log\Log',
-=======
     'location' => [
         'class' => 'modava\location\LocationModule',
     ],
     'log' => [
         'class' => 'modava\log\LogModule',
->>>>>>> master
     ],
     'comment' => [
         'class' => 'modava\comment\CommentModule',
     ],
-<<<<<<< HEAD
     'test' => [
         'class' => 'modava\test\TestModule',
     ],
@@ -93,27 +66,5 @@ return [
     ],
     'kenne' => [
         'class' => 'modava\kenne\KenneModule',
-=======
-    'affiliate' => [
-        'class' => 'modava\affiliate\AffiliateModule',
-    ],
-    'iway' => [
-        'class' => 'modava\iway\IwayModule',
-    ],
-    'pages' => [
-        'class' => 'modava\pages\PagesModule',
-    ],
-    'video' => [
-        'class' => 'modava\video\VideoModule',
-    ],
-    'slide' => [
-        'class' => 'modava\slide\SlideModule',
-    ],
-    'faq' => [
-        'class' => 'modava\faq\FaqModule',
-    ],
-    'api' => [
-        'class' => 'backend\modules\api\Api',
->>>>>>> master
     ],
 ];

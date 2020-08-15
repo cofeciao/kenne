@@ -5,7 +5,6 @@ $this->title = "Shop";
 //print_r($pagination);
 //echo "</pre>";
 //die;
-
 ?>
 <!-- Begin Kenne's Breadcrumb Area -->
 <div class="breadcrumb-area">

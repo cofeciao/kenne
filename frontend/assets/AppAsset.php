@@ -12,7 +12,6 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-<<<<<<< HEAD
         '/css/vendor/bootstrap.min.css',
         '/css/vendor/font-awesome.min.css',
         '/css/vendor/fontawesome-stars.min.css',
@@ -23,7 +22,9 @@ class AppAsset extends AssetBundle
         '/css/plugins/nice-select.css',
         '/css/plugins/timecircles.css',
         '/css/style.css',
-        '/css/custom.css'
+        '/css/custom.css',
+        '/css/bootstrap.min.css',
+        '/css/jquery.toast.min.css',
     ];
     public $js = [
         '/js/vendor/jquery-1.12.4.min.js',
@@ -42,13 +43,9 @@ class AppAsset extends AssetBundle
         '/js/plugins/jquery.zoom.min.js',
         '/js/plugins/timecircles.js',
         '/js/main.js',
-        '/js/custom.js'
-=======
+        '/js/custom.js',
+        '/js/jquery.toast.min.js'
 
-    ];
-    public $js = [
-
->>>>>>> master
     ];
     public $depends = [
         'yii\web\YiiAsset',

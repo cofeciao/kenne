@@ -98,12 +98,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-<<<<<<< HEAD
-                                                'attribute' => 'userProfile.fullname',
-                                                'label' => AuthModule::t('auth', 'User')
-                                            ],
-                                            'email:email',
-=======
                                                 'attribute' => 'fullname',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
@@ -114,7 +108,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                             ],
                                             'email',
->>>>>>> master
                                             'userProfile.phone',
                                             [
                                                 'attribute' => 'status',

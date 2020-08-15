@@ -1,16 +1,15 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
 
-<<<<<<< HEAD
 $this->title = 'WEB_NAME';
 ?>
-        <?php if (Yii::$app->session->hasFlash('success')){
+        <?php /*if (Yii::$app->session->hasFlash('success')){
             echo Yii::$app->session->getFlash('success');
-        } ?>
-
-
+        } */?>
+    <?php if (isset($_SESSION)){ ?>
+    <?= \frontend\widgets\ToastrWidget::widget(['key' => key($_SESSION['__flash'])]) ?>
+    <?php  }?>
     <!-- Begin Slider Area -->
     <?= \frontend\widgets\SliderWidget::widget()?>
     <!-- Slider Area End Here -->
@@ -553,23 +552,8 @@ $this->title = 'WEB_NAME';
                 <a href="callto://+123123321345">(+123) 123 321 345</a>
             </div>
             <div class="kenne-btn-ps_center">
-                <a class="kenne-btn transparent-btn" href="shop-left-sidebar.html">Shop Now</a>
+                <a class="kenne-btn transparent-btn" href="<?= Url::toRoute('/shop')?>">Shop Now</a>
             </div>
         </div>
     </div>
     <!-- Kenne's Banner Area Four End Here -->
-
-
-
-
-
-
-
-
-
-
-=======
-$this->title = WEB_NAME;
-?>
-Đang cập nhật...
->>>>>>> master

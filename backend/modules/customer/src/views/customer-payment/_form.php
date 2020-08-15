@@ -8,18 +8,11 @@ use backend\widgets\ToastrWidget;
 use modava\customer\CustomerModule;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
-<<<<<<< HEAD
-use modava\customer\components\CustomerDateTimePicker;
-=======
->>>>>>> master
 use modava\customer\models\table\CustomerTable;
 use modava\customer\models\table\CustomerOrderTable;
 use modava\customer\models\table\CustomerPaymentTable;
 use modava\customer\models\table\CustomerCoSoTable;
-<<<<<<< HEAD
-=======
 use modava\datetime\DateTimePicker;
->>>>>>> master
 
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerPayment */
@@ -70,11 +63,7 @@ foreach ($customerDongY as $customer_dong_y) {
         <?php } ?>
         <div class="row">
             <div class="col-md-6 col-12">
-<<<<<<< HEAD
-                <?= $form->field($model, 'payment_at')->widget(CustomerDateTimePicker::class, [
-=======
                 <?= $form->field($model, 'payment_at')->widget(DateTimePicker::class, [
->>>>>>> master
                     'template' => '{input}{button}',
                     'pickButtonIcon' => 'btn btn-increment btn-light',
                     'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),

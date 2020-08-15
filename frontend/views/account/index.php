@@ -18,7 +18,7 @@ $this->title = "Tài khoản";
 </div>
 
 <?= \frontend\widgets\AlertWidget::widget() ?>
-
+<?php if (isset($data)) { ?>
 <!-- Kenne's Breadcrumb Area End Here -->
 <!-- Begin Kenne's Page Content Area -->
 <main class="page-content" style="margin-top: -3%">
@@ -40,7 +40,7 @@ $this->title = "Tài khoản";
                             <a class="nav-link" id="account-details-tab" data-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Account Details</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="account-logout-tab" href="login-register.html" role="tab" aria-selected="false">Logout</a>
+                            <a class="nav-link" id="account-logout-tab" href="<?= \yii\helpers\Url::toRoute('/site/logout')?>" role="tab" aria-selected="false">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -48,11 +48,9 @@ $this->title = "Tài khoản";
                     <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
                         <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
                             <div class="myaccount-dashboard">
-                                <p>Hello <b>Edwin Adams</b> (not Edwin Adams? <a href="login-register.html">Sign
+                                <p>Hello <b><?= isset(Yii::$app->user->identity) ? Yii::$app->user->identity->username : ''?></b><a href="<?= \yii\helpers\Url::toRoute('/site/logout')?>"> (Sign
                                         out</a>)</p>
-                                <p>From your account dashboard you can view your recent orders, manage your shipping and
-                                    billing addresses and <a href="javascript:void(0)">edit your password and account
-                                        details</a>.</p>
+                                <p>Từ dashboard có thể xem được các đơn hàng gần đây của bạn<a href="javascript:void(0)"></a>.</p>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
@@ -68,22 +66,23 @@ $this->title = "Tài khoản";
                                             <th>TOTAL</th>
                                             <th></th>
                                         </tr>
+                                        <?php foreach ($data->models as $item) {?>
                                         <tr>
-                                            <td><a class="account-order-id" href="javascript:void(0)">#5364</a></td>
-                                            <td>Mar 27, 2019</td>
-                                            <td>On Hold</td>
-                                            <td>£162.00 for 2 items</td>
-                                            <td><a href="javascript:void(0)" class="kenne-btn kenne-btn_sm"><span>View</span></a>
+                                            <td><a class="account-order-id" href="javascript:void(0)">#<?= $item->id ?></a></td>
+                                            <td><?= date('d-m-Y',$item->created_at) ?></td>
+                                            <td>
+                                                <?php if ($item->tr_status == 0) {
+                                                    echo "Chưa thanh toán";
+                                                 } else {
+                                                    echo "Đã thanh toán";
+                                                }?>
+                                            </td>
+                                            <td><?= number_format($item->tr_total,0,',','.')?>đ</td>
+                                            <td><a href="<?= \yii\helpers\Url::toRoute(['/account/detail-order','id'=>$item->id])?>"
+                                                   data-name=<?= $item->id ?> class="kenne-btn kenne-btn_sm" id="account-view"><span>View</span></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><a class="account-order-id" href="javascript:void(0)">#5356</a></td>
-                                            <td>Mar 27, 2019</td>
-                                            <td>On Hold</td>
-                                            <td>£162.00 for 2 items</td>
-                                            <td><a href="javascript:void(0)" class="kenne-btn kenne-btn_sm"><span>View</span></a>
-                                            </td>
-                                        </tr>
+                                        <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -153,3 +152,11 @@ $this->title = "Tài khoản";
     </div>
     <!-- Kenne's Account Page Area End Here -->
 </main>
+<?php } ?>
+
+<div class="modal" tabindex="-1" role="dialog" id="modal-account" >
+    <div class="modal-dialog" role="document" style="max-width: 900px;margin: auto">
+        <div class="modal-content" >
+        </div>
+    </div>
+</div>

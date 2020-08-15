@@ -14,10 +14,6 @@ use Yii;
 
 class MyController extends Controller
 {
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     public function actions()
     {
         return [

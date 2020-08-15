@@ -16,8 +16,6 @@ return [
     'New password' => 'Mật khẩu mới',
     'Re-enter new password' => 'Nhập lại mật khẩu mới',
     'Back to login' => 'Quay lại đăng nhập',
-<<<<<<< HEAD
-=======
     'Rbac Auth Items' => 'Quản lý vai trò',
     'Rbac Auth Item' => 'Quản lý vai trò',
     'Role' => 'Phân quyền',
@@ -40,5 +38,4 @@ return [
     'Full name' => 'Họ tên',
     'Update : {name}' => 'Cập nhật: {name}',
 
->>>>>>> master
 ];
