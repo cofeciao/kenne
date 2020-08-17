@@ -22,21 +22,21 @@ class AffiliateController extends \backend\components\MyController
         $clinicSearch = \Yii::$app->request->get('ClinicSearch');
         $payload = [
             'page' => $page,
+            'ClinicSearch[appointment_time_from_lich_dieu_tri]' => isset($clinicSearch['appointment_time_from_lich_dieu_tri']) ? $clinicSearch['appointment_time_from_lich_dieu_tri'] : null,
+            'ClinicSearch[appointment_time_to_lich_dieu_tri]' => isset($clinicSearch['appointment_time_to_lich_dieu_tri']) ? $clinicSearch['appointment_time_to_lich_dieu_tri'] : null,
+            'ClinicSearch[nguon_online]' => isset($clinicSearch['nguon_online']) ? $clinicSearch['nguon_online'] : null,
+            'ClinicSearch[directsale]' => isset($clinicSearch['directsale']) ? $clinicSearch['directsale'] : null,
+            'ClinicSearch[customer_come_time_to]' => isset($clinicSearch['customer_come_time_to']) ? $clinicSearch['customer_come_time_to'] : null,
+            'ClinicSearch[creation_time_from]' => isset($clinicSearch['creation_time_from']) ? $clinicSearch['creation_time_from'] : null,
+            'ClinicSearch[appointment_time_from]' => isset($clinicSearch['appointment_time_from']) ? $clinicSearch['appointment_time_from'] : null,
+            'ClinicSearch[appointment_time_to]' => isset($clinicSearch['appointment_time_to']) ? $clinicSearch['appointment_time_to'] : null,
+            'ClinicSearch[creation_time_to]' => isset($clinicSearch['creation_time_to']) ? $clinicSearch['creation_time_to'] : null,
+            'ClinicSearch[co_so]' => isset($clinicSearch['co_so']) ? $clinicSearch['co_so'] : null,
+            'ClinicSearch[permission_user]' => isset($clinicSearch['permission_user']) ? $clinicSearch['permission_user'] : null,
             'ClinicSearch[thao_tac]' => isset($clinicSearch['thao_tac']) ? $clinicSearch['thao_tac'] : null,
-            'ClinicSearch[appointment_time]' => isset($clinicSearch['appointment_time']) ? $clinicSearch['appointment_time'] : null,
             'ClinicSearch[keyword]' => isset($clinicSearch['keyword']) ? $clinicSearch['keyword'] : null,
             'ClinicSearch[last_dieu_tri]' => isset($clinicSearch['last_dieu_tri']) && in_array($clinicSearch['last_dieu_tri'], ['1', 'on']) ? 1 : 0,
         ];
-
-        if (!$payload['ClinicSearch[appointment_time]']) {
-            $appointment_time = date('01-m-Y') . ' - ' . date('d-m-Y');
-            $payload['ClinicSearch[appointment_time]'] = $appointment_time;
-        }
-
-        $appointment_timeArr = explode(' - ', $payload['ClinicSearch[appointment_time]']);
-
-        $payload['ClinicSearch[appointment_time_from]'] = $appointment_timeArr[0];
-        $payload['ClinicSearch[appointment_time_to]'] = $appointment_timeArr[1];
 
         $response = MyAurisApi::getCompleteCustomerService($payload);
         $realResponse = json_decode($response['result'], true);

@@ -46,17 +46,96 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
                     <input type="hidden" name="is_completed_service" value="<?=$payload['ClinicSearch[last_dieu_tri]']?>">
                 <div class="hk-sec-wrapper">
                     <div class="row">
-                        <div class="col-md-4 col-sm-6 col-lg-4">
+                        <div class="col-md-3 col-sm-4 col-lg-3">
                             <div class="form-group row">
-                                <div class="col-12">
-                                    <input type="text" name="ClinicSearch[keyword]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Full Name, Phone, Code')?>" value="<?=$payload['ClinicSearch[keyword]']?>"></div>
+                                <div class="col-6">
+                                    <input type="text" name="ClinicSearch[creation_time_from]" class="form-control datepicker-custom " placeholder="<?=AffiliateModule::t('affiliate', 'Ngày tạo - từ')?>" value="<?=$payload['ClinicSearch[creation_time_from]']?>">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="ClinicSearch[creation_time_to]" class="form-control datepicker-custom " placeholder="<?=AffiliateModule::t('affiliate', 'Ngày tạo - đến')?>" value="<?=$payload['ClinicSearch[creation_time_to]']?>">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6 col-lg-4">
+                        <div class="col-md-3 col-sm-4 col-lg-3">
                             <div class="form-group row">
-                                <div class="col-4"><?=AffiliateModule::t('affiliate', 'Date Range')?>: </div>
-                                <div class="col-8">
-                                    <input type="text" name="ClinicSearch[appointment_time]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Date')?>" value="<?=$payload['ClinicSearch[appointment_time]']?>"></div>
+                                <div class="col-12">
+                                    <input type="text" name="ClinicSearch[keyword]" class="form-control" placeholder="<?=AffiliateModule::t('affiliate', 'Full Name, Phone, Code')?>" value="<?=$payload['ClinicSearch[keyword]']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <select class="form-control" name="ClinicSearch[co_so]" id="">
+                                        <option value="">--- <?=AffiliateModule::t('affiliate', 'Cơ sở')?> ---</option>
+                                        <option value="1" <?=$payload['ClinicSearch[co_so]'] == 1 ? 'selected' : ''?> >Cơ sở 1</option>
+                                        <option value="2" <?=$payload['ClinicSearch[co_so]'] == 2 ? 'selected' : ''?> >Cơ sở 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <select class="form-control" name="ClinicSearch[permission_user]" id="">
+                                        <option value="">--- <?=AffiliateModule::t('affiliate', 'Nhân viên')?> ---</option>
+                                        <option value="109" <?=$payload['ClinicSearch[permission_user]'] == 109 ? 'selected' : ''?> >Lễ Tân CS2</option>
+                                        <option value="153" <?=$payload['ClinicSearch[permission_user]'] == 153 ? 'selected' : ''?> >Lễ Tân CS1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <input type="text" name="ClinicSearch[appointment_time_from]" class="form-control datepicker-custom " placeholder="<?=AffiliateModule::t('affiliate', 'Lịch hẹn - từ')?>" value="<?=$payload['ClinicSearch[appointment_time_from]']?>">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="ClinicSearch[appointment_time_to]" class="form-control datepicker-custom " placeholder="<?=AffiliateModule::t('affiliate', 'Lịch hẹn - đến')?>" value="<?=$payload['ClinicSearch[appointment_time_to]']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <select class="form-control" name="ClinicSearch[customer_come_time_to]" id="">
+                                        <option value="">-- <?=AffiliateModule::t('affiliate', 'Trạng thái khách đến')?> ---</option>
+                                        <option value="109" <?=$payload['ClinicSearch[customer_come_time_to]'] == 6 ? 'selected' : ''?> >Khách vãng lai làm dịch vụ khác</option>
+                                        <option value="153" <?=$payload['ClinicSearch[customer_come_time_to]'] == 5 ? 'selected' : ''?> >Khách làm dịch vụ khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <select class="form-control" name="ClinicSearch[directsale]" id="">
+                                        <option value="">-- <?=AffiliateModule::t('affiliate', 'Direct Sales')?> ---</option>
+                                        <option value="109" <?=$payload['ClinicSearch[directsale]'] == 116 ? 'selected' : ''?> >Như Quỳnh</option>
+                                        <option value="153" <?=$payload['ClinicSearch[directsale]'] == 156 ? 'selected' : ''?> >Ngân Phạm</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <select class="form-control" name="ClinicSearch[nguon_online]" id="">
+                                        <option value="">-- <?=AffiliateModule::t('affiliate', 'Nguồn Online')?> ---</option>
+                                        <option value="109" <?=$payload['ClinicSearch[nguon_online]'] == 13 ? 'selected' : ''?> >Hotline ADS</option>
+                                        <option value="153" <?=$payload['ClinicSearch[nguon_online]'] == 12 ? 'selected' : ''?> >Hotline SEO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-lg-3">
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <input type="text" name="ClinicSearch[appointment_time_from_lich_dieu_tri]" class="form-control datepicker-custom " placeholder="<?=AffiliateModule::t('affiliate', 'Lịch điều trị - từ')?>" value="<?=$payload['ClinicSearch[appointment_time_from_lich_dieu_tri]']?>">
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="ClinicSearch[appointment_time_to_lich_dieu_tri]" class="form-control datepicker-custom " placeholder="<?=AffiliateModule::t('affiliate', 'Lịch điều trị - đến')?>" value="<?=$payload['ClinicSearch[appointment_time_to_lich_dieu_tri]']?>">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-lg-4">
@@ -82,12 +161,13 @@ $sixMonthsRoute = Url::toRoute(['/' . Yii::$app->requestedRoute, 'ClinicSearch[a
 <!--                                </div>-->
 <!--                            </div>-->
 <!--                        </div>-->
+
                         <div class="col-12">
+                            <button type="submit" class="btn-primary btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
                             <a href="<?=$currentRoute?>" type="button" class="btn-success btn"><?=AffiliateModule::t('affiliate', 'Default')?></a>
                             <a href="<?=$oneMonthRoute?>" type="button" class="search-btn btn-info btn"><?=AffiliateModule::t('affiliate', 'Customer 1 Month')?></a>
                             <a href="<?=$threeMonthsRoute?>" type="button" class="search-btn btn-pink btn"><?=AffiliateModule::t('affiliate', 'Customer 3 Month')?></a>
                             <a href="<?=$sixMonthsRoute?>" type="button" class="search-btn btn-indigo btn"><?=AffiliateModule::t('affiliate', 'Customer 6 Month')?></a>
-                            <button type="submit" class="btn-primary btn"><?=AffiliateModule::t('affiliate', 'Search')?></button>
                             <a href="<?=Url::toRoute(['clear-cache'])?>" class="btn btn-link btn-sm pull-right"><?=AffiliateModule::t('affiliate', 'Clear Cache')?></a>
                         </div>
                     </div>
@@ -438,17 +518,30 @@ $('body').on('post-object-created', function() {
     window.location.reload();
 });
 
-$('[name="ClinicSearch[appointment_time]"]').daterangepicker({
-    opens: 'right',
-    cancelClass: "btn-secondary",
-    showDropdowns: true,
-    autoApply: true,
-    locale:{
-        format:'DD-MM-YYYY',
-    }
-}, function(start, end, label) {
-    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-});
+// $('.datepicker-custom').daterangepicker({
+//     opens: 'right',
+//     cancelClass: "btn-secondary",
+//     showDropdowns: true,
+//     // autoUpdateInput: false,
+//     autoApply: true,
+//     locale:{
+//         format:'DD-MM-YYYY',
+//     },
+//     isInvalidDate: function() {
+//       return false
+//     }
+// }, function(start, end, label) {
+//     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+// });
+
+// $('[name="ClinicSearch[appointment_time]"]').on('apply.daterangepicker', function(ev, picker) {
+//   $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+// });
+//
+// $('[name="ClinicSearch[appointment_time]"]').on('cancel.daterangepicker', function(ev, picker) {
+//   $(this).val('');
+// });
+
 $('.customer-img-container').lightGallery();
 
 $('.search-btn').on('click', function(e) {
