@@ -91,8 +91,9 @@ class ProductController extends MyProductController
                         }
 
                     }
-                    $model->image = $imageName;
-                    $model->updateAttributes(['image']);
+                    $model->updateAttributes([
+                        'image' => $imageName
+                    ]);
                     Yii::$app->session->setFlash('toastr-product-view', [
                         'text' => 'Tạo mới thành công',
                         'type' => 'success'
@@ -148,8 +149,9 @@ class ProductController extends MyProductController
                                 }
                             }
 
-                            $model->image = $imageName;
-                            if ($model->updateAttributes(['image'])) {
+                            if ($model->updateAttributes([
+                                'image' => $imageName
+                            ])) {
                                 foreach (Yii::$app->params['product'] as $key => $value) {
                                     $pathSave = $path . $key;
                                     if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
