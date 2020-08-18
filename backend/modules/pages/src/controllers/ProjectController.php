@@ -1,28 +1,23 @@
 <?php
 
-namespace modava\product\controllers;
+namespace modava\pages\controllers;
 
-use modava\product\components\MyUpload;
-use modava\product\models\ProductImage;
-use modava\product\models\table\ProductCategoryTable;
-use modava\product\models\table\ProductTable;
-use modava\product\models\table\ProductTypeTable;
-use modava\product\ProductModule;
-use Yii;
-use modava\product\models\Product;
-use modava\product\models\search\ProductSearch;
-use modava\product\components\MyProductController;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\Response;
+use modava\pages\components\MyUpload;
+use modava\pages\models\ProjectImage;
 use yii\db\Exception;
+use Yii;
+use yii\helpers\Html;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
+use modava\pages\PagesModule;
+use modava\pages\components\MyPagesController;
+use modava\pages\models\Project;
+use modava\pages\models\search\ProjectSearch;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * ProjectController implements the CRUD actions for Project model.
  */
-class ProductController extends MyProductController
+class ProjectController extends MyPagesController
 {
     /**
      * {@inheritdoc}
@@ -40,12 +35,12 @@ class ProductController extends MyProductController
     }
 
     /**
-     * Lists all Product models.
+     * Lists all Project models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new ProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -54,8 +49,9 @@ class ProductController extends MyProductController
         ]);
     }
 
+
     /**
-     * Displays a single Product model.
+     * Displays a single Project model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -68,13 +64,13 @@ class ProductController extends MyProductController
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Project model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Project();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -82,8 +78,8 @@ class ProductController extends MyProductController
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
-                        $path = Yii::getAlias('@frontend/web/uploads/product/');
-                        foreach (Yii::$app->params['product'] as $key => $value) {
+                        $path = Yii::getAlias('@frontend/web/uploads/project/');
+                        foreach (Yii::$app->params['project'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
                                 mkdir($pathSave);
@@ -95,19 +91,19 @@ class ProductController extends MyProductController
                     $model->updateAttributes([
                         'image' => $imageName
                     ]);
-                    Yii::$app->session->setFlash('toastr-product-view', [
+                    Yii::$app->session->setFlash('toastr-project-view', [
                         'text' => 'Tạo mới thành công',
                         'type' => 'success'
                     ]);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
-                $errors = '';
+                $errors = Html::tag('p', 'Tạo mới thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-product-form', [
-                    'title' => 'Tạo mới thất bại',
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -120,7 +116,7 @@ class ProductController extends MyProductController
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Project model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -137,9 +133,9 @@ class ProductController extends MyProductController
                     if ($model->getAttribute('image') !== $oldImage) {
                         if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
-                            $path = Yii::getAlias('@frontend/web/uploads/product/');
+                            $path = Yii::getAlias('@frontend/web/uploads/project/');
                             $imageName = null;
-                            foreach (Yii::$app->params['product'] as $key => $value) {
+                            foreach (Yii::$app->params['project'] as $key => $value) {
                                 $pathSave = $path . $key;
                                 if (!file_exists($pathSave) && !is_dir($pathSave)) {
                                     mkdir($pathSave);
@@ -153,7 +149,7 @@ class ProductController extends MyProductController
                             if ($model->updateAttributes([
                                 'image' => $imageName
                             ])) {
-                                foreach (Yii::$app->params['product'] as $key => $value) {
+                                foreach (Yii::$app->params['project'] as $key => $value) {
                                     $pathSave = $path . $key;
                                     if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
                                         unlink($pathSave . '/' . $oldImage);
@@ -163,19 +159,19 @@ class ProductController extends MyProductController
                             }
                         }
                     }
-                    Yii::$app->session->setFlash('toastr-product-view', [
+                    Yii::$app->session->setFlash('toastr-project-view', [
                         'text' => 'Cập nhật thành công',
                         'type' => 'success'
                     ]);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
-                $errors = '';
+                $errors = Html::tag('p', 'Cập nhật thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-product-form', [
-                    'title' => 'Cập nhật thất bại',
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -208,51 +204,8 @@ class ProductController extends MyProductController
         return 0;
     }
 
-    public function actionCheckHot()
-    {
-        if (Yii::$app->request->isAjax) {
-            $id = Yii::$app->request->post('id');
-
-            $model = $this->findModel($id);
-            try {
-                if ($model->product_hot == 1) {
-                    $model->product_hot = 0;
-                } else {
-                    $model->product_hot = 1;
-                }
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                        'title' => 'Thông báo',
-                        'text' => 'Cập nhật thành công',
-                        'type' => 'success'
-                    ]);
-                } else {
-                    $errors = Html::tag('p', 'Cập nhật thất bại');
-                    foreach ($model->getErrors() as $error) {
-                        $errors .= Html::tag('p', $error[0]);
-                    }
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                        'title' => 'Thông báo',
-                        'text' => $errors,
-                        'type' => 'warning'
-                    ]);
-                }
-            } catch (\yii\db\Exception $exception) {
-                $errors = Html::tag('p', 'Cập nhật thất bại');
-                foreach ($exception as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
-            }
-        }
-    }
-
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Project model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -290,57 +243,29 @@ class ProductController extends MyProductController
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Project model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Product the loaded model
+     * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+
     protected function findModel($id)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        if (($model = Project::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(ProductModule::t('product', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(PagesModule::t('pages', 'The requested page does not exist.'));
     }
 
     protected function findModelImage($id)
     {
-        if (($model = ProductImage::findOne($id)) !== null) {
+        if (($model = ProjectImage::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(ProductModule::t('product', 'The requested page does not exist.'));
-    }
-
-    public function actionLoadCategoriesByLang($lang = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ArrayHelper::map(ProductCategoryTable::getAllProductCategory($lang), 'id', 'title');
-    }
-
-    public function actionLoadTypesByLang($lang = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ArrayHelper::map(ProductTypeTable::getAllProductType($lang), 'id', 'title');
-    }
-
-    public function actionGetProductInfo($id = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        if (Yii::$app->request->isAjax) {
-            $product = ProductTable::getById($id);
-            if ($product != null) return [
-                'code' => 200,
-                'data' => $product->getAttributes([
-                    'title', 'price', 'price_sale'
-                ])
-            ];
-        }
-        return [
-            'code' => 403,
-            'data' => ProductModule::t('product', 'Permission denined!')
-        ];
+        throw new NotFoundHttpException(PagesModule::t('pages', 'The requested page does not exist.'));
     }
 }

@@ -33,4 +33,22 @@ return [
     'video-size' => '150x150px',
     'video-type-size' => '150x150px',
     'video-category-size' => '150x150px',
+    'project-size' => '150x150px',
+    'project-image-size' => '150x150px',
+    'product_tech' => [
+        'Đường kính dây thép' => 'Đường kính dây thép',
+        'Kích thước ô lưới' => 'Kích thước ô lưới',
+        'Chiều cao hàng rào' => 'Chiều cao hàng rào',
+        'Bước cột' => 'Bước cột',
+        'Quy cách trụ/ cột' => 'Quy cách trụ/ cột',
+        'Hoàn thiện' => 'Hoàn thiện',
+    ],
+    'tech' => [
+        'Đường kính dây thép' => 'Đường kính dây thép',
+        'Kích thước ô lưới' => 'Kích thước ô lưới',
+        'Chiều cao hàng rào' => 'Chiều cao hàng rào',
+        'Bước cột' => 'Bước cột',
+        'Quy cách trụ/ cột' => 'Quy cách trụ/ cột',
+        'Hoàn thiện' => 'Hoàn thiện',
+    ],
 ];
