@@ -73,11 +73,11 @@ $datapickerAddon = '<button type="button" class="btn btn-light clear-value"><spa
         <div class="col-md-3 col-sm-4 col-lg-3">
             <div class="form-group row">
                 <div class="col-12">
-                    <?= $form->field($model,'keyword', $templateInput)
+                    <?= $form->field($model, 'keyword', $templateInput)
                         ->textInput(['maxlength' => true])
                         ->label(AffiliateModule::t('affiliate', 'Full Name, Phone, Code'))
                         ->input('text',
-                        ['placeholder' => AffiliateModule::t('affiliate', 'Full Name, Phone, Code')]) ?>
+                            ['placeholder' => AffiliateModule::t('affiliate', 'Full Name, Phone, Code')]) ?>
                 </div>
             </div>
         </div>
@@ -86,11 +86,15 @@ $datapickerAddon = '<button type="button" class="btn btn-light clear-value"><spa
                 <div class="col-12">
                     <?= $form->field($model, 'co_so', $templateInput)
                         ->label(AffiliateModule::t('affiliate',
-                        'Cơ sở'))
+                            'Cơ sở'))
                         ->dropDownList(
-                            $dropdowns['co_so'],
-                        ['prompt' => '---' . AffiliateModule::t('affiliate', 'Cơ sở') . '---']
-                    ) ?>
+                            [
+                                '1' => 'Cơ sở 1',
+                                '2' => 'Cơ sở 2',
+                            ], // $dropdowns['co_so'],
+
+                            ['prompt' => '---' . AffiliateModule::t('affiliate', 'Cơ sở') . '---']
+                        ) ?>
                 </div>
             </div>
         </div>
@@ -140,7 +144,8 @@ $datapickerAddon = '<button type="button" class="btn btn-light clear-value"><spa
         <div class="col-md-3 col-sm-4 col-lg-3">
             <div class="form-group row">
                 <div class="col-12">
-                    <?= $form->field($model, 'customer_come_time_to', $templateInput)->label(AffiliateModule::t('affiliate',
+                    <?= $form->field($model, 'customer_come_time_to',
+                        $templateInput)->label(AffiliateModule::t('affiliate',
                         'Trạng thái khách đến'))->dropDownList(
                         $dropdowns['customer_come_time_to'],
                         ['prompt' => '---' . AffiliateModule::t('affiliate', 'Trạng thái khách đến') . '---']
