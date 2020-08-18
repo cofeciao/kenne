@@ -65,7 +65,7 @@ class Products extends ProductsTable
         $data = new ActiveDataProvider([
             'query'=>$query,
             'pagination'=>[
-                'pageSize'=>$pageSize,
+                'defaultPageSize'=>$pageSize,
                 'totalCount'=> $query->count(),
             ]
         ]);

@@ -42,6 +42,11 @@ class CartController extends MyController
         $product = Products::getDetailProduct($slug);
         isset($queryParams['qtt']) ? $quantity = $queryParams['qtt']: $quantity = 1;
         if ($quantity > $product['pro_quantity']){
+            \Yii::$app->session->setFlash('toastr-login-index', [
+                'title' => '<b>Thông báo</b>',
+                'text' => 'Đăng nhập thành công',
+                'type' => 'success'
+            ]);
             Yii::$app->session->setFlash('error','<b>Số lượng không đủ</b>');
             return $this->redirect(Yii::$app->request->referrer);
         }

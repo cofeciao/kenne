@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
-    <div class="hk-pg-header">
+        <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
         </h4>

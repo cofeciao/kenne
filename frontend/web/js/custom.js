@@ -108,7 +108,6 @@ $('a#account-view').click(function (event){
        type:'get',
        data: {},
         success:function (data){
-           console.log(data);
            $('.modal-content').html(data);
            /*jsondata = JSON.parse(data);
             console.log(jsondata);
@@ -134,7 +133,13 @@ $('a#account-view').click(function (event){
 
 });
 
-// Ham de sort trong /shop : noi url vao dang sau
+ /*
+ Ham de sort trong /shop : noi url vao dang sau.
+ Check 3 TH:
+ - /shop?sort=...
+ - /shop?slug=...
+ - /shop
+ */
 var url3 = window.location;
 if(url3 == 'http://project.tm/shop' || url3['href'].indexOf('?sort') != -1){
     /*$(document).ready(function(){*/

@@ -46,10 +46,13 @@ class SiteController extends MyController
                 'model' => $model,
             ]);
         }*/
+
+
         if (!\Yii::$app->user->isGuest) {
             return $this->goBack();
         }
         $model = new LoginForm();
+
         if ($model->load(\Yii::$app->request->post()) && $model->login()) {
 
             \Yii::$app->session->setFlash('toastr-login-index', [
@@ -69,6 +72,9 @@ class SiteController extends MyController
 
     public function actionSignup()
     {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goBack(); 
+        }
         $model = new SignupForm();
         if ($model->load(\Yii::$app->request->post()) && $model->signup()) {
             \Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');

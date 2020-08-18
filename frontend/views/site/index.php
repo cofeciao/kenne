@@ -7,6 +7,7 @@ $this->title = 'WEB_NAME';
         <?php /*if (Yii::$app->session->hasFlash('success')){
             echo Yii::$app->session->getFlash('success');
         } */?>
+
     <?php if (isset($_SESSION)){ ?>
     <?= \frontend\widgets\ToastrWidget::widget(['key' => key($_SESSION['__flash'])]) ?>
     <?php  }?>

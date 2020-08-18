@@ -30,11 +30,9 @@ use yii\widgets\ActiveForm;
             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-8">
                 <!-- Login Form s-->
                 <?php $form = ActiveForm::begin([
-                    'action'=>['/site/login'],
-                    'method'=>'post',
+                    'id'=>'login-form',
                     'enableClientScript' => false,
                     'enableAjaxValidation' => true,
-                    'validationUrl' => \yii\helpers\Url::toRoute('/site/validate'),
                     'options' => ['enctype' => 'multipart/form-data']
                 ]) ?>
 
