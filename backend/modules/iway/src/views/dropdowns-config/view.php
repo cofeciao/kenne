@@ -8,11 +8,11 @@ use modava\iway\widgets\NavbarWidgets;
 use modava\iway\IwayModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\iway\models\CustomerDropdowns */
+/* @var $model modava\iway\models\DropdownsConfig */
 
-$this->title = $model->field_name;
+$this->title = 'Table: ' . $model->table_name . ' - Field: ' . $model->field_name;
 $this->params['breadcrumbs'][] = ['label' => IwayModule::t('iway', 'Cấu hình dropdowns'), 'url' => ['index']];
-$title = 'Field: ' . $this->title;
+$title = $this->title;
 $this->params['breadcrumbs'][] = $title;
 \yii\web\YiiAsset::register($this);
 ?>

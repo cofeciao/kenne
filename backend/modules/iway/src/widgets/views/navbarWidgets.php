@@ -13,7 +13,7 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
-        'controllerId' => 'customer-dropdowns',
+        'controllerId' => 'dropdowns-config',
         'label' => IwayModule::t('iway', 'Cấu hình dropdowns'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
     ],

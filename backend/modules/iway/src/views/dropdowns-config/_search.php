@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model modava\iway\models\search\CustomerDropdownsSearch */
+/* @var $model modava\iway\models\search\DropdownsConfigSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="customer-dropdowns-search">
+<div class="dropdowns-config-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

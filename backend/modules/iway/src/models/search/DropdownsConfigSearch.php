@@ -5,12 +5,12 @@ namespace modava\iway\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use modava\iway\models\CustomerDropdowns;
+use modava\iway\models\DropdownsConfig;
 
 /**
- * CustomerDropdownsSearch represents the model behind the search form of `modava\iway\models\CustomerDropdowns`.
+ * DropdownsConfigSearch represents the model behind the search form of `modava\iway\models\DropdownsConfig`.
  */
-class CustomerDropdownsSearch extends CustomerDropdowns
+class DropdownsConfigSearch extends DropdownsConfig
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class CustomerDropdownsSearch extends CustomerDropdowns
     {
         return [
             [['id'], 'integer'],
-            [['field_name', 'dropdown_value'], 'safe'],
+            [['field_name', 'dropdown_value', 'table_name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CustomerDropdownsSearch extends CustomerDropdowns
      */
     public function search($params)
     {
-        $query = CustomerDropdowns::find();
+        $query = DropdownsConfig::find();
 
         // add conditions that should always apply here
 
@@ -64,7 +64,7 @@ class CustomerDropdownsSearch extends CustomerDropdowns
         ]);
 
         $query->andFilterWhere(['like', 'field_name', $this->field_name])
-            ->andFilterWhere(['like', 'dropdown_value', $this->dropdown_value]);
+            ->andFilterWhere(['like', 'table_name', $this->table_name]);
 
         return $dataProvider;
     }

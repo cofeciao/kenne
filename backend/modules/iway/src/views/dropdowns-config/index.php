@@ -8,10 +8,10 @@ use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\iway\models\search\CustomerDropdownsSearch */
+/* @var $searchModel modava\iway\models\search\DropdownsConfigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = IwayModule::t('iway', 'Customer Dropdowns');
+$this->title = IwayModule::t('iway', 'Cấu hình Dropdowns');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="table-wrap">
                                 <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
                                     <?= GridView::widget([
+                                        'filterModel' => $searchModel,
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
                                         {errors}
@@ -96,11 +97,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'd-none',
                                                 ],
                                             ],
+                                            'table_name',
                                             [
                                                 'attribute' => 'field_name',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->field_name, \yii\helpers\Url::toRoute(['customer-dropdowns/view', 'id' => $model->primaryKey]));
+                                                    return Html::a($model->field_name, \yii\helpers\Url::toRoute(['dropdowns-config/view', 'id' => $model->primaryKey]));
                                                 }
                                             ],
                                             [

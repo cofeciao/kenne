@@ -5,11 +5,11 @@ namespace modava\iway\models\table;
 use Yii;
 use yii\db\ActiveRecord;
 
-class CustomerDropdownsTable extends ActiveRecord
+class DropdownsConfigTable extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'iway_customer_dropdowns';
+        return 'dropdowns_config';
     }
 
 

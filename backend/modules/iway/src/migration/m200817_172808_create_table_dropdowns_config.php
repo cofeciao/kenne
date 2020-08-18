@@ -3,17 +3,17 @@
 use yii\db\Migration;
 
 /**
- * Class m200817_172808_create_table_iway_customer_dropdowns
+ * Class m200817_172808_create_table_dropdowns_config
  *
  *      Author: Đức Huỳnh
  *      Date    2020-08-18
  *
- * - Table dùng để chứa các giá trị của field dropdowns của table customer
+ * - Table dùng để chứa các giá trị của field dropdowns của các table
  * - Table được thiết kế để scale chiều dọc (insert các row cho các field mới)
  * - Khi tạo 1 field có dạng dropdown, thì insert vào bảng này 1 record với câu lệnh:
- *   + $this->execute('insert into iway_customer_dropdowns (field_name) value (<field_name>)');
+ *   + $this->execute('insert into dropdowns_config (table_name, field_name) value (<tablename>, <field_name>)');
  */
-class m200817_172808_create_table_iway_customer_dropdowns extends Migration
+class m200817_172808_create_table_dropdowns_config extends Migration
 {
     /**
      * {@inheritdoc}
@@ -25,9 +25,10 @@ class m200817_172808_create_table_iway_customer_dropdowns extends Migration
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%iway_customer_dropdowns}}', [
+        $this->createTable('{{%dropdowns_config}}', [
             'id' => $this->primaryKey(),
-            'field_name' => $this->string('100')->notNull()->unique()->comment('Tên field'),
+            'table_name' => $this->string(100)->notNull()->comment('Tên table'),
+            'field_name' => $this->string(100)->notNull()->unique()->comment('Tên field'),
             'dropdown_value' => $this->json()->comment('Danh sách giá trị của field, format: [ 
                 "key_1" => "Value 1",
                 "key_2" => "Value 2",
@@ -41,6 +42,6 @@ class m200817_172808_create_table_iway_customer_dropdowns extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%iway_customer_dropdowns}}');
+        $this->dropTable('{{%dropdowns_config}}');
     }
 }

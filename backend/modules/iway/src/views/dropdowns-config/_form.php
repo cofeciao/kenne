@@ -8,13 +8,16 @@ use backend\widgets\ToastrWidget;
 use modava\iway\IwayModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\iway\models\CustomerDropdowns */
+/* @var $model modava\iway\models\DropdownsConfig */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
-<div class="customer-dropdowns-form">
+<div class="dropdowns-config-form">
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'table_name')->textInput(['maxlength' => true]) ?>
+        </div>
         <div class="col-6">
             <?= $form->field($model, 'field_name')->textInput(['maxlength' => true]) ?>
         </div>

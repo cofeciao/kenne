@@ -3,19 +3,20 @@
 namespace modava\iway\models;
 
 use modava\iway\IwayModule;
-use modava\iway\models\table\CustomerDropdownsTable;
+use modava\iway\models\table\DropdownsConfigTable;
 use Yii;
 
 /**
- * This is the model class for table "iway_customer_dropdowns".
+ * This is the model class for table "dropdowns_config".
  *
  * @property int $id
+ * @property string $table_name Tên table
  * @property string $field_name Tên field
  * @property array $dropdown_value Danh sách giá trị của field, format: [                  "key_1" => "Value 1",                 "key_2" => "Value 2",                 "key_3" => "Value 3",              ], với key viết bằng ký tự none-unicode nối liền bằng gạch dưới
  */
-class CustomerDropdowns extends CustomerDropdownsTable
+class DropdownsConfig extends DropdownsConfigTable
 {
-    public $toastr_key = 'customer-dropdowns';
+    public $toastr_key = 'dropdowns-config';
 
     public function behaviors()
     {
@@ -32,7 +33,7 @@ class CustomerDropdowns extends CustomerDropdownsTable
     public function rules()
     {
         return [
-            [['field_name'], 'required'],
+            [['field_name', 'table_name'], 'required'],
             [['dropdown_value'], 'safe'],
             [['field_name'], 'string', 'max' => 100],
             [['field_name'], 'unique'],
@@ -45,9 +46,10 @@ class CustomerDropdowns extends CustomerDropdownsTable
     public function attributeLabels()
     {
         return [
-            'id' => IwayModule::t('app', 'ID'),
-            'field_name' => IwayModule::t('app', 'Tên field'),
-            'dropdown_value' => IwayModule::t('app', 'Danh sách giá trị dropdown'),
+            'id' => IwayModule::t('iway', 'ID'),
+            'field_name' => IwayModule::t('iway', 'Tên field'),
+            'dropdown_value' => IwayModule::t('iway', 'Danh sách giá trị dropdown'),
+            'table_name' => IwayModule::t('iway', 'Tên table'),
         ];
     }
 }

@@ -9,13 +9,13 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use modava\iway\IwayModule;
 use backend\components\MyController;
-use modava\iway\models\CustomerDropdowns;
-use modava\iway\models\search\CustomerDropdownsSearch;
+use modava\iway\models\DropdownsConfig;
+use modava\iway\models\search\DropdownsConfigSearch;
 
 /**
- * CustomerDropdownsController implements the CRUD actions for CustomerDropdowns model.
+ * DropdownsConfigController implements the CRUD actions for DropdownsConfig model.
  */
-class CustomerDropdownsController extends MyController
+class DropdownsConfigController extends MyController
 {
     /**
     * {@inheritdoc}
@@ -33,12 +33,12 @@ class CustomerDropdownsController extends MyController
     }
 
     /**
-    * Lists all CustomerDropdowns models.
+    * Lists all DropdownsConfig models.
     * @return mixed
     */
     public function actionIndex()
     {
-        $searchModel = new CustomerDropdownsSearch();
+        $searchModel = new DropdownsConfigSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -50,7 +50,7 @@ class CustomerDropdownsController extends MyController
 
 
     /**
-    * Displays a single CustomerDropdowns model.
+    * Displays a single DropdownsConfig model.
     * @param integer $id
     * @return mixed
     * @throws NotFoundHttpException if the model cannot be found
@@ -63,13 +63,13 @@ class CustomerDropdownsController extends MyController
     }
 
     /**
-    * Creates a new CustomerDropdowns model.
+    * Creates a new DropdownsConfig model.
     * If creation is successful, the browser will be redirected to the 'view' page.
     * @return mixed
     */
     public function actionCreate()
     {
-        $model = new CustomerDropdowns();
+        $model = new DropdownsConfig();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -98,7 +98,7 @@ class CustomerDropdownsController extends MyController
     }
 
     /**
-    * Updates an existing CustomerDropdowns model.
+    * Updates an existing DropdownsConfig model.
     * If update is successful, the browser will be redirected to the 'view' page.
     * @param integer $id
     * @return mixed
@@ -137,7 +137,7 @@ class CustomerDropdownsController extends MyController
     }
 
     /**
-    * Deletes an existing CustomerDropdowns model.
+    * Deletes an existing DropdownsConfig model.
     * If deletion is successful, the browser will be redirected to the 'index' page.
     * @param integer $id
     * @return mixed
@@ -175,17 +175,17 @@ class CustomerDropdownsController extends MyController
     }
 
     /**
-    * Finds the CustomerDropdowns model based on its primary key value.
+    * Finds the DropdownsConfig model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
     * @param integer $id
-    * @return CustomerDropdowns the loaded model
+    * @return DropdownsConfig the loaded model
     * @throws NotFoundHttpException if the model cannot be found
     */
 
 
     protected function findModel($id)
     {
-        if (($model = CustomerDropdowns::findOne($id)) !== null) {
+        if (($model = DropdownsConfig::findOne($id)) !== null) {
             return $model;
         }
 

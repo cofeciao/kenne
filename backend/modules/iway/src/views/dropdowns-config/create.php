@@ -2,18 +2,15 @@
 
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use modava\iway\IwayModule;
 
-/* @var $this yii\web\View */
-/* @var $model modava\iway\models\CustomerDropdowns */
 
-$this->title = IwayModule::t('iway', 'Update : {name}', [
-    'name' => $model->id,
-]);
-$this->params['breadcrumbs'][] = ['label' => IwayModule::t('iway', 'Customer Dropdowns'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = IwayModule::t('iway', 'Update');
+/* @var $this yii\web\View */
+/* @var $model modava\iway\models\DropdownsConfig */
+
+$this->title = IwayModule::t('iway', 'Create');
+$this->params['breadcrumbs'][] = ['label' => IwayModule::t('iway', 'Cấu hình Dropdowns'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -23,9 +20,6 @@ $this->params['breadcrumbs'][] = IwayModule::t('iway', 'Update');
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
-        <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= IwayModule::t('iway', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= IwayModule::t('iway', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 
@@ -36,8 +30,8 @@ $this->params['breadcrumbs'][] = IwayModule::t('iway', 'Update');
                 <?= $this->render('_form', [
                     'model' => $model,
                 ]) ?>
-
             </section>
         </div>
     </div>
+
 </div>
