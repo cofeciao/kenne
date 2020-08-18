@@ -35,7 +35,7 @@ $templateInput = [
 ];
 $datapickerAddon = '<button type="button" class="btn btn-light clear-value"><span class="fa fa-times"></span></button><button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>';
 ?>
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['method' => 'GET']); ?>
 <div class="hk-sec-wrapper">
     <div class="row collapse show" id="search-panel">
         <div class="col-md-5 col-sm-4 col-lg-5">
@@ -88,10 +88,7 @@ $datapickerAddon = '<button type="button" class="btn btn-light clear-value"><spa
                         ->label(AffiliateModule::t('affiliate',
                         'Cơ sở'))
                         ->dropDownList(
-                        [
-                            1 => 'Cơ sở 1',
-                            2 => 'Cơ sở 2',
-                        ],
+                            $dropdowns['co_so'],
                         ['prompt' => '---' . AffiliateModule::t('affiliate', 'Cơ sở') . '---']
                     ) ?>
                 </div>

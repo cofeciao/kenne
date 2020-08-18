@@ -84,7 +84,7 @@ class CustomerPartnerSearch extends Model
         try {
             $res = $client->request('GET', $url, [
                 'headers' => Yii::$app->getModule('affiliate')->params['myauris_config']['headers'],
-                'form_params' => $params
+                'query' => $params
             ]);
 
             $response = \GuzzleHttp\json_decode($res->getBody(), true);
@@ -194,7 +194,7 @@ class CustomerPartnerSearch extends Model
         // Fill fake data to use Array Data Provider for Grid View Pagination
         $rowPerPage = \Yii::$app->getModule('affiliate')->params['myauris_config']['row_per_page'];
         $fakeData = array_fill(0, $response['totalCount'], null);
-        $pageForFakeData = self::$PAGE - 1;
+        $pageForFakeData = $this->_getPage() - 1;
         foreach ($data as $rowIndex => $row) {
             $index = $pageForFakeData * $rowPerPage + $rowIndex;
             $fakeData[$index] = $row;

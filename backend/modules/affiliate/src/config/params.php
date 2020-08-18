@@ -33,7 +33,7 @@ return [
         'headers' => ['X-Api-Key' => 'qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'],
         'row_per_page' => 10,
         'field_to_endpoint' => [
-            // 'co_so' => 'co_so', // @todo
+             'co_so' => 'co-so', // @todo
             'permission_user' => 'nhan-vien-le-tan',
             'customer_come_time_to' => 'status-dat-hen',
             'directsale' => 'nhan-vien-direct-sale',
