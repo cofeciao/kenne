@@ -109,5 +109,19 @@ return [
             'width' => 150,
             'height' => 150
         ]
+    ],
+    'project' => [
+        '150x150' => [
+            'folder' => '/uploads/project/150x150/',
+            'width' => 150,
+            'height' => 150
+        ]
+    ],
+    'project-image' => [
+        '150x150' => [
+            'folder' => '/uploads/project/150x150/',
+            'width' => 150,
+            'height' => 150
+        ]
     ]
 ];
