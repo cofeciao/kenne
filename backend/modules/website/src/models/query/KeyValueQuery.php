@@ -27,6 +27,7 @@ class KeyValueQuery extends \yii\db\ActiveQuery
     }
     public function findByLanguage()
     {
-        return $this->andWhere([KeyValue::tableName() . '.language' => \Yii::$app->language]);
+        return $this->andWhere([KeyValue::tableName() . '.language' => \Yii::$app->language])
+            ->orWhere([KeyValue::tableName() . '.language' => '']);
     }
 }

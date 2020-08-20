@@ -27,7 +27,7 @@ class AffiliateDisplayHelper
         $message = AffiliateModule::t('affiliate', 'Converted');
         $tick = '';
 
-        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->controller->module->params['partner_id']['dashboard-myauris'], $model['id'])) {
+        if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id'])) {
             $tick = Html::tag('span', '', [
                 'title' => $message,
                 'alia-label' => $message,
@@ -39,7 +39,7 @@ class AffiliateDisplayHelper
     }
 
     public static function getSex ($model) {
-        return Yii::$app->controller->module->params['sex'][$model['sex']];
+        return Yii::$app->getModule('affiliate')->params['sex'][$model['sex']];
     }
 
     public static function getPhone ($model) {
@@ -51,7 +51,8 @@ class AffiliateDisplayHelper
         ]);
         $content .= Html::a('<i class="fa fa-paste"></i>', 'javascript: void(0)', [
             'class' => 'btn btn-xs btn-info copy ml-1',
-            'title' => 'Copy'
+            'title' => 'Copy',
+            'data-copy' => $model['phone']
         ]);
         return $content;
     }

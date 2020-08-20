@@ -3,6 +3,7 @@
 namespace modava\product\controllers;
 
 use modava\product\components\MyUpload;
+use modava\product\models\ProductImage;
 use modava\product\models\table\ProductCategoryTable;
 use modava\product\models\table\ProductTable;
 use modava\product\models\table\ProductTypeTable;
@@ -91,8 +92,9 @@ class ProductController extends MyProductController
                         }
 
                     }
-                    $model->image = $imageName;
-                    $model->updateAttributes(['image']);
+                    $model->updateAttributes([
+                        'image' => $imageName
+                    ]);
                     Yii::$app->session->setFlash('toastr-product-view', [
                         'text' => 'Tạo mới thành công',
                         'type' => 'success'
@@ -105,7 +107,7 @@ class ProductController extends MyProductController
                     $errors .= Html::tag('p', $error[0]);
                 }
                 Yii::$app->session->setFlash('toastr-product-form', [
-                    'title' => 'Cập nhật thất bại',
+                    'title' => 'Tạo mới thất bại',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -148,8 +150,9 @@ class ProductController extends MyProductController
                                 }
                             }
 
-                            $model->image = $imageName;
-                            if ($model->updateAttributes(['image'])) {
+                            if ($model->updateAttributes([
+                                'image' => $imageName
+                            ])) {
                                 foreach (Yii::$app->params['product'] as $key => $value) {
                                     $pathSave = $path . $key;
                                     if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
@@ -198,6 +201,13 @@ class ProductController extends MyProductController
         ]);
     }
 
+    public function actionDelImage($id)
+    {
+        $model = $this->findModelImage($id);
+        if ($model->delete()) return 1;
+        return 0;
+    }
+
     public function actionCheckHot()
     {
         if (Yii::$app->request->isAjax) {
@@ -238,7 +248,6 @@ class ProductController extends MyProductController
                     'type' => 'warning'
                 ]);
             }
-            return $this->redirect(['index']);
         }
     }
 
@@ -290,6 +299,15 @@ class ProductController extends MyProductController
     protected function findModel($id)
     {
         if (($model = Product::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(ProductModule::t('product', 'The requested page does not exist.'));
+    }
+
+    protected function findModelImage($id)
+    {
+        if (($model = ProductImage::findOne($id)) !== null) {
             return $model;
         }
 

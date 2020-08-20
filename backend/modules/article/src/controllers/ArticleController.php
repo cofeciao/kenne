@@ -151,8 +151,8 @@ class ArticleController extends MyArticleController
                             if ($model->updateAttributes(['image'])) {
                                 foreach (Yii::$app->params['article'] as $key => $value) {
                                     $pathSave = $path . $key;
-                                    if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
-                                        unlink($pathSave . '/' . $oldImage);
+                                    if (file_exists($pathSave . '/' . $oldImage) && !is_dir($pathSave . '/' . $oldImage) && $oldImage != null) {
+                                        @unlink($pathSave . '/' . $oldImage);
                                     }
 
                                 }

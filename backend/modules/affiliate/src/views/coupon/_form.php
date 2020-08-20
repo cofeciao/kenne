@@ -68,7 +68,7 @@ $model->expired_date = $model->expired_date != null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'promotion_type')->dropDownList(
-                Yii::$app->controller->module->params["promotion_type"],
+                Yii::$app->getModule('affiliate')->params["promotion_type"],
                 [ 'prompt' => AffiliateModule::t('affiliate', 'Select an option ...'),
                     'id' => 'promotion-type'
                 ]
@@ -81,6 +81,7 @@ $model->expired_date = $model->expired_date != null
         <div class="col-12">
             <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
                 'options' => ['rows' => 6],
+                'type' => 'content'
             ]) ?>
         </div>
     </div>

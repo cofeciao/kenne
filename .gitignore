@@ -54,6 +54,7 @@ phpunit.phar
 
 !/backend/web/uploads/
 /backend/web/uploads/*
+
 !/backend/web/uploads/filemanager/
 /backend/web/uploads/filemanager/*
 !/backend/web/uploads/filemanager/source/
@@ -74,6 +75,18 @@ phpunit.phar
 
 !/frontend/web/uploads/
 /frontend/web/uploads/*
+
+!/frontend/web/uploads/project/
+/frontend/web/uploads/project/*
+!/frontend/web/uploads/project/150x150/
+/frontend/web/uploads/project/150x150/*
+!/frontend/web/uploads/project/150x150/no-image.png
+
+!/frontend/web/uploads/project-image/
+/frontend/web/uploads/project-image/*
+!/frontend/web/uploads/project-image/150x150/
+/frontend/web/uploads/project-image/150x150/*
+!/frontend/web/uploads/project-image/150x150/no-image.png
 
 !/frontend/web/uploads/faq/
 /frontend/web/uploads/faq/*

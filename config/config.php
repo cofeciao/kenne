@@ -79,6 +79,19 @@ if (YII2_MAIL) {
             ]
         ],
     ];
+    $config['components']['log']['targets'] = [
+        'email' => [
+            'class' => 'yii\log\EmailTarget',
+            'levels' => ['error'],
+            'message' => [
+                'from' => 'mongdao.wd@gmail.com',
+                'to' => 'mongdao.wd@gmail.com',
+                'subject' => 'Log message',
+            ],
+        ],
+    ];
+}
+if (YII2_LOG) {
     $config['components']['log'] = [
         'traceLevel' => YII_DEBUG ? 3 : 0,
         'targets' => [
@@ -92,15 +105,6 @@ if (YII2_MAIL) {
                 },
                 'logVars' => [],
                 'logTable' => '{{%system_log}}'
-            ],
-            'email' => [
-                'class' => 'yii\log\EmailTarget',
-                'levels' => ['error'],
-                'message' => [
-                    'from' => 'mongdao.wd@gmail.com',
-                    'to' => 'mongdao.wd@gmail.com',
-                    'subject' => 'Log message',
-                ],
             ],
         ],
     ];
