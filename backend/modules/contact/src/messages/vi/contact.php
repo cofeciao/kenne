@@ -14,10 +14,14 @@ return [
     'Address' => 'Địa chỉ',
     'Title' => 'Tiêu đề',
     'Content' => 'Nội dung',
-    'Ip Address' => 'Ip',
+    'Ip Address' => 'Địa chỉ IP',
     'Status' => 'Trạng thái',
     'Created At' => 'Ngày tạo',
+    'Updated At' => 'Thời gian cập nhật',
+    'Created By' => 'Người tạo',
+    'Updated By' => 'Người cập nhật',
     'Actions' => 'Hành động',
     'Contact' => 'Liên hệ',
+    'Contacts' => 'Liên hệ',
     'Update : {name}' => 'Cập nhật : {name}'
 ];

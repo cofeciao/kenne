@@ -23,6 +23,7 @@ class ProjectImageQuery extends \yii\db\ActiveQuery
 
     public function sortDescById()
     {
-        return $this->orderBy([ProjectImage::tableName() . '.id' => SORT_DESC]);
+        return $this->orderBy([ProjectImage::tableName() . '.id' => SORT_DESC])
+            ->orWhere([ProjectImage::tableName() . '.language' => '']);
     }
 }
