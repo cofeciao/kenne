@@ -11,6 +11,7 @@ use modava\iway\IwayModule;
 use backend\components\MyController;
 use modava\iway\models\DropdownsConfig;
 use modava\iway\models\search\DropdownsConfigSearch;
+use yii\web\Response;
 
 /**
  * DropdownsConfigController implements the CRUD actions for DropdownsConfig model.
@@ -18,8 +19,8 @@ use modava\iway\models\search\DropdownsConfigSearch;
 class DropdownsConfigController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +34,9 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-    * Lists all DropdownsConfig models.
-    * @return mixed
-    */
+     * Lists all DropdownsConfig models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new DropdownsConfigSearch();
@@ -45,16 +46,15 @@ class DropdownsConfigController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single DropdownsConfig model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single DropdownsConfig model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +63,10 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-    * Creates a new DropdownsConfig model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new DropdownsConfig model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new DropdownsConfig();
@@ -98,18 +98,18 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-    * Updates an existing DropdownsConfig model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing DropdownsConfig model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +137,12 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-    * Deletes an existing DropdownsConfig model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing DropdownsConfig model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -174,13 +174,29 @@ class DropdownsConfigController extends MyController
         return $this->redirect(['index']);
     }
 
+    public function actionGetColumns()
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $tableName = Yii::$app->request->get('table_name');
+            $data = DropdownsConfig::getAllColumns($tableName);
+
+            return [
+                'code' => 200,
+                'data' => $data
+            ];
+        }
+
+        return IwayModule::t('iway', 'Không thể truy cập');
+    }
+
     /**
-    * Finds the DropdownsConfig model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return DropdownsConfig the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the DropdownsConfig model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return DropdownsConfig the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
@@ -190,6 +206,6 @@ class DropdownsConfigController extends MyController
         }
 
         throw new NotFoundHttpException(Yii::t('iway', 'The requested page does not exist.'));
-        throw new NotFoundHttpException(IwayModule::t('iway','The requested page does not exist.'));
+        throw new NotFoundHttpException(IwayModule::t('iway', 'The requested page does not exist.'));
     }
 }

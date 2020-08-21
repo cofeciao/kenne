@@ -35,10 +35,11 @@ class DropdownsConfig extends DropdownsConfigTable
     public function rules()
     {
         return [
-            [['field_name', 'table_name'], 'required'],
+            [['table_name', 'field_name',], 'unique', 'targetAttribute' => ['table_name', 'field_name'], 'message' => IwayModule::t('iway', 'Đã tồn tại record chứ tên table và tên field này')],
+            [['table_name', 'field_name',], 'required'],
             [['dropdown_value'], 'safe'],
-            [['field_name'], 'string', 'max' => 100],
-            [['field_name'], 'unique'],
+            [['table_name', 'field_name'], 'string', 'max' => 100],
+            ['dropdown_value', 'validateDropdownValue']
         ];
     }
 
@@ -60,8 +61,17 @@ class DropdownsConfig extends DropdownsConfigTable
         $connection = Yii::$app->db;
         $dbSchema = $connection->getSchema();
         $allTable = $dbSchema->getTableNames();
-        $allTableCombined = array_combine($allTable, $allTable);
-        return $allTableCombined;
+        return array_combine($allTable, $allTable);
+    }
+
+    public static function getAllColumns($tableName)
+    {
+        if (!$tableName) return [];
+        $connection = Yii::$app->db;
+        $dbSchema = $connection->getSchema();
+        $table = $dbSchema->getTableSchema($tableName);
+        $columns = $table->getColumnNames();
+        return array_combine($columns, $columns);
     }
 
     public static function getDropdowns($tableName)
@@ -97,5 +107,25 @@ class DropdownsConfig extends DropdownsConfigTable
         $dropdowns = self::getDropdowns($tableName);
 
         return $dropdowns[$fieldName];
+    }
+
+    public function validateDropdownValue()
+    {
+        if (!$this->hasErrors() && is_array($this->dropdown_value)) {
+            $duplicateTable = [];
+
+            foreach ($this->dropdown_value as $i => $dropdownValue) {
+                // Check required
+                if (!$dropdownValue['key']) $this->addError("dropdown_value[$i][key]", IwayModule::t('iway', 'Vui lòng nhập'));
+                if (!$dropdownValue['value']) $this->addError("dropdown_value[$i][value]", IwayModule::t('iway', 'Vui lòng nhập'));
+
+                // Check Duplicate
+                if (array_key_exists($dropdownValue['key'], $duplicateTable)) {
+                    $this->addError("dropdown_value[$i][key]", IwayModule::t('iway', '{key} đã tồn tại', ['key' => $dropdownValue['key']]));
+                } else {
+                    $duplicateTable[$dropdownValue['key']] = $i;
+                }
+            }
+        }
     }
 }
