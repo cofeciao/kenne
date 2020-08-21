@@ -55,6 +55,15 @@ class DropdownsConfig extends DropdownsConfigTable
         ];
     }
 
+    public static function getAllTables()
+    {
+        $connection = Yii::$app->db;
+        $dbSchema = $connection->getSchema();
+        $allTable = $dbSchema->getTableNames();
+        $allTableCombined = array_combine($allTable, $allTable);
+        return $allTableCombined;
+    }
+
     public static function getDropdowns($tableName)
     {
         if (!$tableName) return null;

@@ -17,8 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-12">
             <section class="hk-sec-wrapper">
                 <?php
-                var_dump($model->getDropdowns());
-                var_dump($model->getDropdown('status'));
+               /* var_dump($model->getDropdowns());
+                var_dump($model->getDropdown('status'));*/
+                var_dump($model->getAllTables());
                 ?>
             </section>
         </div>

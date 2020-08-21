@@ -1,6 +1,7 @@
 <?php
 
 use unclead\multipleinput\MultipleInput;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -35,9 +36,12 @@ use modava\iway\IwayModule;
                             'name' => 'key',
                             'title' => IwayModule::t('test', 'Key'),
                             'enableError' => true,
+                            'type'  => 'dropDownList',
                             'defaultValue' => '',
+                            'items' => \modava\iway\models\DropdownsConfig::getAllTables(),
                             'options' => [
-                                'class' => 'dropdown-key',
+                                'prompt' => IwayModule::t('iway', 'Chọn table...'),
+                                'class' => 'form-control dropdown-key',
                             ]
                         ],
                         [
