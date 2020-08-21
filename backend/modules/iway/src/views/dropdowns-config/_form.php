@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use unclead\multipleinput\MultipleInput;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -17,7 +18,14 @@ use modava\iway\IwayModule;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-6">
-            <?= $form->field($model, 'table_name')->textInput(['maxlength' => true]) ?>
+            <?php //$form->field($model, 'table_name')->textInput(['maxlength' => true]) ?>
+            <?php echo $form->field($model, 'table_name')->widget(Select2::class, [
+                'data' => \modava\iway\models\DropdownsConfig::getAllTables(),
+                'options' => ['placeholder' => IwayModule::t('iway', 'Chọn table...')],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]); ?>
         </div>
         <div class="col-6">
             <?= $form->field($model, 'field_name')->textInput(['maxlength' => true]) ?>
@@ -36,11 +44,8 @@ use modava\iway\IwayModule;
                             'name' => 'key',
                             'title' => IwayModule::t('test', 'Key'),
                             'enableError' => true,
-                            'type'  => 'dropDownList',
                             'defaultValue' => '',
-                            'items' => \modava\iway\models\DropdownsConfig::getAllTables(),
                             'options' => [
-                                'prompt' => IwayModule::t('iway', 'Chọn table...'),
                                 'class' => 'form-control dropdown-key',
                             ]
                         ],
