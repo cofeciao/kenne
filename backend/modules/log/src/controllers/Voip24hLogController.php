@@ -3,6 +3,7 @@
 namespace modava\log\controllers;
 
 use modava\log\components\MyLogController;
+use modava\log\models\search\Voip24hLogSearch;
 
 class Voip24hLogController extends MyLogController
 {
@@ -15,6 +16,13 @@ class Voip24hLogController extends MyLogController
 
     public function actionIndex()
     {
-        return $this->render('index', []);
+//        echo '<pre>';
+//        var_dump(\Yii::$app->request->queryParams);die;
+        $searchModel = new Voip24hLogSearch();
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
     }
 }
