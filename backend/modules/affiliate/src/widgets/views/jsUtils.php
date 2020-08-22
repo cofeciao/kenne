@@ -55,4 +55,48 @@ $controllerURL = Url::toRoute(["/affiliate/handle-ajax"]);
             }
         });
     }
+
+    function saveStateSearchPanel(searchPanel, button, key) {
+        if (!window.localStorage.getItem(key)) {
+            window.localStorage.setItem(key, 'show');
+        }
+
+        if (window.localStorage.getItem(key) === 'show') $(searchPanel).addClass('show');
+        else $(searchPanel).removeClass('show');
+
+        $(button).on('click', function() {
+            if (window.localStorage.getItem(key) === 'show') {
+                window.localStorage.setItem(key, 'hide');
+            }
+            else {
+                window.localStorage.setItem(key, 'show');
+            }
+        });
+    }
+
+    function copyToClipboard(text) {
+        let dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.setAttribute("id", "dummy_id");
+        document.getElementById("dummy_id").value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        $.toast({
+            heading: 'Thông báo',
+            text: 'Copy thành công',
+            position: 'top-right',
+            class: 'jq-toast-success',
+            hideAfter: 2000,
+            stack: 6,
+            showHideTransition: 'fade'
+        });
+    }
+
+    window.onload = function () {
+        $('.copy').on('click', function () {
+            copyToClipboard($(this).data('copy'));
+        });
+    }
+
 </script>

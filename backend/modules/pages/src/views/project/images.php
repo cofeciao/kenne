@@ -2,17 +2,17 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use modava\product\ProductModule;
+use modava\pages\PagesModule;
 use modava\tiny\components\FileManagerPermisstion;
 use modava\tiny\FileManagerAsset;
-use modava\product\models\ProductImage;
+use modava\pages\models\ProjectImage;
 
-/* @var $model modava\product\models\Product */
+/* @var $model modava\pages\models\Project */
 
-$this->title = 'Product Images: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => ProductModule::t('product', 'Product'), 'url' => ['index']];
+$this->title = 'Project Images: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => PagesModule::t('pages', 'Project'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = ProductModule::t('product', 'Images');
+$this->params['breadcrumbs'][] = PagesModule::t('pages', 'Images');
 
 $css = <<< CSS
 .hk-sec-wrapper .hk-gallery a {
@@ -47,7 +47,7 @@ CSS;
 $this->registerCss($css);
 ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
-        <?= \modava\product\widgets\NavbarWidgets::widget(); ?>
+        <?= \modava\pages\widgets\NavbarWidgets::widget(); ?>
 
         <!-- Title -->
         <div class="hk-pg-header">
@@ -55,13 +55,13 @@ $this->registerCss($css);
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= ProductModule::t('product', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= ProductModule::t('product', 'Create'); ?></a>
+               title="<?= PagesModule::t('pages', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= PagesModule::t('pages', 'Create'); ?></a>
         </div>
         <!-- /Title -->
 
         <?php $form = ActiveForm::begin([
-            'id' => 'form-product-images'
+            'id' => 'form-project-images'
         ]) ?>
         <!-- Row -->
         <div class="row">
@@ -69,15 +69,15 @@ $this->registerCss($css);
                 <section class="hk-sec-wrapper">
                     <div class="row hk-gallery">
                         <?php
-                        if (is_array($model->productImage)) {
-                            foreach ($model->productImage as $productImage) {
-                                $image = $productImage->getImage();
+                        if (is_array($model->projectImage)) {
+                            foreach ($model->projectImage as $projectImage) {
+                                $image = $projectImage->getImage();
                                 if ($image == null) continue;
                                 ?>
                                 <div class="col-lg-2 col-md-4 col-sm-4 col-6 mb-10 px-5"
                                      data-src="<?= $image ?>">
                                     <a href="#" class="d-block">
-                                        <span class="del-image" data-image="<?= $productImage->id ?>">
+                                        <span class="del-image" data-image="<?= $projectImage->id ?>">
                                             <i class="fa fa-times"></i>
                                         </span>
                                         <div class="gallery-img"
@@ -89,14 +89,14 @@ $this->registerCss($css);
                         <div class="col-lg-2 col-md-4 col-sm-4 col-6 mb-10 px-5">
                             <?php
                             if (empty($model->getErrors()))
-                                $path = Yii::$app->params['product']['150x150']['folder'];
+                                $path = Yii::$app->params['project-image']['150x150']['folder'];
                             else
                                 $path = null;
                             echo \modava\tiny\FileManager::widget([
                                 'model' => $model,
                                 'attribute' => 'iptImages',
                                 'path' => $path,
-                                'label' => ProductModule::t('product', 'Hình ảnh') . ': ' . Yii::$app->params['product-size'],
+                                'label' => PagesModule::t('pages', 'Hình ảnh') . ': ' . Yii::$app->params['project-image-size'],
                             ]); ?>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ $this->registerCss($css);
 $urlDelImage = \yii\helpers\Url::toRoute(['del-image']);
 $script = <<< JS
 function responsive_filemanager_callback(field_id){
-    $('#form-product-images').submit();
+    $('#form-project-images').submit();
 }
 $('body').on('click', '.del-image', function(){
     var data_image = $(this).attr('data-image');

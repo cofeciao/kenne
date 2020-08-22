@@ -3,6 +3,7 @@
 namespace modava\product\controllers;
 
 use modava\product\components\MyUpload;
+use modava\product\models\ProductImage;
 use modava\product\models\table\ProductCategoryTable;
 use modava\product\models\table\ProductTable;
 use modava\product\models\table\ProductTypeTable;
@@ -106,7 +107,7 @@ class ProductController extends MyProductController
                     $errors .= Html::tag('p', $error[0]);
                 }
                 Yii::$app->session->setFlash('toastr-product-form', [
-                    'title' => 'Cập nhật thất bại',
+                    'title' => 'Tạo mới thất bại',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -200,6 +201,13 @@ class ProductController extends MyProductController
         ]);
     }
 
+    public function actionDelImage($id)
+    {
+        $model = $this->findModelImage($id);
+        if ($model->delete()) return 1;
+        return 0;
+    }
+
     public function actionCheckHot()
     {
         if (Yii::$app->request->isAjax) {
@@ -291,6 +299,15 @@ class ProductController extends MyProductController
     protected function findModel($id)
     {
         if (($model = Product::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(ProductModule::t('product', 'The requested page does not exist.'));
+    }
+
+    protected function findModelImage($id)
+    {
+        if (($model = ProductImage::findOne($id)) !== null) {
             return $model;
         }
 

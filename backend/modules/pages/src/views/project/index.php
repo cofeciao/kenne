@@ -1,16 +1,16 @@
 <?php
 
-use modava\affiliate\AffiliateModule;
-use modava\affiliate\widgets\NavbarWidgets;
+use modava\pages\PagesModule;
+use modava\pages\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel modava\affiliate\models\search\FeedbackSearch */
+/* @var $searchModel modava\pages\models\search\ProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = AffiliateModule::t('affiliate', 'Feedbacks');
+$this->title = PagesModule::t('pages', 'Projects');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -22,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= AffiliateModule::t('affiliate', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= AffiliateModule::t('affiliate', 'Create'); ?></a>
+           title="<?= PagesModule::t('pages', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= PagesModule::t('pages', 'Create'); ?></a>
     </div>
 
     <!-- Row -->
@@ -60,10 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                     'pager' => [
-                                        'firstPageLabel' => AffiliateModule::t('affiliate', 'First'),
-                                        'lastPageLabel' => AffiliateModule::t('affiliate', 'Last'),
-                                        'prevPageLabel' => AffiliateModule::t('affiliate', 'Previous'),
-                                        'nextPageLabel' => AffiliateModule::t('affiliate', 'Next'),
+                                        'firstPageLabel' => PagesModule::t('pages', 'First'),
+                                        'lastPageLabel' => PagesModule::t('pages', 'Last'),
+                                        'prevPageLabel' => PagesModule::t('pages', 'Previous'),
+                                        'nextPageLabel' => PagesModule::t('pages', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -105,32 +105,31 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ]);
                                             }
                                         ],
+                                    
                                         [
-                                            'attribute' => 'customer_id',
+                                            'attribute' => 'image',
+                                            'format' => 'html',
                                             'value' => function ($model) {
-                                                return $model->customer ? $model->customer->full_name : '';
-                                            }
+                                                if ($model->image == null)
+                                                    return null;
+                                                return Html::img(Yii::$app->params['project']['150x150']['folder'] . $model->image, ['width' => 150, 'height' => 150]);
+                                            },
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
                                         ],
+										//'position',
+										//'ads_pixel:ntext',
+										//'ads_session:ntext',
                                         [
-                                            'attribute' => 'unsatisfied_reason_id',
+                                            'attribute' => 'language',
                                             'value' => function ($model) {
-                                                return $model->unsatisfied_reason_id ? $model->unsatisfiedReason->title : '';
-                                            }
+                                                if ($model->language == null)
+                                                    return null;
+                                                return Yii::$app->params['availableLocales'][$model->language];
+                                            },
                                         ],
-                                        [
-                                            'attribute' => 'feedback_time_id',
-                                            'value' => function ($model) {
-                                                return $model->feedbackTime->title;
-                                            }
-                                        ],
-                                        [
-                                            'attribute' => 'feedback_type',
-                                            'value' => function ($model) {
-                                                return Yii::$app->getModule('affiliate')->params['feedback_type'][$model->feedback_type];
-                                            }
-                                        ],
-										'satisfied_feedback:raw',
-										'description:raw',
+										//'views',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
@@ -147,22 +146,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                            'template' => '{update} {delete}',
+                                            'header' => PagesModule::t('pages', 'Actions'),
+                                            'template' => '{images} {update} {delete}',
                                             'buttons' => [
+                                                'images' => function ($url, $model) {
+                                                    return Html::a('<span class="ion ion-md-images"></span>', $url, [
+                                                        'title' => PagesModule::t('pages', 'Images'),
+                                                        'alia-label' => PagesModule::t('pages', 'Images'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-green btn-xs'
+                                                    ]);
+                                                },
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => AffiliateModule::t('affiliate', 'Update'),
-                                                        'alia-label' => AffiliateModule::t('affiliate', 'Update'),
+                                                        'title' => PagesModule::t('pages', 'Update'),
+                                                        'alia-label' => PagesModule::t('pages', 'Update'),
                                                         'data-pjax' => 0,
                                                         'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => AffiliateModule::t('affiliate', 'Delete'),
+                                                        'title' => PagesModule::t('pages', 'Delete'),
                                                         'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => AffiliateModule::t('affiliate', 'Delete?'),
+                                                        'data-title' => PagesModule::t('pages', 'Delete?'),
                                                         'data-pjax' => 0,
                                                         'data-url' => $url,
                                                         'btn-success-class' => 'success-delete',

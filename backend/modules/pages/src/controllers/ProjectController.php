@@ -1,26 +1,23 @@
 <?php
 
-namespace modava\article\controllers;
+namespace modava\pages\controllers;
 
-use modava\article\ArticleModule;
-use modava\article\components\MyUpload;
-use modava\article\models\table\ActicleCategoryTable;
-use modava\article\models\table\ArticleTypeTable;
-use Yii;
-use modava\article\models\Article;
-use modava\article\models\search\ArticleSearch;
-use modava\article\components\MyArticleController;
+use modava\pages\components\MyUpload;
+use modava\pages\models\ProjectImage;
 use yii\db\Exception;
-use yii\helpers\ArrayHelper;
+use Yii;
 use yii\helpers\Html;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
+use yii\web\NotFoundHttpException;
+use modava\pages\PagesModule;
+use modava\pages\components\MyPagesController;
+use modava\pages\models\Project;
+use modava\pages\models\search\ProjectSearch;
 
 /**
- * ArticleController implements the CRUD actions for Article model.
+ * ProjectController implements the CRUD actions for Project model.
  */
-class ArticleController extends MyArticleController
+class ProjectController extends MyPagesController
 {
     /**
      * {@inheritdoc}
@@ -38,12 +35,12 @@ class ArticleController extends MyArticleController
     }
 
     /**
-     * Lists all Article models.
+     * Lists all Project models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
+        $searchModel = new ProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -52,8 +49,9 @@ class ArticleController extends MyArticleController
         ]);
     }
 
+
     /**
-     * Displays a single Article model.
+     * Displays a single Project model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -66,13 +64,13 @@ class ArticleController extends MyArticleController
     }
 
     /**
-     * Creates a new Article model.
+     * Creates a new Project model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Article();
+        $model = new Project();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -80,8 +78,8 @@ class ArticleController extends MyArticleController
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
-                        $path = Yii::getAlias('@frontend/web/uploads/article/');
-                        foreach (Yii::$app->params['article'] as $key => $value) {
+                        $path = Yii::getAlias('@frontend/web/uploads/project/');
+                        foreach (Yii::$app->params['project'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
                                 mkdir($pathSave);
@@ -90,21 +88,22 @@ class ArticleController extends MyArticleController
                         }
 
                     }
-                    $model->image = $imageName;
-                    $model->updateAttributes(['image']);
-                    Yii::$app->session->setFlash('toastr-article-view', [
+                    $model->updateAttributes([
+                        'image' => $imageName
+                    ]);
+                    Yii::$app->session->setFlash('toastr-project-view', [
                         'text' => 'Tạo mới thành công',
                         'type' => 'success'
                     ]);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
-                $errors = '';
+                $errors = Html::tag('p', 'Tạo mới thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-article-form', [
-                    'title' => 'Cập nhật thất bại',
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -117,7 +116,7 @@ class ArticleController extends MyArticleController
     }
 
     /**
-     * Updates an existing Article model.
+     * Updates an existing Project model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -134,9 +133,9 @@ class ArticleController extends MyArticleController
                     if ($model->getAttribute('image') !== $oldImage) {
                         if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
-                            $path = Yii::getAlias('@frontend/web/uploads/article/');
+                            $path = Yii::getAlias('@frontend/web/uploads/project/');
                             $imageName = null;
-                            foreach (Yii::$app->params['article'] as $key => $value) {
+                            foreach (Yii::$app->params['project'] as $key => $value) {
                                 $pathSave = $path . $key;
                                 if (!file_exists($pathSave) && !is_dir($pathSave)) {
                                     mkdir($pathSave);
@@ -147,31 +146,32 @@ class ArticleController extends MyArticleController
                                 }
                             }
 
-                            $model->image = $imageName;
-                            if ($model->updateAttributes(['image'])) {
-                                foreach (Yii::$app->params['article'] as $key => $value) {
+                            if ($model->updateAttributes([
+                                'image' => $imageName
+                            ])) {
+                                foreach (Yii::$app->params['project'] as $key => $value) {
                                     $pathSave = $path . $key;
-                                    if (file_exists($pathSave . '/' . $oldImage) && !is_dir($pathSave . '/' . $oldImage) && $oldImage != null) {
-                                        @unlink($pathSave . '/' . $oldImage);
+                                    if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
+                                        unlink($pathSave . '/' . $oldImage);
                                     }
 
                                 }
                             }
                         }
                     }
-                    Yii::$app->session->setFlash('toastr-article-view', [
+                    Yii::$app->session->setFlash('toastr-project-view', [
                         'text' => 'Cập nhật thành công',
                         'type' => 'success'
                     ]);
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             } else {
-                $errors = '';
+                $errors = Html::tag('p', 'Cập nhật thất bại');
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-article-form', [
-                    'title' => 'Cập nhật thất bại',
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
+                    'title' => 'Thông báo',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -183,8 +183,29 @@ class ArticleController extends MyArticleController
         ]);
     }
 
+    public function actionImages($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validateImages() && $model->saveImages()) {
+                return $this->refresh();
+            }
+        }
+        $model->iptImages = null;
+        return $this->render('images', [
+            'model' => $model
+        ]);
+    }
+
+    public function actionDelImage($id)
+    {
+        $model = $this->findModelImage($id);
+        if ($model->delete()) return 1;
+        return 0;
+    }
+
     /**
-     * Deletes an existing Article model.
+     * Deletes an existing Project model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -222,31 +243,29 @@ class ArticleController extends MyArticleController
     }
 
     /**
-     * Finds the Article model based on its primary key value.
+     * Finds the Project model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Article the loaded model
+     * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+
     protected function findModel($id)
     {
-        if (($model = Article::findOne($id)) !== null) {
+        if (($model = Project::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(ArticleModule::t('article', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(PagesModule::t('pages', 'The requested page does not exist.'));
     }
 
-
-    public function actionLoadCategoriesByLang($lang = null)
+    protected function findModelImage($id)
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ArrayHelper::map(ActicleCategoryTable::getAllArticleCategory($lang), 'id', 'title');
-    }
+        if (($model = ProjectImage::findOne($id)) !== null) {
+            return $model;
+        }
 
-    public function actionLoadTypesByLang($lang = null)
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ArrayHelper::map(ArticleTypeTable::getAllArticleType($lang), 'id', 'title');
+        throw new NotFoundHttpException(PagesModule::t('pages', 'The requested page does not exist.'));
     }
 }
