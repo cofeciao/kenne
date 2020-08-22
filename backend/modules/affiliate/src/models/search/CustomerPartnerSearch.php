@@ -13,6 +13,7 @@ class CustomerPartnerSearch extends Model
 {
     static $CACHE_TIME = 86400; // 1 day
     static $CACHE_MANAGE_KEY = 'redis-affiliate-dashboard-myauris-list-home-key';
+    const ID_THAO_TAC_LAP = 2;
 
     public $creation_time_from;
     public $creation_time_to;
@@ -59,8 +60,15 @@ class CustomerPartnerSearch extends Model
         ];
     }
 
-    public function search($params)
+    public function search($params, $loadDefaultSearch = false)
     {
+        if ($loadDefaultSearch) {
+            // Set default thao tac
+            if (!array_key_exists('ClinicSearch', $params) || !array_key_exists('thao_tac', $params['ClinicSearch'])) {
+                $params['ClinicSearch']['thao_tac'] = self::ID_THAO_TAC_LAP;
+            }
+        }
+
         $this->load($params);
 
         $myauris_config = \Yii::$app->getModule('affiliate')->params['myauris_config'];
@@ -114,7 +122,8 @@ class CustomerPartnerSearch extends Model
         }
     }
 
-    public function getDropdowns() {
+    public function getDropdowns()
+    {
         $apiParam = \Yii::$app->getModule('affiliate')->params['myauris_config'];
 
         $listDropdown = [];
@@ -208,7 +217,8 @@ class CustomerPartnerSearch extends Model
         ]);
     }
 
-    private function _getPage() {
+    private function _getPage()
+    {
         $page = (int)\Yii::$app->request->get('page');
         return $page > 0 ? $page : 1;
     }
