@@ -195,7 +195,12 @@ class CustomerPartnerSearch extends Model
             $response = \GuzzleHttp\json_decode($res->getBody(), true);
 
             if ($res->getStatusCode() == 200) {
-                $return = $response;
+                if (array_key_exists('data', $response) && count($response['data'])) {
+                    $return = $response['data'][0];
+                } else {
+                    return null;
+                }
+
                 $cache->set($cacheKey, $return, self::$CACHE_TIME_CUSTOMER_INFO);
                 self::_manageCacheKey($cacheKey);
                 return $return;

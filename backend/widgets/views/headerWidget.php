@@ -21,7 +21,7 @@ use yii\helpers\Url;
             'Realm',
             'WSServer',
         ]), [
-            'urlGetUserInfo' => Url::toRoute(['/affiliate/customer/get-info']),
+            'urlGetUserInfo' => Url::toRoute(['/customer/customer/get-info']),
             'layout' => "<li class=\"nav-item\">{item}{callcenter}</li>",
             'itemOptions' => [
                 'class' => 'nav-link'
