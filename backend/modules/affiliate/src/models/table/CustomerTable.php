@@ -71,4 +71,10 @@ class CustomerTable extends \yii\db\ActiveRecord
         }
         return $data;
     }
+
+    public static function getRecordByPhone ($phone) {
+        if (!$phone) return null;
+
+        return self::find()->where(['phone' => $phone])->one();
+    }
 }

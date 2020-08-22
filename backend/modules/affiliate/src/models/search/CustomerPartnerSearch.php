@@ -12,6 +12,7 @@ use yii\data\ArrayDataProvider;
 class CustomerPartnerSearch extends Model
 {
     static $CACHE_TIME = 86400; // 1 day
+    static $CACHE_TIME_CUSTOMER_INFO = 31536000; // 1 year
     static $CACHE_MANAGE_KEY = 'redis-affiliate-dashboard-myauris-list-home-key';
     const ID_THAO_TAC_LAP = 2;
 
@@ -166,6 +167,43 @@ class CustomerPartnerSearch extends Model
             return [];
         } catch (GuzzleException $exception) {
             return [];
+        }
+    }
+
+    public static function getCustomerByPhone($phone)
+    {
+        if (!$phone) return null;
+
+        $cache = Yii::$app->cache;
+        $cacheKey = "redis-affiliate-dashboard-myauris-customer-by-phone-{$phone}";
+        $params['ClinicSearch']['keyword'] = $phone;
+
+        if ($cache->exists($cacheKey)) return $cache->get($cacheKey);
+
+        $myauris_config = \Yii::$app->getModule('affiliate')->params['myauris_config'];
+
+        $url = $myauris_config['url_end_point'] . $myauris_config['endpoint']['customer'];
+
+        $client = new Client();
+
+        try {
+            $res = $client->request('GET', $url, [
+                'headers' => Yii::$app->getModule('affiliate')->params['myauris_config']['headers'],
+                'query' => $params
+            ]);
+
+            $response = \GuzzleHttp\json_decode($res->getBody(), true);
+
+            if ($res->getStatusCode() == 200) {
+                $return = $response;
+                $cache->set($cacheKey, $return, self::$CACHE_TIME_CUSTOMER_INFO);
+                self::_manageCacheKey($cacheKey);
+                return $return;
+            }
+
+            return null;
+        } catch (GuzzleException $exception) {
+            return null;
         }
     }
 
