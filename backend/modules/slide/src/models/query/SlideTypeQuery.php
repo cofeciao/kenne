@@ -27,6 +27,7 @@ class SlideTypeQuery extends \yii\db\ActiveQuery
     }
     public function findByLanguage()
     {
-        return $this->andWhere([SlideType::tableName() . '.language' => \Yii::$app->language]);
+        return $this->andWhere([SlideType::tableName() . '.language' => \Yii::$app->language])
+            ->orWhere([SlideType::tableName() . '.language' => '']);
     }
 }
