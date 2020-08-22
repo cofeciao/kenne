@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class LogAsset extends AssetBundle
 {
-    public $sourcePath = '@backendWeb';
+    public $sourcePath = '@modava-assets';
     public $css = [
         'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
         'vendors/bootstrap/dist/css/bootstrap.min.css',
@@ -25,7 +25,5 @@ class LogAsset extends AssetBundle
         'position' => \yii\web\View::POS_END
     );
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
     ];
 }

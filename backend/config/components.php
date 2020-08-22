@@ -78,7 +78,6 @@ return [
         'bundles' => [
             'yii\web\JqueryAsset' => [
                 'js' => [
-                    '/backend/modava-assets/vendors/jquery/dist/jquery.min.js',
                 ],
                 'jsOptions' => [
                     'position' => \yii\web\View::POS_HEAD
