@@ -46,7 +46,7 @@ use yii\helpers\Url;
                         <div class="media">
                             <div class="media-img-wrap">
                                 <div class="avatar avatar-sm">
-                                    <img src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/avatar1.jpg')[1]; ?>"
+                                    <img src="<?= Yii::$app->assetManager->publish('@modava-assets/dist/img/avatar1.jpg')[1]; ?>"
                                          alt="user" class="avatar-img rounded-circle">
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ use yii\helpers\Url;
                         <div class="media">
                             <div class="media-img-wrap">
                                 <div class="avatar avatar-sm">
-                                    <img src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/avatar2.jpg')[1]; ?>"
+                                    <img src="<?= Yii::$app->assetManager->publish('@modava-assets/dist/img/avatar2.jpg')[1]; ?>"
                                          alt="user" class="avatar-img rounded-circle">
                                 </div>
                             </div>
@@ -150,7 +150,7 @@ use yii\helpers\Url;
                 <div class="media">
                     <div class="media-img-wrap">
                         <div class="avatar">
-                            <img src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/avatar12.jpg')[1]; ?>"
+                            <img src="<?= Yii::$app->assetManager->publish('@modava-assets/dist/img/avatar12.jpg')[1]; ?>"
                                  alt="user" class="avatar-img rounded-circle">
                         </div>
                         <span class="badge badge-success badge-indicator"></span>
