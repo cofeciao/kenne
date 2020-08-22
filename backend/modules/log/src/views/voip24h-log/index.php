@@ -1,20 +1,18 @@
 <?php
 
-use modava\contact\ContactModule;
-use modava\contact\widgets\NavbarWidgets;
+use modava\log\LogModule;
+use modava\log\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\contact\models\search\ContactSearch */
+/* @var $searchModel modava\log\models\search\Voip24hLogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = ContactModule::t('contact', 'Contacts');
+$this->title = LogModule::t('log', 'Voip24h Logs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
         <?= NavbarWidgets::widget(); ?>
 
@@ -24,6 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
         </div>
+
+        <?= $this->render('_search', [
+            'model' => $searchModel
+        ]) ?>
 
         <!-- Row -->
         <div class="row">
@@ -40,34 +42,36 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'layout' => '
                                         {errors}
                                         <div class="row">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-12 table-responsive">
                                                 {items}
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-5">
                                                 <div class="dataTables_info" role="status" aria-live="polite">
-                                                    {pager}
+                                                    <ul class="pagination">
+                                                        ' . $searchModel->getPrevPage() . $searchModel->getNextPage() . '
+                                                    </ul>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-7">
                                                 <div class="dataTables_paginate paging_simple_numbers">
-                                                    {summary}
+                                                    <div class="summary">
+                                                        Tổng ' . $searchModel->total . '
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     ',
                                         'pager' => [
-                                            'firstPageLabel' => ContactModule::t('contact', 'First'),
-                                            'lastPageLabel' => ContactModule::t('contact', 'Last'),
-                                            'prevPageLabel' => ContactModule::t('contact', 'Previous'),
-                                            'nextPageLabel' => ContactModule::t('contact', 'Next'),
+                                            'firstPageLabel' => LogModule::t('log', 'First'),
+                                            'lastPageLabel' => LogModule::t('log', 'Last'),
+                                            'prevPageLabel' => LogModule::t('log', 'Previous'),
+                                            'nextPageLabel' => LogModule::t('log', 'Next'),
                                             'maxButtonCount' => 5,
 
-                                            'options' => [
-                                                'tag' => 'ul',
-                                                'class' => 'pagination',
-                                            ],
+                                            'options' => ['tag' => 'ul',
+                                                'class' => 'pagination',],
 
                                             // Customzing CSS class for pager link
                                             'linkOptions' => ['class' => 'page-link'],
@@ -94,23 +98,46 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'title',
+                                                'attribute' => 'calldate',
+                                                'headerOptions' => ['width' => 200]
+                                            ],
+                                            [
+                                                'attribute' => 'recording',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                        'title' => $model->title,
-                                                        'data-pjax' => 0,
-                                                    ]);
+                                                    if (!isset($model->recording) || $model->recording == '') return null;
+                                                    return Html::tag('audio', '<source src="' . $model->recording . '">', ['controls' => '',]);
                                                 }
                                             ],
 
-                                            'fullname',
-                                            'phone',
-                                            'email:email',
-                                            'address',
-                                            'content:html',
-                                            'ip_address',
-                                        ],
+                                            [
+                                                'attribute' => 'src',
+                                                'label' => LogModule::t('log', 'From'),
+                                                'headerOptions' => ['width' => 120]
+                                            ],
+                                            [
+                                                'attribute' => 'dst',
+                                                'label' => LogModule::t('log', 'To'),
+                                                'value' => function ($model) {
+                                                    return $model->dst;
+                                                },
+                                                'headerOptions' => ['width' => 120]
+                                            ],
+                                            [
+                                                'attribute' => 'status',
+                                                'label' => LogModule::t('log', 'Status'),
+                                                'headerOptions' => ['width' => 150]
+                                            ],
+                                            [
+                                                'attribute' => 'billsec',
+                                                'value' => function ($model) {
+                                                    if ($model->billsec == 0) return null;
+                                                    return gmdate("H:i:s", $model->billsec);
+                                                },
+                                                'label' => LogModule::t('log', 'Time'),
+                                                'headerOptions' => ['width' => 150]
+                                            ],
+                                        ]
                                     ]); ?>
                                 </div>
                             </div>
@@ -123,11 +150,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 <?php
 $script = <<< JS
-$('body').on('click', '.success-delete', function(e){
+$('body').on('click', '.pagination .page-link', function(e){
     e.preventDefault();
-    var url = $(this).attr('href') || null;
-    if(url !== null){
-        $.post(url);
+    var start = $(this).attr('data-start') || null;
+    console.log(start);
+    if(start != null){
+        $('#voip24h-log-start').val(start);
+        $('#search-log').trigger('click');
     }
     return false;
 });
