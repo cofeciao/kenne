@@ -81,7 +81,7 @@ return [
                     '/backend/vendors/jquery/dist/jquery.min.js',
                 ],
                 'jsOptions' => [
-
+                    'position' => \yii\web\View::POS_HEAD
                 ],
             ],
             'yii\bootstrap\BootstrapPluginAsset' => [
