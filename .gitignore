@@ -287,3 +287,8 @@ phpunit.phar
 /backend/widgets/input/composer.json
 /backend/widgets/input/README.md
 /backend/widgets/input/.git
+
+#assets manager
+/backend/web/modava-assets/composer.json
+/backend/web/modava-assets/README.md
+/backend/web/modava-assets/.git

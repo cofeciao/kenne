@@ -26,4 +26,10 @@ class ProjectImageQuery extends \yii\db\ActiveQuery
         return $this->orderBy([ProjectImage::tableName() . '.id' => SORT_DESC])
             ->orWhere([ProjectImage::tableName() . '.language' => '']);
     }
+
+    public function findByLanguage()
+    {
+        return $this->andWhere([ProjectImage::tableName() . '.language' => \Yii::$app->language])
+            ->orWhere([ProjectImage::tableName() . '.language' => '']);
+    }
 }

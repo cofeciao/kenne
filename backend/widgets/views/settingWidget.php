@@ -7,7 +7,7 @@
         <div class="settings-panel-wrap">
             <div class="settings-panel-head">
                 <img class="brand-img d-inline-block align-top"
-                     src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/logo-light.png')[1]; ?>"
+                     src="<?= Yii::$app->assetManager->publish('@modava-assets/dist/img/logo-light.png')[1]; ?>"
                      alt="brand"/>
                 <a href="javascript:void(0);" id="settings_panel_close" class="settings-panel-close"><span
                         class="feather-icon"><i data-feather="x"></i></span></a>
@@ -43,8 +43,8 @@
             <button id="reset_settings" class="btn btn-success btn-block btn-reset mt-30">Reset</button>
         </div>
     </div>
-    <img class="d-none" src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/logo-light.png')[1]; ?>"
+    <img class="d-none" src="<?= Yii::$app->assetManager->publish('@modava-assets/dist/img/logo-light.png')[1]; ?>"
          alt="brand"/>
-    <img class="d-none" src="<?= Yii::$app->assetManager->publish('@backendWeb/dist/img/logo-dark.png')[1]; ?>"
+    <img class="d-none" src="<?= Yii::$app->assetManager->publish('@modava-assets/dist/img/logo-dark.png')[1]; ?>"
          alt="brand"/>
 </div>
