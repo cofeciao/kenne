@@ -204,7 +204,7 @@ class CustomerController extends MyController
                 'phu_trach' => null
             ];
 
-            if ($customer == null) {
+            if ($customer !== null) {
                 $result =  [
                     'ho_ten' => $customer->full_name,
                     'phu_trach' => $customer->userCreated->userProfile->fullname

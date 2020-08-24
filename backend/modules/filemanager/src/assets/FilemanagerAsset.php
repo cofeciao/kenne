@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class FilemanagerAsset extends AssetBundle
 {
-    public $sourcePath = '@backendWeb';
+    public $sourcePath = '@modava-assets';
     public $css = [
     ];
     public $js = [

@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $sourcePath = '@backendWeb';
+    public $sourcePath = '@modava-assets';
     public $css = [
         'vendors/vectormap/jquery-jvectormap-2.0.3.css',
         'vendors/jquery-toggles/css/toggles.css',
@@ -43,7 +43,6 @@ class AppAsset extends AssetBundle
     ];
 
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+
     ];
 }
