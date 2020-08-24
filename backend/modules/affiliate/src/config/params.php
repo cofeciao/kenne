@@ -43,9 +43,6 @@ return [
         ]
     ],
     'not_release_object' => [
-        'Coupon',
-        'CouponType',
-        'Order',
     ],
     'note_type' => [
         '0' => AffiliateModule::t('affiliate', 'For This System'),

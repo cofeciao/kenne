@@ -2,6 +2,9 @@
 
 namespace modava\affiliate\controllers;
 
+use modava\affiliate\helpers\Utils;
+use modava\affiliate\models\Customer;
+use modava\affiliate\models\search\CustomerPartnerSearch;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -187,6 +190,27 @@ class CouponController extends MyController
                 return ActiveForm::validate($model);
             }
         }
+    }
+
+    public function actionGenerateCode () {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $customerId = Yii::$app->request->get('customer_id');
+        $customerInfo = Customer::find()->where(['id' => $customerId])->one();
+
+        if ($customerInfo) {
+            $customerPartnerId = $customerInfo->partner_customer_id;
+            $customerInfo = CustomerPartnerSearch::getCustomerById($customerPartnerId);
+
+            if ($customerInfo) {
+                $code = $customerInfo['customer_code'] . '_' . Utils::generateRandomString();
+                return [ 'success' => true, 'data' => str_replace('-', '_', $code)];
+            }
+            else {
+                return [ 'success' => false, 'message' => AffiliateModule::t('affiliate', 'Có lỗi xảy ra')];
+            }
+        }
+
+        return [ 'success' => false, 'message' => AffiliateModule::t('affiliate', 'Không tìm thấy khách hàng')];
     }
 
     /**
