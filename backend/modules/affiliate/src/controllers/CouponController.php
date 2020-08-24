@@ -213,6 +213,24 @@ class CouponController extends MyController
         return [ 'success' => false, 'message' => AffiliateModule::t('affiliate', 'Không tìm thấy khách hàng')];
     }
 
+    public function actionCheckCode () {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $code = \Yii::$app->request->get('code');
+
+        $coupon = Coupon::checkCoupon($code);
+
+        if (!$coupon) {
+            return [
+                'success' => true,
+                'message' => ''
+            ];
+        }
+
+        return [
+            'success' => false
+        ];
+    }
+
     /**
     * Finds the Coupon model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
