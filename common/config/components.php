@@ -19,7 +19,10 @@ return [
         'ruleTable' => '{{%rbac_auth_rule}}',
 //            'defaultRoles' => ['user'],
     ],
-
+    'cache' => [
+        'class' => yii\caching\FileCache::class,
+        'cachePath' => '@backend/runtime/cache'
+    ],
     'queue' => [
         'class' => \yii\queue\db\Queue::class,
         'db' => 'db', // DB connection component or its config
