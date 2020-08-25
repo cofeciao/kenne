@@ -12,28 +12,32 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "affiliate_order".
-*
-    * @property int $id
-    * @property string $title
-    * @property string $slug
-    * @property int $coupon_id Mã coupon
-    * @property string $pre_total Số tiền trên đơn hàng
-    * @property string $discount Số tiền được chiết khấu
-    * @property string $final_total Số tiền còn lại
-    * @property string $description Mô tả
-    * @property int $created_at
-    * @property int $updated_at
-    * @property int $created_by
-    * @property int $updated_by
-    *
-            * @property Coupon $coupon
-            * @property User $createdBy
-            * @property User $updatedBy
-    */
+ * This is the model class for table "affiliate_order".
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property int $coupon_id Mã coupon
+ * @property string $pre_total Số tiền trên đơn hàng
+ * @property string $discount Số tiền được chiết khấu
+ * @property string $final_total Số tiền còn lại
+ * @property string $description Mô tả
+ * @property int $date_create Ngày tạo
+ * @property int $status Tình trạng đơn hàng
+ * @property int $payment_method Phương thức thanh toán
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ *
+ * @property Coupon $coupon
+ * @property User $createdBy
+ * @property User $updatedBy
+ */
 class Order extends OrderTable
 {
     public $toastr_key = 'affiliate-order';
+
     public function behaviors()
     {
         return array_merge(
@@ -65,26 +69,27 @@ class Order extends OrderTable
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-			[['title', 'slug', 'coupon_id', 'pre_total', 'discount', 'final_total',], 'required'],
-			[['coupon_id',], 'integer'],
-			[['pre_total', 'discount', 'final_total'], 'number'],
-			[['description'], 'string'],
-			[['title', 'slug'], 'string', 'max' => 255],
-			[['slug'], 'unique'],
-			[['coupon_id'], 'exist', 'skipOnError' => true, 'targetClass' => Coupon::class, 'targetAttribute' => ['coupon_id' => 'id']],
-			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-		];
+            [['title', 'slug', 'coupon_id', 'pre_total', 'discount', 'final_total',], 'required'],
+            [['coupon_id', 'status',], 'integer'],
+            [['pre_total', 'discount', 'final_total'], 'number'],
+            [['description', 'payment_method'], 'string'],
+            [['date_create',], 'safe'],
+            [['title', 'slug', 'partner_order_code'], 'string', 'max' => 255],
+            [['slug'], 'unique'],
+            [['coupon_id'], 'exist', 'skipOnError' => true, 'targetClass' => Coupon::class, 'targetAttribute' => ['coupon_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+        ];
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
@@ -100,30 +105,46 @@ class Order extends OrderTable
             'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
             'created_by' => AffiliateModule::t('affiliate', 'Created By'),
             'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
+            'date_create' => AffiliateModule::t('affiliate', 'Ngày tạo'),
+            'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
+            'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh toán'),
+            'partner_order_code' => AffiliateModule::t('affiliate', 'Mã đơn hàng hệ thống partner'),
         ];
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    public function getCoupon() {
+    public function getCoupon()
+    {
         return $this->hasOne(Coupon::class, ['id' => 'coupon_id']);
+    }
+
+    public function loadFromApi($params) {
+        $formName = $this->formName();
+        $paramsPrepare = [];
+
+        foreach ($params as $k => $v) {
+            $paramsPrepare[$formName][$k] = $v;
+        }
+
+        $this->load($paramsPrepare);
     }
 }
