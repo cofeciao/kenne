@@ -29,7 +29,7 @@ use backend\widgets\ToastrWidget;
 $this->title = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container-fluid px-xxl-25 px-xl-10">
+<div class="container-fluid px-xxl-15 px-xl-10">
     <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
         </h4>
-        <a class="btn btn-outline-light" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
+        <a class="btn btn-outline-light btn-sm" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
            title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
             <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
     </div>

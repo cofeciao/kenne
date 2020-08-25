@@ -2,6 +2,7 @@
 
 namespace modava\location\controllers;
 
+use backend\components\MyComponent;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -42,9 +43,20 @@ class LocationCountryController extends MyController
         $searchModel = new LocationCountrySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage'    => $totalPage,
         ]);
     }
 
