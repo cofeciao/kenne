@@ -60,13 +60,13 @@ class AppAsset extends AssetBundle
 
         if (!empty($assetsData['scripts'])) {
             foreach ($assetsData['scripts'] as $script) {
-                    $this->js[] = 'js/' . $script['name'] . '.js';
+                    $this->js[] = 'my-js/' . $script['name'] . '.js';
             }
         }
 
         if (!empty($assetsData['styles'])) {
             foreach ($assetsData['styles'] as $style) {
-                    $this->css[] = 'css/' . $style['name'] . '.css';
+                    $this->css[] = 'my-css/' . $style['name'] . '.css';
             }
         }
 
