@@ -156,12 +156,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $js = <<< JS
-$(function () {
-    var customPjax = new myGridView();
-    customPjax.init({
-        pjaxId: '#location-pjax',
-        urlChangePageSize: '$urlChangePageSize',
-    });
+var customPjax = new myGridView();
+customPjax.init({
+    pjaxId: '#location-pjax',
+    urlChangePageSize: '$urlChangePageSize',
 });
 JS;
 $this->registerJs($js, \yii\web\View::POS_END);

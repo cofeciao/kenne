@@ -17,7 +17,6 @@ class AppAsset extends AssetBundle
         'vendors/morris.js/morris.css',
         'vendors/jquery-toast-plugin/dist/jquery.toast.min.css',
         'dist/css/style.css',
-        'css/custom.css',
     ];
     public $js = [
         'vendors/popper.js/dist/umd/popper.min.js',
@@ -40,7 +39,6 @@ class AppAsset extends AssetBundle
         'vendors/jquery-toast-plugin/dist/jquery.toast.min.js',
         'dist/js/init.js',
         'dist/js/dashboard-data.js',
-        'js/custom.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

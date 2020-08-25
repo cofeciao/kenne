@@ -104,7 +104,7 @@ var GridView = function () {
         })
     };
     this.defaults = {
-        pjaxId: '#dt-ajax',
+        pjaxId: '#dt-pjax',
         gridViewClass: '.grid-view',
         dtClass: '.dt-widget',
         contentClass: '.dt-grid-content',
