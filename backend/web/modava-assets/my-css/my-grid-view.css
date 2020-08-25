@@ -1,18 +1,18 @@
-.data-table-grid {
+.dt-grid {
     position: relative;
     zoom:1;border-radius: 4px
 }
 
-.data-table-widget,.grid-header,.grid-header-wrap,.grid-header tr>th,.data-table-grid td {
+.dt-widget,.grid-header,.grid-header-wrap,.grid-header tr>th,.dt-grid td {
     border-color: #ccc
 }
 
-.data-table-grid,.data-table-widget {
+.dt-grid,.dt-widget {
     outline: 0;
     -webkit-tap-highlight-color: transparent
 }
 
-.data-table-widget table {
+.dt-widget table {
     width: 100%;
     margin: 0;
     max-width: none;
@@ -23,7 +23,7 @@
     outline: 0
 }
 
-.data-table-widget td {
+.dt-widget td {
     border-style: solid;
     border-width: 0 0 0 1px;
     padding: .4em .6em;
@@ -32,18 +32,18 @@
     text-overflow: ellipsis
 }
 
-.data-table-widget .filters>td {
+.dt-widget .filters>td {
     padding-right: 2.8rem;
     position: relative
 }
 
-.data-table-widget tr td {
+.dt-widget tr td {
     border-width: 1px 0 0 1px;
     border-style: solid;
     border-color: #ccc
 }
 
-.data-table-widget tbody td:first-child,.grid-header tr th:first-child {
+.dt-widget tbody td:first-child,.grid-header tr th:first-child {
     border-left-width: 0
 }
 
@@ -56,27 +56,27 @@
     border-bottom-width: 0;
     zoom:1}
 
-.data-table-widget .btn-group .btn-default {
+.dt-widget .btn-group .btn-default {
     padding: .3rem .5rem
 }
 
-.data-table-widget .filters td .btn-default {
+.dt-widget .filters td .btn-default {
     padding: .6rem .4rem .4rem;
     position: absolute;
     right: 5px;
     top: 8px
 }
 
-.data-table-widget .filters td .btn-default i {
+.dt-widget .filters td .btn-default i {
     color: #999;
     font-size: 14px
 }
 
-.data-table-widget .myLoading-container {
+.dt-widget .myLoading-container {
     background-color: rgba(255,255,255,.5)
 }
 
-.data-table-widget::-webkit-scrollbar {
+.dt-widget::-webkit-scrollbar {
     background: 0 0;
     width: 12px;
     height: 12px;
@@ -87,7 +87,7 @@
     transition: background-color .2s linear,opacity .2s linear
 }
 
-.data-table-widget::-webkit-scrollbar-thumb {
+.dt-widget::-webkit-scrollbar-thumb {
     background-color: rgba(0,0,0,.2);
     height: 12px;
     -webkit-border-radius: 2px;
@@ -95,14 +95,14 @@
     border-radius: 2px
 }
 
-.grid-content {
+.dt-grid-content {
     position: relative;
     width: 100%;
     zoom:1;min-height: 0;
     white-space: normal
 }
 
-.grid-content::-webkit-scrollbar {
+.dt-grid-content::-webkit-scrollbar {
     background: 0 0;
     width: 12px;
     height: 12px;
@@ -113,7 +113,7 @@
     transition: background-color .2s linear,opacity .2s linear
 }
 
-.grid-content::-webkit-scrollbar-thumb {
+.dt-grid-content::-webkit-scrollbar-thumb {
     background-color: rgba(0,0,0,.2);
     height: 12px;
     -webkit-border-radius: 2px;
@@ -124,18 +124,19 @@
 .pager-wrap {
     clear: both;
     position: relative;
-    border-style: solid;
-    border-width: 1px;
-    border-top: none;
+    /*border-style: solid;*/
+    /*border-width: 1px;*/
+    /*border-top: none;*/
     line-height: 2em;
-    padding: .4em 0 .1em .25em;
-    border-color: #ccc;
-    background-color: #f5f5f5;
-    border-radius: 0 0 3px 3px
+    padding: .4em 0 .1em;
+    /*border-color: #ccc;*/
+    /*background-color: #f5f5f5;*/
+    /*border-radius: 0 0 3px 3px*/
 }
 
 .pager-wrap .summary {
-    line-height: 2.3em
+    padding-top: 4.5px;
+    line-height: 2.3em;
 }
 
 .pager-wrap .pagination,.pager-wrap .summary {

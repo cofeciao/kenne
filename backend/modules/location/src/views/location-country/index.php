@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
-        <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
+        <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
            title="<?= LocationModule::t('location', 'Create'); ?>">
             <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
     </div>
@@ -33,13 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
-
                 <?php Pjax::begin(['id' => 'location-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <?= MyGridView::widget([
+                                    'id' => 'location-country',
                                     'dataProvider' => $dataProvider,
                                     'layout' => '
                                         {errors} 
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                     'myOptions' => [
                                         'class' => 'dt-grid-content my-content pane-vScroll',
-                                        'data-minus' => '{"0":42}'
+                                        'data-minus' => '{"0":120,"1":".hk-navbar","2":".nav-tabs","3":".hk-pg-header","4":".hk-footer-wrap"}'
                                     ],
                                     'summaryOptions' => [
                                         'class' => 'summary pull-right',
@@ -156,10 +156,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $js = <<< JS
-var customPjax = new myGridView();
-customPjax.init({
-    pjaxId: '#location-pjax',
-    urlChangePageSize: '$urlChangePageSize',
+$(function () {
+    var customPjax = new myGridView();
+    customPjax.init({
+        pjaxId: '#location-pjax',
+        urlChangePageSize: '$urlChangePageSize',
+    });
+});
 JS;
-
+$this->registerJs($js, \yii\web\View::POS_END);
 ?>

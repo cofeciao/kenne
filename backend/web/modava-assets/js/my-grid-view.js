@@ -22,6 +22,7 @@ var GridView = function () {
                     if (data[0] != null && !isNaN(data[0])) hContent -= data[0];
                 } else {
                     if ($(data[k]) != undefined && $(data[k]).length > 0) {
+                        // console.log($(data[k]), $(data[k]).outerHeight());
                         hContent -= $(data[k]).outerHeight();
                     }
                 }
@@ -106,7 +107,7 @@ var GridView = function () {
         pjaxId: '#dt-ajax',
         gridViewClass: '.grid-view',
         dtClass: '.dt-widget',
-        contentClass: '.grid-content',
+        contentClass: '.dt-grid-content',
         paneScroll: ['.pane-hScroll', '.pane-vScroll'],
         pageParam: 'page',
         urlChangePageSize: null,

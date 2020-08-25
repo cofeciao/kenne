@@ -60,6 +60,14 @@ class LocationCountryController extends MyController
         ]);
     }
 
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
 
     /**
      * Displays a single LocationCountry model.
