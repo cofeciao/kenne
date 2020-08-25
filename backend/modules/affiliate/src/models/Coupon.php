@@ -166,4 +166,12 @@ class Coupon extends CouponTable
             ->where(['customer_id' => $customerId])
             ->count();
     }
+
+    public static function checkCoupon($code) {
+        return self::find()
+            ->where(['coupon_code' => $code])
+            ->andWhere('now() <= expired_date')
+            ->andWhere('quantity_used < quantity')
+            ->one();
+    }
 }
