@@ -51,5 +51,6 @@ return [
     'feedback_type' => [
         '0' => AffiliateModule::t('affiliate', 'Unsatisfied'),
         '1' => AffiliateModule::t('affiliate', 'Satisfied'),
+        '2' => AffiliateModule::t('affiliate', 'Bình thường'),
     ],
 ];
