@@ -35,6 +35,9 @@ class MyAccessControl extends \yii\filters\AccessControl
         $params = ArrayHelper::getValue($this->params, $action->id, []);
         if (MyHelper::containsWord($controller->getUniqueId(), '/')) {
             $modules = explode('/', $controller->getUniqueId());
+            if(in_array($modules[0], ['api', 'screenonline'])) {
+                return true;
+            }
             // Kiểu modulesControllerAction
             $can = $modules[0] . ucfirst($modules[1]) . ucfirst($action->id);
             // Kiểu modulesController
