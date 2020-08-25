@@ -55,6 +55,7 @@ AppAsset::register($this);
 
     <?php echo Html::csrfMetaTags() ?>
     <title><?php echo Html::encode($this->title) ?></title>
+    <script src="<?= Yii::$app->assetManager->publish('@modava-assets/vendors/jquery/dist/jquery.min.js')[1]; ?>"></script>
     <?php $this->head() ?>
 </head>
 <body>
@@ -62,7 +63,6 @@ AppAsset::register($this);
 <!--    Loading Start-->
 <?php echo $content ?>
 <!--    Show modal of create or update modules-->
-<script src="<?= Yii::$app->assetManager->publish('@modava-assets/vendors/jquery/dist/jquery.min.js')[1]; ?>"></script>
 <?php $this->endBody() ?>
 </body>
 </html>
