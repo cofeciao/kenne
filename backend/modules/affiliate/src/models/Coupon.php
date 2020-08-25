@@ -170,7 +170,7 @@ class Coupon extends CouponTable
     public static function checkCoupon($code) {
         return self::find()
             ->where(['coupon_code' => $code])
-            ->andWhere('expired_date <= now()')
+            ->andWhere('now() <= expired_date')
             ->andWhere('quantity_used < quantity')
             ->one();
     }

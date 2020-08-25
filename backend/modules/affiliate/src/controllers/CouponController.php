@@ -219,15 +219,16 @@ class CouponController extends MyController
 
         $coupon = Coupon::checkCoupon($code);
 
-        if (!$coupon) {
+        if ($coupon) {
             return [
                 'success' => true,
-                'message' => ''
+                'message' => AffiliateModule::t('affiliate', 'Mã code do khách hàng {full_name} giới thiệu', ['full_name' => $coupon->customer->full_name])
             ];
         }
 
         return [
-            'success' => false
+            'success' => false,
+            'message' => AffiliateModule::t('affiliate', 'Mã code không tồn tại hoặc đã được sử dụng')
         ];
     }
 
