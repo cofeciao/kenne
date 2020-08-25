@@ -2,19 +2,20 @@
 
 namespace modava\article\controllers;
 
+use backend\components\MyComponent;
 use modava\article\ArticleModule;
+use modava\article\components\MyArticleController;
 use modava\article\components\MyUpload;
+use modava\article\models\Article;
+use modava\article\models\search\ArticleSearch;
 use modava\article\models\table\ActicleCategoryTable;
 use modava\article\models\table\ArticleTypeTable;
 use Yii;
-use modava\article\models\Article;
-use modava\article\models\search\ArticleSearch;
-use modava\article\components\MyArticleController;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
@@ -46,9 +47,12 @@ class ArticleController extends MyArticleController
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
     }
 
@@ -219,6 +223,33 @@ class ArticleController extends MyArticleController
             ]);
         }
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
     }
 
     /**
