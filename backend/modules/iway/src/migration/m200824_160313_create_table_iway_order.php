@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m200824_160313_create_table_iway_customer_order
+ * Class m200824_160313_create_table_iway_order
  */
-class m200824_160313_create_table_iway_customer_order extends Migration
+class m200824_160313_create_table_iway_order extends Migration
 {
     /**
      * {@inheritdoc}
@@ -13,14 +13,14 @@ class m200824_160313_create_table_iway_customer_order extends Migration
     public function safeUp()
     {
         /* check table exists */
-        $check_customer_order = Yii::$app->db->getTableSchema('iway_customer_order');
+        $check_customer_order = Yii::$app->db->getTableSchema('iway_order');
         if ($check_customer_order === null) {
             $tableOptions = null;
             if ($this->db->driverName === 'mysql') {
                 // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
                 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             }
-            $this->createTable('iway_customer_order', [
+            $this->createTable('iway_order', [
                 'id' => $this->primaryKey(),
                 'customer_id' => $this->integer(11)->notNull()->comment('Mã khách hàng'),
                 'code' => $this->string(100)->null()->comment('Mã đơn hàng'),
@@ -34,11 +34,11 @@ class m200824_160313_create_table_iway_customer_order extends Migration
                 'created_by' => $this->integer(11)->null()->defaultValue(1),
                 'updated_by' => $this->integer(11)->null()->defaultValue(1),
             ], $tableOptions);
-            $this->createIndex('index-code', 'iway_customer_order', 'code');
-            $this->addForeignKey('fk_iway_customer_order_customer_id_customer', 'iway_customer_order', 'customer_id', 'iway_customer', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_order_co_so_customer_co_so', 'iway_customer_order', 'co_so', 'iway_customer_co_so', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_order_created_by_user', 'iway_customer_order', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_order_updated_by_user', 'iway_customer_order', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->createIndex('index-code', 'iway_order', 'code');
+            $this->addForeignKey('fk_iway_order_customer_id_customer', 'iway_order', 'customer_id', 'iway_customer', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_order_co_so_iway_co_so_id', 'iway_order', 'co_so', 'iway_co_so', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_order_created_by_user', 'iway_order', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_order_updated_by_user', 'iway_order', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }
     }
 
@@ -47,7 +47,7 @@ class m200824_160313_create_table_iway_customer_order extends Migration
      */
     public function safeDown()
     {
-        echo "m200824_160313_create_table_iway_customer_order cannot be reverted.\n";
+        echo "m200824_160313_create_table_iway_order cannot be reverted.\n";
 
         return false;
     }

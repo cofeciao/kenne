@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m200824_161024_create_table_iway_customer_product
+ * Class m200824_161024_create_table_iway_product
  */
-class m200824_161024_create_table_iway_customer_product extends Migration
+class m200824_161024_create_table_iway_product extends Migration
 {
     /**
      * {@inheritdoc}
@@ -13,14 +13,14 @@ class m200824_161024_create_table_iway_customer_product extends Migration
     public function safeUp()
     {
         /* check table exists */
-        $check_table = Yii::$app->db->getTableSchema('iway_customer_product');
+        $check_table = Yii::$app->db->getTableSchema('iway_product');
         if ($check_table === null) {
             $tableOptions = null;
             if ($this->db->driverName === 'mysql') {
                 // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
                 $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
             }
-            $this->createTable('iway_customer_product', [
+            $this->createTable('iway_product', [
                 'id' => $this->primaryKey(),
                 'category_id' => $this->integer(11)->notNull(),
                 'name' => $this->string(255)->notNull(),
@@ -32,11 +32,11 @@ class m200824_161024_create_table_iway_customer_product extends Migration
                 'updated_at' => $this->integer(11)->null(),
                 'updated_by' => $this->integer(11)->null()->defaultValue(1)
             ], $tableOptions);
-            $this->addColumn('iway_customer_product', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
-            $this->createIndex('index-language', 'iway_customer_product', 'language');
-            $this->addForeignKey('fk_iway_customer_product_category_id_customer_product_category', 'iway_customer_product', 'category_id', 'iway_customer_product_category', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_product_created_by_user', 'iway_customer_product', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_product_updated_by_user', 'iway_customer_product', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->addColumn('iway_product', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
+            $this->createIndex('index-language', 'iway_product', 'language');
+            $this->addForeignKey('fk_iway_product_category_id_customer_product_category', 'iway_product', 'category_id', 'iway_product_category', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_product_created_by_user', 'iway_product', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_product_updated_by_user', 'iway_product', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }
     }
 
@@ -45,7 +45,7 @@ class m200824_161024_create_table_iway_customer_product extends Migration
      */
     public function safeDown()
     {
-        echo "m200824_161024_create_table_iway_customer_product cannot be reverted.\n";
+        echo "m200824_161024_create_table_iway_product cannot be reverted.\n";
 
         return false;
     }

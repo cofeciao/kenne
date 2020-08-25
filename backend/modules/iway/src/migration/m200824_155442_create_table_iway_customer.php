@@ -50,10 +50,10 @@ class m200824_155442_create_table_iway_customer extends Migration
                 'updated_by' => $this->integer(11)->null(),
             ], $tableOptions);
             $this->addForeignKey('fk_iway_customer_ward_location_ward', 'iway_customer', 'ward', 'location_ward', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_fanpage_id_customer_fanpage', 'iway_customer', 'fanpage_id', 'customer_fanpage', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_fanpage_id_customer_fanpage', 'iway_customer', 'fanpage_id', 'customer_fanpage', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_customer_permission_user_user', 'iway_customer', 'permission_user', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_customer_direct_sale_user', 'iway_customer', 'direct_sale', 'user', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_co_so_customer_co_so', 'iway_customer', 'co_so', 'customer_co_so', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_co_so_customer_co_so', 'iway_customer', 'co_so', 'customer_co_so', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_customer_created_by_user', 'iway_customer', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_customer_updated_by_user', 'iway_customer', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }
