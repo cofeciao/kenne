@@ -16,25 +16,4 @@ $config = [
     'params' => require __DIR__ . '/params.php',
 ];
 
-if (YII2_ENV_DEV) {
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-        'allowedIPs' => ['127.0.0.1', '::1'],
-        'generators' => [
-            'module' => [
-                'class' => \modava\generators\module\Generator::class,
-//                'templates' => ['generators' => '@app/backend/generators/module/Generator']
-            ],
-            'model' => [
-                'class' => \modava\generators\model\Generator::class,
-//                'templates' => ['generators' => '@app/backend/generators/model/Generator']
-            ],
-            'crud' => [
-                'class' => \modava\generators\crud\Generator::class,
-//                'templates' => ['generators' => '@app/backend/generators/crud/Generator']
-            ],
-        ]
-    ];
-}
-
 return $config;
