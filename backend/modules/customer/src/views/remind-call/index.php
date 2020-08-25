@@ -1,10 +1,10 @@
 <?php
 
+use backend\widgets\ToastrWidget;
+use common\grid\MyGridView;
 use modava\customer\CustomerModule;
 use modava\customer\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use common\grid\MyGridView;
-use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
