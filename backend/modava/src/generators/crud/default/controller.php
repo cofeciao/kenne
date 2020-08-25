@@ -30,6 +30,7 @@ echo "<?php\n";
 
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
+use backend\components\MyComponent;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -73,20 +74,25 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         <?php if (!empty($generator->searchModelClass)): ?>$searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage'    => $totalPage,
         ]);
         <?php else : ?>$dataProvider = new ActiveDataProvider([
             'query' => <?= $modelClass ?>::find(),
         ]);
+
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'totalPage'    => $totalPage,
         ]);
 <?php endif; ?>
     }
-
-
 
     /**
     * Displays a single <?= $modelClass ?> model.
@@ -211,6 +217,33 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             ]);
         }
         return $this->redirect(['index']);
+    }
+
+    /**
+    * @param $perpage
+    */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+    * @param $dataProvider
+    * @return float|int
+    */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
     }
 
     /**

@@ -69,13 +69,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::class,
-            'access_token' => [
-                'class' => AttributeBehavior::class,
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => 'access_token'
-                ],
-                'value' => Yii::$app->getSecurity()->generateRandomString(40)
-            ],
         ];
     }
 

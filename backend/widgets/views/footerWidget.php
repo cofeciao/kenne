@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 
 ?>
-<div class="hk-footer-wrap container-fluid px-xxl-65 px-xl-20">
+<div class="hk-footer-wrap container-fluid px-xxl-65- px-xl-15">
     <footer class="footer">
         <div class="row">
             <div class="col-md-6 col-sm-12">

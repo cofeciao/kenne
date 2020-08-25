@@ -10,8 +10,8 @@
 $this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container-fluid mt-xl-50 mt-sm-30 mt-15 px-xxl-65 px-xl-20">
-    <ul class="nav nav-tabs nav-sm nav-light mb-25" role="tablist">
+<div class="container-fluid mt-xl-50- mt-sm-30- mt-10 px-xxl-65- px-xl-15">
+    <ul class="nav nav-tabs nav-sm nav-light mb-10" role="tablist">
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left active" data-toggle="tab" href="#tabs-1" role="tab"><i
                         class="zmdi zmdi-apps"></i>My Dashboard</a>
@@ -36,9 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <!-- Row -->
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="row">
-Content Here
-                    </div>
+                    Content Here
                 </div>
             </div>
             <!-- /Row -->
