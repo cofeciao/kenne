@@ -23,6 +23,7 @@ use Yii;
  * @property string|null $so_luong
  * @property string|null $description
  * @property string|null $content
+ * @property int $product_hot
  * @property string|null $product_tech
  * @property int|null $position
  * @property string|null $ads_pixel
@@ -109,9 +110,34 @@ class ProductTable extends \yii\db\ActiveRecord
      */
     public function getProductImage()
     {
-        return $this->hasMany(ProductImage::class, ['product_id' => 'id']);
+        return $this->hasMany(ProductImageTable::class, ['product_id' => 'id']);
     }
 
+    /**
+     * @param string|null $size
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getImage(string $size = null)
+    {
+        $image = $this->image;
+        if (!isset(Yii::$app->params['product'])) {
+            $size = '150x150';
+            $image = 'no-image.png';
+        }
+        if (!array_key_exists($size, Yii::$app->params['product'])) $size = array_keys(Yii::$app->params['product'])[0];
+        if (is_dir(Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'] . $image) || !file_exists(Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'] . $image)) {
+            $size = '150x150';
+            $image = 'no-image.png';
+        }
+        return Yii::$app->assetManager->publish(Yii::getAlias('@frontend/web') . Yii::$app->params['product'][$size]['folder'] . $image)[1];
+    }
+
+    /**
+     * @param $id
+     * @param null $language
+     * @return array|mixed|\yii\db\ActiveRecord|null
+     */
     public static function getById($id, $language = null)
     {
         $language = $language ?: Yii::$app->language;
@@ -125,6 +151,10 @@ class ProductTable extends \yii\db\ActiveRecord
         return $data;
     }
 
+    /**
+     * @param null $language
+     * @return array|mixed|\yii\db\ActiveRecord[]
+     */
     public static function getAll($language = null)
     {
         $language = $language ?: Yii::$app->language;
@@ -138,6 +168,11 @@ class ProductTable extends \yii\db\ActiveRecord
         return $data;
     }
 
+    /**
+     * @param $category_id
+     * @param null $language
+     * @return array|mixed|\yii\db\ActiveRecord[]
+     */
     public static function getProductsByCategory($category_id, $language = null)
     {
         $language = $language ?: Yii::$app->language;

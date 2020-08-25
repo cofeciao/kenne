@@ -9,14 +9,12 @@ use yii\web\AssetBundle;
  */
 class LocationAsset extends AssetBundle
 {
-    public $sourcePath = '@locationweb';
+    public $sourcePath = '@modava-assets';
     public $css = [
         'vendors/datatables.net-dt/css/jquery.dataTables.min.css',
-        'vendors/bootstrap/dist/css/bootstrap.min.css',
-        'css/customLocation.css',
+        'vendors/bootstrap/dist/css/bootstrap.min.css'
     ];
     public $js = [
-        'js/location.js'
     ];
     public $jsOptions = array(
         'position' => \yii\web\View::POS_END

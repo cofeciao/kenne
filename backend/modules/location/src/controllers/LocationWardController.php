@@ -208,6 +208,6 @@ class LocationWardController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('location', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(LocationModule::t('location', 'The requested page does not exist.'));
     }
 }

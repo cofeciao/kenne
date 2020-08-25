@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class WebsiteAsset extends AssetBundle
 {
-    public $sourcePath = '@backendWeb';
+    public $sourcePath = '@modava-assets';
     public $css = [
         'vendors/bootstrap/dist/css/bootstrap.min.css',
         "vendors/jquery-toggles/css/toggles.css",

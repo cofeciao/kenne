@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use modava\filemanager\FilemanagerModule;
 
-$this->title = Yii::t('backend', 'File manager');
+$this->title = FilemanagerModule::t('filemanager', 'File manager');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- /Title -->
     <div class="row">
         <div class="col-xl-12">
-            <iframe src="<?= $link; ?>/dialog.php?lang=vi&akey=<?= $filemanager_access_key; ?>"
+            <iframe src="<?= $link; ?>/dialog.php?lang=vi&akey=<?=$akey; ?>&config=<?=$filemanager_access_key;?>"
                     style="width: 100%; height: 900px;"></iframe>
         </div>
     </div>

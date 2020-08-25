@@ -2,12 +2,10 @@
 
 namespace modava\iway\controllers;
 
-use modava\iway\components\MyIwayController;
-
-class IwayController extends MyIwayController
+class IwayController extends \modava\iway\components\MyIwayController
 {
     public function actionIndex()
     {
-        return $this->render('index', []);
+        return $this->render('index');
     }
 }

@@ -44,32 +44,119 @@ phpunit.phar
 
 /log
 
-!/backend/runtime
+!/backend/runtime/
 /backend/runtime/*
 !/backend/runtime/index.html
 
-!/backend/web/assets
+!/backend/web/assets/
 /backend/web/assets/*
 !/backend/web/assets/index.html
 
-/backend/web/img
-/backend/web/thumbs
-/backend/.htaccess
+!/backend/web/uploads/
+/backend/web/uploads/*
 
-!/frontend/runtime
+!/backend/web/uploads/filemanager/
+/backend/web/uploads/filemanager/*
+!/backend/web/uploads/filemanager/source/
+/backend/web/uploads/filemanager/source/*
+!/backend/web/uploads/filemanager/source/index.html
+
+!/backend/web/uploads/filemanager/thumbs/
+/backend/web/uploads/filemanager/thumbs/*
+!/backend/web/uploads/filemanager/thumbs/index.html
+
+!/frontend/runtime/
 /frontend/runtime/*
 !/frontend/runtime/index.html
 
-!/frontend/web/assets
+!/frontend/web/assets/
 /frontend/web/assets/*
 !/frontend/web/assets/index.html
 
 !/frontend/web/uploads/
 /frontend/web/uploads/*
 
+!/frontend/web/uploads/project/
+/frontend/web/uploads/project/*
+!/frontend/web/uploads/project/150x150/
+/frontend/web/uploads/project/150x150/*
+!/frontend/web/uploads/project/150x150/no-image.png
+
+!/frontend/web/uploads/project-image/
+/frontend/web/uploads/project-image/*
+!/frontend/web/uploads/project-image/150x150/
+/frontend/web/uploads/project-image/150x150/*
+!/frontend/web/uploads/project-image/150x150/no-image.png
+
+!/frontend/web/uploads/faq/
+/frontend/web/uploads/faq/*
+!/frontend/web/uploads/faq/150x150/
+/frontend/web/uploads/faq/150x150/*
+!/frontend/web/uploads/faq/150x150/no-image.png
+
+!/frontend/web/uploads/partner/
+/frontend/web/uploads/partner/*
+!/frontend/web/uploads/partner/150x150/
+/frontend/web/uploads/partner/150x150/*
+!/frontend/web/uploads/partner/150x150/no-image.png
+
+!/frontend/web/uploads/slide/
+/frontend/web/uploads/slide/*
+!/frontend/web/uploads/slide/150x150/
+/frontend/web/uploads/slide/150x150/*
+!/frontend/web/uploads/slide/150x150/no-image.png
+
+!/frontend/web/uploads/slide-category/
+/frontend/web/uploads/slide-category/*
+!/frontend/web/uploads/slide-category/150x150/
+/frontend/web/uploads/slide-category/150x150/*
+!/frontend/web/uploads/slide-category/150x150/no-image.png
+
+!/frontend/web/uploads/slide-type/
+/frontend/web/uploads/slide-type/*
+!/frontend/web/uploads/slide-type/150x150/
+/frontend/web/uploads/slide-type/150x150/*
+!/frontend/web/uploads/slide-type/150x150/no-image.png
+
+!/frontend/web/uploads/article/
+/frontend/web/uploads/article/*
+!/frontend/web/uploads/article/150x150/
+/frontend/web/uploads/article/150x150/*
+!/frontend/web/uploads/article/150x150/no-image.png
+
+!/frontend/web/uploads/article-category/
+/frontend/web/uploads/article-category/*
+!/frontend/web/uploads/article-category/150x150/
+/frontend/web/uploads/article-category/150x150/*
+!/frontend/web/uploads/article-category/150x150/no-image.png
+
+!/frontend/web/uploads/article-type/
+/frontend/web/uploads/article-type/*
+!/frontend/web/uploads/article-type/150x150/
+/frontend/web/uploads/article-type/150x150/*
+!/frontend/web/uploads/article-type/150x150/no-image.png
+
+!/frontend/web/uploads/product-category/
+/frontend/web/uploads/product-category/*
+!/frontend/web/uploads/product-category/150x150/
+/frontend/web/uploads/product-category/150x150/*
+!/frontend/web/uploads/product-category/150x150/no-image.png
+
+!/frontend/web/uploads/product-type/
+/frontend/web/uploads/product-type/*
+!/frontend/web/uploads/product-type/150x150/
+/frontend/web/uploads/product-type/150x150/*
+!/frontend/web/uploads/product-type/150x150/no-image.png
+
+!/frontend/web/uploads/product/
+/frontend/web/uploads/product/*
+!/frontend/web/uploads/product/150x150/
+/frontend/web/uploads/product/150x150/*
+!/frontend/web/uploads/product/150x150/no-image.png
+
+
 !/frontend/web/uploads/document/
 /frontend/web/uploads/document/*
-
 !/frontend/web/uploads/document/60x64/
 /frontend/web/uploads/document/60x64/*
 !/frontend/web/uploads/document/60x64/no-image.png
@@ -94,6 +181,10 @@ phpunit.phar
 !/frontend/web/uploads/video-category/150x150/no-image.png
 
 # Git
+
+/backend/modules/faq/composer.json
+/backend/modules/faq/README.md
+/backend/modules/faq/.git
 
 /backend/modules/video/composer.json
 /backend/modules/video/README.md
@@ -171,6 +262,10 @@ phpunit.phar
 /backend/widgets/giaohang/README.md
 /backend/widgets/giaohang/.git
 
+/backend/modules/slide/composer.json
+/backend/modules/slide/README.md
+/backend/modules/slide/.git
+
 #package
 /package/imagick/.git
 /package/imagick/README.md
@@ -188,3 +283,12 @@ phpunit.phar
 /backend/widgets/select2/composer.json
 /backend/widgets/select2/README.md
 /backend/widgets/select2/.git
+
+/backend/widgets/input/composer.json
+/backend/widgets/input/README.md
+/backend/widgets/input/.git
+
+#assets manager
+/backend/web/modava-assets/composer.json
+/backend/web/modava-assets/README.md
+/backend/web/modava-assets/.git

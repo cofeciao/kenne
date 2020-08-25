@@ -25,4 +25,9 @@ class KeyValueQuery extends \yii\db\ActiveQuery
     {
         return $this->orderBy(['id' => SORT_DESC]);
     }
+    public function findByLanguage()
+    {
+        return $this->andWhere([KeyValue::tableName() . '.language' => \Yii::$app->language])
+            ->orWhere([KeyValue::tableName() . '.language' => '']);
+    }
 }

@@ -7,12 +7,6 @@
  */
 
 return [
-    'reCaptcha' => [
-        'name' => 'reCaptcha',
-        'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
-        'siteKeyV2' => RECAPTCHA_GOOGLE_SITEKEY,
-        'secretV2' => RECAPTCHA_GOOGLE_SECRETKEY,
-    ],
     'devicedetect' => [
         'class' => 'alexandernst\devicedetect\DeviceDetect',
     ],
@@ -25,7 +19,10 @@ return [
         'ruleTable' => '{{%rbac_auth_rule}}',
 //            'defaultRoles' => ['user'],
     ],
-
+    'cache' => [
+        'class' => yii\caching\FileCache::class,
+        'cachePath' => '@backend/runtime/cache'
+    ],
     'queue' => [
         'class' => \yii\queue\db\Queue::class,
         'db' => 'db', // DB connection component or its config

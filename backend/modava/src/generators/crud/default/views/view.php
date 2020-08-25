@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) ?>
+                        class="ion ion-md-apps"></span></span><?= "<?=" ?><?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Chi tiết'); ?>: <?= "<?=" ?> Html::encode($this->title) ?>
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= "<?=" ?> Url::to(['create']); ?>"
@@ -98,7 +98,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('<?= $generator->messageCategory ?>')->params['availableLocales'][$model->language];
+                                if($model->language == null)
+                                    return null;
+                                return Yii::$app->params['availableLocales'][$model->language];
                             },
                         ],
 <?php

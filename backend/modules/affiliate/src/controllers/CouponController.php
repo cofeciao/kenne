@@ -2,6 +2,9 @@
 
 namespace modava\affiliate\controllers;
 
+use modava\affiliate\helpers\Utils;
+use modava\affiliate\models\Customer;
+use modava\affiliate\models\search\CustomerPartnerSearch;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -189,6 +192,46 @@ class CouponController extends MyController
         }
     }
 
+    public function actionGenerateCode () {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $customerId = Yii::$app->request->get('customer_id');
+        $customerInfo = Customer::find()->where(['id' => $customerId])->one();
+
+        if ($customerInfo) {
+            $customerPartnerId = $customerInfo->partner_customer_id;
+            $customerInfo = CustomerPartnerSearch::getCustomerById($customerPartnerId);
+
+            if ($customerInfo) {
+                $code = $customerInfo['customer_code'] . '_' . Utils::generateRandomString();
+                return [ 'success' => true, 'data' => str_replace('-', '_', $code)];
+            }
+            else {
+                return [ 'success' => false, 'message' => AffiliateModule::t('affiliate', 'Có lỗi xảy ra')];
+            }
+        }
+
+        return [ 'success' => false, 'message' => AffiliateModule::t('affiliate', 'Không tìm thấy khách hàng')];
+    }
+
+    public function actionCheckCode () {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $code = \Yii::$app->request->get('code');
+
+        $coupon = Coupon::checkCoupon($code);
+
+        if ($coupon) {
+            return [
+                'success' => true,
+                'message' => AffiliateModule::t('affiliate', 'Mã code do khách hàng {full_name} giới thiệu', ['full_name' => $coupon->customer->full_name])
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => AffiliateModule::t('affiliate', 'Mã code không tồn tại hoặc đã được sử dụng')
+        ];
+    }
+
     /**
     * Finds the Coupon model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
@@ -204,6 +247,6 @@ class CouponController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('affiliate', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(AffiliateModule::t('affiliate', 'The requested page does not exist.'));
     }
 }

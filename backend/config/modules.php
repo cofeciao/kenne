@@ -20,6 +20,7 @@ return [
     ],
     'filemanager' => [
         'class' => 'modava\filemanager\FilemanagerModule',
+        'upload_dir' => '../../../../../../frontend/web',
     ],
     'calendar' => [
         'class' => 'modava\calendar\CalendarModule',
@@ -56,6 +57,12 @@ return [
     ],
     'video' => [
         'class' => 'modava\video\VideoModule',
+    ],
+    'slide' => [
+        'class' => 'modava\slide\SlideModule',
+    ],
+    'faq' => [
+        'class' => 'modava\faq\FaqModule',
     ],
     'api' => [
         'class' => 'backend\modules\api\Api',

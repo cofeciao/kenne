@@ -20,7 +20,7 @@ Yii::setAlias('@backendUrl', $domain . '/backend/');
 //Config package
 Yii::setAlias('@moduleBackend', realpath(__DIR__ . '/../backend/modules/'));
 Yii::setAlias('@api', dirname(dirname(__DIR__)) . '/../backend/modules/api');
-//Yii::setAlias('modava/auth', dirname(dirname(__DIR__)) . '/backend/modules/auth/src');
+Yii::setAlias('modava/auth', dirname(dirname(__DIR__)) . '/backend/modules/auth/src');
 Yii::setAlias('modava/contact', dirname(dirname(__DIR__)) . '/backend/modules/contact/src');
 Yii::setAlias('modava/article', dirname(dirname(__DIR__)) . '/backend/modules/article/src');
 Yii::setAlias('modava/product', dirname(dirname(__DIR__)) . '/backend/modules/product/src');
@@ -38,8 +38,11 @@ Yii::setAlias('modava/iway', dirname(dirname(__DIR__)) . '/backend/modules/iway/
 Yii::setAlias('modava/affiliate', dirname(dirname(__DIR__)) . '/backend/modules/affiliate/src');
 Yii::setAlias('modava/pages', dirname(dirname(__DIR__)) . '/backend/modules/pages/src');
 Yii::setAlias('modava/video', dirname(dirname(__DIR__)) . '/backend/modules/video/src');
+Yii::setAlias('modava/slide', dirname(dirname(__DIR__)) . '/backend/modules/slide/src');
+Yii::setAlias('modava/faq', dirname(dirname(__DIR__)) . '/backend/modules/faq/src');
 Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
-//Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
+Yii::setAlias('modava/input', dirname(dirname(__DIR__)) . '/backend/widgets/input/src');
+Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
 
 //Widget
 Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');

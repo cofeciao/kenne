@@ -28,6 +28,7 @@ use modava\affiliate\helpers\Utils;
     * @property int $partner_id Partner tích hợp affiliate
     * @property int $partner_customer_id id Customer trên hệ thống partner
     * @property string $description Mô tả
+    * @property int $status
     * @property int $created_at
     * @property int $updated_at
     * @property int $created_by Người gọi
@@ -113,7 +114,7 @@ class Customer extends CustomerTable
     public function rules()
     {
         return [
-			[['full_name', 'phone', 'partner_id', 'partner_customer_id'], 'required'],
+			[['full_name', 'phone', 'partner_id', 'partner_customer_id', 'status'], 'required'],
 			[['partner_id', 'sex', 'partner_customer_id', 'country_id', 'province_id', 'district_id', 'ward_id'], 'integer'],
 			[['description', 'address'], 'string'],
 			[['full_name', 'email', 'face_customer'], 'string', 'max' => 255],
@@ -159,54 +160,7 @@ class Customer extends CustomerTable
             'district_id' => AffiliateModule::t('affiliate', 'District'),
             'ward_id' => AffiliateModule::t('affiliate', 'Ward'),
             'address' => AffiliateModule::t('affiliate', 'Address'),
+            'status' => AffiliateModule::t('affiliate', 'Customer Status'),
         ];
-    }
-
-    /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUserCreated()
-    {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-    /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
-    public function getUserUpdated()
-    {
-        return $this->hasOne(User::class, ['id' => 'updated_by']);
-    }
-
-    public function getPartner() {
-        return $this->hasOne(Partner::class, ['id' => 'partner_id']);
-    }
-
-    public function getNotes() {
-        return $this->hasMany(Note::class, ['customer_id' => 'id']);
-    }
-
-    public function getCoupons() {
-        return $this->hasMany(Coupon::class, ['customer_id' => 'id']);
-    }
-
-    public function getCountry() {
-        return $this->hasOne(LocationCountry::class, ['id' => 'country_id']);
-    }
-
-    public function getProvince() {
-        return $this->hasOne(LocationProvince::class, ['id' => 'province_id']);
-    }
-
-    public function getDistrict() {
-        return $this->hasOne(LocationDistrict::class, ['id' => 'district_id']);
-    }
-
-    public function getWard() {
-        return $this->hasOne(LocationWard::class, ['id' => 'ward_id']);
     }
 }

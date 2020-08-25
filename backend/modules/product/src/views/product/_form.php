@@ -25,7 +25,9 @@ if ($model->language == null) $model->language = Yii::$app->language;
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-4">
-                <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('product')->params['availableLocales'])->label(ProductModule::t('product', 'Ngôn ngữ')) ?>
+                <?= $form->field($model, 'language')
+                    ->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => ProductModule::t('product', 'Chọn ngôn ngữ...')])
+                    ->label(ProductModule::t('product', 'Ngôn ngữ')) ?>
             </div>
         </div>
 
@@ -74,7 +76,7 @@ if ($model->language == null) $model->language = Yii::$app->language;
                             'type' => 'dropDownList',
                             'title' => ProductModule::t('product', 'Thuộc tính sản phẩm'),
                             'defaultValue' => 1,
-                            'items' => Yii::$app->getModule('product')->params['product_tech'],
+                            'items' => Yii::$app->params['product_tech'],
                         ],
                         [
                             'name' => 'value',

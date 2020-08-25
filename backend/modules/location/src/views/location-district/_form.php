@@ -57,7 +57,7 @@ if ($model->ProvinceId != null) $model->countryId = $model->provinceHasOne->coun
             <?= $form->field($model, 'SortOrder')->textInput() ?>
         </div>
         <div class="col-6">
-            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('location')->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
         </div>
     </div>
 

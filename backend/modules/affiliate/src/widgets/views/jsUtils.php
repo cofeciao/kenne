@@ -5,8 +5,17 @@ $controllerURL = Url::toRoute(["/affiliate/handle-ajax"]);
 
 ?>
 <script>
+    function changeButtonSave(modalConatiner) {
+        let buttonSubmit = modalConatiner.find('button[type="submit"]').clone();
+        modalConatiner.find('button[type="submit"]').remove();
+        buttonSubmit.on('click', function () {
+            modalConatiner.find('form').submit();
+        });
+        modalConatiner.find('.modal-footer').prepend(buttonSubmit);
+    }
+
     function openCreateModal(params) {
-        let modalHTML = `<div class="modal fade ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true"></div>`;
+        let modalHTML = `<div class="modal ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true"></div>`;
 
         if ($('.ModalContainer').length) $('.ModalContainer').remove();
 
@@ -17,12 +26,14 @@ $controllerURL = Url::toRoute(["/affiliate/handle-ajax"]);
                 if (typeof tinymce != "undefined") tinymce.remove();
                 $('.ModalContainer').html(data);
                 $('.ModalContainer').modal();
+
+                changeButtonSave($('.ModalContainer'));
             }
         });
     }
 
     function getListRelatedRecords(elementDOM) {
-        let modalHTML = `<div class="modal fade ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true"></div>`;
+        let modalHTML = `<div class="modal ModalContainer" tabindex="-1" role="dialog" aria-labelledby="ModalContainer" aria-hidden="true"></div>`;
 
         if ($('.ModalContainer').length) $('.ModalContainer').remove();
 
@@ -44,4 +55,48 @@ $controllerURL = Url::toRoute(["/affiliate/handle-ajax"]);
             }
         });
     }
+
+    function saveStateSearchPanel(searchPanel, button, key) {
+        if (!window.localStorage.getItem(key)) {
+            window.localStorage.setItem(key, 'show');
+        }
+
+        if (window.localStorage.getItem(key) === 'show') $(searchPanel).addClass('show');
+        else $(searchPanel).removeClass('show');
+
+        $(button).on('click', function() {
+            if (window.localStorage.getItem(key) === 'show') {
+                window.localStorage.setItem(key, 'hide');
+            }
+            else {
+                window.localStorage.setItem(key, 'show');
+            }
+        });
+    }
+
+    function copyToClipboard(text) {
+        let dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.setAttribute("id", "dummy_id");
+        document.getElementById("dummy_id").value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        $.toast({
+            heading: 'Thông báo',
+            text: 'Copy thành công',
+            position: 'top-right',
+            class: 'jq-toast-success',
+            hideAfter: 2000,
+            stack: 6,
+            showHideTransition: 'fade'
+        });
+    }
+
+    window.onload = function () {
+        $('.copy').on('click', function () {
+            copyToClipboard($(this).data('copy'));
+        });
+    }
+
 </script>

@@ -1,5 +1,6 @@
 <?php
 
+use modava\contact\ContactModule;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -39,8 +40,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'created_at') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('contact', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('contact', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(ContactModule::t('contact', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(ContactModule::t('contact', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

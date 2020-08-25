@@ -2,13 +2,12 @@
 
 namespace modava\affiliate\controllers;
 
-use backend\widgets\ToastrWidget;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\components\MyAffiliateController;
 use modava\affiliate\helpers\Utils;
 use Yii;
-use yii\helpers\Html;
 use yii\web\Response;
+use modava\affiliate\helpers\MyAurisApi;
 
 /*
  * Implement by Duc Huynh
@@ -73,11 +72,11 @@ class HandleAjaxController extends MyAffiliateController
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true];
+                return [ 'success' => true ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true];
+                return [ 'success' => false ];
             }
         }
     }
@@ -100,7 +99,7 @@ class HandleAjaxController extends MyAffiliateController
         }
 
 
-        if (in_array($modelName, Yii::$app->controller->module->params['not_release_object'])) {
+        if (in_array($modelName, Yii::$app->getModule('affiliate')->params['not_release_object'])) {
             echo $this->renderAjax('error-modal', [
                 'errorMessage' => AffiliateModule::t('affiliate', 'Object is not released'),
             ]);
@@ -133,6 +132,27 @@ class HandleAjaxController extends MyAffiliateController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'filePath' => $filePath
+        ]);
+    }
+
+    public function actionGetCustomerMoreInfo () {
+        $customerId = Yii::$app->request->get('customerId');
+        $data = MyAurisApi::getCustomerInfo($customerId);
+        $listThaoTac = MyAurisApi::getListThaoTac();
+
+        if (!$data || (isset($data['status']) && $data['status'] == 500)) {
+            if (isset($data['status']) && $data['status'] == 500) {
+                Yii::warning($data['message']);
+            }
+
+            return $this->renderAjax('error-modal', [
+                'errorMessage' => AffiliateModule::t('affiliate', 'Error connection!'),
+            ]);
+        }
+
+        return $this->renderAjax('dashboard-myauris-customer-modal', [
+            'model' => $data['data'],
+            'listThaotac' => $listThaoTac
         ]);
     }
 }

@@ -8,6 +8,12 @@
 
 return [
 //    'geoip' => ['class' => 'lysenkobv\GeoIP\GeoIP'],
+    'reCaptcha' => [
+        'name' => 'reCaptcha',
+        'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
+        'siteKeyV2' => RECAPTCHA_GOOGLE_SITEKEY,
+        'secretV2' => RECAPTCHA_GOOGLE_SECRETKEY,
+    ],
     'errorHandler' => [
         'errorAction' => 'site/error',
     ],
@@ -72,10 +78,9 @@ return [
         'bundles' => [
             'yii\web\JqueryAsset' => [
                 'js' => [
-                    '/backend/vendors/jquery/dist/jquery.min.js',
                 ],
                 'jsOptions' => [
-
+                    'position' => \yii\web\View::POS_HEAD
                 ],
             ],
             'yii\bootstrap\BootstrapPluginAsset' => [

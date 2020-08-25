@@ -2,6 +2,8 @@
 
 namespace modava\affiliate\controllers;
 
+use modava\affiliate\models\search\CustomerPartnerSearch;
+use modava\affiliate\models\table\CustomerTable;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -191,6 +193,39 @@ class CustomerController extends MyController
         }
     }
 
+    public function actionGetInfo($phone = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        try {
+            // Check customer trong hệ thống trước
+            $customer = CustomerTable::getrecordByPhone($phone);
+            $result =  [
+                'ho_ten' => null,
+                'phu_trach' => null
+            ];
+
+            if ($customer !== null) {
+                $result =  [
+                    'ho_ten' => $customer->full_name,
+                    'phu_trach' => $customer->userCreated->userProfile->fullname
+                ];
+            } else {
+                $customer = CustomerPartnerSearch::getCustomerByPhone($phone);
+
+                if ($customer) {
+                    $result =  [
+                        'ho_ten' => $customer['full_name'],
+                        'phu_trach' => null
+                    ];
+                }
+            }
+
+            return $result;
+        } catch (\yii\base\Exception $ex) {
+            return [];
+        }
+    }
+
     /**
     * Finds the Customer model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
@@ -206,6 +241,6 @@ class CustomerController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('affiliate', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(AffiliateModule::t('affiliate', 'The requested page does not exist.'));
     }
 }

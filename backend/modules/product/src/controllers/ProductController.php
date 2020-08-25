@@ -3,6 +3,7 @@
 namespace modava\product\controllers;
 
 use modava\product\components\MyUpload;
+use modava\product\models\ProductImage;
 use modava\product\models\table\ProductCategoryTable;
 use modava\product\models\table\ProductTable;
 use modava\product\models\table\ProductTypeTable;
@@ -78,10 +79,10 @@ class ProductController extends MyProductController
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 if ($model->save()) {
+                    $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
                         $path = Yii::getAlias('@frontend/web/uploads/product/');
-                        $imageName = null;
                         foreach (Yii::$app->params['product'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
@@ -90,11 +91,10 @@ class ProductController extends MyProductController
                             $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                         }
 
-                    } else {
-                        $imageName = NOIMAGE;
                     }
-                    $model->image = $imageName;
-                    $model->updateAttributes(['image']);
+                    $model->updateAttributes([
+                        'image' => $imageName
+                    ]);
                     Yii::$app->session->setFlash('toastr-product-view', [
                         'text' => 'Tạo mới thành công',
                         'type' => 'success'
@@ -107,7 +107,7 @@ class ProductController extends MyProductController
                     $errors .= Html::tag('p', $error[0]);
                 }
                 Yii::$app->session->setFlash('toastr-product-form', [
-                    'title' => 'Cập nhật thất bại',
+                    'title' => 'Tạo mới thất bại',
                     'text' => $errors,
                     'type' => 'warning'
                 ]);
@@ -135,10 +135,7 @@ class ProductController extends MyProductController
                 $oldImage = $model->getOldAttribute('image');
                 if ($model->save()) {
                     if ($model->getAttribute('image') !== $oldImage) {
-                        if ($model->getAttribute('image') == '') {
-                            $model->image = 'no-image.png';
-                            $model->updateAttributes(['image']);
-                        } else {
+                        if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
                             $path = Yii::getAlias('@frontend/web/uploads/product/');
                             $imageName = null;
@@ -153,8 +150,9 @@ class ProductController extends MyProductController
                                 }
                             }
 
-                            $model->image = $imageName;
-                            if ($model->updateAttributes(['image'])) {
+                            if ($model->updateAttributes([
+                                'image' => $imageName
+                            ])) {
                                 foreach (Yii::$app->params['product'] as $key => $value) {
                                     $pathSave = $path . $key;
                                     if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
@@ -201,6 +199,56 @@ class ProductController extends MyProductController
         return $this->render('images', [
             'model' => $model
         ]);
+    }
+
+    public function actionDelImage($id)
+    {
+        $model = $this->findModelImage($id);
+        if ($model->delete()) return 1;
+        return 0;
+    }
+
+    public function actionCheckHot()
+    {
+        if (Yii::$app->request->isAjax) {
+            $id = Yii::$app->request->post('id');
+
+            $model = $this->findModel($id);
+            try {
+                if ($model->product_hot == 1) {
+                    $model->product_hot = 0;
+                } else {
+                    $model->product_hot = 1;
+                }
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                        'title' => 'Thông báo',
+                        'text' => 'Cập nhật thành công',
+                        'type' => 'success'
+                    ]);
+                } else {
+                    $errors = Html::tag('p', 'Cập nhật thất bại');
+                    foreach ($model->getErrors() as $error) {
+                        $errors .= Html::tag('p', $error[0]);
+                    }
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                        'title' => 'Thông báo',
+                        'text' => $errors,
+                        'type' => 'warning'
+                    ]);
+                }
+            } catch (\yii\db\Exception $exception) {
+                $errors = Html::tag('p', 'Cập nhật thất bại');
+                foreach ($exception as $error) {
+                    $errors .= Html::tag('p', $error[0]);
+                }
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                    'title' => 'Thông báo',
+                    'text' => $errors,
+                    'type' => 'warning'
+                ]);
+            }
+        }
     }
 
     /**
@@ -251,6 +299,15 @@ class ProductController extends MyProductController
     protected function findModel($id)
     {
         if (($model = Product::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(ProductModule::t('product', 'The requested page does not exist.'));
+    }
+
+    protected function findModelImage($id)
+    {
+        if (($model = ProductImage::findOne($id)) !== null) {
             return $model;
         }
 

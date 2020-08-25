@@ -77,10 +77,10 @@ class ArticleController extends MyArticleController
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 if ($model->save()) {
+                    $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
                         $path = Yii::getAlias('@frontend/web/uploads/article/');
-                        $imageName = null;
                         foreach (Yii::$app->params['article'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
@@ -89,8 +89,6 @@ class ArticleController extends MyArticleController
                             $imageName = MyUpload::uploadFromOnline($value['width'], $value['height'], $pathImage, $pathSave . '/', $imageName);
                         }
 
-                    } else {
-                        $imageName = NOIMAGE;
                     }
                     $model->image = $imageName;
                     $model->updateAttributes(['image']);
@@ -134,10 +132,7 @@ class ArticleController extends MyArticleController
                 $oldImage = $model->getOldAttribute('image');
                 if ($model->save()) {
                     if ($model->getAttribute('image') !== $oldImage) {
-                        if ($model->getAttribute('image') == '') {
-                            $model->image = 'no-image.png';
-                            $model->updateAttributes(['image']);
-                        } else {
+                        if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
                             $path = Yii::getAlias('@frontend/web/uploads/article/');
                             $imageName = null;
@@ -156,8 +151,8 @@ class ArticleController extends MyArticleController
                             if ($model->updateAttributes(['image'])) {
                                 foreach (Yii::$app->params['article'] as $key => $value) {
                                     $pathSave = $path . $key;
-                                    if (file_exists($pathSave . '/' . $oldImage) && $oldImage != null) {
-                                        unlink($pathSave . '/' . $oldImage);
+                                    if (file_exists($pathSave . '/' . $oldImage) && !is_dir($pathSave . '/' . $oldImage) && $oldImage != null) {
+                                        @unlink($pathSave . '/' . $oldImage);
                                     }
 
                                 }
@@ -175,7 +170,7 @@ class ArticleController extends MyArticleController
                 foreach ($model->getErrors() as $error) {
                     $errors .= Html::tag('p', $error[0]);
                 }
-                Yii::$app->session->setFlash('toastr-product-form', [
+                Yii::$app->session->setFlash('toastr-article-form', [
                     'title' => 'Cập nhật thất bại',
                     'text' => $errors,
                     'type' => 'warning'
