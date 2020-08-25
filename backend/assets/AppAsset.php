@@ -53,9 +53,6 @@ class AppAsset extends AssetBundle
         parent::init();
 
         $content = @file_get_contents(\Yii::getAlias('@modava-assets/assets.json'));
-        if (!$content) {
-            throw new Exception('Could not read assests from path ' . \Yii::getAlias('@app/assets.json'));
-        }
         $assetsData = json_decode($content, true);
 
         if (!empty($assetsData['scripts'])) {
