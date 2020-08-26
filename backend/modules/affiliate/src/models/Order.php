@@ -137,7 +137,7 @@ class Order extends OrderTable
             'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
             'created_by' => AffiliateModule::t('affiliate', 'Created By'),
             'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
-            'date_create' => AffiliateModule::t('affiliate', 'Ngày tạo'),
+            'date_create' => AffiliateModule::t('affiliate', 'Ngày đơn hàng'),
             'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
             'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh toán'),
             'partner_order_code' => AffiliateModule::t('affiliate', 'Mã đơn hàng hệ thống partner'),

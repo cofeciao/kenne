@@ -24,19 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
-        <p>
-            <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= AffiliateModule::t('affiliate', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= AffiliateModule::t('affiliate', 'Create'); ?></a>
-            <?= Html::a(AffiliateModule::t('affiliate', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(AffiliateModule::t('affiliate', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => AffiliateModule::t('affiliate', 'Are you sure you want to delete this item?'),
-                    'method' => 'post',
-                ],
-            ]) ?>
-        </p>
     </div>
     <!-- /Title -->
 
@@ -47,9 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
 						'title',
-						'slug',
 						[
 						    'attribute' => 'coupon_id',
                             'format' => 'raw',
@@ -60,9 +45,31 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]);
                             }
                         ],
-						'pre_total',
-						'discount',
-						'final_total',
+                        [
+                            'attribute' => 'status',
+                            'value' => function ($model) {
+                                if ($model->status === null) return null;
+
+                                return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
+                            },
+                        ],
+                        'payment_method',
+                        [
+                            'attribute' => 'pre_total',
+                            'format' => 'decimal',
+                        ],
+                        [
+                            'attribute' => 'date_create',
+                            'format' => 'datetime'
+                        ],
+                        [
+                            'attribute' => 'discount',
+                            'format' => 'decimal',
+                        ],
+                        [
+                            'attribute' => 'final_total',
+                            'format' => 'decimal',
+                        ],
 						'description:raw',
 						'created_at:datetime',
 						'updated_at:datetime',
