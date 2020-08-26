@@ -2,19 +2,20 @@
 
 namespace modava\slide\controllers;
 
+use backend\components\MyComponent;
+use modava\slide\components\MySlideController;
 use modava\slide\components\MyUpload;
+use modava\slide\models\search\SlideSearch;
+use modava\slide\models\Slide;
 use modava\slide\models\table\SlideCategoryTable;
 use modava\slide\models\table\SlideTypeTable;
-use yii\db\Exception;
+use modava\slide\SlideModule;
 use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use modava\slide\SlideModule;
-use modava\slide\components\MySlideController;
-use modava\slide\models\Slide;
-use modava\slide\models\search\SlideSearch;
 use yii\web\Response;
 
 /**
@@ -46,9 +47,12 @@ class SlideController extends MySlideController
         $searchModel = new SlideSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
     }
 
@@ -88,7 +92,7 @@ class SlideController extends MySlideController
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if($model->save()) {
+                if ($model->save()) {
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
@@ -233,6 +237,33 @@ class SlideController extends MySlideController
             ]);
         }
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
     }
 
     /**
