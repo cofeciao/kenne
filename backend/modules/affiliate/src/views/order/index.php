@@ -136,26 +136,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             'payment_method',
                                             [
-                                                'attribute' => 'pre_total',
-                                                'format' => 'decimal',
-                                                'contentOptions' => [
-                                                    'class' => 'text-right',
-                                                ]
-                                            ],
-                                            [
                                                 'attribute' => 'date_create',
                                                 'format' => 'datetime'
                                             ],
                                             [
-                                                'attribute' => 'discount',
-                                                'format' => 'decimal',
+                                                'attribute' => 'pre_total',
+                                                'format' => 'currency',
                                                 'contentOptions' => [
                                                     'class' => 'text-right',
                                                 ]
                                             ],
                                             [
+                                                'attribute' => 'discount',
+                                                'format' => 'currency',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right',
+                                                ],
+                                            ],
+                                            [
                                                 'attribute' => 'final_total',
-                                                'format' => 'decimal',
+                                                'format' => 'currency',
                                                 'contentOptions' => [
                                                     'class' => 'text-right',
                                                 ]

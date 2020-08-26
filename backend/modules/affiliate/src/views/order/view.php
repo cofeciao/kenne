@@ -55,20 +55,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'payment_method',
                         [
-                            'attribute' => 'pre_total',
-                            'format' => 'decimal',
-                        ],
-                        [
                             'attribute' => 'date_create',
                             'format' => 'datetime'
                         ],
                         [
+                            'attribute' => 'pre_total',
+                            'format' => 'currency',
+                        ],
+                        [
                             'attribute' => 'discount',
-                            'format' => 'decimal',
+                            'format' => 'currency',
                         ],
                         [
                             'attribute' => 'final_total',
-                            'format' => 'decimal',
+                            'format' => 'currency',
                         ],
 						'description:raw',
 						'created_at:datetime',
