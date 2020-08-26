@@ -1,7 +1,21 @@
 {
+  "scripts": [
+    {
+      "name": "my-grid-view"
+    },
+    {
+      "name": "my-loading"
+    }
+  ],
   "styles": [
     {
-      "name": "myCss"
+      "name": "my-grid-view"
+    },
+    {
+      "name": "my-loading"
+    },
+    {
+      "name": "custom"
     }
   ]
 }

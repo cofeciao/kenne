@@ -2,6 +2,7 @@
 
 namespace modava\location\controllers;
 
+use backend\components\MyComponent;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -42,12 +43,14 @@ class LocationCountryController extends MyController
         $searchModel = new LocationCountrySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage'    => $totalPage,
         ]);
     }
-
 
     /**
      * Displays a single LocationCountry model.
@@ -166,6 +169,37 @@ class LocationCountryController extends MyController
         return $this->redirect(['index']);
     }
 
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
+     * @param string $lang
+     * @return array
+     */
     public function actionGetCountryByLang($lang = 'vi')
     {
         if (Yii::$app->request->isAjax) {

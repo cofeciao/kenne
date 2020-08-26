@@ -18,7 +18,7 @@ echo "<?php\n";
 use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 use <?= $ns ?>\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use yii\grid\GridView;
+use common\grid\MyGridView;
 use backend\widgets\ToastrWidget;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
 
@@ -29,7 +29,7 @@ use backend\widgets\ToastrWidget;
 $this->title = <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container-fluid px-xxl-25 px-xl-10">
+<div class="container-fluid px-xxl-15 px-xl-10">
     <?= "<?=" ?> NavbarWidgets::widget(); ?>
 
     <!-- Title -->
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                         class="ion ion-md-apps"></span></span><?= "<?=" ?> Html::encode($this->title) <?= "?>\n" ?>
         </h4>
-        <a class="btn btn-outline-light" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
+        <a class="btn btn-outline-light btn-sm" href="<?= "<?=" ?> \yii\helpers\Url::to(['create']); <?= "?>" ?>"
            title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
             <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
     </div>
@@ -47,35 +47,41 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
 
-                <?= $generator->enablePjax ? "<?php Pjax::begin(); ?>\n" : '' ?>
+                <?= $generator->enablePjax ? "<?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>\n" : '' ?>
                 <?= "<?=" ?> ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) <?= "?>\n" ?>
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
-                            <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
+                            <div class="dataTables_wrapper dt-bootstrap4">
                                 <?php if ($generator->indexWidgetType === 'grid'): ?>
-<?= "<?= " ?>GridView::widget([
+<?= "<?= " ?>MyGridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'layout' => '
                                         {errors}
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                {items}
-                                            </div>
+                                        <div class="pane-single-table">
+                                            {items}
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-5">
-                                                <div class="dataTables_info" role="status" aria-live="polite">
-                                                    {pager}
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers">
-                                                    {summary}
-                                                </div>
-                                            </div>
+                                        <div class="pager-wrap clearfix">
+                                            {summary}' .
+                                            Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageTo', [
+                                                'totalPage' => $totalPage,
+                                                'currentPage' => Yii::$app->request->get($dataProvider->getPagination()->pageParam)
+                                            ]) .
+                                            Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize') .
+                                            '{pager}
                                         </div>
                                     ',
+                                    'tableOptions' => [
+                                        'id' => 'dataTable',
+                                        'class' => 'dt-grid dt-widget pane-hScroll',
+                                    ],
+                                    'myOptions' => [
+                                        'class' => 'dt-grid-content my-content pane-vScroll',
+                                        'data-minus' => '{"0":95,"1":".hk-navbar","2":".nav-tabs","3":".hk-pg-header","4":".hk-footer-wrap"}'
+                                    ],
+                                    'summaryOptions' => [
+                                        'class' => 'summary pull-right',
+                                    ],
                                     'pager' => [
                                         'firstPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'First'),
                                         'lastPageLabel' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Last'),
@@ -85,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                         'options' => [
                                             'tag' => 'ul',
-                                            'class' => 'pagination',
+                                            'class' => 'pagination pull-left',
                                         ],
 
                                         // Customzing CSS class for pager link
@@ -95,10 +101,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'pageCssClass' => 'page-item',
 
                                         // Customzing CSS class for navigating link
-                                        'prevPageCssClass' => 'paginate_button page-item',
-                                        'nextPageCssClass' => 'paginate_button page-item',
-                                        'firstPageCssClass' => 'paginate_button page-item',
-                                        'lastPageCssClass' => 'paginate_button page-item',
+                                        'prevPageCssClass' => 'paginate_button page-item prev',
+                                        'nextPageCssClass' => 'paginate_button page-item next',
+                                        'firstPageCssClass' => 'paginate_button page-item first',
+                                        'lastPageCssClass' => 'paginate_button page-item last',
                                     ],
                                     'columns' => [
                                         [
@@ -221,6 +227,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?= "<?php\n" ?>
+$urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $script = <<< JS
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();
@@ -229,6 +236,11 @@ $('body').on('click', '.success-delete', function(e){
         $.post(url);
     }
     return false;
+});
+var customPjax = new myGridView();
+customPjax.init({
+pjaxId: '#dt-pjax',
+urlChangePageSize: '$urlChangePageSize',
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

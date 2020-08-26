@@ -1,8 +1,8 @@
 <?php
 
+use modava\affiliate\AffiliateModule;
 use modava\affiliate\helpers\Utils;
 use yii\helpers\Url;
-use modava\affiliate\AffiliateModule;
 
 // Define route info
 $routeInfos = [
@@ -78,15 +78,15 @@ $routeInfos = [
     ],
 ];
 ?>
-<ul class="nav nav-tabs nav-sm nav-light mb-25">
-    <?php foreach($routeInfos as $routeInfo):
-            if (Utils::isReleaseObject($routeInfo['model'])):?>
-                <li class="nav-item mb-5">
-                    <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == $routeInfo['controllerId']) echo ' active' ?>"
-                       href="<?= Url::toRoute(["/{$routeInfo['module']}/{$routeInfo['controllerId']}"]); ?>">
-                        <?= $routeInfo['icon'] . AffiliateModule::t($routeInfo['module'], $routeInfo['label']); ?>
-                    </a>
-                </li>
-    <?php   endif;
-        endforeach;?>
+<ul class="nav nav-tabs nav-sm nav-light mb-10">
+    <?php foreach ($routeInfos as $routeInfo):
+        if (Utils::isReleaseObject($routeInfo['model'])):?>
+            <li class="nav-item mb-5">
+                <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == $routeInfo['controllerId']) echo ' active' ?>"
+                   href="<?= Url::toRoute(["/{$routeInfo['module']}/{$routeInfo['controllerId']}"]); ?>">
+                    <?= $routeInfo['icon'] . AffiliateModule::t($routeInfo['module'], $routeInfo['label']); ?>
+                </a>
+            </li>
+        <?php endif;
+    endforeach; ?>
 </ul>

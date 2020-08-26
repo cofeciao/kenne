@@ -43,9 +43,6 @@ return [
         ]
     ],
     'not_release_object' => [
-        'Coupon',
-        'CouponType',
-        'Order',
     ],
     'note_type' => [
         '0' => AffiliateModule::t('affiliate', 'For This System'),
@@ -56,4 +53,9 @@ return [
         '1' => AffiliateModule::t('affiliate', 'Satisfied'),
         '2' => AffiliateModule::t('affiliate', 'Bình thường'),
     ],
+    'order_status' => [
+        '0' => AffiliateModule::t('affiliate', 'Thanh toán'),
+        '1' => AffiliateModule::t('affiliate', 'Đặt cọc'),
+        '2' => AffiliateModule::t('affiliate', 'Hoàn Cọc'),
+    ]
 ];
