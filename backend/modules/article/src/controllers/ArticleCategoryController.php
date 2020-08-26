@@ -47,7 +47,6 @@ class ArticleCategoryController extends MyArticleController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'dataProvider' => $dataProvider,
             'totalPage' => $totalPage,
         ]);
     }

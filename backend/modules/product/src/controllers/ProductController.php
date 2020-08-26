@@ -54,7 +54,7 @@ class ProductController extends MyProductController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'totalPage'    => $totalPage,
+            'totalPage' => $totalPage,
         ]);
     }
 
@@ -86,7 +86,7 @@ class ProductController extends MyProductController
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
-                        $path = Yii::getAlias('@frontend/web/uploads/product/');
+                        $path = $this->getUploadDir() . '/web/uploads/product/';
                         foreach (Yii::$app->params['product'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
@@ -141,7 +141,7 @@ class ProductController extends MyProductController
                     if ($model->getAttribute('image') !== $oldImage) {
                         if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
-                            $path = Yii::getAlias('@frontend/web/uploads/product/');
+                            $path = $this->getUploadDir() . '/web/uploads/product/';
                             $imageName = null;
                             foreach (Yii::$app->params['product'] as $key => $value) {
                                 $pathSave = $path . $key;
@@ -313,9 +313,9 @@ class ProductController extends MyProductController
             $dataProvider->pagination->pageSize = 10;
         }
 
-        $pageSize   = $dataProvider->pagination->pageSize;
+        $pageSize = $dataProvider->pagination->pageSize;
         $totalCount = $dataProvider->totalCount;
-        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
 
         return $totalPage;
     }

@@ -27,6 +27,7 @@ return [
     ],
     'product' => [
         'class' => 'modava\product\ProductModule',
+        'upload_dir' => '@frontend',
     ],
     'customer' => [
         'class' => 'modava\customer\CustomerModule'

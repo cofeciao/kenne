@@ -84,7 +84,7 @@ class ArticleController extends MyArticleController
                     $imageName = null;
                     if ($model->image != "") {
                         $pathImage = FRONTEND_HOST_INFO . $model->image;
-                        $path = Yii::getAlias('@frontend/web/uploads/article/');
+                        $path = $this->getUploadDir() . '/web/uploads/article/';
                         foreach (Yii::$app->params['article'] as $key => $value) {
                             $pathSave = $path . $key;
                             if (!file_exists($pathSave) && !is_dir($pathSave)) {
@@ -138,7 +138,7 @@ class ArticleController extends MyArticleController
                     if ($model->getAttribute('image') !== $oldImage) {
                         if ($model->getAttribute('image') != '') {
                             $pathImage = FRONTEND_HOST_INFO . $model->image;
-                            $path = Yii::getAlias('@frontend/web/uploads/article/');
+                            $path = $this->getUploadDir() . '/web/uploads/article/';
                             $imageName = null;
                             foreach (Yii::$app->params['article'] as $key => $value) {
                                 $pathSave = $path . $key;
