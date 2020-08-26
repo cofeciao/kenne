@@ -40,16 +40,16 @@ $status_call_dathen = ArrayHelper::map(CustomerStatusCall::getStatusCallDatHen()
                 Yii::$app->user->can('customerCustomer-orderCreate')) { ?>
                 <?php if (in_array($model->scenario, [Customer::SCENARIO_CLINIC, Customer::SCENARIO_ADMIN]) && $model->statusDongYHasOne != null && $model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
                     <?= Html::a('<i class="fa fa-plus"></i> ' . CustomerModule::t('customer', 'Order'), ['/customer/customer-order/create', 'customer_id' => $model->primaryKey], [
-                        'class' => 'btn btn-success'
+                        'class' => 'btn btn-success btn-sm'
                     ]) ?>
                 <?php }
             } ?>
-            <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
+            <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                title="<?= CustomerModule::t('customer', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
             <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger btn-sm',
                 'data' => [
                     'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
                     'method' => 'post',

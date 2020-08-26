@@ -25,12 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
+            <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                title="<?= VideoModule::t('video', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= VideoModule::t('video', 'Create'); ?></a>
-            <?= Html::a(VideoModule::t('video', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(VideoModule::t('video', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
             <?= Html::a(VideoModule::t('video', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger btn-sm',
                 'data' => [
                     'confirm' => VideoModule::t('video', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
