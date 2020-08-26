@@ -8,7 +8,7 @@ use modava\auth\models\User;
 
 $is_dev = Yii::$app->user->can(User::DEV);
 ?>
-<ul class="nav nav-tabs nav-sm nav-light mb-25">
+<ul class="nav nav-tabs nav-sm nav-light mb-10">
     <?php if ($is_dev ||
         Yii::$app->user->can('customer') ||
         Yii::$app->user->can('customerCustomer') ||

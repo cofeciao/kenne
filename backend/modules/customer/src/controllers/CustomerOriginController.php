@@ -2,6 +2,7 @@
 
 namespace modava\customer\controllers;
 
+use backend\components\MyComponent;
 use modava\customer\models\table\CustomerOriginTable;
 use yii\db\Exception;
 use Yii;
@@ -44,9 +45,12 @@ class CustomerOriginController extends MyController
         $searchModel = new CustomerOriginSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage'    => $totalPage,
         ]);
     }
 
@@ -176,6 +180,37 @@ class CustomerOriginController extends MyController
         return $this->redirect(['index']);
     }
 
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+
+    /**
+     * @return array
+     */
     public function actionGetOriginByAgency()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;

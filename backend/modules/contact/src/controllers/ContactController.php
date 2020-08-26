@@ -2,15 +2,16 @@
 
 namespace modava\contact\controllers;
 
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\contact\ContactModule;
+use backend\components\MyComponent;
 use modava\contact\components\MyContactController;
+use modava\contact\ContactModule;
 use modava\contact\models\Contact;
 use modava\contact\models\search\ContactSearch;
+use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 
 /**
  * ContactController implements the CRUD actions for Contact model.
@@ -18,8 +19,8 @@ use modava\contact\models\search\ContactSearch;
 class ContactController extends MyContactController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,28 +34,30 @@ class ContactController extends MyContactController
     }
 
     /**
-    * Lists all Contact models.
-    * @return mixed
-    */
+     * Lists all Contact models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new ContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Contact model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Contact model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +66,10 @@ class ContactController extends MyContactController
     }
 
     /**
-    * Creates a new Contact model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Contact model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Contact();
@@ -98,18 +101,18 @@ class ContactController extends MyContactController
     }
 
     /**
-    * Updates an existing Contact model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Contact model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +140,12 @@ class ContactController extends MyContactController
     }
 
     /**
-    * Deletes an existing Contact model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Contact model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,12 +178,39 @@ class ContactController extends MyContactController
     }
 
     /**
-    * Finds the Contact model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Contact the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
+     * Finds the Contact model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Contact the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

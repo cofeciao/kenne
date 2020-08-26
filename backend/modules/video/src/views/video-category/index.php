@@ -1,10 +1,10 @@
 <?php
 
+use backend\widgets\ToastrWidget;
 use modava\video\VideoModule;
 use modava\video\widgets\NavbarWidgets;
+use common\grid\MyGridView;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
-            <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
+            <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
                title="<?= VideoModule::t('video', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= VideoModule::t('video', 'Create'); ?></a>
         </div>
@@ -33,33 +33,39 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xl-12">
                 <section class="hk-sec-wrapper">
 
-                    <?php Pjax::begin(); ?>
+                    <?php Pjax::begin(['id' => 'video-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
                                 <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
-                                    <?= GridView::widget([
+                                    <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
-                                        {errors}
-                                        <div class="row">
-                                            <div class="col-sm-12">
+                                            {errors} 
+                                            <div class="pane-single-table">
                                                 {items}
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-5">
-                                                <div class="dataTables_info" role="status" aria-live="polite">
-                                                    {pager}
-                                                </div>
+                                            <div class="pager-wrap clearfix">
+                                                {summary}' .
+                                            Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageTo', [
+                                                'totalPage' => $totalPage,
+                                                'currentPage' => Yii::$app->request->get($dataProvider->getPagination()->pageParam)
+                                            ]) .
+                                            Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize') .
+                                            '{pager}
                                             </div>
-                                            <div class="col-sm-12 col-md-7">
-                                                <div class="dataTables_paginate paging_simple_numbers">
-                                                    {summary}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ',
+                                        ',
+                                        'tableOptions' => [
+                                            'id' => 'dataTable',
+                                            'class' => 'dt-grid dt-widget pane-hScroll',
+                                        ],
+                                        'myOptions' => [
+                                            'class' => 'dt-grid-content my-content pane-vScroll',
+                                            'data-minus' => '{"0":95,"1":".hk-navbar","2":".nav-tabs","3":".hk-pg-header","4":".hk-footer-wrap"}'
+                                        ],
+                                        'summaryOptions' => [
+                                            'class' => 'summary pull-right',
+                                        ],
                                         'pager' => [
                                             'firstPageLabel' => VideoModule::t('video', 'First'),
                                             'lastPageLabel' => VideoModule::t('video', 'Last'),
@@ -79,10 +85,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'pageCssClass' => 'page-item',
 
                                             // Customzing CSS class for navigating link
-                                            'prevPageCssClass' => 'paginate_button page-item',
-                                            'nextPageCssClass' => 'paginate_button page-item',
-                                            'firstPageCssClass' => 'paginate_button page-item',
-                                            'lastPageCssClass' => 'paginate_button page-item',
+                                            'prevPageCssClass' => 'paginate_button page-item prev',
+                                            'nextPageCssClass' => 'paginate_button page-item next',
+                                            'firstPageCssClass' => 'paginate_button page-item first',
+                                            'lastPageCssClass' => 'paginate_button page-item last',
                                         ],
                                         'columns' => [
                                             [
@@ -114,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     if ($model->image == null) {
                                                         return Html::img('/uploads/video-category/150x150/no-image.png', ['width' => 150, 'height' => 150]);
                                                     }
-                                                    return Html::img(Yii::$app->params['video-category']['150x150']['folder']  . $model->image);
+                                                    return Html::img(Yii::$app->params['video-category']['150x150']['folder'] . $model->image);
                                                 },
                                                 'headerOptions' => [
                                                     'width' => 150,
@@ -189,7 +195,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 <?php
+$urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $script = <<< JS
+var customPjax = new myGridView();
+customPjax.init({
+    pjaxId: '#video-pjax',
+    urlChangePageSize: '$urlChangePageSize',
+});
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();
     var url = $(this).attr('href') || null;

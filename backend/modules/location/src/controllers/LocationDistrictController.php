@@ -2,16 +2,17 @@
 
 namespace modava\location\controllers;
 
-use modava\location\models\table\LocationDistrictTable;
-use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\location\LocationModule;
+use backend\components\MyComponent;
 use backend\components\MyController;
+use modava\location\LocationModule;
 use modava\location\models\LocationDistrict;
 use modava\location\models\search\LocationDistrictSearch;
+use modava\location\models\table\LocationDistrictTable;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -20,8 +21,8 @@ use yii\web\Response;
 class LocationDistrictController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -35,28 +36,30 @@ class LocationDistrictController extends MyController
     }
 
     /**
-    * Lists all LocationDistrict models.
-    * @return mixed
-    */
+     * Lists all LocationDistrict models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new LocationDistrictSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single LocationDistrict model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single LocationDistrict model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -65,10 +68,10 @@ class LocationDistrictController extends MyController
     }
 
     /**
-    * Creates a new LocationDistrict model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new LocationDistrict model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new LocationDistrict();
@@ -100,18 +103,18 @@ class LocationDistrictController extends MyController
     }
 
     /**
-    * Updates an existing LocationDistrict model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing LocationDistrict model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -139,12 +142,12 @@ class LocationDistrictController extends MyController
     }
 
     /**
-    * Deletes an existing LocationDistrict model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing LocationDistrict model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -168,13 +171,44 @@ class LocationDistrictController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionGetDistrictByProvince(){
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
+     * @return array
+     */
+    public function actionGetDistrictByProvince()
+    {
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $province = Yii::$app->request->get('province');
             $option_tag = Yii::$app->request->get('option_tag', false);
             $data = LocationDistrictTable::getDistrictByProvince($province, Yii::$app->language);
-            if($option_tag === false) {
+            if ($option_tag === false) {
                 return [
                     'code' => 200,
                     'data' => ArrayHelper::map($data, 'id', 'name')
@@ -195,12 +229,12 @@ class LocationDistrictController extends MyController
     }
 
     /**
-    * Finds the LocationDistrict model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return LocationDistrict the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the LocationDistrict model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return LocationDistrict the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

@@ -2,15 +2,16 @@
 
 namespace modava\website\controllers;
 
-use modava\website\models\search\KeyValueSearch;
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\website\WebsiteModule;
+use backend\components\MyComponent;
 use modava\website\components\MyWebsiteController;
 use modava\website\models\KeyValue;
+use modava\website\models\search\KeyValueSearch;
+use modava\website\WebsiteModule;
+use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 
 /**
  * LinkStaticController implements the CRUD actions for LinkStatic model.
@@ -18,8 +19,8 @@ use modava\website\models\KeyValue;
 class KeyValueController extends MyWebsiteController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,28 +34,30 @@ class KeyValueController extends MyWebsiteController
     }
 
     /**
-    * Lists all LinkStatic models.
-    * @return mixed
-    */
+     * Lists all LinkStatic models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new KeyValueSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single LinkStatic model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single LinkStatic model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +66,10 @@ class KeyValueController extends MyWebsiteController
     }
 
     /**
-    * Creates a new LinkStatic model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new LinkStatic model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new KeyValue();
@@ -98,18 +101,18 @@ class KeyValueController extends MyWebsiteController
     }
 
     /**
-    * Updates an existing LinkStatic model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing LinkStatic model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +140,12 @@ class KeyValueController extends MyWebsiteController
     }
 
     /**
-    * Deletes an existing LinkStatic model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing LinkStatic model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -175,12 +178,39 @@ class KeyValueController extends MyWebsiteController
     }
 
     /**
-    * Finds the LinkStatic model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return LinkStatic the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
+     * Finds the LinkStatic model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return LinkStatic the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

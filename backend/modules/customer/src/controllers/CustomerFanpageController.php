@@ -2,17 +2,18 @@
 
 namespace modava\customer\controllers;
 
-use modava\customer\models\table\CustomerFanpageTable;
-use yii\db\Exception;
-use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\customer\CustomerModule;
+use backend\components\MyComponent;
 use backend\components\MyController;
+use modava\customer\CustomerModule;
 use modava\customer\models\CustomerFanpage;
 use modava\customer\models\search\CustomerFanpageSearch;
+use modava\customer\models\table\CustomerFanpageTable;
+use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -21,8 +22,8 @@ use yii\web\Response;
 class CustomerFanpageController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -36,28 +37,30 @@ class CustomerFanpageController extends MyController
     }
 
     /**
-    * Lists all CustomerFanpage models.
-    * @return mixed
-    */
+     * Lists all CustomerFanpage models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new CustomerFanpageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single CustomerFanpage model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single CustomerFanpage model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -66,10 +69,10 @@ class CustomerFanpageController extends MyController
     }
 
     /**
-    * Creates a new CustomerFanpage model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new CustomerFanpage model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new CustomerFanpage();
@@ -101,18 +104,18 @@ class CustomerFanpageController extends MyController
     }
 
     /**
-    * Updates an existing CustomerFanpage model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing CustomerFanpage model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -140,12 +143,12 @@ class CustomerFanpageController extends MyController
     }
 
     /**
-    * Deletes an existing CustomerFanpage model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing CustomerFanpage model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -177,7 +180,38 @@ class CustomerFanpageController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionGetFanpageByOrigin(){
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
+     * @return array
+     */
+    public function actionGetFanpageByOrigin()
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (Yii::$app->request->isAjax) {
             $origin = Yii::$app->request->get('origin');
@@ -194,12 +228,12 @@ class CustomerFanpageController extends MyController
     }
 
     /**
-    * Finds the CustomerFanpage model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return CustomerFanpage the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the CustomerFanpage model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return CustomerFanpage the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

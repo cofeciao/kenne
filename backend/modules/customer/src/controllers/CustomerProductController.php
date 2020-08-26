@@ -2,16 +2,17 @@
 
 namespace modava\customer\controllers;
 
-use modava\customer\models\table\CustomerProductTable;
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\customer\CustomerModule;
+use backend\components\MyComponent;
 use backend\components\MyController;
+use modava\customer\CustomerModule;
 use modava\customer\models\CustomerProduct;
 use modava\customer\models\search\CustomerProductSearch;
+use modava\customer\models\table\CustomerProductTable;
+use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -43,9 +44,12 @@ class CustomerProductController extends MyController
         $searchModel = new CustomerProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalPage = $this->getTotalPage($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage' => $totalPage,
         ]);
     }
 
@@ -173,6 +177,33 @@ class CustomerProductController extends MyController
             ]);
         }
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $perpage
+     */
+    public function actionPerpage($perpage)
+    {
+        MyComponent::setCookies('pageSize', $perpage);
+    }
+
+    /**
+     * @param $dataProvider
+     * @return float|int
+     */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
     }
 
     /**
