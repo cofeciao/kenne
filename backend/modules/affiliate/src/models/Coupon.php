@@ -37,6 +37,10 @@ use Yii;
 class Coupon extends CouponTable
 {
     public $toastr_key = 'coupon';
+
+    const DISCOUNT_PERCENT = 0;
+    const DISCOUNT_AMOUNT = 1;
+
     public function behaviors()
     {
         return array_merge(

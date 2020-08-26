@@ -52,9 +52,7 @@ class CouponController extends RestfullController
             $model = new Order();
         }
 
-        $model->loadFromApi(Yii::$app->request->post());
-
-        if ($model->validate() && $model->save()) {
+        if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             Yii::$app->response->statusCode = 200;
             return [
                 'success' => 'true',
@@ -63,6 +61,17 @@ class CouponController extends RestfullController
             ];
         } else {
             Yii::$app->response->statusCode = 400;
+
+            if ($model->hasErrors('coupon_id')) {
+                $model->clearErrors('coupon_id');
+
+                if (Yii::$app->request->post('coupon_code')) {
+                    $model->addError('coupon_code', 'Mã coupon không tồn tại hoặc đã được sử dụng');
+                } else {
+                    $model->addError('coupon_code', 'Mã coupon không được để trống');
+                }
+            }
+
             return [
                 'success' => 'false',
                 'error' => [
