@@ -12,6 +12,7 @@ class m200825_035142_modify_table_order extends Migration
      */
     public function safeUp()
     {
+        $this->addColumn('affiliate_order', 'partner_customer_id', $this->integer(11)->null()->comment('Id khách hàng hệ thống partner'));
         $this->addColumn('affiliate_order', 'partner_order_code', $this->string()->null()->comment('Mã đơn hàng hệ thống partner'));
         $this->addColumn('affiliate_order', 'date_create', $this->integer(11)->notNull());
         $this->addColumn('affiliate_order', 'status', $this->smallInteger(2)->comment('0: Thanh toán, 1: Đặt cọc, 2: Hoàn cọc'));

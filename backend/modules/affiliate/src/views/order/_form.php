@@ -30,7 +30,7 @@ use \modava\affiliate\models\table\CouponTable;
             <?= $form->field($model, 'partner_order_code')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-6">
-            <?= $form->field($model, 'customer_id')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'partner_customer_id')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-6">
             <?= $form->field($model, 'date_create')->widget(DatePicker::class, [

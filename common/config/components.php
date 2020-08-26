@@ -64,8 +64,8 @@ return [
         'datetimeFormat' => 'php:d-m-Y H:i:s',
         'timeFormat' => 'php:H:i:s',
         'locale' => 'vi_VN',
-        'decimalSeparator' => ',',
-        'thousandSeparator' => ' ',
+        'decimalSeparator' => '.',
+        'thousandSeparator' => ',',
 //        'currencyCode' => '₫',
     ],
 ];

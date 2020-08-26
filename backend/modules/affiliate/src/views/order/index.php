@@ -7,6 +7,7 @@ use yii\grid\GridView;
 use backend\widgets\ToastrWidget;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -15,32 +16,32 @@ $this->title = AffiliateModule::t('affiliate', 'Orders');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
-<div class="container-fluid px-xxl-25 px-xl-10">
-    <?= NavbarWidgets::widget(); ?>
+    <div class="container-fluid px-xxl-25 px-xl-10">
+        <?= NavbarWidgets::widget(); ?>
 
-    <!-- Title -->
-    <div class="hk-pg-header">
-        <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
-        </h4>
-        <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= AffiliateModule::t('affiliate', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= AffiliateModule::t('affiliate', 'Create'); ?></a>
-    </div>
+        <!-- Title -->
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span
+                            class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
+            </h4>
+<!--            <a class="btn btn-outline-light" href="--><?//= \yii\helpers\Url::to(['create']); ?><!--"-->
+<!--               title="--><?//= AffiliateModule::t('affiliate', 'Create'); ?><!--">-->
+<!--                <i class="fa fa-plus"></i> --><?//= AffiliateModule::t('affiliate', 'Create'); ?><!--</a>-->
+        </div>
 
-    <!-- Row -->
-    <div class="row">
-        <div class="col-xl-12">
-            <section class="hk-sec-wrapper">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-xl-12">
+                <section class="hk-sec-wrapper">
 
-                <?php Pjax::begin(); ?>
-                <div class="row">
-                    <div class="col-sm">
-                        <div class="table-wrap">
-                            <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
-                                <?= GridView::widget([
-                                    'dataProvider' => $dataProvider,
-                                    'layout' => '
+                    <?php Pjax::begin(); ?>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="table-wrap">
+                                <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
+                                    <?= GridView::widget([
+                                        'dataProvider' => $dataProvider,
+                                        'layout' => '
                                         {errors}
                                         <div class="row">
                                             <div class="col-sm-12">
@@ -60,121 +61,161 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </div>
                                         </div>
                                     ',
-                                    'pager' => [
-                                        'firstPageLabel' => AffiliateModule::t('affiliate', 'First'),
-                                        'lastPageLabel' => AffiliateModule::t('affiliate', 'Last'),
-                                        'prevPageLabel' => AffiliateModule::t('affiliate', 'Previous'),
-                                        'nextPageLabel' => AffiliateModule::t('affiliate', 'Next'),
-                                        'maxButtonCount' => 5,
+                                        'pager' => [
+                                            'firstPageLabel' => AffiliateModule::t('affiliate', 'First'),
+                                            'lastPageLabel' => AffiliateModule::t('affiliate', 'Last'),
+                                            'prevPageLabel' => AffiliateModule::t('affiliate', 'Previous'),
+                                            'nextPageLabel' => AffiliateModule::t('affiliate', 'Next'),
+                                            'maxButtonCount' => 5,
 
-                                        'options' => [
-                                            'tag' => 'ul',
-                                            'class' => 'pagination',
-                                        ],
+                                            'options' => [
+                                                'tag' => 'ul',
+                                                'class' => 'pagination',
+                                            ],
 
-                                        // Customzing CSS class for pager link
-                                        'linkOptions' => ['class' => 'page-link'],
-                                        'activePageCssClass' => 'active',
-                                        'disabledPageCssClass' => 'disabled page-disabled',
-                                        'pageCssClass' => 'page-item',
+                                            // Customzing CSS class for pager link
+                                            'linkOptions' => ['class' => 'page-link'],
+                                            'activePageCssClass' => 'active',
+                                            'disabledPageCssClass' => 'disabled page-disabled',
+                                            'pageCssClass' => 'page-item',
 
-                                        // Customzing CSS class for navigating link
-                                        'prevPageCssClass' => 'paginate_button page-item',
-                                        'nextPageCssClass' => 'paginate_button page-item',
-                                        'firstPageCssClass' => 'paginate_button page-item',
-                                        'lastPageCssClass' => 'paginate_button page-item',
-                                    ],
-                                    'columns' => [
-                                        [
-                                            'class' => 'yii\grid\SerialColumn',
-                                            'header' => 'STT',
-                                            'headerOptions' => [
-                                                'width' => 60,
-                                                'rowspan' => 2
+                                            // Customzing CSS class for navigating link
+                                            'prevPageCssClass' => 'paginate_button page-item',
+                                            'nextPageCssClass' => 'paginate_button page-item',
+                                            'firstPageCssClass' => 'paginate_button page-item',
+                                            'lastPageCssClass' => 'paginate_button page-item',
+                                        ],
+                                        'columns' => [
+                                            [
+                                                'class' => 'yii\grid\SerialColumn',
+                                                'header' => 'STT',
+                                                'headerOptions' => [
+                                                    'width' => 60,
+                                                    'rowspan' => 2
+                                                ],
+                                                'filterOptions' => [
+                                                    'class' => 'd-none',
+                                                ],
                                             ],
-                                            'filterOptions' => [
-                                                'class' => 'd-none',
-                                            ],
-                                        ],
-                                                                            [
-                                            'attribute' => 'title',
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                    'title' => $model->title,
-                                                    'data-pjax' => 0,
-                                                ]);
-                                            }
-                                        ],
-                                        [
-                                            'attribute' => 'coupon_id',
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return Html::a($model->coupon->coupon_code, Url::toRoute(['coupon/view', 'id' => $model->coupon_id]), [
-                                                    'target' => '_blank',
-                                                    'data-pjax' => 0
-                                                ]);
-                                            }
-                                        ],
-										'pre_total',
-										'discount',
-										'final_total',
-										//'description:ntext',
-                                        [
-                                            'attribute' => 'created_by',
-                                            'value' => 'userCreated.userProfile.fullname',
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                        ],
-                                        [
-                                            'attribute' => 'created_at',
-                                            'format' => 'datetime',
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                        ],
-                                        [
-                                            'class' => 'yii\grid\ActionColumn',
-                                            'header' => AffiliateModule::t('affiliate', 'Actions'),
-                                            'template' => '{update} {delete}',
-                                            'buttons' => [
-                                                'update' => function ($url, $model) {
-                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => AffiliateModule::t('affiliate', 'Update'),
-                                                        'alia-label' => AffiliateModule::t('affiliate', 'Update'),
+                                            [
+                                                'attribute' => 'title',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
+                                                        'title' => $model->title,
                                                         'data-pjax' => 0,
-                                                        'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
-                                                'delete' => function ($url, $model) {
-                                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => AffiliateModule::t('affiliate', 'Delete'),
-                                                        'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => AffiliateModule::t('affiliate', 'Delete?'),
-                                                        'data-pjax' => 0,
-                                                        'data-url' => $url,
-                                                        'btn-success-class' => 'success-delete',
-                                                        'btn-cancel-class' => 'cancel-delete',
-                                                        'data-placement' => 'top'
-                                                    ]);
-                                                }
+                                                'headerOptions' => [
+                                                    'class' => 'header-200',
+                                                ]
                                             ],
-                                            'headerOptions' => [
-                                                'width' => 150,
+                                            [
+                                                'attribute' => 'coupon_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->coupon->coupon_code, Url::toRoute(['coupon/view', 'id' => $model->coupon_id]), [
+                                                        'target' => '_blank',
+                                                        'data-pjax' => 0
+                                                    ]);
+                                                },
+                                                'headerOptions' => [
+                                                    'class' => 'header-200',
+                                                ]
+                                            ],
+                                            [
+                                                'attribute' => 'status',
+                                                'value' => function ($model) {
+                                                    if ($model->status === null) return null;
+
+                                                    return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
+                                                },
+                                                'contentOptions' => [
+                                                    'class' => 'header-200'
+                                                ]
+                                            ],
+                                            'payment_method',
+                                            [
+                                                'attribute' => 'date_create',
+                                                'format' => 'datetime'
+                                            ],
+                                            [
+                                                'attribute' => 'pre_total',
+                                                'format' => 'currency',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right',
+                                                ]
+                                            ],
+                                            [
+                                                'attribute' => 'discount',
+                                                'format' => 'currency',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right',
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'final_total',
+                                                'format' => 'currency',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right',
+                                                ]
+                                            ],
+                                            //'description:ntext',
+                                            [
+                                                'attribute' => 'created_by',
+                                                'value' => 'userCreated.userProfile.fullname',
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'created_at',
+                                                'format' => 'datetime',
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
+                                                'class' => 'yii\grid\ActionColumn',
+                                                'header' => AffiliateModule::t('affiliate', 'Actions'),
+                                                'template' => '',
+                                                'buttons' => [
+                                                    'update' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                            'title' => AffiliateModule::t('affiliate', 'Update'),
+                                                            'alia-label' => AffiliateModule::t('affiliate', 'Update'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-info btn-xs'
+                                                        ]);
+                                                    },
+                                                    'delete' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                            'title' => AffiliateModule::t('affiliate', 'Delete'),
+                                                            'class' => 'btn btn-danger btn-xs btn-del',
+                                                            'data-title' => AffiliateModule::t('affiliate', 'Delete?'),
+                                                            'data-pjax' => 0,
+                                                            'data-url' => $url,
+                                                            'btn-success-class' => 'success-delete',
+                                                            'btn-cancel-class' => 'cancel-delete',
+                                                            'data-placement' => 'top'
+                                                        ]);
+                                                    }
+                                                ],
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
                                             ],
                                         ],
-                                    ],
-                                ]); ?>
-                                                            </div>
+                                    ]); ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php Pjax::end(); ?>
-            </section>
+                    <?php Pjax::end(); ?>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 <?php
 $script = <<< JS
 $('body').on('click', '.success-delete', function(e){
