@@ -76,6 +76,13 @@ $routeInfos = [
         'label' => AffiliateModule::t('affiliate', 'Unsatisfied Reason'),
         'icon' => '<span class="material-icons">face</span>',
     ],
+    [
+        'module' => 'affiliate',
+        'controllerId' => 'receipt',
+        'model' => 'Receipt',
+        'label' => AffiliateModule::t('affiliate', 'Receipt'),
+        'icon' => '<span class="material-icons">face</span>',
+    ],
 ];
 ?>
 <ul class="nav nav-tabs nav-sm nav-light mb-10">
