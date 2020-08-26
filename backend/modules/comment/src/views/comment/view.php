@@ -25,12 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
+            <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                 title="<?= CommentModule::t('comment', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CommentModule::t('comment>', 'Create'); ?></a>
-            <?= Html::a(CommentModule::t('comment>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(CommentModule::t('comment>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
             <?= Html::a(CommentModule::t('comment>', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger btn-sm',
                 'data' => [
                     'confirm' => CommentModule::t('comment', 'Are you sure you want to delete this item?'),
                     'method' => 'post',

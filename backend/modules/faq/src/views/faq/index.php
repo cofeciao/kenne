@@ -1,14 +1,14 @@
 <?php
 
+use backend\widgets\ToastrWidget;
 use modava\auth\models\User;
 use modava\faq\FaqModule;
 use modava\faq\widgets\JsUtils;
 use modava\faq\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use backend\widgets\ToastrWidget;
+use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
-use \yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\faq\models\search\FaqSearch */
@@ -31,8 +31,7 @@ $this->registerCss('
             <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
-            <button class="btn btn-outline-light" type="button" onclick="openCreateModal({model: 'Faq',
-    });"
+            <button class="btn btn-outline-light btn-sm" type="button" onclick="openCreateModal({model: 'Faq'rrrrrrrrrrrrrrrrrrrrrr1});"
                     title="<?= FaqModule::t('faq', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= FaqModule::t('faq', 'Create Question'); ?></button>
         </div>
