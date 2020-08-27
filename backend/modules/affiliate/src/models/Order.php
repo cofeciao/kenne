@@ -26,6 +26,8 @@ use Yii;
  * @property int $date_create Ngày tạo
  * @property int $status Tình trạng đơn hàng
  * @property int $payment_method Phương thức thanh toán
+ * @property string $partner_order_code Mã code order hệ thống partner
+ * @property string $partner_customer_id Mã KH hệ thống partner
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
@@ -110,7 +112,7 @@ class Order extends OrderTable
             [['coupon_id', 'status',], 'integer'],
             [['pre_total', 'discount', 'final_total'], 'number'],
             [['description', 'payment_method'], 'string'],
-            [['date_create',], 'safe'],
+            [['date_create', 'partner_order_code', 'partner_customer_id'], 'safe'],
             [['title', 'slug', 'partner_order_code'], 'string', 'max' => 255],
             [['slug'], 'unique'],
             [['coupon_id'], 'exist', 'skipOnError' => true, 'targetClass' => Coupon::class, 'targetAttribute' => ['coupon_id' => 'id']],
@@ -141,6 +143,7 @@ class Order extends OrderTable
             'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
             'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh toán'),
             'partner_order_code' => AffiliateModule::t('affiliate', 'Mã đơn hàng hệ thống partner'),
+            'partner_customer_id' => AffiliateModule::t('affiliate', 'Mã KH hệ thống partner'),
         ];
     }
 
