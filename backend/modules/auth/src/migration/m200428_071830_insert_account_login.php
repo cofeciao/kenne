@@ -16,6 +16,7 @@ class m200428_071830_insert_account_login extends Migration
             'id' => '1',
             'username' => 'admin',
             'auth_key' => 'A8DUoLxLHFdxvVzVOdS4OrvzY8xjk97s',
+            'access_token' => 'rcc6aC6HfUpenPJs9OP49xqysRJTmpbvfXgIpThw',
             'password_hash' => '$2y$13$86/bGSUBrrWjvLBQWMO62.aJT2TxRCVErW7mIbYFG5VQnQ4D2zskK',
             'email' => 'mongdaovan86.wd@gmail.com',
             'status' => '10',
