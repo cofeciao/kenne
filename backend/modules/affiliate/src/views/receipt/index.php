@@ -125,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'value' => function ($model) {
                                                     if ($model->status === null) return null;
 
-                                                    return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
+                                                    return Yii::$app->getModule('affiliate')->params['receipt_status'][$model->status];
                                                 },
                                             ],
                                             'total:currency',

@@ -5,6 +5,7 @@ namespace modava\affiliate\models;
 use common\models\User;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\table\ReceiptTable;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use common\helpers\MyHelper;
@@ -28,11 +29,15 @@ use Yii;
  *
  * @property User $createdBy
  * @property User $updatedBy
- * @property AffiliateOrder $order
+ * @property Order $order
  */
 class Receipt extends ReceiptTable
 {
     public $toastr_key = 'receipt';
+
+    const STATUS_THANH_TOAN = 0;
+    const STATUS_DAT_COC = 1;
+    const STATUS_HOAN_COC = 2;
 
     public function behaviors()
     {
@@ -125,4 +130,53 @@ class Receipt extends ReceiptTable
     {
         return $this->hasOne(Order::class, ['id' => 'order_id']);
     }
+
+
+    public function loadFromApi($params) {
+        $formName = $this->formName();
+        $paramsPrepare = [];
+
+        if (array_key_exists('order_code', $params)) {
+            $order = Order::findOne(['partner_order_code' => $params['order_code']]);
+
+            if ($order) {
+                $params['order_id'] = $order->primaryKey;
+            }
+        }
+
+        foreach ($params as $k => $v) {
+            $paramsPrepare[$formName][$k] = $v;
+        }
+
+        return $this->load($paramsPrepare);
+    }
+
+    /*public function afterSave($insert, $changedAttributes)
+    {
+        if ($this->status == self::STATUS_HOAN_COC && $this->order_id) {
+            $order = Order::findOne($this->order_id);
+            $order->status = self::STATUS_HOAN_COC;
+            $order->save();
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function updateOrderStatus($orderId, $status) {
+        $query = "SELECT status, title
+                FROM affiliate_receipt
+                WHERE order_id = {$this->order_id}
+                GROUP BY status";
+
+        $receiptByStatus = Yii::$app->db->createCommand($query)->queryColumn();
+
+        if (array_search(self::STATUS_HOAN_COC, $receiptByStatus)) {
+            $status = self::STATUS_HOAN_COC;
+        } else if (array_search(self::STATUS_HOAN_COC, $receiptByStatus)) {
+
+        }
+
+        $order = Order::findOne($orderId);
+        $order->status = $status;
+        $order->save();
+    }*/
 }

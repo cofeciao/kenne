@@ -48,7 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
 						'title',
-						'order_id',
 						[
                             'attribute' => 'order_id',
                             'format' => 'raw',
@@ -61,19 +60,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                                 if ($model->status === null) return null;
 
-                                return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
+                                return Yii::$app->getModule('affiliate')->params['receipt_status'][$model->status];
                             },
                         ],
 						'total:currency',
-                        [
-                            'attribute' => 'status',
-                            'value' => function ($model) {
-                                return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
-                            }
-                        ],
 						'payment_method',
-						'created_at',
-						'updated_at',
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => AffiliateModule::t('receipt', 'Created By')

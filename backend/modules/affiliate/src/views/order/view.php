@@ -45,6 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]);
                             }
                         ],
+                        'partner_order_code',
+                        'partner_customer_id',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {

@@ -123,6 +123,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'class' => 'header-200',
                                                 ]
                                             ],
+                                            'partner_order_code',
+                                            'partner_customer_id',
                                             [
                                                 'attribute' => 'status',
                                                 'value' => function ($model) {

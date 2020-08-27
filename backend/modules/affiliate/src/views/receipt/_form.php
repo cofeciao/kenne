@@ -26,7 +26,7 @@ use modava\affiliate\AffiliateModule;
         </div>
         <div class="col-6">
             <?= $form->field($model, 'status')->dropDownList(
-                Yii::$app->getModule('affiliate')->params['order_status'],
+                Yii::$app->getModule('affiliate')->params['receipt_status'],
                 ['prompt' => AffiliateModule::t('affiliate', 'Select an option ...')]
             ) ?>
         </div>
