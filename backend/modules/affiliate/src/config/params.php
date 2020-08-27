@@ -54,9 +54,14 @@ return [
         '1' => AffiliateModule::t('affiliate', 'Satisfied'),
         '2' => AffiliateModule::t('affiliate', 'Bình thường'),
     ],
-    'order_status' => [
+    'receipt_status' => [
         '0' => AffiliateModule::t('affiliate', 'Thanh toán'),
         '1' => AffiliateModule::t('affiliate', 'Đặt cọc'),
         '2' => AffiliateModule::t('affiliate', 'Hoàn Cọc'),
+    ],
+    'order_status' => [
+        '0' => AffiliateModule::t('affiliate', 'Chưa hoàn thành'),
+        '1' => AffiliateModule::t('affiliate', 'Hoàn thành'),
+        '2' => AffiliateModule::t('affiliate', 'Hủy'),
     ]
 ];

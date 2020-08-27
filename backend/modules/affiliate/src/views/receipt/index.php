@@ -1,21 +1,22 @@
 <?php
 
-use modava\product\ProductModule;
-use common\grid\MyGridView;
+use modava\affiliate\AffiliateModule;
+use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
+use common\grid\MyGridView;
+use backend\widgets\ToastrWidget;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\product\models\search\ProductTypeSearch */
+/* @var $searchModel modava\affiliate\models\search\ReceiptSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = ProductModule::t('product', 'Product type');
-$this->params['breadcrumbs'][] = ['label' => ProductModule::t('product', 'Product'), 'url' => ['/product']];
+$this->title = AffiliateModule::t('receipt', 'Receipts');
 $this->params['breadcrumbs'][] = $this->title;
-\backend\widgets\ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']);
 ?>
-    <div class="container-fluid px-xxl-25 px-xl-10">
-        <?= \modava\product\widgets\NavbarWidgets::widget(); ?>
+    <div class="container-fluid px-xxl-15 px-xl-10">
+        <?= NavbarWidgets::widget(); ?>
 
         <!-- Title -->
         <div class="hk-pg-header">
@@ -23,16 +24,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= ProductModule::t('product', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= ProductModule::t('product', 'Create'); ?></a>
+               title="<?= AffiliateModule::t('receipt', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= AffiliateModule::t('receipt', 'Create'); ?></a>
         </div>
 
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
-                <section class="hk-sec-wrapper index">
+                <section class="hk-sec-wrapper">
 
-                    <?php Pjax::begin(['id' => 'product-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
+                    <?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
+                    <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
@@ -40,20 +42,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
-                                            {errors} 
-                                            <div class="pane-single-table">
-                                                {items}
-                                            </div>
-                                            <div class="pager-wrap clearfix">
-                                                {summary}' .
+                                        {errors}
+                                        <div class="pane-single-table">
+                                            {items}
+                                        </div>
+                                        <div class="pager-wrap clearfix">
+                                            {summary}' .
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageTo', [
                                                 'totalPage' => $totalPage,
                                                 'currentPage' => Yii::$app->request->get($dataProvider->getPagination()->pageParam)
                                             ]) .
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize') .
                                             '{pager}
-                                            </div>
-                                        ',
+                                        </div>
+                                    ',
                                         'tableOptions' => [
                                             'id' => 'dataTable',
                                             'class' => 'dt-grid dt-widget pane-hScroll',
@@ -66,15 +68,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => ProductModule::t('product', 'First'),
-                                            'lastPageLabel' => ProductModule::t('product', 'Last'),
-                                            'prevPageLabel' => ProductModule::t('product', 'Previous'),
-                                            'nextPageLabel' => ProductModule::t('product', 'Next'),
+                                            'firstPageLabel' => AffiliateModule::t('receipt', 'First'),
+                                            'lastPageLabel' => AffiliateModule::t('receipt', 'Last'),
+                                            'prevPageLabel' => AffiliateModule::t('receipt', 'Previous'),
+                                            'nextPageLabel' => AffiliateModule::t('receipt', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
                                                 'tag' => 'ul',
-                                                'class' => 'pagination',
+                                                'class' => 'pagination pull-left',
                                             ],
 
                                             // Customzing CSS class for pager link
@@ -94,10 +96,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'yii\grid\SerialColumn',
                                                 'header' => 'STT',
                                                 'headerOptions' => [
-                                                    'width' => 50,
+                                                    'width' => 60,
+                                                    'rowspan' => 2
+                                                ],
+                                                'filterOptions' => [
+                                                    'class' => 'd-none',
                                                 ],
                                             ],
-
                                             [
                                                 'attribute' => 'title',
                                                 'format' => 'raw',
@@ -108,23 +113,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 }
                                             ],
-                                            'description:html',
                                             [
-                                                'attribute' => 'language',
+                                                'attribute' => 'order_id',
+                                                'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    if ($model->language == null)
-                                                        return null;
-                                                    return Yii::$app->params['availableLocales'][$model->language];
-                                                },
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
+                                                    return Html::a($model->order->title, Url::toRoute(['order/view', 'id' => $model->order_id]));
+                                                }
                                             ],
                                             [
                                                 'attribute' => 'status',
                                                 'value' => function ($model) {
-                                                    return Yii::$app->getModule('product')->params['status'][$model->status];
+                                                    if ($model->status === null) return null;
+
+                                                    return Yii::$app->getModule('affiliate')->params['receipt_status'][$model->status];
                                                 },
+                                            ],
+                                            'total:currency',
+                                            'payment_method',
+                                            [
+                                                'attribute' => 'created_by',
+                                                'value' => 'userCreated.userProfile.fullname',
                                                 'headerOptions' => [
                                                     'width' => 150,
                                                 ],
@@ -136,34 +144,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'width' => 150,
                                                 ],
                                             ],
-                                            //'updated_at',
-                                            [
-                                                'attribute' => 'created_by',
-                                                'value' => 'userCreated.userProfile.fullname',
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            //'updated_by',
-
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'header' => ProductModule::t('product', 'Actions'),
+                                                'header' => AffiliateModule::t('receipt', 'Actions'),
                                                 'template' => '{update} {delete}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                            'title' => ProductModule::t('product', 'Update'),
-                                                            'alia-label' => ProductModule::t('product', 'Update'),
+                                                            'title' => AffiliateModule::t('receipt', 'Update'),
+                                                            'alia-label' => AffiliateModule::t('receipt', 'Update'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-info btn-xs'
                                                         ]);
                                                     },
                                                     'delete' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                            'title' => ProductModule::t('product', 'Delete'),
+                                                            'title' => AffiliateModule::t('receipt', 'Delete'),
                                                             'class' => 'btn btn-danger btn-xs btn-del',
-                                                            'data-title' => ProductModule::t('product', 'Delete?'),
+                                                            'data-title' => AffiliateModule::t('receipt', 'Delete?'),
                                                             'data-pjax' => 0,
                                                             'data-url' => $url,
                                                             'btn-success-class' => 'success-delete',
@@ -178,26 +176,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                         ],
                                     ]); ?>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <?php Pjax::end(); ?>
                 </section>
             </div>
         </div>
-
     </div>
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $script = <<< JS
-var customPjax = new myGridView();
-customPjax.init({
-    pjaxId: '#product-pjax',
-    urlChangePageSize: '$urlChangePageSize',
-});
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();
     var url = $(this).attr('href') || null;
@@ -205,6 +195,11 @@ $('body').on('click', '.success-delete', function(e){
         $.post(url);
     }
     return false;
+});
+var customPjax = new myGridView();
+customPjax.init({
+pjaxId: '#dt-pjax',
+urlChangePageSize: '$urlChangePageSize',
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

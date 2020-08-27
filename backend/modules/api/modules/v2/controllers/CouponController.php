@@ -3,6 +3,7 @@
 namespace backend\modules\api\modules\v2\controllers;
 
 use modava\affiliate\models\Order;
+use modava\affiliate\models\Receipt;
 use Yii;
 use backend\modules\api\modules\v2\components\RestfullController;
 use modava\affiliate\AffiliateModule;
@@ -69,6 +70,55 @@ class CouponController extends RestfullController
                     $model->addError('coupon_code', 'Mã coupon không tồn tại hoặc đã được sử dụng');
                 } else {
                     $model->addError('coupon_code', 'Mã coupon không được để trống');
+                }
+            }
+
+            return [
+                'success' => 'false',
+                'error' => [
+                    'code' => 400,
+                    'message' => $model->getErrors()
+                ]
+            ];
+        }
+    }
+    public function actionSaveReceipt() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->get('id');
+
+        if ($id) {
+            $model = Receipt::findOne($id);
+            if ($model === null) {
+                Yii::$app->response->statusCode = 404;
+                return [
+                    'success' => false,
+                    'error' => [
+                        'code' => 404,
+                        'message' => "not found"
+                    ]
+                ];
+            }
+        } else {
+            $model = new Receipt();
+        }
+
+        if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+            Yii::$app->response->statusCode = 200;
+            return [
+                'success' => 'true',
+                'code' => 200,
+                'data' => $model->getAttributes(),
+            ];
+        } else {
+            Yii::$app->response->statusCode = 400;
+
+            if ($model->hasErrors('order_id')) {
+                $model->clearErrors('order_id');
+
+                if (Yii::$app->request->post('order_code')) {
+                    $model->addError('order_code', 'Mã đơn hàng không tồn tại');
+                } else {
+                    $model->addError('order_code', 'Mã đơn hàng không được để trống');
                 }
             }
 
