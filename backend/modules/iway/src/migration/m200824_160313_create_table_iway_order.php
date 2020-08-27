@@ -22,13 +22,13 @@ class m200824_160313_create_table_iway_order extends Migration
             }
             $this->createTable('iway_order', [
                 'id' => $this->primaryKey(),
-                'customer_id' => $this->integer(11)->notNull()->comment('Mã khách hàng'),
                 'code' => $this->string(100)->null()->comment('Mã đơn hàng'),
+                'ordered_at' => $this->integer(11)->null()->comment('Ngày lập đơn'),
+                'customer_id' => $this->integer(11)->notNull()->comment('Mã khách hàng'),
+                'status' => $this->string()->null()->comment('Tình trạng đơn hàng'),
+                'co_so' => $this->integer(11)->null()->comment('Đơn hàng lập ở cơ sở nào'),
                 'total' => $this->double('16,2')->null()->defaultValue(0)->comment('Tổng tiền'),
                 'discount' => $this->double('16,2')->null()->defaultValue(0)->comment('Chiết khấu'),
-                'status' => $this->string()->null()->comment('"chưa hoàn thành, hoàn thành"'),
-                'co_so' => $this->integer(11)->null()->comment('Đơn hàng lập ở cơ sở nào'),
-                'ordered_at' => $this->integer(11)->null()->comment('Ngày lập đơn'),
                 'created_at' => $this->integer(11)->null()->comment('Ngày nhập đơn vào hệ thống'),
                 'updated_at' => $this->integer(11)->null(),
                 'created_by' => $this->integer(11)->null()->defaultValue(1),

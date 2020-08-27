@@ -2,12 +2,151 @@
 
 namespace modava\iway\models;
 
-use modava\iway\components\MyIwayModel;
+use common\models\User;
+use modava\iway\IwayModule;
+use modava\iway\models\table\CustomerTable;
+use modava\location\models\LocationCountry;
+use modava\location\models\LocationDistrict;
+use modava\location\models\LocationProvince;
+use modava\location\models\LocationWard;
+use yii\behaviors\BlameableBehavior;
+use yii\db\ActiveRecord;
+use Yii;
 
-class Customer extends MyIwayModel
+/**
+* This is the model class for table "iway_customer".
+*
+    * @property int $id
+    * @property string $code
+    * @property string $name
+    * @property string $birthday
+    * @property string $sex
+    * @property string $phone
+    * @property string $address
+    * @property int $ward_id
+    * @property string $avatar
+    * @property int $fanpage_id
+    * @property string $type Chưa xác định - Khách online - Khách vãng lai ... 
+    * @property int $online_sales Quyền thuộc về nhân viên nào
+    * @property string $sale_online_note Ghi chú của Sales Online
+    * @property int $direct_sale_id Direct Sale phụ trách
+    * @property string $direct_sale_note Ghi chú của Direct Sale
+    * @property int $co_so
+    * @property string $status Tình trạng khách hàng
+    * @property int $created_at
+    * @property int $created_by
+    * @property int $updated_at
+    * @property int $updated_by
+    *
+            * @property CoSo $coSo
+            * @property User $createdBy
+            * @property User $directSale
+            * @property User $permissionUser
+            * @property User $updatedBy
+            * @property LocationWard $ward0
+            * @property Fanpage $fanpage
+            * @property Order[] $iwayOrders
+    */
+class Customer extends CustomerTable
 {
-    public static function tableName()
+    public $toastr_key = 'customer';
+    public function behaviors()
     {
-        return 'iway_customer';
+        return array_merge(
+            parent::behaviors(),
+            [
+                [
+                    'class' => BlameableBehavior::class,
+                    'createdByAttribute' => 'created_by',
+                    'updatedByAttribute' => 'updated_by',
+                ],
+                'timestamp' => [
+                    'class' => 'yii\behaviors\TimestampBehavior',
+                    'preserveNonEmptyValues' => false,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function rules()
+    {
+        return [
+			[['name', 'phone', 'type', 'online_sales'], 'required'],
+			[['birthday'], 'safe'],
+			[['fanpage_id', 'online_sales', 'direct_sale_id', 'co_so', 'country_id', 'province_id', 'district_id', 'ward_id'], 'integer'],
+			[['code', 'name', 'sex', 'address', 'avatar', 'type', 'sale_online_note', 'direct_sale_note', 'status'], 'string', 'max' => 255],
+			[['phone'], 'string', 'max' => 30],
+            [['sex'], 'string', 'max' => 255],
+			[['co_so'], 'exist', 'skipOnError' => true, 'targetClass' => CoSo::class, 'targetAttribute' => ['co_so' => 'id']],
+			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+			[['direct_sale_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['direct_sale_id' => 'id']],
+			[['online_sales'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['online_sales' => 'id']],
+			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationCountry::class, 'targetAttribute' => ['country_id' => 'id']],
+            [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationProvince::class, 'targetAttribute' => ['province_id' => 'id']],
+            [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationDistrict::class, 'targetAttribute' => ['district_id' => 'id']],
+            [['ward_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationWard::class, 'targetAttribute' => ['ward_id' => 'id']],
+			[['fanpage_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fanpage::class, 'targetAttribute' => ['fanpage_id' => 'id']],
+		];
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function attributeLabels()
+    {
+        return [
+            'id' => IwayModule::t('iway', 'ID'),
+            'code' => IwayModule::t('iway', 'Code'),
+            'name' => IwayModule::t('iway', 'Tên'),
+            'birthday' => IwayModule::t('iway', 'Ngày sinh'),
+            'sex' => IwayModule::t('iway', 'Giới tinh'),
+            'phone' => IwayModule::t('iway', 'Số điện thoại'),
+            'avatar' => IwayModule::t('iway', 'Avatar'),
+            'fanpage_id' => IwayModule::t('iway', 'Fanpage'),
+            'type' => IwayModule::t('iway', 'Loại khách hàng'),
+            'online_sales' => IwayModule::t('iway', 'Online Sales'),
+            'sale_online_note' => IwayModule::t('iway', 'Ghi chú của SalesOnline'),
+            'direct_sale_id' => IwayModule::t('iway', 'Direct Sale'),
+            'direct_sale_note' => IwayModule::t('iway', 'Ghi chú của DirectSales'),
+            'co_so' => IwayModule::t('iway', 'Cơ sở'),
+            'status' => IwayModule::t('iway', 'Tình trạng'),
+            'created_at' => IwayModule::t('iway', 'Created At'),
+            'created_by' => IwayModule::t('iway', 'Created By'),
+            'updated_at' => IwayModule::t('iway', 'Updated At'),
+            'updated_by' => IwayModule::t('iway', 'Updated By'),
+            'country_id' => IwayModule::t('iway', 'Quốc gia'),
+            'province_id' => IwayModule::t('iway', 'Tỉnh/thành phố'),
+            'district_id' => IwayModule::t('iway', 'Quận/huyện'),
+            'ward_id' => IwayModule::t('iway', 'Phường/xã'),
+            'address' => IwayModule::t('iway', 'Địa chỉ'),
+        ];
+    }
+
+    /**
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUserCreated()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+    public function getUserUpdated()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 }

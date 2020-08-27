@@ -13,6 +13,36 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
+        'controllerId' => 'customer',
+        'label' => IwayModule::t('iway', 'Khách hàng'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'co-so',
+        'label' => IwayModule::t('iway', 'Cơ sở'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'origin',
+        'label' => IwayModule::t('iway', 'Origin'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'agency',
+        'label' => IwayModule::t('iway', 'Agency'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'fanpage',
+        'label' => IwayModule::t('iway', 'Fanpage'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
         'controllerId' => 'dropdowns-config',
         'label' => IwayModule::t('iway', 'Cấu hình dropdowns'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
