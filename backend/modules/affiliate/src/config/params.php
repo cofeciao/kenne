@@ -9,6 +9,10 @@ return [
         '0' => AffiliateModule::t('affiliate', 'Tạm ngưng'),
         '1' => AffiliateModule::t('affiliate', 'Hiển thị'),
     ],
+    'active' => [
+        '0' => AffiliateModule::t('affiliate', 'Ngừng hoạt động'),
+        '1' => AffiliateModule::t('affiliate', 'Hoạt động'),
+    ],
     'sex' => [
         '0' => AffiliateModule::t('affiliate', 'Female'),
         '1' => AffiliateModule::t('affiliate', 'Male'),
