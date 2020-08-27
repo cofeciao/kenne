@@ -12,27 +12,28 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "affiliate_receipt".
-*
-    * @property int $id
-    * @property string $slug
-    * @property string $title
-    * @property int $order_id Mã đơn hàng
-    * @property string $total Số tiền
-    * @property int $status 0: Thanh toán, 1: Đặt cọc, 2: Hoàn cọc
-    * @property string $payment_method Số tiền còn lại
-    * @property int $created_at
-    * @property int $updated_at
-    * @property int $created_by
-    * @property int $updated_by
-    *
-            * @property User $createdBy
-            * @property User $updatedBy
-            * @property AffiliateOrder $order
-    */
+ * This is the model class for table "affiliate_receipt".
+ *
+ * @property int $id
+ * @property string $slug
+ * @property string $title
+ * @property int $order_id Mã đơn hàng
+ * @property string $total Số tiền
+ * @property int $status 0: Thanh toán, 1: Đặt cọc, 2: Hoàn cọc
+ * @property string $payment_method Số tiền còn lại
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ *
+ * @property User $createdBy
+ * @property User $updatedBy
+ * @property AffiliateOrder $order
+ */
 class Receipt extends ReceiptTable
 {
     public $toastr_key = 'receipt';
+
     public function behaviors()
     {
         return array_merge(
@@ -64,35 +65,35 @@ class Receipt extends ReceiptTable
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-			[['slug', 'title', 'order_id', 'total', 'status', 'created_at', 'updated_at'], 'required'],
-			[['order_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-			[['total'], 'number'],
-			[['slug', 'title', 'payment_method'], 'string', 'max' => 255],
-			[['slug'], 'unique'],
-			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-			[['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => AffiliateOrder::class, 'targetAttribute' => ['order_id' => 'id']],
-		];
+            [['slug', 'title', 'order_id', 'total',], 'required'],
+            [['order_id', 'status',], 'integer'],
+            [['total'], 'number'],
+            [['slug', 'title', 'payment_method'], 'string', 'max' => 255],
+            [['slug'], 'unique'],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
+        ];
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
             'id' => AffiliateModule::t('affiliate', 'ID'),
             'slug' => AffiliateModule::t('affiliate', 'Slug'),
             'title' => AffiliateModule::t('affiliate', 'Title'),
-            'order_id' => AffiliateModule::t('affiliate', 'Order ID'),
-            'total' => AffiliateModule::t('affiliate', 'Total'),
-            'status' => AffiliateModule::t('affiliate', 'Status'),
-            'payment_method' => AffiliateModule::t('affiliate', 'Payment Method'),
+            'order_id' => AffiliateModule::t('affiliate', 'Đơn hàng'),
+            'total' => AffiliateModule::t('affiliate', 'Số tiền'),
+            'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
+            'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh thoán'),
             'created_at' => AffiliateModule::t('affiliate', 'Created At'),
             'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
             'created_by' => AffiliateModule::t('affiliate', 'Created By'),
@@ -101,22 +102,27 @@ class Receipt extends ReceiptTable
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getOrder()
+    {
+        return $this->hasOne(Order::class, ['id' => 'order_id']);
     }
 }

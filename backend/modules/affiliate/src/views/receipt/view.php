@@ -47,15 +47,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'slug',
 						'title',
 						'order_id',
-						'total',
+						[
+                            'attribute' => 'order_id',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return Html::a($model->order->title, Url::toRoute(['order/view', 'id' => $model->order_id]));
+                            }
+                        ],
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('receipt')->params['status'][$model->status];
+                                if ($model->status === null) return null;
+
+                                return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
+                            },
+                        ],
+						'total:currency',
+                        [
+                            'attribute' => 'status',
+                            'value' => function ($model) {
+                                return Yii::$app->getModule('affiliate')->params['order_status'][$model->status];
                             }
                         ],
 						'payment_method',
