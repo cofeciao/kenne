@@ -1,5 +1,6 @@
 <?php
 use modava\affiliate\AffiliateModule;
+use modava\affiliate\models\Coupon;
 
 return [
     'affiliateName' => 'Affiliate',
@@ -18,8 +19,8 @@ return [
         '1' => AffiliateModule::t('affiliate', 'Đã hoàn thành dịch vụ'),
     ],
     'promotion_type' => [
-        '0' => AffiliateModule::t('affiliate', 'Discount Percent In Order'),
-        '1' => AffiliateModule::t('affiliate', 'Discount Amount In Order'),
+        Coupon::DISCOUNT_PERCENT => AffiliateModule::t('affiliate', 'Discount Percent In Order'),
+        Coupon::DISCOUNT_AMOUNT => AffiliateModule::t('affiliate', 'Discount Amount In Order'),
     ],
     'myauris_config' => [
         'url_website' => "https://dashboard.myauris.vn",

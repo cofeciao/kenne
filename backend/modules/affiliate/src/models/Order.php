@@ -5,6 +5,7 @@ namespace modava\affiliate\models;
 use common\models\User;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\table\OrderTable;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use common\helpers\MyHelper;
@@ -64,6 +65,37 @@ class Order extends OrderTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['discount'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['discount'],
+                    ],
+                    'value' => function ($event) {
+                        $coupon = $this->coupon;
+                        $promotion_type = $coupon->promotion_type;
+
+                        if ($promotion_type === Coupon::DISCOUNT_PERCENT) {
+                            $discountValue = ($coupon->promotion_value / 100) * $this->pre_total;
+                        } else {
+                            $discountValue = $coupon->promotion_value;
+                        }
+
+                        return $discountValue;
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['final_total'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['final_total'],
+                    ],
+                    'value' => function ($event) {
+                        $this->final_total = (float) $this->pre_total - (float) $this->discount;
+
+                        return $this->final_total > 0 ? $this->final_total : 0;
+                    },
+                ],
             ]
         );
     }
@@ -74,7 +106,7 @@ class Order extends OrderTable
     public function rules()
     {
         return [
-            [['title', 'slug', 'coupon_id', 'pre_total', 'discount', 'final_total',], 'required'],
+            [['title', 'slug', 'coupon_id', 'pre_total', 'date_create', 'status', 'payment_method',], 'required'],
             [['coupon_id', 'status',], 'integer'],
             [['pre_total', 'discount', 'final_total'], 'number'],
             [['description', 'payment_method'], 'string'],
@@ -105,7 +137,7 @@ class Order extends OrderTable
             'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
             'created_by' => AffiliateModule::t('affiliate', 'Created By'),
             'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
-            'date_create' => AffiliateModule::t('affiliate', 'Ngày tạo'),
+            'date_create' => AffiliateModule::t('affiliate', 'Ngày đơn hàng'),
             'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
             'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh toán'),
             'partner_order_code' => AffiliateModule::t('affiliate', 'Mã đơn hàng hệ thống partner'),
@@ -141,10 +173,18 @@ class Order extends OrderTable
         $formName = $this->formName();
         $paramsPrepare = [];
 
+        if (array_key_exists('coupon_code', $params)) {
+            $coupon = Coupon::checkCoupon($params['coupon_code']);
+
+            if ($coupon) {
+                $params['coupon_id'] = $coupon->primaryKey;
+            }
+        }
+
         foreach ($params as $k => $v) {
             $paramsPrepare[$formName][$k] = $v;
         }
 
-        $this->load($paramsPrepare);
+        return $this->load($paramsPrepare);
     }
 }
