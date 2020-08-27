@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\modules\v2\controllers;
 
+use yii\db\Exception;
 use modava\affiliate\models\Order;
 use modava\affiliate\models\Receipt;
 use Yii;
@@ -14,7 +15,8 @@ class CouponController extends RestfullController
 {
     public $modelClass = 'backend\modules\api\modules\v1\models\UserApi';
 
-    public function actionCheckCode() {
+    public function actionCheckCode()
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $code = \Yii::$app->request->get('code');
 
@@ -33,7 +35,8 @@ class CouponController extends RestfullController
         ];
     }
 
-    public function actionSaveOrder() {
+    public function actionSaveOrder()
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $id = Yii::$app->request->get('id');
 
@@ -82,7 +85,9 @@ class CouponController extends RestfullController
             ];
         }
     }
-    public function actionSaveReceipt() {
+
+    public function actionSaveReceipt()
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $id = Yii::$app->request->get('id');
 
@@ -130,5 +135,61 @@ class CouponController extends RestfullController
                 ]
             ];
         }
+    }
+
+    public function actionDeleteRecord()
+    {
+        $target = Yii::$app->request->post('target');
+        $id = Yii::$app->request->post('id');
+
+        switch ($target) {
+            case 'Receipt':
+                $model = Receipt::findOne($id);
+                break;
+            case 'Order':
+                $model = Order::findOne($id);
+                break;
+            default:
+                $model = null;
+                break;
+        }
+
+        if ($model == null) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => 'false',
+                'error' => [
+                    'code' => 400,
+                    'message' => [AffiliateModule::t('affiliate', '{target} không tồn tại', ['target' => $target])]
+                ]
+            ];
+        }
+
+        try {
+            if ($model->delete()) {
+                $code = 200;
+                Yii::$app->response->statusCode = $code;
+                $message = AffiliateModule::t('affiliate', 'Xóa thành công');
+                $status = 'true';
+            } else {
+                $code = 406;
+                Yii::$app->response->statusCode = $code;
+                $message = $model->getErrors();
+                $status = 'false';
+            }
+        } catch (Exception $ex) {
+            $code = 406;
+            Yii::$app->response->statusCode = $code;
+            $message = [$ex->getMessage()];
+            $status = 'false';
+        }
+
+        return [
+            'success' => $status,
+            'error' => [
+                'code' => $code,
+                'message' => $message
+            ]
+        ];
     }
 }
