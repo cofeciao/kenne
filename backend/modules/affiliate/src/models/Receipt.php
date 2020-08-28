@@ -21,7 +21,7 @@ use Yii;
  * @property int $order_id Mã đơn hàng
  * @property string $total Số tiền
  * @property int $status 0: Thanh toán, 1: Đặt cọc, 2: Hoàn cọc
- * @property string $payment_method Số tiền còn lại
+ * @property string $payment_method Phương thức thanh toán
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by

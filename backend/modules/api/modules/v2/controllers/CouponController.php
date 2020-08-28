@@ -25,7 +25,8 @@ class CouponController extends RestfullController
         if ($coupon) {
             return [
                 'success' => true,
-                'message' => AffiliateModule::t('affiliate', 'Mã code do khách hàng {full_name} giới thiệu', ['full_name' => $coupon->customer->full_name])
+                'message' => AffiliateModule::t('affiliate', 'Mã code do khách hàng {full_name} giới thiệu', ['full_name' => $coupon->customer->full_name]),
+                'data' => $coupon->getAttributes()
             ];
         }
 
@@ -59,7 +60,7 @@ class CouponController extends RestfullController
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             Yii::$app->response->statusCode = 200;
             return [
-                'success' => 'true',
+                'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
@@ -77,7 +78,7 @@ class CouponController extends RestfullController
             }
 
             return [
-                'success' => 'false',
+                'success' => false,
                 'error' => [
                     'code' => 400,
                     'message' => $model->getErrors()
@@ -110,7 +111,7 @@ class CouponController extends RestfullController
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             Yii::$app->response->statusCode = 200;
             return [
-                'success' => 'true',
+                'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
@@ -128,7 +129,7 @@ class CouponController extends RestfullController
             }
 
             return [
-                'success' => 'false',
+                'success' => false,
                 'error' => [
                     'code' => 400,
                     'message' => $model->getErrors()
@@ -157,7 +158,7 @@ class CouponController extends RestfullController
         if ($model == null) {
             Yii::$app->response->statusCode = 400;
             return [
-                'success' => 'false',
+                'success' => false,
                 'error' => [
                     'code' => 400,
                     'message' => [AffiliateModule::t('affiliate', '{target} không tồn tại', ['target' => $target])]
@@ -170,18 +171,18 @@ class CouponController extends RestfullController
                 $code = 200;
                 Yii::$app->response->statusCode = $code;
                 $message = AffiliateModule::t('affiliate', 'Xóa thành công');
-                $status = 'true';
+                $status = true;
             } else {
                 $code = 406;
                 Yii::$app->response->statusCode = $code;
                 $message = $model->getErrors();
-                $status = 'false';
+                $status = false;
             }
         } catch (Exception $ex) {
             $code = 406;
             Yii::$app->response->statusCode = $code;
             $message = [$ex->getMessage()];
-            $status = 'false';
+            $status = false;
         }
 
         return [
