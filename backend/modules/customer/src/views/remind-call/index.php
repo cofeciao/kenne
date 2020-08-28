@@ -1,12 +1,11 @@
 <?php
 
+use backend\widgets\ToastrWidget;
+use common\grid\MyGridView;
 use modava\customer\CustomerModule;
 use modava\customer\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
-use modava\customer\models\table\CustomerTable;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\customer\models\search\RemindCallSearch */
@@ -29,35 +28,41 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
-                <section class="hk-sec-wrapper">
+                <section class="hk-sec-wrapper index">
 
-                    <?php Pjax::begin(); ?>
+                    <?php Pjax::begin(['id' => 'remind-call-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
                                 <div class="dataTables_wrapper dt-bootstrap4">
-                                    <?= GridView::widget([
+                                    <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
-                                            {errors}
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    {items}
-                                                </div>
+                                            {errors} 
+                                            <div class="pane-single-table">
+                                                {items}
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-md-5">
-                                                    <div class="dataTables_info" role="status" aria-live="polite">
-                                                        {pager}
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-md-7">
-                                                    <div class="dataTables_paginate paging_simple_numbers">
-                                                        {summary}
-                                                    </div>
-                                                </div>
+                                            <div class="pager-wrap clearfix">
+                                                {summary}' .
+                                            Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageTo', [
+                                                'totalPage' => $totalPage,
+                                                'currentPage' => Yii::$app->request->get($dataProvider->getPagination()->pageParam)
+                                            ]) .
+                                            Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize') .
+                                            '{pager}
                                             </div>
                                         ',
+                                        'tableOptions' => [
+                                            'id' => 'dataTable',
+                                            'class' => 'dt-grid dt-widget pane-hScroll',
+                                        ],
+                                        'myOptions' => [
+                                            'class' => 'dt-grid-content my-content pane-vScroll',
+                                            'data-minus' => '{"0":95,"1":".hk-navbar","2":".nav-tabs","3":".hk-pg-header","4":".hk-footer-wrap"}'
+                                        ],
+                                        'summaryOptions' => [
+                                            'class' => 'summary pull-right',
+                                        ],
                                         'pager' => [
                                             'firstPageLabel' => CustomerModule::t('customer', 'First'),
                                             'lastPageLabel' => CustomerModule::t('customer', 'Last'),
@@ -77,10 +82,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'pageCssClass' => 'page-item',
 
                                             // Customzing CSS class for navigating link
-                                            'prevPageCssClass' => 'paginate_button page-item',
-                                            'nextPageCssClass' => 'paginate_button page-item',
-                                            'firstPageCssClass' => 'paginate_button page-item',
-                                            'lastPageCssClass' => 'paginate_button page-item',
+                                            'prevPageCssClass' => 'paginate_button page-item prev',
+                                            'nextPageCssClass' => 'paginate_button page-item next',
+                                            'firstPageCssClass' => 'paginate_button page-item first',
+                                            'lastPageCssClass' => 'paginate_button page-item last',
                                         ],
                                         'rowOptions' => function ($model, $index) {
                                             if (date('d-m-Y', $model->remind_call_time) == date('d-m-Y')) return [
@@ -176,6 +181,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 <?php
+$urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $script = <<< JS
+var customPjax = new myGridView();
+customPjax.init({
+    pjaxId: '#remind-call-pjax',
+    urlChangePageSize: '$urlChangePageSize',
+});
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

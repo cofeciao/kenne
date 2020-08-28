@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
-                            <div class="dataTables_wrapper dt-bootstrap4">
+                            <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
                                 <?= GridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'layout' => '
@@ -104,14 +104,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'title' => $model->title,
                                                     'data-pjax' => 0,
                                                 ]);
-                                            }
+                                            },
+                                            'headerOptions' => [
+                                                'class' => 'header-200',
+                                            ],
                                         ],
                                         [
                                             'attribute' => 'customer_id',
                                             'format' => 'raw',
                                             'value' => function ($model) {
                                                 return $model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '';
-                                            }
+                                            },
+                                            'headerOptions' => [
+                                                'class' => 'header-200',
+                                            ],
                                         ],
                                         [
                                             'attribute' => 'call_time',
@@ -119,7 +125,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return $model->call_time
                                                     ? date('d-m-Y H:i', strtotime($model->call_time))
                                                     : '';
-                                            }
+                                            },
+                                            'headerOptions' => [
+                                                'class' => 'header-200',
+                                            ],
                                         ],
                                         [
                                             'attribute' => 'recall_time',
@@ -127,21 +136,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return $model->recall_time
                                                     ? date('d-m-Y H:i', strtotime($model->recall_time))
                                                     : '';
-                                            }
+                                            },
+                                            'headerOptions' => [
+                                                'class' => 'header-200',
+                                            ],
                                         ],
-										'description:raw',
+                                        [
+                                            'attribute' => 'description',
+                                            'format' => 'raw',
+                                            'headerOptions' => [
+                                                'class' => 'header-400',
+                                            ],
+                                        ],
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',
                                             'headerOptions' => [
-                                                'width' => 150,
+                                                'class' => 'header-300',
                                             ],
                                         ],
                                         [
                                             'attribute' => 'created_at',
                                             'format' => 'datetime',
                                             'headerOptions' => [
-                                                'width' => 150,
+                                                'class' => 'header-300',
                                             ],
                                         ],
                                         [

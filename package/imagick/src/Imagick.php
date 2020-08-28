@@ -267,9 +267,13 @@ class Imagick
     public function saveTo($path)
     {
         $filename = Helper::createAlias($this->name);
-        $fileNameResult = $filename . '.' . $this->ext;
-        if (file_exists($path.$fileNameResult)) {
-            $fileNameResult = $filename . '-' . time() . '.' . $this->ext;
+        if($this->filename == null) {
+            $fileNameResult = $filename . '.' . $this->ext;
+            if (file_exists($path.$fileNameResult)) {
+                $fileNameResult = $filename . '-' . time() . '.' . $this->ext;
+            }
+        } else {
+            $fileNameResult = $this->filename;
         }
         $this->image->writeImage($path . $fileNameResult);
         $this->image->destroy();
@@ -292,6 +296,8 @@ class Imagick
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         $raw = curl_exec($ch);
         curl_close($ch);
         if (file_exists($img)) {

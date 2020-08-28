@@ -2,10 +2,10 @@
 
 define('ISCLI', PHP_SAPI === 'cli');
 define('CONSOLE_HOST', 1);
+define('UPLOAD_PATH', 'frontend');
 define('YII2_CACHE', false);
-define('YII2_DEBUG', true);
-define('YII2_ENV_DEV', true);
-define('YII2_MAIL', false);
+define('YII2_DEBUG', false);
+define('YII2_MAIL', true);
 define('YII2_LOG', true);
 define('LINK_ASSETS', true);
 define('SITE_ADMIN', 'Dashboard');
@@ -79,19 +79,6 @@ if (YII2_MAIL) {
             ]
         ],
     ];
-    $config['components']['log']['targets'] = [
-        'email' => [
-            'class' => 'yii\log\EmailTarget',
-            'levels' => ['error'],
-            'message' => [
-                'from' => 'mongdao.wd@gmail.com',
-                'to' => 'mongdao.wd@gmail.com',
-                'subject' => 'Log message',
-            ],
-        ],
-    ];
-}
-if (YII2_LOG) {
     $config['components']['log'] = [
         'traceLevel' => YII_DEBUG ? 3 : 0,
         'targets' => [
@@ -106,6 +93,15 @@ if (YII2_LOG) {
                 'logVars' => [],
                 'logTable' => '{{%system_log}}'
             ],
+            'email' => [
+                'class' => 'yii\log\EmailTarget',
+                'levels' => ['error'],
+                'message' => [
+                    'from' => 'mongdao.wd@gmail.com',
+                    'to' => 'mongdao.wd@gmail.com',
+                    'subject' => 'Log project',
+                ],
+            ],
         ],
     ];
 }
@@ -117,29 +113,20 @@ if (YII2_DEBUG && ISCLI == false) {
         'class' => yii\debug\Module::class,
         'allowedIPs' => ['127.0.0.1', '::1', '192.168.33.1', '172.17.42.1', '172.17.0.1', '192.168.99.1'],
     ];
-}
-
-if (YII2_ENV_DEV) {
-    $config['components']['cache'] = [
-        'class' => yii\caching\FileCache::class,
-        'cachePath' => '@backend/runtime/cache'
-    ];
-}
-
-if (YII2_CACHE) {
-    $config['components']['redis'] = [
-        'class' => 'yii\redis\Connection',
-        'hostname' => 'localhost',
-        'port' => 6379,
-        'database' => 0,
-    ];
-    $config['components']['session'] = [
-        'class' => 'yii\redis\Session',
-        'keyPrefix' => $_SERVER['HTTP_HOST'],
-    ];
-    $config['components']['cache'] = [
-        'class' => 'yii\redis\Cache',
-        'keyPrefix' => $_SERVER['HTTP_HOST'],
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '::1'],
+        'generators' => [
+            'module' => [
+                'class' => \modava\generators\module\Generator::class,
+            ],
+            'model' => [
+                'class' => \modava\generators\model\Generator::class,
+            ],
+            'crud' => [
+                'class' => \modava\generators\crud\Generator::class,
+            ],
+        ]
     ];
 }
 

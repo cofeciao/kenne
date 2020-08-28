@@ -17,7 +17,6 @@ class AppAsset extends AssetBundle
         'vendors/morris.js/morris.css',
         'vendors/jquery-toast-plugin/dist/jquery.toast.min.css',
         'dist/css/style.css',
-        'css/custom.css',
     ];
     public $js = [
         'vendors/popper.js/dist/umd/popper.min.js',
@@ -41,8 +40,31 @@ class AppAsset extends AssetBundle
         'dist/js/init.js',
         'dist/js/dashboard-data.js',
     ];
-
     public $depends = [
-
+        'yii\web\YiiAsset',
+        'yii\web\JqueryAsset',
+        'yii\widgets\ActiveFormAsset',
+        'yii\validators\ValidationAsset'
     ];
+
+    public function init()
+    {
+        parent::init();
+
+        $content = @file_get_contents(\Yii::getAlias('@modava-assets/assets.json'));
+        $assetsData = json_decode($content, true);
+
+        if (!empty($assetsData['scripts'])) {
+            foreach ($assetsData['scripts'] as $script) {
+                    $this->js[] = 'my-js/' . $script['name'] . '.js';
+            }
+        }
+
+        if (!empty($assetsData['styles'])) {
+            foreach ($assetsData['styles'] as $style) {
+                    $this->css[] = 'my-css/' . $style['name'] . '.css';
+            }
+        }
+
+    }
 }

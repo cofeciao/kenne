@@ -8,15 +8,20 @@
 
 return [
     'product' => [
+        '95x80' => [
+            'folder' => '/uploads/product/95x80/',
+            'width' => 95,
+            'height' => 80
+        ],
         '150x150' => [
             'folder' => '/uploads/product/150x150/',
             'width' => 150,
             'height' => 150
         ],
-        '300x300' => [
-            'folder' => '/uploads/product/300x300/',
-            'width' => 300,
-            'height' => 300
+        '370x233' => [
+            'folder' => '/uploads/product/370x233/',
+            'width' => 370,
+            'height' => 233
         ]
     ],
     'product-category' => [

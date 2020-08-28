@@ -3,8 +3,10 @@
 namespace modava\auth\models;
 
 use modava\auth\AuthModule;
+use modava\auth\models\query\UserQuery;
 use Yii;
 use yii\base\NotSupportedException;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -70,6 +72,11 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -113,11 +120,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::find()
+            ->active()
+            ->andWhere(['access_token' => $token])
+            ->one();
     }
 
     /**

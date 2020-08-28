@@ -2,16 +2,16 @@
 
 namespace modava\faq\controllers;
 
-use yii\bootstrap\ActiveForm;
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use modava\faq\FaqModule;
 use backend\components\MyController;
+use modava\faq\FaqModule;
 use modava\faq\models\Faq;
 use modava\faq\models\search\FaqSearch;
+use Yii;
+use yii\bootstrap\ActiveForm;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -20,8 +20,8 @@ use yii\web\Response;
 class FaqController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -35,9 +35,9 @@ class FaqController extends MyController
     }
 
     /**
-    * Lists all Faq models.
-    * @return mixed
-    */
+     * Lists all Faq models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new FaqSearch();
@@ -47,16 +47,15 @@ class FaqController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Faq model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Faq model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -65,10 +64,10 @@ class FaqController extends MyController
     }
 
     /**
-    * Creates a new Faq model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Faq model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Faq();
@@ -100,18 +99,18 @@ class FaqController extends MyController
     }
 
     /**
-    * Updates an existing Faq model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Faq model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -139,12 +138,12 @@ class FaqController extends MyController
     }
 
     /**
-    * Deletes an existing Faq model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Faq model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -177,12 +176,12 @@ class FaqController extends MyController
     }
 
     /**
-    * Finds the Faq model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Faq the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the Faq model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Faq the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
