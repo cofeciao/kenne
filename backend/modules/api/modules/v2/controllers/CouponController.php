@@ -36,6 +36,57 @@ class CouponController extends RestfullController
         ];
     }
 
+    public function actionSaveOrderByPartnerCode()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $code = Yii::$app->request->get('code');
+
+        if ($code) {
+            $model = Order::findOne(['partner_order_code' => $code]);
+            if ($model === null) {
+                Yii::$app->response->statusCode = 404;
+                return [
+                    'success' => false,
+                    'error' => [
+                        'code' => 404,
+                        'message' => "not found"
+                    ]
+                ];
+            }
+        } else {
+            $model = new Order();
+        }
+
+        if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+            Yii::$app->response->statusCode = 200;
+            return [
+                'success' => true,
+                'code' => 200,
+                'data' => $model->getAttributes(),
+            ];
+        } else {
+            Yii::$app->response->statusCode = 400;
+
+            if ($model->hasErrors('coupon_id')) {
+                $model->clearErrors('coupon_id');
+
+                if (Yii::$app->request->post('coupon_code')) {
+                    $model->addError('coupon_code', 'Mã coupon không tồn tại hoặc đã được sử dụng');
+                } else {
+                    $model->addError('coupon_code', 'Mã coupon không được để trống');
+                }
+            }
+
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 400,
+                    'message' => $model->getErrors()
+                ]
+            ];
+        }
+    }
+
     public function actionSaveOrder()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -118,15 +169,46 @@ class CouponController extends RestfullController
         } else {
             Yii::$app->response->statusCode = 400;
 
-            if ($model->hasErrors('order_id')) {
-                $model->clearErrors('order_id');
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 400,
+                    'message' => $model->getErrors()
+                ]
+            ];
+        }
+    }
 
-                if (Yii::$app->request->post('order_code')) {
-                    $model->addError('order_code', 'Mã đơn hàng không tồn tại');
-                } else {
-                    $model->addError('order_code', 'Mã đơn hàng không được để trống');
-                }
+    public function actionSaveReceiptByPartnerCode()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $code = Yii::$app->request->get('code');
+
+        if ($code) {
+            $model = Receipt::findOne(['partner_code' => $code]);
+            if ($model === null) {
+                Yii::$app->response->statusCode = 404;
+                return [
+                    'success' => false,
+                    'error' => [
+                        'code' => 404,
+                        'message' => "not found"
+                    ]
+                ];
             }
+        } else {
+            $model = new Receipt();
+        }
+
+        if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+            Yii::$app->response->statusCode = 200;
+            return [
+                'success' => true,
+                'code' => 200,
+                'data' => $model->getAttributes(),
+            ];
+        } else {
+            Yii::$app->response->statusCode = 400;
 
             return [
                 'success' => false,
