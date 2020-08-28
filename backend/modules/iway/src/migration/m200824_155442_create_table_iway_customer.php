@@ -35,7 +35,7 @@ class m200824_155442_create_table_iway_customer extends Migration
                 'avatar' => $this->string(255)->null(),
                 'fanpage_id' => $this->integer(11)->null(),
                 'type' => $this->string()->notNull()->comment('Chưa xác định - Khách online - Khách vãng lai ... '),
-                'online_sales' => $this->integer(11)->notNull()->comment('Sales Online'),
+                'online_sales_id' => $this->integer(11)->notNull()->comment('Sales Online'),
                 'sale_online_note' => $this->text()->null()->comment('Ghi chú của Sales Online'),
                 'direct_sale_id' => $this->integer(11)->null()->comment('Direct Sale phụ trách'),
                 'direct_sale_note' => $this->text()->null()->comment('Ghi chú của Direct Sale'),
@@ -56,7 +56,7 @@ class m200824_155442_create_table_iway_customer extends Migration
                 'updated_by' => $this->integer(11)->null(),
             ], $tableOptions);
             $this->addForeignKey('fk_iway_fanpage_id_customer_fanpage', 'iway_customer', 'fanpage_id', 'customer_fanpage', 'id', 'RESTRICT', 'CASCADE');
-            $this->addForeignKey('fk_iway_customer_online_sales_user', 'iway_customer', 'online_sales', 'user', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_customer_online_sales_id_user', 'iway_customer', 'online_sales_id', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_customer_direct_sale_user', 'iway_customer', 'direct_sale_id', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_co_so_customer_co_so', 'iway_customer', 'co_so', 'customer_co_so', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_customer_created_by_user', 'iway_customer', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');

@@ -24,3 +24,19 @@ li.nav-item.mb-5 {
 .form-group .help-block {
     color: red;
 }
+
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly] {
+    background-color: #f5f5f5!important;
+    border-color: #ddd!important;
+    cursor: not-allowed!important;
+}
+
+form div.required label.control-label:after {
+    content:" * ";
+    color:red;
+}

@@ -47,10 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'origin_id',
 						'name',
-						'description:ntext',
+                        [
+                            'attribute' => 'origin_id',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return Html::a($model->origin->name, \yii\helpers\Url::toRoute(['origin/view', 'id' => $model->origin_id]), [
+                                    'title' => $model->origin->name,
+                                    'data-pjax' => 0,
+                                ]);
+                            }
+                        ],
 						'url_page:url',
                         [
                             'attribute' => 'status',
@@ -66,8 +73,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->params['availableLocales'][$model->language];
                             },
                         ],
-						'created_at',
-						'updated_at',
+                        'description:raw',
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => IwayModule::t('iway', 'Created By')

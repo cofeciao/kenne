@@ -22,11 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?=IwayModule::t('iway', 'Chi tiết'); ?>: <?= Html::encode($this->title) ?>
+                        class="ion ion-md-apps"></span></span><?= IwayModule::t('iway', 'Chi tiết'); ?>
+            : <?= Html::encode($this->title) ?>
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= IwayModule::t('iway', 'Create'); ?>">
+               title="<?= IwayModule::t('iway', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= IwayModule::t('iway', 'Create'); ?></a>
             <?= Html::a(IwayModule::t('iway', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(IwayModule::t('iway', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,30 +48,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'code',
-						'name',
-						'birthday',
-						'sex',
-						'phone',
-						'address',
-						'ward_id',
-						'avatar',
-						'fanpage_id',
-						'type',
-						'permission_user',
-						'sale_online_note',
-						'direct_sale',
-						'direct_sale_note',
-						'co_so',
+                        'name',
+                        'code',
+                        'birthday:date',
                         [
-                            'attribute' => 'status',
+                            'attribute' => 'sex',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('iway')->params['status'][$model->status];
+                                return $model->getDisplayDropdown($model->sex, 'sex');
                             }
                         ],
-						'created_at',
-						'updated_at',
+                        'phone',
+                        'address',
+                        'ward_id',
+                        'avatar',
+                        'fanpage_id',
+                        [
+                            'attribute' => 'type',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->type, 'type');
+                            }
+                        ],
+                        'permission_user',
+                        'sale_online_note:raw',
+                        'direct_sale',
+                        'direct_sale_note:raw',
+                        'co_so',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => IwayModule::t('iway', 'Created By')

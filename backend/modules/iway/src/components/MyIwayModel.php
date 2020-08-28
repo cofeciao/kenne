@@ -28,4 +28,13 @@ class MyIwayModel extends ActiveRecord
 
         return isset($dropdowns[$fieldName]) ? $dropdowns[$fieldName] : null;
     }
+
+    public function getDisplayDropdown($value, $fieldName) {
+        $dropDown = $this->getDropdown($fieldName);
+        if ($dropDown === null) return null;
+        if (array_key_exists($value, $dropDown)) {
+            return $dropDown[$value];
+        }
+        return null;
+    }
 }

@@ -95,13 +95,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                    
-										'name',
+                                        [
+                                            'attribute' => 'name',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return Html::a($model->name, ['view', 'id' => $model->id], [
+                                                    'title' => $model->name,
+                                                    'data-pjax' => 0,
+                                                ]);
+                                            }
+                                        ],
 										'address',
 										'phone',
 										'email:email',
-										'description',
-										//'language',
+										'language',
+                                        'description:raw',
                                         [
                                             'attribute' => 'created_by',
                                             'value' => 'userCreated.userProfile.fullname',

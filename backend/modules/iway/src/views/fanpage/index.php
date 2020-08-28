@@ -95,11 +95,28 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'd-none',
                                             ],
                                         ],
-                                    
-										'origin_id',
-										'name',
-										'description:ntext',
-										'url_page:url',
+                                        [
+                                            'attribute' => 'name',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return Html::a($model->name, ['view', 'id' => $model->id], [
+                                                    'title' => $model->name,
+                                                    'data-pjax' => 0,
+                                                ]);
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'origin_id',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return Html::a($model->origin->name, \yii\helpers\Url::toRoute(['origin/view', 'id' => $model->origin_id]), [
+                                                    'title' => $model->origin->name,
+                                                    'data-pjax' => 0,
+                                                ]);
+                                            }
+                                        ],
+                                        'url_page:url',
+										'description:raw',
 										'language',
                                         [
                                             'attribute' => 'created_by',

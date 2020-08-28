@@ -18,7 +18,7 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['id', 'ward_id', 'country_id', 'province_id', 'district_id','fanpage_id', 'permission_user', 'direct_sale', 'co_so', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'ward_id', 'country_id', 'province_id', 'district_id','fanpage_id', 'direct_sale_id', 'online_sales_id','co_so', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['code', 'name', 'birthday', 'sex', 'phone', 'address', 'avatar', 'type', 'sale_online_note', 'direct_sale_note', 'status'], 'safe'],
         ];
     }
@@ -64,8 +64,8 @@ class CustomerSearch extends Customer
             'birthday' => $this->birthday,
             'ward_id' => $this->ward_id,
             'fanpage_id' => $this->fanpage_id,
-            'permission_user' => $this->permission_user,
-            'direct_sale' => $this->direct_sale,
+            'online_sales_id' => $this->online_sales_id,
+            'direct_sale_id' => $this->direct_sale_id,
             'co_so' => $this->co_so,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

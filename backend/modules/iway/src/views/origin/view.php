@@ -47,9 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
 						'name',
-						'description:ntext',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
@@ -64,8 +62,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Yii::$app->params['availableLocales'][$model->language];
                             },
                         ],
-						'created_at',
-						'updated_at',
+                        'description:raw',
+						'created_at:datetime',
+						'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => IwayModule::t('iway', 'Created By')

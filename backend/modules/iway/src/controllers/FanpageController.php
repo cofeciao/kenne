@@ -18,8 +18,8 @@ use modava\iway\models\search\FanpageSearch;
 class FanpageController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -33,9 +33,9 @@ class FanpageController extends MyController
     }
 
     /**
-    * Lists all Fanpage models.
-    * @return mixed
-    */
+     * Lists all Fanpage models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new FanpageSearch();
@@ -45,16 +45,15 @@ class FanpageController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Fanpage model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Fanpage model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,10 +62,10 @@ class FanpageController extends MyController
     }
 
     /**
-    * Creates a new Fanpage model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Fanpage model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Fanpage();
@@ -98,18 +97,18 @@ class FanpageController extends MyController
     }
 
     /**
-    * Updates an existing Fanpage model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Fanpage model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +136,12 @@ class FanpageController extends MyController
     }
 
     /**
-    * Deletes an existing Fanpage model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Fanpage model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -174,13 +173,32 @@ class FanpageController extends MyController
         return $this->redirect(['index']);
     }
 
+    public function actionFanpageList($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+
+        if (!is_null($q)) {
+            $data = Fanpage::findByName($q);
+            $out['results'] = array_values($data);
+        } elseif ($id > 0) {
+            $model = Fanpage::findOne($id);
+            if ($model) {
+                $out['results'] = ['id' => $id, 'text' => $model->name];
+            } else {
+                $out['results'] = ['id' => '', 'text' => ''];
+            }
+        }
+        return $out;
+    }
+
     /**
-    * Finds the Fanpage model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Fanpage the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the Fanpage model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Fanpage the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
@@ -190,6 +208,6 @@ class FanpageController extends MyController
         }
 
         throw new NotFoundHttpException(Yii::t('iway', 'The requested page does not exist.'));
-        throw new NotFoundHttpException(IwayModule::t('iway','The requested page does not exist.'));
+        throw new NotFoundHttpException(IwayModule::t('iway', 'The requested page does not exist.'));
     }
 }

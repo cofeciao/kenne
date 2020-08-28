@@ -77,12 +77,12 @@ class CoSo extends CoSoTable
     {
         return [
             'id' => IwayModule::t('iway', 'ID'),
-            'name' => IwayModule::t('iway', 'Name'),
-            'address' => IwayModule::t('iway', 'Address'),
-            'phone' => IwayModule::t('iway', 'Phone'),
+            'name' => IwayModule::t('iway', 'Tên'),
+            'address' => IwayModule::t('iway', 'Địa chỉ'),
+            'phone' => IwayModule::t('iway', 'Số điện thoại'),
             'email' => IwayModule::t('iway', 'Email'),
-            'description' => IwayModule::t('iway', 'Description'),
-            'status' => IwayModule::t('iway', 'Status'),
+            'description' => IwayModule::t('iway', 'Mô tả'),
+            'status' => IwayModule::t('iway', 'Trạng thái'),
             'language' => IwayModule::t('iway', 'Language'),
             'created_at' => IwayModule::t('iway', 'Created At'),
             'updated_at' => IwayModule::t('iway', 'Updated At'),

@@ -64,7 +64,7 @@ class Fanpage extends FanpageTable
 			[['description', 'language'], 'string'],
 			[['name', 'url_page'], 'string', 'max' => 255],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['origin_id'], 'exist', 'skipOnError' => true, 'targetClass' => IwayOrigin::class, 'targetAttribute' => ['origin_id' => 'id']],
+			[['origin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Origin::class, 'targetAttribute' => ['origin_id' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
 		];
     }
@@ -107,5 +107,14 @@ class Fanpage extends FanpageTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public static function findByName($name) {
+        return self::find()->where(['like', 'name', $name])->limit(20)->all();
+    }
+
+    public function getOrigin()
+    {
+        return $this->hasOne(Origin::class, ['id' => 'origin_id']);
     }
 }

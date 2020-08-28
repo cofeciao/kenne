@@ -109,6 +109,15 @@ class DropdownsConfig extends DropdownsConfigTable
         return $dropdowns[$fieldName];
     }
 
+    public static function getDisplayDropdown($value, $fieldName, $tableName) {
+        $dropDown = self::getDropdown($tableName, $fieldName);
+        if ($dropDown === null) return null;
+        if (array_key_exists($value, $dropDown)) {
+            return $dropDown[$value];
+        }
+        return null;
+    }
+
     public function validateDropdownValue()
     {
         if (!$this->hasErrors() && is_array($this->dropdown_value)) {

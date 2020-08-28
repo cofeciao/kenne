@@ -13,27 +13,33 @@ use modava\iway\IwayModule;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="agency-form">
     <?php $form = ActiveForm::begin(); ?>
-		<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-		<?= $form->field($model, 'status')->textInput() ?>
-
-		<?= $form->field($model, 'language')->dropDownList([ 'vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp', ], ['prompt' => '']) ?>
-
-		<?= $form->field($model, 'created_at')->textInput() ?>
-
-		<?= $form->field($model, 'updated_at')->textInput() ?>
-
-		<?= $form->field($model, 'created_by')->textInput() ?>
-
-		<?= $form->field($model, 'updated_by')->textInput() ?>
-
-		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
-		<?= $form->field($model, 'status')->checkbox() ?>
-        <div class="form-group">
-            <?= Html::submitButton(IwayModule::t('iway', 'Save'), ['class' => 'btn btn-success']) ?>
+    <div class="hk-sec-wrapper">
+        <div class="hk-sec-title">
+            <h5>Thông tin chung</h5>
         </div>
+        <div class="row">
+            <div class="col-6">
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'language')->dropDownList(['vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp',], ['prompt' => '']) ?>
+            </div>
+            <div class="col-6">
+                <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+                <?= $form->field($model, 'status')->checkbox() ?>
+            </div>
+            <div class="col-12">
+                <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
+                    'options' => ['rows' => 6],
+                    'type' => 'content'
+                ]) ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <?= Html::submitButton(IwayModule::t('iway', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
 
     <?php ActiveForm::end(); ?>
 </div>

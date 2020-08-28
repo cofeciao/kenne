@@ -1,6 +1,7 @@
 <?php
 
 use dosamigos\datepicker\DatePicker;
+use kartik\select2\Select2;
 use modava\auth\models\User;
 use modava\auth\models\UserProfile;
 use modava\iway\models\table\CustomerTable;
@@ -8,10 +9,10 @@ use modava\location\models\table\LocationCountryTable;
 use modava\location\models\table\LocationDistrictTable;
 use modava\location\models\table\LocationProvinceTable;
 use modava\location\models\table\LocationWardTable;
-use modava\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\iway\IwayModule;
@@ -44,13 +45,30 @@ use modava\iway\IwayModule;
                 <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-6">
-                <?= $form->field($model, 'sex')->dropDownList($model->getDropdown('sex'),['prompt' => IwayModule::t('iway', 'Chọn một giá trị ...')]) ?>
+                <?= $form->field($model, 'sex')->dropDownList($model->getDropdown('sex'), ['prompt' => IwayModule::t('iway', 'Chọn một giá trị ...')]) ?>
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-6">
-                <?= $form->field($model, 'fanpage_id')->textInput() ?>
+                <?= $form->field($model, 'fanpage_id')->widget(Select2::class, [
+                    'options' => ['placeholder' => 'Gõ để tìm ...'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'minimumInputLength' => 3,
+                        'language' => [
+                            'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                        ],
+                        'ajax' => [
+                            'url' => Url::toRoute(['fanpage/fanpage-list']),
+                            'dataType' => 'json',
+                            'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                        ],
+                        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                        'templateResult' => new JsExpression('function(record) { return record.name; }'),
+                        'templateSelection' => new JsExpression('function (record) { return record.name; }'),
+                    ],
+                ]); ?>
             </div>
             <div class="col-6">
                 <?php
@@ -63,7 +81,6 @@ use modava\iway\IwayModule;
             </div>
         </div>
     </div>
-
     <div class="hk-sec-wrapper">
         <h5 class="hk-sec-title">Thông tin quản lý</h5>
         <div class="row">
@@ -118,29 +135,27 @@ use modava\iway\IwayModule;
                     'id' => 'select-ward',
                 ]) ?>
             </div>
-
             <div class="col-12">
                 <?= $form->field($model, 'address')->textarea(['rows' => 2]) ?>
             </div>
         </div>
     </div>
-
     <div class="hk-sec-wrapper">
         <h5 class="hk-sec-title">Thông tin quản lý</h5>
         <div class="row">
             <div class="col-6">
-                <?= $form->field($model, 'type')->dropDownList($model->getDropdown('type'),['prompt' => IwayModule::t('iway', 'Chọn một giá trị ...')]) ?>
+                <?= $form->field($model, 'type')->dropDownList($model->getDropdown('type'), ['prompt' => IwayModule::t('iway', 'Chọn một giá trị ...')]) ?>
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'status')->textInput() ?>
             </div>
             <div class="col-6">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'online_sales',
-                    'data' => ArrayHelper::map(User::getUserByRole('online_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                    'options' => []
-                ]) ?>
+                <?= $form->field($model, 'online_sales_id')->widget(Select2::class,
+                    [
+                        'options' => ['placeholder' => 'Chọn một giá trị ...'],
+                        'data' => ArrayHelper::map(User::getUserByRole('online_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                        'value' => $model->online_sales_id
+                    ]) ?>
             </div>
             <div class="col-12">
                 <?= $form->field($model, 'sale_online_note')->widget(\modava\tiny\TinyMce::class, [
@@ -149,12 +164,12 @@ use modava\iway\IwayModule;
                 ]) ?>
             </div>
             <div class="col-6">
-                <?= Select2::widget([
-                    'model' => $model,
-                    'attribute' => 'direct_sale_id',
-                    'data' => ArrayHelper::map(User::getUserByRole('direct_sale_id', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                    'options' => []
-                ]) ?>
+                <?= $form->field($model, 'direct_sale_id')->widget(Select2::class,
+                    [
+                        'options' => ['placeholder' => 'Chọn một giá trị ...'],
+                        'data' => ArrayHelper::map(User::getUserByRole('direct_sale', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                        'value' => $model->direct_sale_id
+                    ]) ?>
             </div>
             <div class="col-12">
                 <?= $form->field($model, 'direct_sale_note')->widget(\modava\tiny\TinyMce::class, [
@@ -164,7 +179,6 @@ use modava\iway\IwayModule;
             </div>
         </div>
     </div>
-
     <div class="form-group">
         <?= Html::submitButton(IwayModule::t('iway', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
