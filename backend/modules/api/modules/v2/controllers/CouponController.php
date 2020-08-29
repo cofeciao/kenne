@@ -39,22 +39,24 @@ class CouponController extends RestfullController
     public function actionSaveOrderByPartnerCode()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $code = Yii::$app->request->get('code');
+        $code = Yii::$app->request->post('partner_order_code');
 
         if ($code) {
             $model = Order::findOne(['partner_order_code' => $code]);
             if ($model === null) {
-                Yii::$app->response->statusCode = 404;
-                return [
-                    'success' => false,
-                    'error' => [
-                        'code' => 404,
-                        'message' => "not found"
-                    ]
-                ];
+                $model = new Order();
             }
         } else {
-            $model = new Order();
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 404,
+                    'message' => [
+                        'partner_order_code' => 'partner_order_code Không được để trống'
+                    ]
+                ]
+            ];
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
@@ -182,22 +184,22 @@ class CouponController extends RestfullController
     public function actionSaveReceiptByPartnerCode()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $code = Yii::$app->request->get('code');
+        $code = Yii::$app->request->post('partner_code');
 
         if ($code) {
             $model = Receipt::findOne(['partner_code' => $code]);
             if ($model === null) {
-                Yii::$app->response->statusCode = 404;
-                return [
-                    'success' => false,
-                    'error' => [
-                        'code' => 404,
-                        'message' => "not found"
-                    ]
-                ];
+                $model = new Receipt();
             }
         } else {
-            $model = new Receipt();
+            Yii::$app->response->statusCode = 40;
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 404,
+                    'message' => "partner_code Không được để trống"
+                ]
+            ];
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
