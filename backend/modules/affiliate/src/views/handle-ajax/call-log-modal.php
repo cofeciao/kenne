@@ -32,9 +32,6 @@ use yii\helpers\Url;
                         <?= AffiliateModule::t('affiliate', 'Đến số') ?>
                     </th>
                     <th>
-                        <?= AffiliateModule::t('affiliate', 'Thời gian') ?>
-                    </th>
-                    <th>
                         <?= AffiliateModule::t('affiliate', 'Ghi âm') ?>
                     </th>
                     <th>
@@ -56,14 +53,9 @@ use yii\helpers\Url;
                         </td>
                         <td><?= $record['from_number'] ?></td>
                         <td><?= $record['to_number'] ?></td>
-                        <td><?php
-                            $hours = floor($record['duration'] / 3600);
-                            $mins = floor($record['duration'] / 60 % 60);
-                            $secs = floor($record['duration'] % 60);
-                            echo sprintf('%02d:%02d:%02d', $hours, $mins, $secs)  ?></td>
                         <td>
                             <?php if ($record['recording_url']) : ?>
-                                <audio controls="controls" autobuffer="autobuffer">
+                                <audio class="call-log-audio" controls="controls" autobuffer="autobuffer">
                                     <source src="<?= $record['recording_path'] ?>">
                                     Your browser does not support the audio element.
                                 </audio>
