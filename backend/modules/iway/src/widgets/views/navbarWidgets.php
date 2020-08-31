@@ -19,6 +19,24 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
+        'controllerId' => 'order',
+        'label' => IwayModule::t('iway', 'Đơn hàng'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'product',
+        'label' => IwayModule::t('iway', 'Sản phẩm'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'payment',
+        'label' => IwayModule::t('iway', 'Thanh toán'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
         'controllerId' => 'co-so',
         'label' => IwayModule::t('iway', 'Cơ sở'),
         'icon' => '<i class="ion ion-md-contacts"></i>',

@@ -22,6 +22,7 @@ class m200825_163251_create_table_iway_payment extends Migration
             }
             $this->createTable('iway_payment', [
                 'id' => $this->primaryKey(),
+                'customer' => $this->integer(11)->notNull(),
                 'order_id' => $this->integer(11)->notNull(),
                 'price' => $this->double('16,2')->null()->defaultValue(0)->comment('Tiền thanh toán'),
                 'type' => $this->string()->notNull()->comment('"Loại thanh toán: 0: Thanh toán, 1: Đặt cọc, ..."'),
@@ -34,6 +35,7 @@ class m200825_163251_create_table_iway_payment extends Migration
                 'updated_by' => $this->integer(11)->null()->defaultValue(1),
             ], $tableOptions);
             $this->addForeignKey('fk_iway_payment_order_id_iway_order_id', 'iway_payment', 'order_id', 'iway_order', 'id', 'RESTRICT', 'CASCADE');
+            $this->addForeignKey('fk_iway_payment_customer_id_iway_customer_id', 'iway_payment', 'customer_id', 'iway_customer', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_payment_co_so_iway_co_so', 'iway_payment', 'co_so', 'iway_co_so', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_payment_created_by_user', 'iway_payment', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_payment_updated_by_user', 'iway_payment', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');

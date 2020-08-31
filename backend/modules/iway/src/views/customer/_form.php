@@ -4,7 +4,7 @@ use dosamigos\datepicker\DatePicker;
 use kartik\select2\Select2;
 use modava\auth\models\User;
 use modava\auth\models\UserProfile;
-use modava\iway\models\table\CustomerTable;
+use modava\iway\models\table\CoSoTable;
 use modava\location\models\table\LocationCountryTable;
 use modava\location\models\table\LocationDistrictTable;
 use modava\location\models\table\LocationProvinceTable;
@@ -74,7 +74,7 @@ use modava\iway\IwayModule;
                 <?php
                 if (isset(Yii::$app->user->identity->co_so)) $model->co_so = Yii::$app->user->identity->co_so;
                 ?>
-                <?= $form->field($model, 'co_so')->dropDownList(ArrayHelper::map(CustomerTable::getAllCoSo(), 'id', 'name'), [
+                <?= $form->field($model, 'co_so')->dropDownList(ArrayHelper::map(CosoTable::getAllCoSo(), 'id', 'name'), [
                     'prompt' => IwayModule::t('customer', 'Chọn một giá trị ...'),
                     'id' => 'co-so'
                 ]) ?>

@@ -22,10 +22,10 @@ class m200824_161024_create_table_iway_product extends Migration
             }
             $this->createTable('iway_product', [
                 'id' => $this->primaryKey(),
-                'category_id' => $this->integer(11)->notNull(),
+                'category' => $this->string(100)->notNull(),
                 'name' => $this->string(255)->notNull(),
                 'price' => $this->double('16,2')->null()->defaultValue(0)->comment('Đơn giá'),
-                'description' => $this->string(255)->null()->comment('Mô tả sản phẩm'),
+                'description' => $this->text()->null()->comment('Mô tả sản phẩm'),
                 'status' => $this->tinyInteger(1)->null()->defaultValue(1)->comment('0: disabled, 1: published'),
                 'created_at' => $this->integer(11)->null(),
                 'created_by' => $this->integer(11)->null()->defaultValue(1),
@@ -34,7 +34,6 @@ class m200824_161024_create_table_iway_product extends Migration
             ], $tableOptions);
             $this->addColumn('iway_product', 'language', "ENUM('vi', 'en', 'jp') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'vi' COMMENT 'Language' AFTER `status`");
             $this->createIndex('index-language', 'iway_product', 'language');
-            $this->addForeignKey('fk_iway_product_category_id_customer_product_category', 'iway_product', 'category_id', 'iway_product_category', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_product_created_by_user', 'iway_product', 'created_by', 'user', 'id', 'RESTRICT', 'CASCADE');
             $this->addForeignKey('fk_iway_product_updated_by_user', 'iway_product', 'updated_by', 'user', 'id', 'RESTRICT', 'CASCADE');
         }

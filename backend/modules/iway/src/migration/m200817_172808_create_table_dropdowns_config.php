@@ -28,7 +28,7 @@ class m200817_172808_create_table_dropdowns_config extends Migration
         $this->createTable('{{%dropdowns_config}}', [
             'id' => $this->primaryKey(),
             'table_name' => $this->string(100)->notNull()->comment('Tên table'),
-            'field_name' => $this->string(100)->notNull()->unique()->comment('Tên field'),
+            'field_name' => $this->string(100)->notNull()->comment('Tên field'),
             'dropdown_value' => $this->json()->comment('Danh sách giá trị của field, format: [ 
                 "key_1" => "Value 1",
                 "key_2" => "Value 2",
