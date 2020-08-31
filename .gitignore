@@ -288,6 +288,10 @@ phpunit.phar
 /backend/widgets/input/README.md
 /backend/widgets/input/.git
 
+/backend/widgets/charts/composer.json
+/backend/widgets/charts/README.md
+/backend/widgets/charts/.git
+
 #assets manager
 /backend/web/modava-assets/composer.json
 /backend/web/modava-assets/README.md
