@@ -11,10 +11,10 @@ class AppAsset extends AssetBundle
 {
     public $sourcePath = '@backendWeb';
     public $css = [
-
+        'css/style.css'
     ];
     public $js = [
-
+        'js/init-chart.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
