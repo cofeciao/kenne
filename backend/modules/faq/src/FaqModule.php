@@ -25,7 +25,7 @@ class FaqModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
-        $this->registerTranslations();
+//        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/faq.php'));
 //        $handler = $this->get('errorHandler');
@@ -46,7 +46,7 @@ class FaqModule extends Module implements BootstrapInterface
         });
     }
 
-    public function registerTranslations()
+    /*public function registerTranslations()
     {
         Yii::$app->i18n->translations['faq/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
@@ -61,5 +61,5 @@ class FaqModule extends Module implements BootstrapInterface
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('faq/messages/' . $category, $message, $params, $language);
-    }
+    }*/
 }

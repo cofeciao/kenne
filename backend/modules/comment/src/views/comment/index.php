@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\comment\models\search\CommentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CommentModule::t('comment', 'Comments');
+$this->title = Yii::t('backend', 'Comments');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -23,8 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= CommentModule::t('comment', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= CommentModule::t('comment', 'Create'); ?></a>
+           title="<?= Yii::t('backend', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
     </div>
 
     <!-- Row -->
@@ -60,10 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
                                     ',
                                     'pager' => [
-                                        'firstPageLabel' => CommentModule::t('comment', 'First'),
-                                        'lastPageLabel' => CommentModule::t('comment', 'Last'),
-                                        'prevPageLabel' => CommentModule::t('comment', 'Previous'),
-                                        'nextPageLabel' => CommentModule::t('comment', 'Next'),
+                                        'firstPageLabel' => Yii::t('backend', 'First'),
+                                        'lastPageLabel' => Yii::t('backend', 'Last'),
+                                        'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                        'nextPageLabel' => Yii::t('backend', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -114,22 +114,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => CommentModule::t('comment', 'Actions'),
+                                            'header' => Yii::t('backend', 'Actions'),
                                             'template' => '{update} {delete}',
                                             'buttons' => [
                                                 'update' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => CommentModule::t('comment', 'Update'),
-                                                        'alia-label' => CommentModule::t('comment', 'Update'),
+                                                        'title' => Yii::t('backend', 'Update'),
+                                                        'alia-label' => Yii::t('backend', 'Update'),
                                                         'data-pjax' => 0,
                                                         'class' => 'btn btn-info btn-xs'
                                                     ]);
                                                 },
                                                 'delete' => function ($url, $model) {
                                                     return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => CommentModule::t('comment', 'Delete'),
+                                                        'title' => Yii::t('backend', 'Delete'),
                                                         'class' => 'btn btn-danger btn-xs btn-del',
-                                                        'data-title' => CommentModule::t('comment', 'Delete?'),
+                                                        'data-title' => Yii::t('backend', 'Delete?'),
                                                         'data-pjax' => 0,
                                                         'data-url' => $url,
                                                         'btn-success-class' => 'success-delete',

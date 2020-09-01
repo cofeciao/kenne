@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\contact\models\search\ContactSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = ContactModule::t('contact', 'Contacts');
+$this->title = Yii::t('backend', 'Contacts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -64,10 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => ContactModule::t('contact', 'First'),
-                                            'lastPageLabel' => ContactModule::t('contact', 'Last'),
-                                            'prevPageLabel' => ContactModule::t('contact', 'Previous'),
-                                            'nextPageLabel' => ContactModule::t('contact', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [

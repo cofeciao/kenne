@@ -243,6 +243,6 @@ class LocationDistrictController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(LocationModule::t('location', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

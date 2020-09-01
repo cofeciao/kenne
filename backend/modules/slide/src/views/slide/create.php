@@ -8,8 +8,8 @@ use modava\slide\SlideModule;
 /* @var $this yii\web\View */
 /* @var $model modava\slide\models\Slide */
 
-$this->title = SlideModule::t('slide', 'Create');
-$this->params['breadcrumbs'][] = ['label' => SlideModule::t('slide', 'Slides'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Slides'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

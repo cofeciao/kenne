@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $model modava\marketing\models\MarketingFacebookAds */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => MarketingModule::t('marketing', 'Marketing Facebook Ads'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Marketing Facebook Ads'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-               title="<?= MarketingModule::t('marketing', 'Create'); ?>">
+               title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= MarketingModule::t('article', 'Create'); ?></a>
             <?= Html::a(MarketingModule::t('article', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
             <?= Html::a(MarketingModule::t('article', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => MarketingModule::t('marketing', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>

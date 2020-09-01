@@ -110,16 +110,16 @@ class CustomerTreatmentSchedule extends CustomerTreatmentScheduleTable
     public function attributeLabels()
     {
         return [
-            'id' => CustomerModule::t('customer', 'ID'),
-            'order_id' => CustomerModule::t('customer', 'Order ID'),
-            'co_so' => CustomerModule::t('customer', 'Co So'),
-            'time_start' => CustomerModule::t('customer', 'Time Start'),
-            'time_end' => CustomerModule::t('customer', 'Time End'),
-            'note' => CustomerModule::t('customer', 'Note'),
-            'created_at' => CustomerModule::t('customer', 'Created At'),
-            'updated_at' => CustomerModule::t('customer', 'Updated At'),
-            'created_by' => CustomerModule::t('customer', 'Created By'),
-            'updated_by' => CustomerModule::t('customer', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'order_id' => Yii::t('backend', 'Order ID'),
+            'co_so' => Yii::t('backend', 'Co So'),
+            'time_start' => Yii::t('backend', 'Time Start'),
+            'time_end' => Yii::t('backend', 'Time End'),
+            'note' => Yii::t('backend', 'Note'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

@@ -198,18 +198,18 @@ class CustomerOrder extends CustomerOrderTable
     public function attributeLabels()
     {
         return [
-            'id' => CustomerModule::t('customer', 'ID'),
-            'customer_id' => CustomerModule::t('customer', 'Customer ID'),
-            'code' => CustomerModule::t('customer', 'Code'),
-            'total' => CustomerModule::t('customer', 'Total'),
-            'discount' => CustomerModule::t('customer', 'Discount'),
-            'status' => CustomerModule::t('customer', 'Status'),
-            'co_so' => CustomerModule::t('customer', 'Co So'),
-            'ordered_at' => CustomerModule::t('customer', 'Ordered At'),
-            'created_at' => CustomerModule::t('customer', 'Created At'),
-            'updated_at' => CustomerModule::t('customer', 'Updated At'),
-            'created_by' => CustomerModule::t('customer', 'Created By'),
-            'updated_by' => CustomerModule::t('customer', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'customer_id' => Yii::t('backend', 'Customer ID'),
+            'code' => Yii::t('backend', 'Code'),
+            'total' => Yii::t('backend', 'Total'),
+            'discount' => Yii::t('backend', 'Discount'),
+            'status' => Yii::t('backend', 'Status'),
+            'co_so' => Yii::t('backend', 'Co So'),
+            'ordered_at' => Yii::t('backend', 'Ordered At'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

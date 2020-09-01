@@ -32,11 +32,11 @@ use yii\widgets\DetailView;
         'updated_at:datetime',
         [
             'attribute' => 'userCreated.userProfile.fullname',
-            'label' => FaqModule::t('faq', 'Created By')
+            'label' => Yii::t('backend', 'Created By')
         ],
         [
             'attribute' => 'userUpdated.userProfile.fullname',
-            'label' => FaqModule::t('faq', 'Updated By')
+            'label' => Yii::t('backend', 'Updated By')
         ],
     ],
 ]) ?>

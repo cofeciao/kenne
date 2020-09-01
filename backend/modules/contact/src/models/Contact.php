@@ -58,17 +58,17 @@ class Contact extends ContactTable
     public function attributeLabels()
     {
         return [
-            'id' => ContactModule::t('contact', 'ID'),
-            'fullname' => ContactModule::t('contact', 'Fullname'),
-            'phone' => ContactModule::t('contact', 'Phone'),
-            'email' => ContactModule::t('contact', 'Email'),
-            'address' => ContactModule::t('contact', 'Address'),
-            'title' => ContactModule::t('contact', 'Title'),
-            'content' => ContactModule::t('contact', 'Content'),
-            'ip_address' => ContactModule::t('contact', 'Ip Address'),
-            'status' => ContactModule::t('contact', 'Status'),
-            'category_id' => ContactModule::t('contact', 'Category'),
-            'created_at' => ContactModule::t('contact', 'Created At'),
+            'id' => Yii::t('backend', 'ID'),
+            'fullname' => Yii::t('backend', 'Fullname'),
+            'phone' => Yii::t('backend', 'Phone'),
+            'email' => Yii::t('backend', 'Email'),
+            'address' => Yii::t('backend', 'Address'),
+            'title' => Yii::t('backend', 'Title'),
+            'content' => Yii::t('backend', 'Content'),
+            'ip_address' => Yii::t('backend', 'Ip Address'),
+            'status' => Yii::t('backend', 'Status'),
+            'category_id' => Yii::t('backend', 'Category'),
+            'created_at' => Yii::t('backend', 'Created At'),
         ];
     }
 

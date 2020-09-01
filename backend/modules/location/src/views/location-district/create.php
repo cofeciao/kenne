@@ -8,9 +8,9 @@ use modava\location\LocationModule;
 /* @var $this yii\web\View */
 /* @var $model modava\location\models\LocationDistrict */
 
-$this->title = LocationModule::t('location', 'Create');
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'District'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Country'), 'url' => ['/location']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'District'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

@@ -8,8 +8,8 @@ use modava\marketing\MarketingModule;
 /* @var $this yii\web\View */
 /* @var $model modava\marketing\models\MarketingFacebookAds */
 
-$this->title = MarketingModule::t('marketing', 'Create');
-$this->params['breadcrumbs'][] = ['label' => MarketingModule::t('marketing', 'Marketing Facebook Ads'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Marketing Facebook Ads'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

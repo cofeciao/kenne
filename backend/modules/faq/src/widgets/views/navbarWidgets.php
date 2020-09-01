@@ -9,14 +9,14 @@ $routeInfos = [
         'module' => 'faq',
         'controllerId' => 'faq',
         'model' => 'Faq',
-        'label' => FaqModule::t('faq', 'Faq'),
+        'label' => Yii::t('backend', 'Faq'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
     ],
     [
         'module' => 'faq',
         'controllerId' => 'faq-category',
         'model' => 'FaqCategory',
-        'label' => FaqModule::t('faq', 'Faq Category'),
+        'label' => Yii::t('backend', 'Faq Category'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
     ],
 ];

@@ -86,7 +86,7 @@ if($model->time_end != null){
     <?= $form->field($model, 'note')->textarea(['rows' => 6, 'maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

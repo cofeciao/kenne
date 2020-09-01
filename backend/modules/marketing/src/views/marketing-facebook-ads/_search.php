@@ -80,8 +80,8 @@ use modava\marketing\MarketingModule;
     <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(MarketingModule::t('marketing', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(MarketingModule::t('marketing', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

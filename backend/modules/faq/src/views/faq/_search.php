@@ -26,10 +26,10 @@ use yii\widgets\ActiveForm;
                 <div class="input-group mb-3">
                     {input}
                     <div class="input-group-append">
-                      ' . Html::submitButton(FaqModule::t('faq', 'Search'), ['class' => 'btn btn-success', 'id' => 'search_faq']) . '
+                      ' . Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-success', 'id' => 'search_faq']) . '
                     </div>
                  </div>'
-            ])->input('text', ['placeholder' => FaqModule::t('faq', 'Place a question...'),])->label(false) ?>
+            ])->input('text', ['placeholder' => Yii::t('backend', 'Place a question...'),])->label(false) ?>
         </div>
     </div>
 

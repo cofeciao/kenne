@@ -7,7 +7,7 @@ use modava\comment\CommentModule;
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'comment') echo ' active' ?>"
            href="<?= Url::toRoute(['/comment/comment']); ?>">
-            <i class="ion ion-ios-locate"></i><?= CommentModule::t('comment', 'Comment'); ?>
+            <i class="ion ion-ios-locate"></i><?= Yii::t('backend', 'Comment'); ?>
         </a>
     </li>
 </ul>

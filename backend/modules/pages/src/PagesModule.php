@@ -25,7 +25,7 @@ class PagesModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
-        $this->registerTranslations();
+//        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/pages.php'));
 //        $handler = $this->get('errorHandler');
@@ -44,20 +44,20 @@ class PagesModule extends Module implements BootstrapInterface
         });
     }
 
-    public function registerTranslations()
-    {
-        Yii::$app->i18n->translations['pages/messages/*'] = [
-            'class' => 'yii\i18n\PhpMessageSource',
-            'sourceLanguage' => 'en',
-            'basePath' => '@modava/pages/messages',
-            'fileMap' => [
-                'pages/messages/pages' => 'pages.php',
-            ],
-        ];
-    }
-
-    public static function t($category, $message, $params = [], $language = null)
-    {
-        return Yii::t('pages/messages/' . $category, $message, $params, $language);
-    }
+//    public function registerTranslations()
+//    {
+//        Yii::$app->i18n->translations['pages/messages/*'] = [
+//            'class' => 'yii\i18n\PhpMessageSource',
+//            'sourceLanguage' => 'en',
+//            'basePath' => '@modava/pages/messages',
+//            'fileMap' => [
+//                'pages/messages/pages' => 'pages.php',
+//            ],
+//        ];
+//    }
+//
+//    public static function t($category, $message, $params = [], $language = null)
+//    {
+//        return Yii::t('pages/messages/' . $category, $message, $params, $language);
+//    }
 }

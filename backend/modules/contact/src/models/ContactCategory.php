@@ -84,15 +84,15 @@ class ContactCategory extends ContactCategoryTable
     public function attributeLabels()
     {
         return [
-            'id' => ContactModule::t('contact', 'ID'),
-            'title' => ContactModule::t('contact', 'Title'),
-            'slug' => ContactModule::t('contact', 'Slug'),
-            'description' => ContactModule::t('contact', 'Description'),
-            'status' => ContactModule::t('contact', 'Status'),
-            'created_at' => ContactModule::t('contact', 'Created At'),
-            'updated_at' => ContactModule::t('contact', 'Updated At'),
-            'created_by' => ContactModule::t('contact', 'Created By'),
-            'updated_by' => ContactModule::t('contact', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'description' => Yii::t('backend', 'Description'),
+            'status' => Yii::t('backend', 'Status'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

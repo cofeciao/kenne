@@ -30,22 +30,22 @@ class LocationProvinceTable extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => LocationModule::t('location', 'ID'),
-            'name' => LocationModule::t('location', 'Name'),
-            'slug' => LocationModule::t('location', 'Slug'),
-            'Type' => LocationModule::t('location', 'Type'),
-            'TelephoneCode' => LocationModule::t('location', 'Telephone Code'),
-            'ZipCode' => LocationModule::t('location', 'Zip Code'),
-            'CountryId' => LocationModule::t('location', 'Quốc gia'),
-            'CountryCode' => LocationModule::t('location', 'Country Code'),
-            'SortOrder' => LocationModule::t('location', 'Sort Order'),
-            'status' => LocationModule::t('location', 'Status'),
-            'language' => LocationModule::t('location', 'Language'),
-            'IsDeleted' => LocationModule::t('location', 'Is Deleted'),
-            'created_at' => LocationModule::t('location', 'Created At'),
-            'updated_at' => LocationModule::t('location', 'Updated At'),
-            'created_by' => LocationModule::t('location', 'Created By'),
-            'updated_by' => LocationModule::t('location', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'name' => Yii::t('backend', 'Name'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'Type' => Yii::t('backend', 'Type'),
+            'TelephoneCode' => Yii::t('backend', 'Telephone Code'),
+            'ZipCode' => Yii::t('backend', 'Zip Code'),
+            'CountryId' => Yii::t('backend', 'Quốc gia'),
+            'CountryCode' => Yii::t('backend', 'Country Code'),
+            'SortOrder' => Yii::t('backend', 'Sort Order'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'IsDeleted' => Yii::t('backend', 'Is Deleted'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

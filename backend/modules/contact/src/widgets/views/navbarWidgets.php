@@ -7,13 +7,13 @@ use modava\contact\ContactModule;
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'contact') echo ' active' ?>"
            href="<?= Url::toRoute(['/contact/contact']); ?>">
-            <i class="ion ion-ios-locate"></i><?= ContactModule::t('contact', 'Contact'); ?>
+            <i class="ion ion-ios-locate"></i><?= Yii::t('backend', 'Contact'); ?>
         </a>
     </li>
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'contact-category') echo ' active' ?>"
            href="<?= Url::toRoute(['/contact/contact-category']); ?>">
-            <i class="ion ion-ios-locate"></i><?= ContactModule::t('contact', 'Contact category'); ?>
+            <i class="ion ion-ios-locate"></i><?= Yii::t('backend', 'Contact category'); ?>
         </a>
     </li>
 </ul>

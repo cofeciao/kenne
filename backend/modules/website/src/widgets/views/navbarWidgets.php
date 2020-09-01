@@ -7,7 +7,7 @@ use modava\website\WebsiteModule;
     <li class="nav-item mb-5">
         <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'key-value') echo ' active' ?>"
            href="<?= Url::toRoute(['/website/key-value']); ?>">
-            <i class="ion ion-ios-locate"></i><?= WebsiteModule::t('website', 'Key value'); ?>
+            <i class="ion ion-ios-locate"></i><?= Yii::t('backend', 'Key value'); ?>
         </a>
     </li>
 </ul>

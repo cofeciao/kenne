@@ -74,17 +74,17 @@ class CustomerFanpage extends CustomerFanpageTable
     public function attributeLabels()
     {
         return [
-            'id' => CustomerModule::t('customer', 'ID'),
-            'origin_id' => CustomerModule::t('customer', 'Origin ID'),
-            'name' => CustomerModule::t('customer', 'Name'),
-            'description' => CustomerModule::t('customer', 'Description'),
-            'url_page' => CustomerModule::t('customer', 'Url Page'),
-            'status' => CustomerModule::t('customer', 'Status'),
-            'language' => CustomerModule::t('customer', 'Language'),
-            'created_at' => CustomerModule::t('customer', 'Created At'),
-            'updated_at' => CustomerModule::t('customer', 'Updated At'),
-            'created_by' => CustomerModule::t('customer', 'Created By'),
-            'updated_by' => CustomerModule::t('customer', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'origin_id' => Yii::t('backend', 'Origin ID'),
+            'name' => Yii::t('backend', 'Name'),
+            'description' => Yii::t('backend', 'Description'),
+            'url_page' => Yii::t('backend', 'Url Page'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

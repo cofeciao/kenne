@@ -290,6 +290,6 @@ class DocumentController extends MyPagesController
             return $model;
         }
 
-        throw new NotFoundHttpException(PagesModule::t('pages', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

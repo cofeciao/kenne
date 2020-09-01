@@ -8,8 +8,8 @@ use modava\website\WebsiteModule;
 /* @var $this yii\web\View */
 /* @var $model modava\website\models\KeyValue */
 
-$this->title = WebsiteModule::t('website', 'Create');
-$this->params['breadcrumbs'][] = ['label' => WebsiteModule::t('website', 'Key value'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Key value'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

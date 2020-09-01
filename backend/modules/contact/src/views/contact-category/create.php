@@ -8,8 +8,8 @@ use modava\contact\ContactModule;
 /* @var $this yii\web\View */
 /* @var $model modava\contact\models\ContactCategory */
 
-$this->title = ContactModule::t('contact', 'Create');
-$this->params['breadcrumbs'][] = ['label' => ContactModule::t('contact', 'Contact Categories'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Contact Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

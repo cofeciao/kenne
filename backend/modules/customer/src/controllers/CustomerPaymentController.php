@@ -49,7 +49,7 @@ class CustomerPaymentController extends MyController
         if ($order_id != null && ($searchModel->orderHasOne == null || $searchModel->orderHasOne->customerHasOne == null)) {
             Yii::$app->session->setFlash('toastr-' . $searchModel->toastr_key . '-index', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Không tìm thấy thanh toán theo đơn hàng "' . $order_id . '"'),
+                'text' => Yii::t('backend', 'Không tìm thấy thanh toán theo đơn hàng "' . $order_id . '"'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['index']);
@@ -93,7 +93,7 @@ class CustomerPaymentController extends MyController
         if ($order_id != null && ($model->orderHasOne == null || $model->orderHasOne->customerHasOne == null)) {
             Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '"'),
+                'text' => Yii::t('backend', 'Không tìm thấy đơn hàng "' . $order_id . '"'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['create']);
@@ -235,7 +235,7 @@ class CustomerPaymentController extends MyController
     public function actionGetPaymentInfo($payment_id = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $payment_info = CustomerModule::t('customer', 'Không tìm thấy đơn hàng');
+        $payment_info = Yii::t('backend', 'Không tìm thấy đơn hàng');
         $order_id = Yii::$app->request->get('order_id');
         if (Yii::$app->request->isAjax && $order_id != null) {
             $order = CustomerOrderTable::getById($order_id);
@@ -295,6 +295,6 @@ class CustomerPaymentController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(CustomerModule::t('customer', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

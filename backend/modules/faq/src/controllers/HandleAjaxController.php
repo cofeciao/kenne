@@ -41,7 +41,7 @@ class HandleAjaxController extends MyFaqController
         $filePath = \Yii::getAlias('@modava/faq/views/' . $formView . '/_form.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
-                'errorMessage' => FaqModule::t('faq', 'Form is not existed'),
+                'errorMessage' => Yii::t('backend', 'Form is not existed'),
             ]);
         }
 
@@ -57,7 +57,7 @@ class HandleAjaxController extends MyFaqController
             'formView' => $formView,
             'model' => $model,
             'filePath' => $filePath,
-            'title' => FaqModule::t('faq', 'Create'),
+            'title' => Yii::t('backend', 'Create'),
         ]);
     }
 
@@ -67,7 +67,7 @@ class HandleAjaxController extends MyFaqController
         $filePath = \Yii::getAlias('@modava/faq/views/' . $formView . '/_form.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
-                'errorMessage' => FaqModule::t('faq', 'Form is not existed'),
+                'errorMessage' => Yii::t('backend', 'Form is not existed'),
             ]);
         }
 
@@ -77,7 +77,7 @@ class HandleAjaxController extends MyFaqController
 
         if (!$model) {
             return $this->renderAjax('error-modal', [
-                'errorMessage' => FaqModule::t('faq', 'Record is not existed'),
+                'errorMessage' => Yii::t('backend', 'Record is not existed'),
             ]);
         }
 
@@ -86,7 +86,7 @@ class HandleAjaxController extends MyFaqController
             'formView' => $formView,
             'model' => $model,
             'filePath' => $filePath,
-            'title' => FaqModule::t('faq', 'Create'),
+            'title' => Yii::t('backend', 'Create'),
         ]);
     }
 
@@ -102,7 +102,7 @@ class HandleAjaxController extends MyFaqController
 
             if (!file_exists($filePath)) {
                 return $this->renderAjax('error-modal', [
-                    'errorMessage' => FaqModule::t('faq', 'File is not existed'),
+                    'errorMessage' => Yii::t('backend', 'File is not existed'),
                 ]);
             }
 
@@ -118,7 +118,7 @@ class HandleAjaxController extends MyFaqController
             'filePath' => $filePath,
             'title' => $model->title,
             'buttons' => Yii::$app->user->can(User::DEV || Yii::$app->user->can('admin')) ? [
-                Html::a(FaqModule::t('faq', 'Detail'), Url::toRoute(['faq/view', 'id' => $model->primaryKey]), ['class' => 'btn btn-primary'])
+                Html::a(Yii::t('backend', 'Detail'), Url::toRoute(['faq/view', 'id' => $model->primaryKey]), ['class' => 'btn btn-primary'])
             ] : []
         ]);
     }
@@ -135,7 +135,7 @@ class HandleAjaxController extends MyFaqController
 
             if (!$model) {
                 return $this->renderAjax('error-modal', [
-                    'errorMessage' => FaqModule::t('faq', 'Record is not existed'),
+                    'errorMessage' => Yii::t('backend', 'Record is not existed'),
                 ]);
             }
         }
@@ -172,7 +172,7 @@ class HandleAjaxController extends MyFaqController
         // Validate Query Param
         if (!$modelName || !class_exists($className) || !class_exists($classNameTable) || !class_exists($classNameSearch)) {
             echo $this->renderAjax('error-modal', [
-                'errorMessage' => FaqModule::t('faq', 'Object is not existed'),
+                'errorMessage' => Yii::t('backend', 'Object is not existed'),
             ]);
 
             Yii::$app->end();
@@ -192,7 +192,7 @@ class HandleAjaxController extends MyFaqController
         $filePath = \Yii::getAlias('@modava/faq/views/' . $formView . '/related-list.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
-                'errorMessage' => FaqModule::t('faq', 'File is not existed'),
+                'errorMessage' => Yii::t('backend', 'File is not existed'),
             ]);
         }
 

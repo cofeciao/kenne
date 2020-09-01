@@ -252,6 +252,6 @@ class VideoCategoryController extends MyVideoController
             return $model;
         }
 
-        throw new NotFoundHttpException(VideoModule::t('video', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }
