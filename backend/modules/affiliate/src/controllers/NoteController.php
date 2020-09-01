@@ -20,8 +20,8 @@ use yii\widgets\ActiveForm;
 class NoteController extends MyController
 {
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function behaviors()
     {
         return [
@@ -35,9 +35,9 @@ class NoteController extends MyController
     }
 
     /**
-     * Lists all Note models.
-     * @return mixed
-     */
+    * Lists all Note models.
+    * @return mixed
+    */
     public function actionIndex()
     {
         $searchModel = new NoteSearch();
@@ -47,15 +47,16 @@ class NoteController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
+            }
+
 
 
     /**
-     * Displays a single Note model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Displays a single Note model.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -64,10 +65,10 @@ class NoteController extends MyController
     }
 
     /**
-     * Creates a new Note model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+    * Creates a new Note model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
     public function actionCreate()
     {
         $model = new Note();
@@ -99,18 +100,18 @@ class NoteController extends MyController
     }
 
     /**
-     * Updates an existing Note model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Updates an existing Note model.
+    * If update is successful, the browser will be redirected to the 'view' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
+            if($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -138,12 +139,12 @@ class NoteController extends MyController
     }
 
     /**
-     * Deletes an existing Note model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Deletes an existing Note model.
+    * If deletion is successful, the browser will be redirected to the 'index' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -190,20 +191,14 @@ class NoteController extends MyController
         }
     }
 
-    public function actionGetComingNote()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $notes = Note::getComingNote();
-        return $this->renderAjax('mini-list', ['notes' => $notes]);
-    }
-
     /**
-     * Finds the Note model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Note the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Finds the Note model based on its primary key value.
+    * If the model is not found, a 404 HTTP exception will be thrown.
+    * @param integer $id
+    * @return Note the loaded model
+    * @throws NotFoundHttpException if the model cannot be found
+    */
+
 
     protected function findModel($id)
     {
@@ -211,6 +206,6 @@ class NoteController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(AffiliateModule::t('affiliate', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

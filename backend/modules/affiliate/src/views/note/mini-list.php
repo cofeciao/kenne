@@ -16,8 +16,8 @@ use modava\affiliate\helpers\AffiliateDisplayHelper;
         <td class="w-md"><?= Yii::$app->formatter->asDatetime($note->recall_time) ?></td>
         <td class="w-sm">
             <a href="#" data-trigger="focus" data-toggle="popover"
-               title="<?= AffiliateModule::t('affiliate', 'Note') ?>"
-               data-content="<?= $note->description ?>"><?= AffiliateModule::t('affiliate', 'Chi tiết') ?></a>
+               title="<?= Yii::t('backend', 'Note') ?>"
+               data-content="<?= $note->description ?>"><?= Yii::t('backend', 'Chi tiết') ?></a>
         </td>
         <td class="w-sm text-center"><input type="checkbox"></td>
     </tr>
