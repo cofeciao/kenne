@@ -277,4 +277,60 @@ class CouponController extends RestfullController
             ]
         ];
     }
+
+    public function actionDeleteRecordByPartnerCode()
+    {
+        $target = Yii::$app->request->post('target');
+        $partnerCode = Yii::$app->request->post('code');
+
+        switch ($target) {
+            case 'Receipt':
+                $model = Receipt::findOne(['partner_code' => $partnerCode]);
+                break;
+            case 'Order':
+                $model = Order::findOne(['partner_order_code' => $partnerCode]);
+                break;
+            default:
+                $model = null;
+                break;
+        }
+
+        if ($model == null) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 400,
+                    'message' => [AffiliateModule::t('affiliate', '{target} không tồn tại', ['target' => $target])]
+                ]
+            ];
+        }
+
+        try {
+            if ($model->delete()) {
+                $code = 200;
+                Yii::$app->response->statusCode = $code;
+                $message = AffiliateModule::t('affiliate', 'Xóa thành công');
+                $status = true;
+            } else {
+                $code = 406;
+                Yii::$app->response->statusCode = $code;
+                $message = $model->getErrors();
+                $status = false;
+            }
+        } catch (Exception $ex) {
+            $code = 406;
+            Yii::$app->response->statusCode = $code;
+            $message = [$ex->getMessage()];
+            $status = false;
+        }
+
+        return [
+            'success' => $status,
+            'error' => [
+                'code' => $code,
+                'message' => $message
+            ]
+        ];
+    }
 }
