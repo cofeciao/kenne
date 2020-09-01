@@ -25,12 +25,12 @@ class CalendarModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
-        $this->registerTranslations();
+//        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/calendar.php'));
-        $handler = $this->get('errorHandler');
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
+//        $handler = $this->get('errorHandler');
+//        Yii::$app->set('errorHandler', $handler);
+//        $handler->register();
         $this->layout = 'calendar';
     }
 
@@ -46,20 +46,20 @@ class CalendarModule extends Module implements BootstrapInterface
         });
     }
 
-    public function registerTranslations()
-    {
-        Yii::$app->i18n->translations['calendar/messages/*'] = [
-            'class' => 'yii\i18n\PhpMessageSource',
-            'sourceLanguage' => 'en',
-            'basePath' => '@modava/calendar/messages',
-            'fileMap' => [
-                'calendar/messages/calendar' => 'calendar.php',
-            ],
-        ];
-    }
-
-    public static function t($category, $message, $params = [], $language = null)
-    {
-        return Yii::t('calendar/messages/' . $category, $message, $params, $language);
-    }
+//    public function registerTranslations()
+//    {
+//        Yii::$app->i18n->translations['calendar/messages/*'] = [
+//            'class' => 'yii\i18n\PhpMessageSource',
+//            'sourceLanguage' => 'en',
+//            'basePath' => '@modava/calendar/messages',
+//            'fileMap' => [
+//                'calendar/messages/calendar' => 'calendar.php',
+//            ],
+//        ];
+//    }
+//
+//    public static function t($category, $message, $params = [], $language = null)
+//    {
+//        return Yii::t('calendar/messages/' . $category, $message, $params, $language);
+//    }
 }

@@ -24,7 +24,7 @@ use modava\comment\CommentModule;
 		<?= $form->field($model, 'created_by')->textInput() ?>
 
         <div class="form-group">
-            <?= Html::submitButton(CommentModule::t('comment', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
     <?php ActiveForm::end(); ?>

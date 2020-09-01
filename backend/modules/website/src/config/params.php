@@ -10,7 +10,7 @@ return [
     'websiteName' => 'Website',
     'websiteVersion' => '1.0',
     'status' => [
-        '0' => WebsiteModule::t('website', 'Tạm ngưng'),
-        '1' => WebsiteModule::t('website', 'Hiển thị'),
+        '0' => Yii::t('backend', 'Tạm ngưng'),
+        '1' => Yii::t('backend', 'Hiển thị'),
     ]
 ];

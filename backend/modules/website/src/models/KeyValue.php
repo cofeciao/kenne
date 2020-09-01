@@ -69,16 +69,16 @@ class KeyValue extends KeyValueTable
     public function attributeLabels()
     {
         return [
-            'id' => WebsiteModule::t('website', 'ID'),
-            'title' => WebsiteModule::t('website', 'Title'),
-            'key' => WebsiteModule::t('website', 'Key'),
-            'value' => WebsiteModule::t('website', 'Value'),
-            'status' => WebsiteModule::t('website', 'Status'),
-            'language' => WebsiteModule::t('website', 'Language'),
-            'created_at' => WebsiteModule::t('website', 'Created At'),
-            'updated_at' => WebsiteModule::t('website', 'Updated At'),
-            'created_by' => WebsiteModule::t('website', 'Created By'),
-            'updated_by' => WebsiteModule::t('website', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'key' => Yii::t('backend', 'Key'),
+            'value' => Yii::t('backend', 'Value'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

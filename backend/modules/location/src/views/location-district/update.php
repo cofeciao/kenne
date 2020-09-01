@@ -8,13 +8,13 @@ use modava\location\LocationModule;
 /* @var $this yii\web\View */
 /* @var $model modava\location\models\LocationDistrict */
 
-$this->title = LocationModule::t('location', 'Update : {name}', [
+$this->title = Yii::t('backend', 'Update : {name}', [
     'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'District'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Country'), 'url' => ['/location']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'District'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -25,8 +25,8 @@ $this->params['breadcrumbs'][] = LocationModule::t('location', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= LocationModule::t('location', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
+           title="<?= Yii::t('backend', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

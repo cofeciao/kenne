@@ -8,12 +8,12 @@ use modava\marketing\MarketingModule;
 /* @var $this yii\web\View */
 /* @var $model modava\marketing\models\MarketingFacebookAds */
 
-$this->title = MarketingModule::t('marketing', 'Update : {name}', [
+$this->title = Yii::t('backend', 'Update : {name}', [
     'name' => $model->id,
 ]);
-$this->params['breadcrumbs'][] = ['label' => MarketingModule::t('marketing', 'Marketing Facebook Ads'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Marketing Facebook Ads'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = MarketingModule::t('marketing', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>

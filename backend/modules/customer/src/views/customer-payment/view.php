@@ -11,8 +11,8 @@ use modava\customer\models\table\CustomerPaymentTable;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerPayment */
 
-$this->title = CustomerModule::t('customer', 'Payment') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Payments'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Payment') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Customer Payments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         [
                             'attribute' => 'orderHasOne.customer_id',
-                            'label' => CustomerModule::t('customer', 'Customers'),
+                            'label' => Yii::t('backend', 'Customers'),
                             'format' => 'raw',
                             'value' => function ($model) {
                                 return Html::a($model->orderHasOne->customerHasOne->name, ['/customer/customer/view', 'id' => $model->orderHasOne->customer_id], [
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute' => 'order_id',
-                            'label' => CustomerModule::t('customer', 'Order'),
+                            'label' => Yii::t('backend', 'Order'),
                             'format' => 'raw',
                             'value' => function ($model) {
                                 return Html::a($model->orderHasOne->code, ['/customer/customer-order/view', 'id' => $model->order_id], [
@@ -90,11 +90,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => CustomerModule::t('customer', 'Created By')
+                            'label' => Yii::t('backend', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => CustomerModule::t('customer', 'Updated By')
+                            'label' => Yii::t('backend', 'Updated By')
                         ],
                     ],
                 ]) ?>

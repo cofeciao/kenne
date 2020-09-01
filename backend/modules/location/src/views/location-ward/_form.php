@@ -34,7 +34,7 @@ if (Yii::$app->controller->action->id == 'update' && $model->DistrictID !== null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'countryId')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
-                'prompt' => LocationModule::t('location', 'Chọn quốc gia...'),
+                'prompt' => Yii::t('backend', 'Chọn quốc gia...'),
                 'class' => 'form-control load-data-on-change',
                 'load-data-key' => 'country',
                 'load-data-url' => Url::toRoute(['/location/location-province/get-province-by-country']),
@@ -48,7 +48,7 @@ if (Yii::$app->controller->action->id == 'update' && $model->DistrictID !== null
                 'attribute' => 'provinceId',
                 'data' => ArrayHelper::map(LocationProvinceTable::getProvinceByCountry(), 'id', 'name'),
                 'options' => [
-                    'prompt' => LocationModule::t('location', 'Chọn tỉnh/thành phố...'),
+                    'prompt' => Yii::t('backend', 'Chọn tỉnh/thành phố...'),
                     'id' => 'select-province',
                     'class' => 'form-control load-data-on-change',
                     'load-data-key' => 'province',
@@ -62,7 +62,7 @@ if (Yii::$app->controller->action->id == 'update' && $model->DistrictID !== null
         </div>
         <div class="col-6">
             <?= $form->field($model, 'DistrictID')->dropDownList(ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->provinceId, Yii::$app->language), 'id', 'name'), [
-                'prompt' => LocationModule::t('location', 'Chọn phường/xã...'),
+                'prompt' => Yii::t('backend', 'Chọn phường/xã...'),
                 'id' => 'select-district'
             ])->label('Quận/Huyện') ?>
         </div>
@@ -77,7 +77,7 @@ if (Yii::$app->controller->action->id == 'update' && $model->DistrictID !== null
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
-        <?= Html::submitButton(LocationModule::t('location', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

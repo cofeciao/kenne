@@ -1,11 +1,13 @@
 <?php
 
+use backend\assets\ModavaAsset;
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+ModavaAsset::register($this);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

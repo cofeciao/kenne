@@ -27,8 +27,13 @@ class m200620_070052_create_table_contact extends Migration
             'content' => $this->text()->null(),
             'ip_address' => $this->string(25)->null(),
             'status' => $this->smallInteger(1)->notNull()->defaultValue(1),
+            'type' => $this->integer(11)->null(),
             'created_at' => $this->integer(11)->notNull(),
         ], $tableOptions);
+
+        $this->createIndex('index-phone', 'contact', 'phone');
+        $this->createIndex('index-type', 'contact', 'type');
+        $this->addForeignKey('fk-contact-type-contact_category-id', 'contact', 'type', 'contact_category', 'id', 'RESTRICT', 'CASCADE');
     }
 
     /**

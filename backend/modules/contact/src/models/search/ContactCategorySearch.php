@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\models\search;
+namespace modava\contact\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Test;
+use modava\contact\models\ContactCategory;
 
 /**
- * TestSearch represents the model behind the search form of `backend\models\Test`.
+ * ContactCategorySearch represents the model behind the search form of `modava\contact\models\ContactCategory`.
  */
-class TestSearch extends Test
+class ContactCategorySearch extends ContactCategory
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class TestSearch extends Test
     public function rules()
     {
         return [
-            [['id', 'view_number', 'position', 'created_at', 'updated_at', 'created_by', 'updated_by', 'idTool'], 'integer'],
-            [['name', 'category', 'image', 'status'], 'safe'],
+            [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['title', 'slug', 'description'], 'safe'],
         ];
     }
 
@@ -41,12 +41,13 @@ class TestSearch extends Test
      */
     public function search($params)
     {
-        $query = Test::find();
+        $query = ContactCategory::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
 
         $this->load($params);
@@ -60,19 +61,16 @@ class TestSearch extends Test
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'view_number' => $this->view_number,
-            'position' => $this->position,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'idTool' => $this->idTool,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'category', $this->category])
-            ->andFilterWhere(['like', 'image', $this->image])
-            ->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

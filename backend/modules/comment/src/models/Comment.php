@@ -55,12 +55,12 @@ class Comment extends CommentTable
     public function attributeLabels()
     {
         return [
-            'id' => CommentModule::t('comment', 'ID'),
-            'table_name' => CommentModule::t('comment', 'Table Name'),
-            'table_id' => CommentModule::t('comment', 'Table ID'),
-            'comment' => CommentModule::t('comment', 'Comment'),
-            'created_at' => CommentModule::t('comment', 'Created At'),
-            'created_by' => CommentModule::t('comment', 'Created By'),
+            'id' => Yii::t('backend', 'ID'),
+            'table_name' => Yii::t('backend', 'Table Name'),
+            'table_id' => Yii::t('backend', 'Table ID'),
+            'comment' => Yii::t('backend', 'Comment'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'created_by' => Yii::t('backend', 'Created By'),
         ];
     }
 

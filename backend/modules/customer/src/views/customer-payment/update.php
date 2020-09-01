@@ -8,10 +8,10 @@ use modava\customer\CustomerModule;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerPayment */
 
-$this->title = CustomerModule::t('customer', 'Update') . ' ' . CustomerModule::t('customer', 'Payment') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Thanh toán'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Update') . ' ' . Yii::t('backend', 'Payment') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Thanh toán'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = CustomerModule::t('customer', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -22,8 +22,8 @@ $this->params['breadcrumbs'][] = CustomerModule::t('customer', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= CustomerModule::t('customer', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+           title="<?= Yii::t('backend', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

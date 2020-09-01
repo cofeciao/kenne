@@ -38,6 +38,7 @@ return [
             'customer' => "customer",
             'get_customer' => "get-customer",
             'create_note' => "save-log-cskh",
+            'get_call_log' => 'get-call-log'
         ],
         'header' => ['X-Api-Key: qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'], // @todo Refactor code here: chuyển MyAurisApi vào model
         'headers' => ['X-Api-Key' => 'qWnUiio9_xxRpExYzqSyzCqn3Gz3ZjP6jN_pxKUX'],

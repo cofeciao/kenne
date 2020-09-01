@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\faq\models\search\FaqSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = FaqModule::t('faq', 'Faqs');
+$this->title = Yii::t('backend', 'Faqs');
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss('   
 .hk-sec-wrapper {
@@ -32,8 +32,8 @@ $this->registerCss('
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <button class="btn btn-outline-light btn-sm" type="button" onclick="openCreateModal({model: 'Faq'rrrrrrrrrrrrrrrrrrrrrr1});"
-                    title="<?= FaqModule::t('faq', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= FaqModule::t('faq', 'Create Question'); ?></button>
+                    title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create Question'); ?></button>
         </div>
 
         <!-- Row -->
@@ -49,7 +49,7 @@ $this->registerCss('
                                 <div class="dataTables_wrapper dt-bootstrap4 table-responsive px-4">
                                     <?= ListView::widget([
                                         'dataProvider' => $dataProvider,
-                                        'summary' => FaqModule::t('faq', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.'),
+                                        'summary' => Yii::t('backend', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.'),
                                         'summaryOptions' => [
                                             'class' => 'mb-4'
                                         ],
@@ -60,10 +60,10 @@ $this->registerCss('
 
                                             if (Yii::$app->user->can('faqFaqAnswer') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                                 if ($model->content) {
-                                                    $message = FaqModule::t('faq', 'Update Answer');
+                                                    $message = Yii::t('backend', 'Update Answer');
                                                     $class = 'text-info';
                                                 } else {
-                                                    $message = FaqModule::t('faq', 'Answer the Question');
+                                                    $message = Yii::t('backend', 'Answer the Question');
                                                 }
 
                                                 $buttonAnswer = Html::button($message,
@@ -75,9 +75,9 @@ $this->registerCss('
 
                                             if (Yii::$app->user->can('faqFaqDelete') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                                 $buttonDelete = Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                    'title' => FaqModule::t('faq', 'Delete'),
+                                                    'title' => Yii::t('backend', 'Delete'),
                                                     'class' => 'btn btn-link btn-xs btn-del float-right text-danger',
-                                                    'data-title' => FaqModule::t('faq', 'Delete?'),
+                                                    'data-title' => Yii::t('backend', 'Delete?'),
                                                     'data-pjax' => 0,
                                                     'data-url' => Url::toRoute(['delete', 'id' => $model->primaryKey]),
                                                     'btn-success-class' => 'success-delete',
@@ -96,10 +96,10 @@ $this->registerCss('
                                         ";
                                         },
                                         'pager' => [
-                                            'firstPageLabel' => FaqModule::t('faq', 'First'),
-                                            'lastPageLabel' => FaqModule::t('faq', 'Last'),
-                                            'prevPageLabel' => FaqModule::t('faq', 'Previous'),
-                                            'nextPageLabel' => FaqModule::t('faq', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [

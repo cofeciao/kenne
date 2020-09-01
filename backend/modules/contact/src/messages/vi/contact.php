@@ -23,5 +23,8 @@ return [
     'Actions' => 'Hành động',
     'Contact' => 'Liên hệ',
     'Contacts' => 'Liên hệ',
-    'Update : {name}' => 'Cập nhật : {name}'
+    'Update : {name}' => 'Cập nhật : {name}',
+    'Contact category' => 'Danh mục liên hệ',
+    'Contact Categories' => 'Danh mục liên hệ',
+    'Description' => 'Mô tả'
 ];

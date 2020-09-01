@@ -28,7 +28,7 @@ if (in_array(Yii::$app->controller->action->id, ['create', 'get-create-modal']))
 
     <div class="row">
         <div class="col-12">
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label(FaqModule::t('faq',
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label(Yii::t('backend',
                 'Question')) ?>
         </div>
 
@@ -43,7 +43,7 @@ if (in_array(Yii::$app->controller->action->id, ['create', 'get-create-modal']))
         <div class="col-6">
             <?= $form->field($model, 'faq_category_id')->dropDownList(
                 ArrayHelper::map(\modava\faq\models\table\FaqCategoryTable::getAllRecordsPublished(), 'id', 'title'),
-                ['prompt' => FaqModule::t('faq', 'Select an option ...')]
+                ['prompt' => Yii::t('backend', 'Select an option ...')]
             ) ?>
         </div>
         <?php if (Yii::$app->user->can('faqFaqAnswer') || Yii::$app->user->can(User::DEV)): ?>
@@ -56,13 +56,13 @@ if (in_array(Yii::$app->controller->action->id, ['create', 'get-create-modal']))
                 <?= $form->field($model, 'content')->widget(\modava\tiny\TinyMce::class, [
                     'options' => ['rows' => 20],
                     'type' => 'content'
-                ])->label(FaqModule::t('faq', 'Answer')) ?>
+                ])->label(Yii::t('backend', 'Answer')) ?>
             </div>
         <?php endif; ?>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton(FaqModule::t('faq', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

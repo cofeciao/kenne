@@ -30,14 +30,14 @@ if (Yii::$app->controller->action->id == 'create') {
     <div class="row">
         <div class="col-md-6 col-12">
             <?= $form->field($model, 'accept')->dropDownList([
-                CustomerStatusDatHen::STATUS_DISABLED => CustomerModule::t('customer', 'Đặt hẹn không đến'),
-                CustomerStatusDatHen::STATUS_PUBLISHED => CustomerModule::t('customer', 'Đặt hẹn đến'),
+                CustomerStatusDatHen::STATUS_DISABLED => Yii::t('backend', 'Đặt hẹn không đến'),
+                CustomerStatusDatHen::STATUS_PUBLISHED => Yii::t('backend', 'Đặt hẹn đến'),
             ], []) ?>
         </div>
     </div>
     <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
-        <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

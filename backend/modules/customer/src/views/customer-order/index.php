@@ -12,7 +12,7 @@ use modava\customer\models\table\CustomerOrderTable;
 /* @var $searchModel modava\customer\models\search\CustomerOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CustomerModule::t('customer', 'Đơn hàng');
+$this->title = Yii::t('backend', 'Đơn hàng');
 if ($searchModel->customerHasOne != null) $this->title .= ': ' . $searchModel->customerHasOne->name;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </h4>
             <a class="btn btn-outline-light btn-sm"
                href="<?= \yii\helpers\Url::to(['create', 'customer_id' => Yii::$app->request->get('customer_id')]); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+               title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
         </div>
 
         <!-- Row -->
@@ -70,10 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => CustomerModule::t('customer', 'First'),
-                                            'lastPageLabel' => CustomerModule::t('customer', 'Last'),
-                                            'prevPageLabel' => CustomerModule::t('customer', 'Previous'),
-                                            'nextPageLabel' => CustomerModule::t('customer', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'attribute' => 'customer_id',
                                                 'format' => 'raw',
-                                                'label' => CustomerModule::t('customer', 'Customers'),
+                                                'label' => Yii::t('backend', 'Customers'),
                                                 'value' => function ($model) {
                                                     return Html::a($model->customerHasOne->name, ['/customer/customer/view', 'id' => $model->customerHasOne->id], [
                                                         'target' => '_blank',
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'attribute' => 'code',
-                                                'label' => CustomerModule::t('customer', 'Order'),
+                                                'label' => Yii::t('backend', 'Order'),
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
                                                     return Html::a($model->code, ['view', 'id' => $model->id], [
@@ -146,30 +146,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'header' => CustomerModule::t('customer', 'Actions'),
+                                                'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '<div>{view} {update} {delete}</div><div class="mt-1">{payment} {list-payment}</div>',
                                                 'buttons' => [
                                                     'view' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-search"></span>', $url, [
-                                                            'title' => CustomerModule::t('customer', 'View'),
-                                                            'alia-label' => CustomerModule::t('customer', 'View'),
+                                                            'title' => Yii::t('backend', 'View'),
+                                                            'alia-label' => Yii::t('backend', 'View'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-success btn-xs'
                                                         ]);
                                                     },
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                            'title' => CustomerModule::t('customer', 'Update'),
-                                                            'alia-label' => CustomerModule::t('customer', 'Update'),
+                                                            'title' => Yii::t('backend', 'Update'),
+                                                            'alia-label' => Yii::t('backend', 'Update'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-info btn-xs'
                                                         ]);
                                                     },
                                                     'delete' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                            'title' => CustomerModule::t('customer', 'Delete'),
+                                                            'title' => Yii::t('backend', 'Delete'),
                                                             'class' => 'btn btn-danger btn-xs btn-del',
-                                                            'data-title' => CustomerModule::t('customer', 'Delete?'),
+                                                            'data-title' => Yii::t('backend', 'Delete?'),
                                                             'data-pjax' => 0,
                                                             'data-url' => $url,
                                                             'btn-success-class' => 'success-delete',
@@ -182,14 +182,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                      * 'treatment-schedule' => function ($url, $model) {
                                                         if ($model->status == CustomerOrderTable::STATUS_PUBLISHED) return null;
                                                         return Html::a('<span class="glyphicon glyphicon-plus"></span>', ['/customer/customer-treatment-schedule/create', 'order_id' => $model->id], [
-                                                            'title' => CustomerModule::t('customer', 'Create Treatment Schedule'),
+                                                            'title' => Yii::t('backend', 'Create Treatment Schedule'),
                                                             'class' => 'btn btn-warning btn-xs',
                                                             'data-pjax' => 0,
                                                         ]);
                                                     },
                                                     'list-treatment-schedule' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', ['/customer/customer-treatment-schedule/index', 'order_id' => $model->id], [
-                                                            'title' => CustomerModule::t('customer', 'List Treatment Schedule'),
+                                                            'title' => Yii::t('backend', 'List Treatment Schedule'),
                                                             'class' => 'btn btn-warning btn-xs',
                                                             'data-pjax' => 0,
                                                         ]);
@@ -197,14 +197,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'payment' => function ($url, $model) {
                                                         if ($model->status == CustomerOrderTable::STATUS_PUBLISHED) return null;
                                                         return Html::a('<span class="glyphicon glyphicon-plus"></span>', ['/customer/customer-payment/create', 'order_id' => $model->id], [
-                                                            'title' => CustomerModule::t('customer', 'Create Payment'),
+                                                            'title' => Yii::t('backend', 'Create Payment'),
                                                             'class' => 'btn btn-success btn-xs',
                                                             'data-pjax' => 0,
                                                         ]);
                                                     },
                                                     'list-payment' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-credit-card"></span>', ['/customer/customer-payment/index', 'order_id' => $model->id], [
-                                                            'title' => CustomerModule::t('customer', 'List Payment'),
+                                                            'title' => Yii::t('backend', 'List Payment'),
                                                             'class' => 'btn btn-success btn-xs',
                                                             'data-pjax' => 0,
                                                         ]);

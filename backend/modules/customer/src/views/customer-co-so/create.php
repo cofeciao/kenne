@@ -8,8 +8,8 @@ use modava\customer\CustomerModule;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerCoSo */
 
-$this->title = CustomerModule::t('customer', 'Create');
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Cơ sở'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Cơ sở'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

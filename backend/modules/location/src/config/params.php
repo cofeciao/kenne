@@ -6,8 +6,8 @@ return [
     'locationName' => 'Location',
     'locationVersion' => '1.0',
     'status' => [
-        '0' => LocationModule::t('location', 'Tạm ngưng'),
-        '1' => LocationModule::t('location', 'Hiển thị'),
+        '0' => Yii::t('backend', 'Tạm ngưng'),
+        '1' => Yii::t('backend', 'Hiển thị'),
     ],
     'district-type' => [
         'Thành phố' => 'Thành phố',

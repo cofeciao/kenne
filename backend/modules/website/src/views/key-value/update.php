@@ -8,12 +8,12 @@ use modava\website\WebsiteModule;
 /* @var $this yii\web\View */
 /* @var $model modava\website\models\KeyValue */
 
-$this->title = WebsiteModule::t('website', 'Update : {title}', [
+$this->title = Yii::t('backend', 'Update : {title}', [
     'title' => $model->title,
 ]);
-$this->params['breadcrumbs'][] = ['label' => WebsiteModule::t('website', 'Key value'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Key value'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = WebsiteModule::t('website', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = WebsiteModule::t('website', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= WebsiteModule::t('website', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
+           title="<?= Yii::t('backend', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

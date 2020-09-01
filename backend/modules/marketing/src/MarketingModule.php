@@ -28,9 +28,9 @@ class MarketingModule extends Module implements BootstrapInterface
         $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/marketing.php'));
-        $handler = $this->get('errorHandler');
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
+//        $handler = $this->get('errorHandler');
+//        Yii::$app->set('errorHandler', $handler);
+//        $handler->register();
         $this->layout = 'marketing';
     }
 

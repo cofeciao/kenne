@@ -83,14 +83,14 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
             </div>
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'sex')->dropDownList(CustomerTable::SEX, [
-                    'prompt' => CustomerModule::t('customer', 'Chọn giới tính...')
+                    'prompt' => Yii::t('backend', 'Chọn giới tính...')
                 ]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'country')->dropDownList(ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'), [
-                    'prompt' => CustomerModule::t('customer', 'Chọn quốc gia...'),
+                    'prompt' => Yii::t('backend', 'Chọn quốc gia...'),
                     'class' => 'form-control load-data-on-change',
                     'load-data-element' => '#select-province',
                     'load-data-url' => Url::toRoute(['/location/location-province/get-province-by-country']),
@@ -103,7 +103,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'province')->dropDownList(ArrayHelper::map(LocationProvinceTable::getProvinceByCountry($model->country, Yii::$app->language), 'id', 'name'), [
                     'id' => 'select-province',
-                    'prompt' => CustomerModule::t('customer', 'Chọn Tỉnh/Thành phố...'),
+                    'prompt' => Yii::t('backend', 'Chọn Tỉnh/Thành phố...'),
                     'class' => 'form-control load-data-on-change',
                     'load-data-element' => '#select-district',
                     'load-data-url' => Url::toRoute(['/location/location-district/get-district-by-province']),
@@ -118,7 +118,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'district')->dropDownList(ArrayHelper::map(LocationDistrictTable::getDistrictByProvince($model->province, Yii::$app->language), 'id', 'name'), [
                     'id' => 'select-district',
-                    'prompt' => CustomerModule::t('customer', 'Chọn Quận/Huyện...'),
+                    'prompt' => Yii::t('backend', 'Chọn Quận/Huyện...'),
                     'class' => 'form-control load-data-on-change',
                     'load-data-element' => '#select-ward',
                     'load-data-url' => Url::toRoute(['/location/location-ward/get-ward-by-district']),
@@ -129,7 +129,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
             </div>
             <div class="col-md-6 col-12">
                 <?= $form->field($model, 'ward')->dropDownList(ArrayHelper::map(LocationWardTable::getWardByDistrict($model->district), 'id', 'name'), [
-                    'prompt' => CustomerModule::t('customer', 'Chọn Phường/Xã...'),
+                    'prompt' => Yii::t('backend', 'Chọn Phường/Xã...'),
                     'id' => 'select-ward',
                 ]) ?>
             </div>
@@ -166,7 +166,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                 <div class="col-md-6 col-12 agency is-online"
                      style="display: <?= $model->scenario == Customer::SCENARIO_ONLINE || $model->type == Customer::TYPE_ONLINE ? 'block' : 'none' ?>">
                     <?= $form->field($model, 'agency')->dropDownList(ArrayHelper::map(CustomerAgencyTable::getAllAgency(), 'id', 'name'), [
-                        'prompt' => CustomerModule::t('customer', 'Chọn agency...'),
+                        'prompt' => Yii::t('backend', 'Chọn agency...'),
                         'class' => 'form-control load-data-on-change',
                         'id' => 'agency',
                         'load-data-url' => Url::toRoute(['/customer/customer-origin/get-origin-by-agency']),
@@ -174,24 +174,24 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                         'load-data-key' => 'agency',
                         'load-data-method' => 'GET',
                         'load-data-callback' => '$("#fanpage-id").find("option[value!=\'\']").remove();'
-                    ])->label(CustomerModule::t('customer', 'Agency')) ?>
+                    ])->label(Yii::t('backend', 'Agency')) ?>
                 </div>
                 <div class="col-md-6 col-12 origin is-online"
                      style="display: <?= $model->scenario == Customer::SCENARIO_ONLINE || $model->type == Customer::TYPE_ONLINE ? 'block' : 'none' ?>">
                     <?= $form->field($model, 'origin')->dropDownList(ArrayHelper::map(CustomerOriginTable::getOriginByAgency($model->agency), 'id', 'name'), [
-                        'prompt' => CustomerModule::t('customer', 'Chọn nguồn trực tuyến...'),
+                        'prompt' => Yii::t('backend', 'Chọn nguồn trực tuyến...'),
                         'id' => 'origin',
                         'class' => 'form-control load-data-on-change',
                         'load-data-url' => Url::toRoute(['/customer/customer-fanpage/get-fanpage-by-origin']),
                         'load-data-element' => '#fanpage-id',
                         'load-data-key' => 'origin',
                         'load-data-method' => 'GET'
-                    ])->label(CustomerModule::t('customer', 'Nguồn trực tuyến')) ?>
+                    ])->label(Yii::t('backend', 'Nguồn trực tuyến')) ?>
                 </div>
                 <div class="col-md-6 col-12 fanpage-id is-online"
                      style="display: <?= $model->scenario == Customer::SCENARIO_ONLINE || $model->type == Customer::TYPE_ONLINE ? 'block' : 'none' ?>">
                     <?= $form->field($model, 'fanpage_id')->dropDownList(ArrayHelper::map(CustomerFanpageTable::getFanpageByOrigin($model->origin), 'id', 'name'), [
-                        'prompt' => CustomerModule::t('customer', 'Chọn fanpage facebook...'),
+                        'prompt' => Yii::t('backend', 'Chọn fanpage facebook...'),
                         'id' => 'fanpage-id'
                     ]) ?>
                 </div>
@@ -199,7 +199,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                      style="display: <?= $model->scenario == Customer::SCENARIO_ONLINE || $model->type == Customer::TYPE_ONLINE ? 'block' : 'none' ?>">
                     <?= $form->field($model, 'status_call')->dropDownList(ArrayHelper::map(CustomerStatusCallTable::getAllStatusCall(), 'id', 'name'), [
                         'id' => 'status-call',
-                        'prompt' => CustomerModule::t('customer', 'Trạng thái gọi...')
+                        'prompt' => Yii::t('backend', 'Trạng thái gọi...')
                     ]) ?>
                 </div>
                 <div class="col-12 customer-status-call-fail"
@@ -237,7 +237,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                         </div>
                         <div class="col-md-6 col-12 status-fail">
                             <?= $form->field($model, 'status_fail')->dropDownList(ArrayHelper::map(CustomerStatusFailTable::getAllStatusCallFail(), 'id', 'name'), [
-                                'prompt' => CustomerModule::t('customer', 'Lý do fail...'),
+                                'prompt' => Yii::t('backend', 'Lý do fail...'),
                                 'id' => 'status-fail'
                             ]) ?>
                         </div>
@@ -269,7 +269,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
                 if (isset(Yii::$app->user->identity->co_so)) $model->co_so = Yii::$app->user->identity->co_so;
                 ?>
                 <?= $form->field($model, 'co_so')->dropDownList(ArrayHelper::map(CustomerCoSoTable::getAllCoSo(), 'id', 'name'), [
-                    'prompt' => CustomerModule::t('customer', 'Chọn cơ sở...'),
+                    'prompt' => Yii::t('backend', 'Chọn cơ sở...'),
                     'id' => 'co-so'
                 ]) ?>
             </div>
@@ -351,7 +351,7 @@ $user_direct_sales = $this->params['user_direct_sales'] ?: null;
             <?php } ?>
         </div>
         <div class="form-group">
-            <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

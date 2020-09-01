@@ -31,14 +31,14 @@ if (Yii::$app->controller->action->id == 'create') {
     <div class="row">
         <div class="col-md-6 col-12">
             <?= $form->field($model, 'accept')->dropDownList([
-                CustomerStatusDongY::STATUS_DISABLED => CustomerModule::t('customer', 'Không đồng ý'),
-                CustomerStatusDongY::STATUS_PUBLISHED => CustomerModule::t('customer', 'Đồng ý'),
+                CustomerStatusDongY::STATUS_DISABLED => Yii::t('backend', 'Không đồng ý'),
+                CustomerStatusDongY::STATUS_PUBLISHED => Yii::t('backend', 'Đồng ý'),
             ], []) ?>
         </div>
     </div>
     <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
-        <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
