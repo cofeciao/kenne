@@ -1,8 +1,9 @@
 {
   "scripts": [
-
   ],
   "styles": [
-
+    {
+      "name": "style"
+    }
   ]
 }

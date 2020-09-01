@@ -13,7 +13,7 @@ use yii\helpers\Url;
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title"
-                id="createCouponModalLabel"><?= AffiliateModule::t('affiliate', 'Lịch sử cuộc gọi của') . ' ' . $phone ?></h5>
+                id="createCouponModalLabel"><?= Yii::t('backend', 'Lịch sử cuộc gọi của') . ' ' . $phone ?></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -23,19 +23,19 @@ use yii\helpers\Url;
                 <thead>
                 <tr>
                     <th>
-                        <?= AffiliateModule::t('affiliate', 'Hướng') ?>
+                        <?= Yii::t('backend', 'Hướng') ?>
                     </th>
                     <th>
-                        <?= AffiliateModule::t('affiliate', 'Từ số') ?>
+                        <?= Yii::t('backend', 'Từ số') ?>
                     </th>
                     <th>
-                        <?= AffiliateModule::t('affiliate', 'Đến số') ?>
+                        <?= Yii::t('backend', 'Đến số') ?>
                     </th>
                     <th>
-                        <?= AffiliateModule::t('affiliate', 'Ghi âm') ?>
+                        <?= Yii::t('backend', 'Ghi âm') ?>
                     </th>
                     <th>
-                        <?= AffiliateModule::t('affiliate', 'Ngày gọi') ?>
+                        <?= Yii::t('backend', 'Ngày gọi') ?>
                     </th>
                 </tr>
                 </thead>
@@ -46,9 +46,9 @@ use yii\helpers\Url;
                         <td>
                             <?php
                             if ($record['direction'] == 1) {
-                                echo AffiliateModule::t('affiliate', 'Gọi vào');
+                                echo Yii::t('backend', 'Gọi vào');
                             } else if ($record['direction'] == 3) {
-                                echo AffiliateModule::t('affiliate', 'Gọi ra');
+                                echo Yii::t('backend', 'Gọi ra');
                             } else echo '-' ?>
                         </td>
                         <td><?= $record['from_number'] ?></td>
@@ -69,7 +69,7 @@ use yii\helpers\Url;
                     <tr>
                         <td colspan="5">
                             <div class="alert alert-success">
-                                <?= AffiliateModule::t('affiliate', 'Không có cuộc gọi nào') ?>
+                                <?= Yii::t('backend', 'Không có cuộc gọi nào') ?>
                             </div>
                         </td>
                     </tr>
