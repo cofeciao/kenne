@@ -280,4 +280,12 @@ class Note extends NoteTable
             ];
         }
     }
+
+    public static function getComingNote ($forAllUser = false) {
+        $query = self::find()->where('DATE(recall_time) = DATE(NOW())');
+        if (!$forAllUser) {
+            $query->andWhere(['=', 'created_by', Yii::$app->user->id]);
+        }
+        return $query->orderBy(['recall_time' => SORT_ASC])->all();
+    }
 }

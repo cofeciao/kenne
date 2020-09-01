@@ -9,6 +9,7 @@
 use yii\helpers\Url;
 
 use modava\chart\PieChart;
+use modava\chart\MiniList;
 use modava\chart\BarChart;
 use modava\affiliate\AffiliateModule;
 
@@ -40,6 +41,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="tab-pane active" id="tabs-1" role="tabpanel">
             <!-- Row -->
             <div class="row">
+                <div class="col-xl-6">
+                    <?= MiniList::widget([
+                        'title' => AffiliateModule::t('affiliate', 'Note cần gọi trong ngày'),
+                        'columns' => [
+                            'title',
+                            'Khách hàng',
+                            'SĐT',
+                            'Thời gian gọi',
+                            'Thời gian gọi lại',
+                            'Note',
+                            'Đã gọi lại',
+                        ],
+                        'url_get_data' => Url::toRoute(["/affiliate/note/get-coming-note"])
+                    ]) ?>
+                </div>
                 <div class="col-xl-6">
                     <?= BarChart::widget([
                         'title' => AffiliateModule::t('affliate', 'Feedback theo giai đoạn'),
