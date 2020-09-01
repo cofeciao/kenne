@@ -43,6 +43,7 @@ Yii::setAlias('modava/faq', dirname(dirname(__DIR__)) . '/backend/modules/faq/sr
 Yii::setAlias('modava/voip24h', dirname(dirname(__DIR__)) . '/backend/widgets/voip24h/src');
 Yii::setAlias('modava/input', dirname(dirname(__DIR__)) . '/backend/widgets/input/src');
 Yii::setAlias('modava/location', dirname(dirname(__DIR__)) . '/backend/modules/location/src');
+Yii::setAlias('modava/test', dirname(dirname(__DIR__)) . '/backend/modules/test/src');
 
 //Widget
 Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/src');
