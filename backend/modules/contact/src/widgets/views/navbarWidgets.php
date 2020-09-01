@@ -10,4 +10,10 @@ use modava\contact\ContactModule;
             <i class="ion ion-ios-locate"></i><?= ContactModule::t('contact', 'Contact'); ?>
         </a>
     </li>
+    <li class="nav-item mb-5">
+        <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == 'contact-category') echo ' active' ?>"
+           href="<?= Url::toRoute(['/contact/contact-category']); ?>">
+            <i class="ion ion-ios-locate"></i><?= ContactModule::t('contact', 'Contact category'); ?>
+        </a>
+    </li>
 </ul>

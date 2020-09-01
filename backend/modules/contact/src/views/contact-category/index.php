@@ -1,21 +1,20 @@
 <?php
 
-use backend\widgets\ToastrWidget;
 use modava\contact\ContactModule;
 use modava\contact\widgets\NavbarWidgets;
-use common\grid\MyGridView;
 use yii\helpers\Html;
+use common\grid\MyGridView;
+use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\contact\models\search\ContactSearch */
+/* @var $searchModel modava\contact\models\search\ContactCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = ContactModule::t('contact', 'Contacts');
+$this->title = ContactModule::t('contact', 'Contact Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
-    <div class="container-fluid px-xxl-25 px-xl-10">
+    <div class="container-fluid px-xxl-15 px-xl-10">
         <?= NavbarWidgets::widget(); ?>
 
         <!-- Title -->
@@ -23,6 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4 class="hk-pg-title"><span class="pg-title-icon"><span
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
+            <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
+               title="<?= ContactModule::t('contact', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= ContactModule::t('contact', 'Create'); ?></a>
         </div>
 
         <!-- Row -->
@@ -30,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xl-12">
                 <section class="hk-sec-wrapper index">
 
-                    <?php Pjax::begin(['id' => 'contact-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
+                    <?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
+                    <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
@@ -38,20 +41,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
-                                            {errors} 
-                                            <div class="pane-single-table">
-                                                {items}
-                                            </div>
-                                            <div class="pager-wrap clearfix">
-                                                {summary}' .
+                                        {errors}
+                                        <div class="pane-single-table">
+                                            {items}
+                                        </div>
+                                        <div class="pager-wrap clearfix">
+                                            {summary}' .
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageTo', [
                                                 'totalPage' => $totalPage,
                                                 'currentPage' => Yii::$app->request->get($dataProvider->getPagination()->pageParam)
                                             ]) .
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize') .
                                             '{pager}
-                                            </div>
-                                        ',
+                                        </div>
+                                    ',
                                         'tableOptions' => [
                                             'id' => 'dataTable',
                                             'class' => 'dt-grid dt-widget pane-hScroll',
@@ -72,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                             'options' => [
                                                 'tag' => 'ul',
-                                                'class' => 'pagination',
+                                                'class' => 'pagination pull-left',
                                             ],
 
                                             // Customzing CSS class for pager link
@@ -92,11 +95,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'yii\grid\SerialColumn',
                                                 'header' => 'STT',
                                                 'headerOptions' => [
-                                                    'width' => 50,
+                                                    'width' => 30,
                                                     'rowspan' => 2
                                                 ],
                                                 'filterOptions' => [
                                                     'class' => 'd-none',
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'id',
+                                                'headerOptions' => [
+                                                    'width' => 40,
                                                 ],
                                             ],
                                             [
@@ -109,18 +118,51 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 }
                                             ],
-
-                                            'fullname',
-                                            'phone',
-                                            'email',
-                                            'address',
-                                            'content:html',
+                                            'description:html',
                                             [
-                                                'attribute' => 'Category',
-                                                'label' => 'Danh mục',
-                                                'value' => 'contactCategory.title',
+                                                'attribute' => 'created_by',
+                                                'value' => 'userCreated.userProfile.fullname',
+                                                'headerOptions' => [
+                                                    'width' => 100,
+                                                ],
                                             ],
-                                            'ip_address',
+                                            [
+                                                'attribute' => 'created_at',
+                                                'format' => 'date',
+                                                'headerOptions' => [
+                                                    'width' => 100,
+                                                ],
+                                            ],
+                                            [
+                                                'class' => 'yii\grid\ActionColumn',
+                                                'header' => ContactModule::t('contact', 'Actions'),
+                                                'template' => '{update} {delete}',
+                                                'buttons' => [
+                                                    'update' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                            'title' => ContactModule::t('contact', 'Update'),
+                                                            'alia-label' => ContactModule::t('contact', 'Update'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-info btn-xs'
+                                                        ]);
+                                                    },
+                                                    'delete' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                            'title' => ContactModule::t('contact', 'Delete'),
+                                                            'class' => 'btn btn-danger btn-xs btn-del',
+                                                            'data-title' => ContactModule::t('contact', 'Delete?'),
+                                                            'data-pjax' => 0,
+                                                            'data-url' => $url,
+                                                            'btn-success-class' => 'success-delete',
+                                                            'btn-cancel-class' => 'cancel-delete',
+                                                            'data-placement' => 'top'
+                                                        ]);
+                                                    }
+                                                ],
+                                                'headerOptions' => [
+                                                    'width' => 100,
+                                                ],
+                                            ],
                                         ],
                                     ]); ?>
                                 </div>
@@ -135,11 +177,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $script = <<< JS
-var customPjax = new myGridView();
-customPjax.init({
-    pjaxId: '#contact-pjax',
-    urlChangePageSize: '$urlChangePageSize',
-});
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();
     var url = $(this).attr('href') || null;
@@ -147,6 +184,11 @@ $('body').on('click', '.success-delete', function(e){
         $.post(url);
     }
     return false;
+});
+var customPjax = new myGridView();
+customPjax.init({
+pjaxId: '#dt-pjax',
+urlChangePageSize: '$urlChangePageSize',
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);
