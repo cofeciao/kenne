@@ -3,7 +3,7 @@
 namespace modava\website\models;
 
 use common\models\User;
-use modava\website\WebsiteModule;
+use Yii;
 use modava\website\models\table\KeyValueTable;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
