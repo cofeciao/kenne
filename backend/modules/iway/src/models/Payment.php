@@ -113,4 +113,9 @@ class Payment extends PaymentTable
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
+
+    public function getOrder()
+    {
+        return $this->hasOne(Order::class, ['id' => 'order_id']);
+    }
 }

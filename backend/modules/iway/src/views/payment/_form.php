@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\select2\Select2;
+use modava\select2\Select2;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\iway\IwayModule;
@@ -71,7 +71,7 @@ $customers = CustomerTable::getAll();
                 <?php
                 if ($model->co_so == null) {
                     if (isset(Yii::$app->user->identity->co_so)) $model->co_so = Yii::$app->user->identity->co_so;
-                    if ($model->orderHasOne != null) $model->co_so = $model->orderHasOne->customerHasOne->co_so;
+                    if ($model->order != null) $model->co_so = $model->order->customer->co_so;
                     else $model->co_so = null;
                 }
                 ?>

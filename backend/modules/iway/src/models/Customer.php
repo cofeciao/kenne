@@ -170,4 +170,9 @@ class Customer extends CustomerTable
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
+
+    public function getCoSo()
+    {
+        return $this->hasOne(CoSo::class, ['id' => 'co_so']);
+    }
 }

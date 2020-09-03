@@ -9,6 +9,25 @@ use yii\db\ActiveRecord;
 
 class PaymentTable extends MyIwayModel
 {
+    const DISCOUNT_BY_MONEY = '1';
+    const DISCOUNT_BY_PERCENT = '2';
+    const DISCOUNT = [
+        self::DISCOUNT_BY_MONEY => 'đ',
+        self::DISCOUNT_BY_PERCENT => '%',
+    ];
+    const TYPE_TIEN_MAT = 0;
+    const TYPE_CHUYEN_KHOAN = 1;
+    const TYPE = [
+        self::TYPE_TIEN_MAT => 'Tiền mặt',
+        self::TYPE_CHUYEN_KHOAN => 'Chuyển khoản'
+    ];
+    const PAYMENTS_THANH_TOAN = 0;
+    const PAYMENTS_DAT_COC = 1;
+    const PAYMENTS = [
+        self::PAYMENTS_THANH_TOAN => 'Thanh toán',
+        self::PAYMENTS_DAT_COC => 'Đặt cọc'
+    ];
+
     public static function tableName()
     {
         return 'iway_payment';

@@ -12,6 +12,8 @@ use modava\iway\IwayModule;
 use backend\components\MyController;
 use modava\iway\models\Order;
 use modava\iway\models\search\OrderSearch;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -203,6 +205,24 @@ class OrderController extends MyController
         return $totalPage;
     }
 
+    public function actionValidateOrder($id = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if (Yii::$app->request->isAjax) {
+            $model = new Order([
+                'customer_id' => Yii::$app->request->get('customer_id')
+            ]);
+            if ($id != null) $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post())) {
+                return ActiveForm::validate($model);
+            }
+        }
+        return [
+            'code' => 403,
+            'msg' => Yii::t('backend', 'Không có quyền truy cập')
+        ];
+    }
+
     /**
     * Finds the Order model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
@@ -219,6 +239,5 @@ class OrderController extends MyController
         }
 
         throw new NotFoundHttpException(Yii::t('iway', 'The requested page does not exist.'));
-        throw new NotFoundHttpException(IwayModule::t('iway','The requested page does not exist.'));
     }
 }

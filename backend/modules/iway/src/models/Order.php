@@ -10,32 +10,33 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "iway_order".
-*
-    * @property int $id
-    * @property string $code Mã đơn hàng
-    * @property int $ordered_at Ngày lập đơn
-    * @property int $customer_id Mã khách hàng
-    * @property string $status Tình trạng đơn hàng
-    * @property int $co_so Đơn hàng lập ở cơ sở nào
-    * @property double $total Tổng tiền
-    * @property double $discount Chiết khấu
-    * @property int $created_at Ngày nhập đơn vào hệ thống
-    * @property int $updated_at
-    * @property int $created_by
-    * @property int $updated_by
-    *
-            * @property IwayCoSo $coSo
-            * @property User $createdBy
-            * @property IwayCustomer $customer
-            * @property User $updatedBy
-            * @property IwayOrderDetail[] $iwayOrderDetails
-            * @property IwayPayment[] $iwayPayments
-            * @property IwayTreatmentSchedule[] $iwayTreatmentSchedules
-    */
+ * This is the model class for table "iway_order".
+ *
+ * @property int $id
+ * @property string $code Mã đơn hàng
+ * @property int $ordered_at Ngày lập đơn
+ * @property int $customer_id Mã khách hàng
+ * @property string $status Tình trạng đơn hàng
+ * @property int $co_so Đơn hàng lập ở cơ sở nào
+ * @property double $total Tổng tiền
+ * @property double $discount Chiết khấu
+ * @property int $created_at Ngày nhập đơn vào hệ thống
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ *
+ * @property CoSo $coSo
+ * @property User $createdBy
+ * @property Customer $customer
+ * @property User $updatedBy
+ * @property OrderDetail[] $iwayOrderDetails
+ * @property Payment[] $iwayPayments
+ * @property TreatmentSchedule[] $iwayTreatmentSchedules
+ */
 class Order extends OrderTable
 {
     public $toastr_key = 'order';
+
     public function behaviors()
     {
         return array_merge(
@@ -59,26 +60,26 @@ class Order extends OrderTable
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-			[['ordered_at', 'customer_id', 'co_so', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-			[['customer_id'], 'required'],
-			[['total', 'discount'], 'number'],
-			[['code'], 'string', 'max' => 100],
-			[['status'], 'string', 'max' => 255],
-			[['co_so'], 'exist', 'skipOnError' => true, 'targetClass' => IwayCoSo::class, 'targetAttribute' => ['co_so' => 'id']],
-			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => IwayCustomer::class, 'targetAttribute' => ['customer_id' => 'id']],
-			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-		];
+            [['ordered_at', 'customer_id', 'co_so', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['customer_id'], 'required'],
+            [['total', 'discount'], 'number'],
+            [['code'], 'string', 'max' => 100],
+            [['status'], 'string', 'max' => 255],
+            [['co_so'], 'exist', 'skipOnError' => true, 'targetClass' => IwayCoSo::class, 'targetAttribute' => ['co_so' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => IwayCustomer::class, 'targetAttribute' => ['customer_id' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+        ];
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
@@ -98,22 +99,27 @@ class Order extends OrderTable
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
     }
 }

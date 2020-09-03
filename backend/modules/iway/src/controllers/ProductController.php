@@ -3,6 +3,7 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\iway\models\table\ProductTable;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -12,6 +13,7 @@ use modava\iway\IwayModule;
 use backend\components\MyController;
 use modava\iway\models\Product;
 use modava\iway\models\search\ProductSearch;
+use yii\web\Response;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -203,6 +205,26 @@ class ProductController extends MyController
         return $totalPage;
     }
 
+
+
+    public function actionGetProductInfo($id = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if (Yii::$app->request->isAjax) {
+            $product = ProductTable::getById($id);
+            if ($product != null) return [
+                'code' => 200,
+                'data' => $product->getAttributes([
+                    'name', 'price'
+                ])
+            ];
+        }
+        return [
+            'code' => 403,
+            'data' => Yii::t('backend', 'Permission denined!')
+        ];
+    }
+
     /**
     * Finds the Product model based on its primary key value.
     * If the model is not found, a 404 HTTP exception will be thrown.
@@ -219,6 +241,5 @@ class ProductController extends MyController
         }
 
         throw new NotFoundHttpException(Yii::t('iway', 'The requested page does not exist.'));
-        throw new NotFoundHttpException(IwayModule::t('iway','The requested page does not exist.'));
     }
 }
