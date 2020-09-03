@@ -53,6 +53,8 @@ use modava\iway\IwayModule;
             <div class="col-6">
                 <?= $form->field($model, 'fanpage_id')->widget(Select2::class, [
                     'options' => ['placeholder' => 'Gõ để tìm ...'],
+                    'value' => $model->fanpage_id,
+                    'initValueText' => $model->fanpage ? $model->fanpage->name : '',
                     'pluginOptions' => [
                         'allowClear' => true,
                         'minimumInputLength' => 3,
@@ -65,8 +67,8 @@ use modava\iway\IwayModule;
                             'data' => new JsExpression('function(params) { return {q:params.term}; }')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                        'templateResult' => new JsExpression('function(record) { return record.name; }'),
-                        'templateSelection' => new JsExpression('function (record) { return record.name; }'),
+                        'templateResult' => new JsExpression('function(record) { return record.text; }'),
+                        'templateSelection' => new JsExpression('function (record) { return record.text; }'),
                     ],
                 ]); ?>
             </div>

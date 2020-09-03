@@ -110,7 +110,10 @@ class Fanpage extends FanpageTable
     }
 
     public static function findByName($name) {
-        return self::find()->where(['like', 'name', $name])->limit(20)->all();
+        $record = Yii::$app->db->createCommand(
+            "SELECT `id`, `name` AS `text` FROM `iway_fanpage` WHERE `name` LIKE '%$name%' AND status = 1"
+        )->queryAll();
+        return $record;
     }
 
     public function getOrigin()
