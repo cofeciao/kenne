@@ -1,6 +1,5 @@
 <?php
 
-use modava\select2\assets\Select2Asset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use modava\iway\models\table\ProductTable;
@@ -8,7 +7,7 @@ use modava\iway\models\Payment;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\iway\IwayModule;
-use modava\select2\Select2;
+use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use unclead\multipleinput\MultipleInput;
 use modava\iway\models\table\CustomerTable;
@@ -19,7 +18,7 @@ use modava\datetime\DateTimePicker;
 /* @var $model modava\iway\models\Order */
 /* @var $form yii\widgets\ActiveForm */
 
-Select2Asset::register($this);
+//Select2Asset::register($this);
 
 $options_price = [];
 foreach (ArrayHelper::map(ProductTable::getAll(Yii::$app->language), 'id', 'price') as $id => $price) {

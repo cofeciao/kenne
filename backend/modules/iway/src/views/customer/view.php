@@ -58,21 +58,76 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         'phone',
+                        [
+                            'attribute' => 'country_id',
+                            'value' => function ($model) {
+                                return $model->country_id ? $model->country->CommonName : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'province_id',
+                            'value' => function ($model) {
+                                return $model->province_id ? $model->province->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'district_id',
+                            'value' => function ($model) {
+                                return $model->district_id ? $model->district->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'ward_id',
+                            'value' => function ($model) {
+                                return $model->ward_id ? $model->ward->name : null;
+                            }
+                        ],
                         'address',
-                        'ward_id',
                         'avatar',
-                        'fanpage_id',
+                        [
+                            'attribute' => 'fanpage_id',
+                            'value' => function ($model) {
+                                if ($model->fanpage_id) {
+                                    return $model->fanpage->name;
+                                }
+                                return '';
+                            }
+                        ],
                         [
                             'attribute' => 'type',
                             'value' => function ($model) {
                                 return $model->getDisplayDropdown($model->type, 'type');
                             }
                         ],
-                        'permission_user',
+                        [
+                            'attribute' => 'online_sales_id',
+                            'value' => function ($model) {
+                                if ($model->online_sales_id) {
+                                    return $model->onlineSale->fullname;
+                                }
+                                return '';
+                            }
+                        ],
                         'sale_online_note:raw',
-                        'direct_sale',
+                        [
+                            'attribute' => 'direct_sale_id',
+                            'value' => function ($model) {
+                                if ($model->direct_sale_id) {
+                                    return $model->directSale->fullname;
+                                }
+                                return '';
+                            }
+                        ],
                         'direct_sale_note:raw',
-                        'co_so',
+                        [
+                            'attribute' => 'co_so',
+                            'value' => function ($model) {
+                                if ($model->co_so) {
+                                    return $model->coSo->name;
+                                }
+                                return '';
+                            }
+                        ],
                         'created_at:datetime',
                         'updated_at:datetime',
                         [

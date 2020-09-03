@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use modava\select2\Select2;
+use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
 use modava\iway\IwayModule;

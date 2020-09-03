@@ -3,6 +3,7 @@
 namespace modava\iway\models;
 
 use common\models\User;
+use modava\auth\models\UserProfile;
 use modava\iway\helpers\Utils;
 use modava\iway\IwayModule;
 use modava\iway\models\table\CustomerTable;
@@ -171,8 +172,50 @@ class Customer extends CustomerTable
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOnlineSale()
+    {
+        return $this->hasOne(UserProfile::class, ['user_id' => 'online_sales_id']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDirectSale()
+    {
+        return $this->hasOne(UserProfile::class, ['user_id' => 'direct_sale_id']);
+    }
+
     public function getCoSo()
     {
         return $this->hasOne(CoSo::class, ['id' => 'co_so']);
+    }
+
+    public function getFanpage()
+    {
+        return $this->hasOne(Fanpage::class, ['id' => 'fanpage_id']);
+    }
+
+
+    public function getCountry() {
+        return $this->hasOne(LocationCountry::class, ['id' => 'country_id']);
+    }
+
+    public function getProvince() {
+        return $this->hasOne(LocationProvince::class, ['id' => 'province_id']);
+    }
+
+    public function getDistrict() {
+        return $this->hasOne(LocationDistrict::class, ['id' => 'district_id']);
+    }
+
+    public function getWard() {
+        return $this->hasOne(LocationWard::class, ['id' => 'ward_id']);
     }
 }
