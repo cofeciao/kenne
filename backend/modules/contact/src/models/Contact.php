@@ -134,8 +134,8 @@ class Contact extends ContactTable
             [['status', 'created_at'], 'integer'],
             [['fullname', 'email', 'address', 'title'], 'string', 'max' => 255],
             [['phone', 'ip_address'], 'string', 'max' => 25],
-            [['phone'], 'unique'],
-            [['email'], 'unique'],
+//            [['phone'], 'unique'],
+//            [['email'], 'unique'],
             [['type'], 'exist', 'skipOnError' => true, 'targetClass' => ContactCategory::class, 'targetAttribute' => ['type' => 'id']],
             [['metadata'], 'validateMetadata']
         ];
