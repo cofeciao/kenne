@@ -44,9 +44,14 @@ class Contact extends ContactTable
                 }
             }
             $metadataView = isset($params_module_contact['metadataView']) ? $params_module_contact['metadataView'] : null;
-            if ($metadataView != null && substr($metadataView, -4) != '.php') $metadataView .= '.php';
-            if ($metadataView != null && !is_dir($metadataView) && file_exists($metadataView)) {
-                $this->contactMetadataView = $metadataView;
+            if ($metadataView != null) {
+                try {
+                    if (!is_dir(Yii::getAlias($metadataView)) && file_exists(Yii::getAlias($metadataView))) {
+                        if(substr($metadataView, -4) == '.php') $metadataView = substr($metadataView, 0, -4);
+                        $this->contactMetadataView = $metadataView;
+                    }
+                } catch (\Exception $ex) {
+                }
             }
         }
         if ($this->contactMetadata == null ||
