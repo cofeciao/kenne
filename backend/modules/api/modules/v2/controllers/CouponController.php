@@ -191,7 +191,7 @@ class CouponController extends RestfullController
                 $model = new Receipt();
             }
         } else {
-            Yii::$app->response->statusCode = 40;
+            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
