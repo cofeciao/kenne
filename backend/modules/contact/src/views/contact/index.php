@@ -13,6 +13,14 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('backend', 'Contacts');
 $this->params['breadcrumbs'][] = $this->title;
+//echo '<pre>';
+//var_dump($searchModel->contactMetadataIndex);die;
+try {
+    $contactMetadataIndex = $searchModel->contactMetadataIndex;
+    if (!is_array($contactMetadataIndex)) $contactMetadataIndex = [];
+} catch (Exception $ex) {
+    $contactMetadataIndex = [];
+}
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
@@ -87,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'firstPageCssClass' => 'paginate_button page-item first',
                                             'lastPageCssClass' => 'paginate_button page-item last',
                                         ],
-                                        'columns' => [
+                                        'columns' => array_merge([
                                             [
                                                 'class' => 'yii\grid\SerialColumn',
                                                 'header' => 'STT',
@@ -109,7 +117,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 }
                                             ],
-
                                             'fullname',
                                             'phone',
                                             'email',
@@ -121,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'value' => 'contactCategory.title',
                                             ],
                                             'ip_address',
-                                        ],
+                                        ], $contactMetadataIndex)
                                     ]); ?>
                                 </div>
                             </div>

@@ -30,7 +30,9 @@ class Contact extends ContactTable
     public $toastr_key = 'contact';
 
     public $contactMetadata = null;
+    public $contactMetadataIndex = [];
     public $contactMetadataView = null;
+    public $contactMetadataForm = null;
 
     public function init()
     {
@@ -43,12 +45,30 @@ class Contact extends ContactTable
                 } catch (\Exception $ex) {
                 }
             }
+            $metadataIndex = isset($params_module_contact['metadataIndex']) ? $params_module_contact['metadataIndex'] : null;
+            if ($metadataIndex != null) {
+                try {
+                    if (!is_dir(Yii::getAlias($metadataIndex)) && file_exists(Yii::getAlias($metadataIndex))) {
+                        $this->contactMetadataIndex = require Yii::getAlias($metadataIndex);
+                    }
+                } catch (\Exception $ex) {
+                }
+            }
             $metadataView = isset($params_module_contact['metadataView']) ? $params_module_contact['metadataView'] : null;
             if ($metadataView != null) {
                 try {
                     if (!is_dir(Yii::getAlias($metadataView)) && file_exists(Yii::getAlias($metadataView))) {
-                        if(substr($metadataView, -4) == '.php') $metadataView = substr($metadataView, 0, -4);
-                        $this->contactMetadataView = $metadataView;
+                        $this->contactMetadataView = require Yii::getAlias($metadataView);
+                    }
+                } catch (\Exception $ex) {
+                }
+            }
+            $metadataForm = isset($params_module_contact['metadataForm']) ? $params_module_contact['metadataForm'] : null;
+            if ($metadataForm != null) {
+                try {
+                    if (!is_dir(Yii::getAlias($metadataForm)) && file_exists(Yii::getAlias($metadataForm))) {
+                        if (substr($metadataForm, -4) == '.php') $metadataForm = substr($metadataForm, 0, -4);
+                        $this->contactMetadataForm = $metadataForm;
                     }
                 } catch (\Exception $ex) {
                 }
