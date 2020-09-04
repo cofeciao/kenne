@@ -30,12 +30,13 @@ use modava\contact\ContactModule;
     <?php
     if ($model->contactMetadataView != null) {
         try {
-            $this->render('@backend/views/layouts/contact-metadata/view');
+            echo $this->render($model->contactMetadataView, [
+                'form' => $form,
+                'model' => $model
+            ]);
         } catch (\yii\base\ViewNotFoundException $ex) {
-            var_dump($ex->getMessage());
         }
     }
-    echo $form->field($model, 'metadata[code]')->textInput();
     ?>
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>
