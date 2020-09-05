@@ -33,8 +33,8 @@ $this->registerCss('
             </h4>
             <button class="btn btn-outline-light btn-sm" type="button"
                     onclick="openCreateModal({model: 'Faq'rrrrrrrrrrrrrrrrrrrrrr1});"
-                    title="<?= FaqModule::t('faq', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= FaqModule::t('faq', 'Create Question'); ?></button>
+                    title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create Question'); ?></button>
         </div>
 
         <!-- Row -->
