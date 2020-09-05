@@ -2,7 +2,6 @@
 
 use backend\widgets\ToastrWidget;
 use modava\auth\models\User;
-use modava\faq\FaqModule;
 use modava\faq\widgets\JsUtils;
 use modava\faq\widgets\NavbarWidgets;
 use yii\helpers\Html;
@@ -49,7 +48,7 @@ $this->registerCss('
                             <?= ListView::widget([
                                 'dataProvider' => $dataProvider,
                                 'layout' => '<div class="summary mb-4">{summary}</div>{items}',
-                                'summary' => FaqModule::t('faq', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.'),
+                                'summary' => Yii::t('faq', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.'),
                                 'itemView' => function ($model, $key, $index, $widget) {
                                     $buttonAnswer = '';
                                     $buttonDelete = '';
@@ -57,10 +56,10 @@ $this->registerCss('
 
                                     if (Yii::$app->user->can('faqFaqAnswer') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                         if ($model->content) {
-                                            $message = FaqModule::t('faq', 'Update Answer');
+                                            $message = Yii::t('backend', 'Update Answer');
                                             $class = 'text-info';
                                         } else {
-                                            $message = FaqModule::t('faq', 'Answer the Question');
+                                            $message = Yii::t('faq', 'Answer the Question');
                                         }
 
                                         $buttonAnswer = Html::button($message,
@@ -71,9 +70,9 @@ $this->registerCss('
                                     }
                                     if (Yii::$app->user->can('faqFaqDelete') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                         $buttonDelete = Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                            'title' => FaqModule::t('faq', 'Delete'),
+                                            'title' => Yii::t('faq', 'Delete'),
                                             'class' => 'btn btn-link btn-xs btn-del float-right text-danger',
-                                            'data-title' => FaqModule::t('faq', 'Delete?'),
+                                            'data-title' => Yii::t('faq', 'Delete?'),
                                             'data-pjax' => 0,
                                             'data-url' => Url::toRoute(['delete', 'id' => $model->primaryKey]),
                                             'btn-success-class' => 'success-delete',
@@ -92,10 +91,10 @@ $this->registerCss('
                                         ";
                                 },
                                 'pager' => [
-                                    'firstPageLabel' => FaqModule::t('faq', 'First'),
-                                    'lastPageLabel' => FaqModule::t('faq', 'Last'),
-                                    'prevPageLabel' => FaqModule::t('faq', 'Previous'),
-                                    'nextPageLabel' => FaqModule::t('faq', 'Next'),
+                                    'firstPageLabel' => Yii::t('faq', 'First'),
+                                    'lastPageLabel' => Yii::t('faq', 'Last'),
+                                    'prevPageLabel' => Yii::t('faq', 'Previous'),
+                                    'nextPageLabel' => Yii::t('faq', 'Next'),
                                     'maxButtonCount' => 5,
 
                                     'options' => [
