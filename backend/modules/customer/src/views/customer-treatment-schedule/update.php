@@ -8,10 +8,10 @@ use modava\customer\CustomerModule;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerTreatmentSchedule */
 
-$this->title = CustomerModule::t('customer', 'Update') . ' ' . CustomerModule::t('customer', 'Customer Treatment Schedules') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Treatment Schedules'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Update') . ' ' . Yii::t('backend', 'Customer Treatment Schedules') . ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Customer Treatment Schedules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = CustomerModule::t('customer', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>

@@ -19,7 +19,7 @@ use modava\customer\models\table\CustomerStatusDongYTable;
 /* @var $model modava\customer\models\Customer */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customers'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Customers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
@@ -39,19 +39,19 @@ $status_call_dathen = ArrayHelper::map(CustomerStatusCall::getStatusCallDatHen()
                 Yii::$app->user->can('customer') ||
                 Yii::$app->user->can('customerCustomer-orderCreate')) { ?>
                 <?php if (in_array($model->scenario, [Customer::SCENARIO_CLINIC, Customer::SCENARIO_ADMIN]) && $model->statusDongYHasOne != null && $model->statusDongYHasOne->accept == CustomerStatusDongYTable::STATUS_PUBLISHED) { ?>
-                    <?= Html::a('<i class="fa fa-plus"></i> ' . CustomerModule::t('customer', 'Order'), ['/customer/customer-order/create', 'customer_id' => $model->primaryKey], [
+                    <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('backend', 'Order'), ['/customer/customer-order/create', 'customer_id' => $model->primaryKey], [
                         'class' => 'btn btn-success btn-sm'
                     ]) ?>
                 <?php }
             } ?>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -197,11 +197,11 @@ $status_call_dathen = ArrayHelper::map(CustomerStatusCall::getStatusCallDatHen()
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => CustomerModule::t('customer', 'Created By')
+                            'label' => Yii::t('backend', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => CustomerModule::t('customer', 'Updated By')
+                            'label' => Yii::t('backend', 'Updated By')
                         ],
                     ],
                 ]) ?>

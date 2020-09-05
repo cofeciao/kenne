@@ -68,4 +68,7 @@ return [
     'api' => [
         'class' => 'backend\modules\api\Api',
     ],
+    'test' => [
+        'class' => 'modava\test\TestModule',
+    ],
 ];

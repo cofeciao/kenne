@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\website\models\search\KeyValueSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = WebsiteModule::t('website', 'Key value');
+$this->title = Yii::t('backend', 'Key value');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
-               title="<?= WebsiteModule::t('website', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
+               title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
         </div>
 
         <!-- Row -->
@@ -67,10 +67,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => WebsiteModule::t('website', 'First'),
-                                            'lastPageLabel' => WebsiteModule::t('website', 'Last'),
-                                            'prevPageLabel' => WebsiteModule::t('website', 'Previous'),
-                                            'nextPageLabel' => WebsiteModule::t('website', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
@@ -141,22 +141,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'header' => WebsiteModule::t('website', 'Actions'),
+                                                'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '{update} {delete}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                            'title' => WebsiteModule::t('website', 'Update'),
-                                                            'alia-label' => WebsiteModule::t('website', 'Update'),
+                                                            'title' => Yii::t('backend', 'Update'),
+                                                            'alia-label' => Yii::t('backend', 'Update'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-info btn-xs'
                                                         ]);
                                                     },
                                                     'delete' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                            'title' => WebsiteModule::t('website', 'Delete'),
+                                                            'title' => Yii::t('backend', 'Delete'),
                                                             'class' => 'btn btn-danger btn-xs btn-del',
-                                                            'data-title' => WebsiteModule::t('website', 'Delete?'),
+                                                            'data-title' => Yii::t('backend', 'Delete?'),
                                                             'data-pjax' => 0,
                                                             'data-url' => $url,
                                                             'btn-success-class' => 'success-delete',

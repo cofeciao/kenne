@@ -40,7 +40,7 @@ class HandleAjaxController extends MyAffiliateController
         $filePath = \Yii::getAlias('@modava/affiliate/views/' . $formView . '/_form.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
-                'errorMessage' => AffiliateModule::t('affiliate', 'Form is not existed'),
+                'errorMessage' => Yii::t('backend', 'Form is not existed'),
             ]);
         }
 
@@ -82,6 +82,28 @@ class HandleAjaxController extends MyAffiliateController
         }
     }
 
+    public function actionUpdateAjax($id)
+    {
+        $model = $this->classModelName::findOne($id);
+
+        if ($model == null) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [ 'success' => false, 'message' => Yii::t('backend', 'Không tìm thấy record') ];
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate() && $model->save()) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+
+                return [ 'success' => true ];
+            } else {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+
+                return [ 'success' => false ];
+            }
+        }
+    }
+
     public function beforeAction($action)
     {
         $modelName = \Yii::$app->request->get('model');
@@ -93,7 +115,7 @@ class HandleAjaxController extends MyAffiliateController
         // Validate Query Param
         if (!$modelName || !class_exists($className) || !class_exists($classNameTable) || !class_exists($classNameSearch)) {
             echo $this->renderAjax('error-modal', [
-                'errorMessage' => AffiliateModule::t('affiliate', 'Object is not existed'),
+                'errorMessage' => Yii::t('backend', 'Object is not existed'),
             ]);
 
             Yii::$app->end();
@@ -102,7 +124,7 @@ class HandleAjaxController extends MyAffiliateController
 
         if (in_array($modelName, Yii::$app->getModule('affiliate')->params['not_release_object'])) {
             echo $this->renderAjax('error-modal', [
-                'errorMessage' => AffiliateModule::t('affiliate', 'Object is not released'),
+                'errorMessage' => Yii::t('backend', 'Object is not released'),
             ]);
 
             Yii::$app->end();
@@ -121,7 +143,7 @@ class HandleAjaxController extends MyAffiliateController
         $filePath = \Yii::getAlias('@modava/affiliate/views/' . $formView . '/related-list.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
-                'errorMessage' => AffiliateModule::t('affiliate', 'File is not existed'),
+                'errorMessage' => Yii::t('backend', 'File is not existed'),
             ]);
         }
 
@@ -147,7 +169,7 @@ class HandleAjaxController extends MyAffiliateController
             }
 
             return $this->renderAjax('error-modal', [
-                'errorMessage' => AffiliateModule::t('affiliate', 'Error connection!'),
+                'errorMessage' => Yii::t('backend', 'Error connection!'),
             ]);
         }
 

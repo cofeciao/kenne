@@ -5,7 +5,7 @@ return [
     'contactName' => 'Contact',
     'contactVersion' => '1.0',
     'status' => [
-        '0' => ContactModule::t('contact', 'Tạm ngưng'),
-        '1' => ContactModule::t('contact', 'Hiển thị'),
+        '0' => Yii::t('backend', 'Tạm ngưng'),
+        '1' => Yii::t('backend', 'Hiển thị'),
     ]
 ];

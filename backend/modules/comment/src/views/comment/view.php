@@ -11,7 +11,7 @@ use modava\comment\CommentModule;
 /* @var $model modava\comment\models\Comment */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => CommentModule::t('comment', 'Comments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Comments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-                title="<?= CommentModule::t('comment', 'Create'); ?>">
+                title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CommentModule::t('comment>', 'Create'); ?></a>
             <?= Html::a(CommentModule::t('comment>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
             <?= Html::a(CommentModule::t('comment>', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => CommentModule::t('comment', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>

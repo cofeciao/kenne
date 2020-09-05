@@ -32,8 +32,8 @@ use modava\comment\CommentModule;
     <?php // echo $form->field($model, 'created_by') ?>
 
     <div class="form-group">
-        <?= Html::submitButton(CommentModule::t('comment', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(CommentModule::t('comment', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('backend', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

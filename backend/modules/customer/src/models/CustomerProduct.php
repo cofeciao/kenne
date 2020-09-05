@@ -76,17 +76,17 @@ class CustomerProduct extends CustomerProductTable
     public function attributeLabels()
     {
         return [
-            'id' => CustomerModule::t('customer', 'ID'),
-            'category_id' => CustomerModule::t('customer', 'Category ID'),
-            'name' => CustomerModule::t('customer', 'Name'),
-            'price' => CustomerModule::t('customer', 'Price'),
-            'description' => CustomerModule::t('customer', 'Description'),
-            'status' => CustomerModule::t('customer', 'Status'),
-            'language' => CustomerModule::t('customer', 'Language'),
-            'created_at' => CustomerModule::t('customer', 'Created At'),
-            'created_by' => CustomerModule::t('customer', 'Created By'),
-            'updated_at' => CustomerModule::t('customer', 'Updated At'),
-            'updated_by' => CustomerModule::t('customer', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'category_id' => Yii::t('backend', 'Category ID'),
+            'name' => Yii::t('backend', 'Name'),
+            'price' => Yii::t('backend', 'Price'),
+            'description' => Yii::t('backend', 'Description'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 }

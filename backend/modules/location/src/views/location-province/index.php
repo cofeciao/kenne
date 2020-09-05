@@ -11,8 +11,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\location\models\search\LocationProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = LocationModule::t('location', 'Province');
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location/location-country']];
+$this->title = Yii::t('backend', 'Province');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Country'), 'url' => ['/location/location-country']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -25,8 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
-           title="<?= LocationModule::t('location', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
+           title="<?= Yii::t('backend', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
     </div>
 
     <!-- Row -->
@@ -69,10 +69,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'class' => 'summary pull-right',
                                     ],
                                     'pager' => [
-                                        'firstPageLabel' => LocationModule::t('location', 'First'),
-                                        'lastPageLabel' => LocationModule::t('location', 'Last'),
-                                        'prevPageLabel' => LocationModule::t('location', 'Previous'),
-                                        'nextPageLabel' => LocationModule::t('location', 'Next'),
+                                        'firstPageLabel' => Yii::t('backend', 'First'),
+                                        'lastPageLabel' => Yii::t('backend', 'Last'),
+                                        'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                        'nextPageLabel' => Yii::t('backend', 'Next'),
                                         'maxButtonCount' => 5,
 
                                         'options' => [
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                        ],
                                         [
                                             'class' => 'yii\grid\ActionColumn',
-                                            'header' => LocationModule::t('location', 'Actions'),
+                                            'header' => Yii::t('backend', 'Actions'),
                                             'headerOptions' => [
                                                 'width' => 130,
                                             ],

@@ -64,13 +64,13 @@ use modava\location\LocationModule;
     <?= \modava\tiny\FileManager::widget([
         'model' => $model,
         'attribute' => 'Flags',
-        'label' => LocationModule::t('location', 'Hình ảnh') . ': 150x150px'
+        'label' => Yii::t('backend', 'Hình ảnh') . ': 150x150px'
     ]); ?>
 
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
-        <?= Html::submitButton(LocationModule::t('location', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

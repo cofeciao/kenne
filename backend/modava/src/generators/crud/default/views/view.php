@@ -9,22 +9,23 @@ use yii\helpers\StringHelper;
 $urlParams = $generator->generateUrlParams();
 $modelClass = StringHelper::basename($generator->modelClass);
 $ns = explode('\\', $generator->modelClass)[0];
+$alias = $generator->getYiiAlias();
 
 echo "<?php\n";
 ?>
 
+use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
-use <?= $ns ?>\<?= $generator->messageCategory ?>\widgets\NavbarWidgets;
-use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
+use <?= $alias ?>widgets\NavbarWidgets;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
-$this->params['breadcrumbs'][] = ['label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('<?= $generator->messageCategory ?>', '<?= Inflector::pluralize(Inflector::camel2words($modelClass)) ?>'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -35,17 +36,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?= "<?=" ?><?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Chi tiết'); ?>: <?= "<?=" ?> Html::encode($this->title) ?>
+                        class="ion ion-md-apps"></span></span><?= "<?=" ?>Yii::t('<?= $generator->messageCategory ?>', 'Chi tiết'); ?>: <?= "<?=" ?> Html::encode($this->title) ?>
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= "<?=" ?> Url::to(['create']); ?>"
-                title="<?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
-                <i class="fa fa-plus"></i> <?= "<?=" ?> <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
-            <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) <?= "?>\n" ?>
-            <?= "<?=" ?> Html::a(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Delete'), ['delete', 'id' => $model->id], [
+                title="<?= "<?=" ?> Yii::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?>">
+                <i class="fa fa-plus"></i> <?= "<?=" ?> Yii::t('<?= $generator->messageCategory ?>', 'Create'); <?= "?>" ?></a>
+            <?= "<?=" ?> Html::a(Yii::t('<?= $generator->messageCategory ?>', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) <?= "?>\n" ?>
+            <?= "<?=" ?> Html::a(Yii::t('<?= $generator->messageCategory ?>', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('<?= $generator->messageCategory ?>', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) <?= "?>\n" ?>
@@ -88,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
-                                return Yii::$app->getModule('<?= $generator->messageCategory ?>')->params['status'][$model->status];
+                                return Yii::$app->params['status'][$model->status];
                             }
                         ],
 <?php
@@ -115,11 +116,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         ?>
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Created By')
+                            'label' => Yii::t('<?= $generator->messageCategory ?>', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => <?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>', 'Updated By')
+                            'label' => Yii::t('<?= $generator->messageCategory ?>', 'Updated By')
                         ],
                     ],
                 ]) ?>

@@ -74,18 +74,18 @@ class CustomerCoSo extends CustomerCoSoTable
     public function attributeLabels()
     {
         return [
-            'id' => CustomerModule::t('customer', 'ID'),
-            'name' => CustomerModule::t('customer', 'Name'),
-            'address' => CustomerModule::t('customer', 'Address'),
-            'phone' => CustomerModule::t('customer', 'Phone'),
-            'email' => CustomerModule::t('customer', 'Email'),
-            'description' => CustomerModule::t('customer', 'Description'),
-            'status' => CustomerModule::t('customer', 'Status'),
-            'language' => CustomerModule::t('customer', 'Language'),
-            'created_at' => CustomerModule::t('customer', 'Created At'),
-            'updated_at' => CustomerModule::t('customer', 'Updated At'),
-            'created_by' => CustomerModule::t('customer', 'Created By'),
-            'updated_by' => CustomerModule::t('customer', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'name' => Yii::t('backend', 'Name'),
+            'address' => Yii::t('backend', 'Address'),
+            'phone' => Yii::t('backend', 'Phone'),
+            'email' => Yii::t('backend', 'Email'),
+            'description' => Yii::t('backend', 'Description'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

@@ -177,7 +177,7 @@ foreach ($customerDongY as $customer_dong_y) {
         </div>
 
         <div class="form-group">
-            <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

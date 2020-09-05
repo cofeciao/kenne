@@ -66,12 +66,12 @@ class CustomerOrderDetail extends CustomerOrderDetailTable
     public function attributeLabels()
     {
         return [
-            'order_id' => CustomerModule::t('customer', 'Order ID'),
-            'product_id' => CustomerModule::t('customer', 'Product ID'),
-            'qty' => CustomerModule::t('customer', 'Qty'),
-            'price' => CustomerModule::t('customer', 'Price'),
-            'discount' => CustomerModule::t('customer', 'Discount'),
-            'reason_discount' => CustomerModule::t('customer', 'Reason Discount'),
+            'order_id' => Yii::t('backend', 'Order ID'),
+            'product_id' => Yii::t('backend', 'Product ID'),
+            'qty' => Yii::t('backend', 'Qty'),
+            'price' => Yii::t('backend', 'Price'),
+            'discount' => Yii::t('backend', 'Discount'),
+            'reason_discount' => Yii::t('backend', 'Reason Discount'),
         ];
     }
 

@@ -7,7 +7,6 @@ use modava\affiliate\models\Order;
 use modava\affiliate\models\Receipt;
 use Yii;
 use backend\modules\api\modules\v2\components\RestfullController;
-use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\Coupon;
 use yii\web\Response;
 
@@ -25,14 +24,14 @@ class CouponController extends RestfullController
         if ($coupon) {
             return [
                 'success' => true,
-                'message' => AffiliateModule::t('affiliate', 'Mã code do khách hàng {full_name} giới thiệu', ['full_name' => $coupon->customer->full_name]),
+                'message' => Yii::t('backend', 'Mã code do khách hàng {full_name} giới thiệu', ['full_name' => $coupon->customer->full_name]),
                 'data' => $coupon->getAttributes()
             ];
         }
 
         return [
             'success' => false,
-            'message' => AffiliateModule::t('affiliate', 'Mã code không tồn tại hoặc đã được sử dụng')
+            'message' => Yii::t('backend', 'Mã code không tồn tại hoặc đã được sử dụng')
         ];
     }
 
@@ -192,7 +191,7 @@ class CouponController extends RestfullController
                 $model = new Receipt();
             }
         } else {
-            Yii::$app->response->statusCode = 40;
+            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
@@ -245,7 +244,7 @@ class CouponController extends RestfullController
                 'success' => false,
                 'error' => [
                     'code' => 400,
-                    'message' => [AffiliateModule::t('affiliate', '{target} không tồn tại', ['target' => $target])]
+                    'message' => [Yii::t('backend', '{target} không tồn tại', ['target' => $target])]
                 ]
             ];
         }
@@ -254,7 +253,7 @@ class CouponController extends RestfullController
             if ($model->delete()) {
                 $code = 200;
                 Yii::$app->response->statusCode = $code;
-                $message = AffiliateModule::t('affiliate', 'Xóa thành công');
+                $message = Yii::t('backend', 'Xóa thành công');
                 $status = true;
             } else {
                 $code = 406;
@@ -301,7 +300,7 @@ class CouponController extends RestfullController
                 'success' => false,
                 'error' => [
                     'code' => 400,
-                    'message' => [AffiliateModule::t('affiliate', '{target} không tồn tại', ['target' => $target])]
+                    'message' => [Yii::t('backend', '{target} không tồn tại', ['target' => $target])]
                 ]
             ];
         }
@@ -310,7 +309,7 @@ class CouponController extends RestfullController
             if ($model->delete()) {
                 $code = 200;
                 Yii::$app->response->statusCode = $code;
-                $message = AffiliateModule::t('affiliate', 'Xóa thành công');
+                $message = Yii::t('backend', 'Xóa thành công');
                 $status = true;
             } else {
                 $code = 406;

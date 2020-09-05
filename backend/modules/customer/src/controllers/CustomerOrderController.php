@@ -192,7 +192,7 @@ class CustomerOrderController extends MyController
         }
         return [
             'code' => 403,
-            'msg' => CustomerModule::t('customer', 'Không có quyền truy cập')
+            'msg' => Yii::t('backend', 'Không có quyền truy cập')
         ];
     }
 
@@ -277,7 +277,7 @@ class CustomerOrderController extends MyController
         }
         return [
             'code' => 403,
-            'data' => CustomerModule::t('customer', 'Không có quyền truy cập')
+            'data' => Yii::t('backend', 'Không có quyền truy cập')
         ];
     }
 
@@ -296,6 +296,6 @@ class CustomerOrderController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(CustomerModule::t('customer', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

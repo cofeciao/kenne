@@ -21,10 +21,10 @@ use modava\website\WebsiteModule;
 
     <?= $form->field($model, 'language')
         ->dropDownList(Yii::$app->getModule('website')->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...'])
-        ->label(WebsiteModule::t('website', 'Ngôn ngữ')) ?>
+        ->label(Yii::t('backend', 'Ngôn ngữ')) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(WebsiteModule::t('website', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

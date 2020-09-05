@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\faq\models\search\FaqSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = FaqModule::t('faq', 'Faqs');
+$this->title = Yii::t('backend', 'Faqs');
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCss('   
 .hk-sec-wrapper {
@@ -69,7 +69,6 @@ $this->registerCss('
                                                 'onclick' => 'openUpdateModal({model: "Faq", id: ' . $model->primaryKey . '})'
                                             ]);
                                     }
-
                                     if (Yii::$app->user->can('faqFaqDelete') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                         $buttonDelete = Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
                                             'title' => FaqModule::t('faq', 'Delete'),

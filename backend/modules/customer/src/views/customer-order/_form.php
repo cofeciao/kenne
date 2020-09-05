@@ -90,7 +90,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     [
                         'name' => 'order_detail_id',
                         'type' => 'hiddenInput',
-                        'title' => CustomerModule::t('customer', 'Order Detail Id'),
+                        'title' => Yii::t('backend', 'Order Detail Id'),
                         'enableError' => true,
                         'options' => [
                             'class' => 'hidden',
@@ -99,18 +99,18 @@ if (Yii::$app->controller->action->id == 'create') {
                     [
                         'name' => 'product_id',
                         'type' => 'dropdownList',
-                        'title' => CustomerModule::t('customer', 'Product ID'),
+                        'title' => Yii::t('backend', 'Product ID'),
                         'enableError' => true,
                         'items' => ArrayHelper::map(CustomerProductTable::getAll(Yii::$app->language), 'id', 'name'),
                         'options' => [
-                            'prompt' => CustomerModule::t('customer', 'Chọn sản phẩm...'),
+                            'prompt' => Yii::t('backend', 'Chọn sản phẩm...'),
                             'class' => 'form-control select-product',
                             'options' => $options_price
                         ]
                     ],
                     [
                         'name' => 'qty',
-                        'title' => CustomerModule::t('customer', 'Qty'),
+                        'title' => Yii::t('backend', 'Qty'),
                         'enableError' => true,
                         'defaultValue' => 1,
                         'options' => [
@@ -122,7 +122,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     ],
                     [
                         'name' => 'price',
-                        'title' => CustomerModule::t('customer', 'Price'),
+                        'title' => Yii::t('backend', 'Price'),
                         'enableError' => true,
                         'defaultValue' => 0,
                         'options' => [
@@ -132,7 +132,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     ],
                     [
                         'name' => 'total_price',
-                        'title' => CustomerModule::t('customer', 'Total Price'),
+                        'title' => Yii::t('backend', 'Total Price'),
                         'enableError' => true,
                         'defaultValue' => 0,
                         'options' => [
@@ -142,7 +142,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     ],
                     [
                         'name' => 'discount',
-                        'title' => CustomerModule::t('customer', 'Discount'),
+                        'title' => Yii::t('backend', 'Discount'),
                         'enableError' => true,
                         'defaultValue' => 0,
                         'options' => [
@@ -154,7 +154,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     [
                         'name' => 'discount_by',
                         'type' => 'dropdownList',
-                        'title' => CustomerModule::t('customer', 'Discount By'),
+                        'title' => Yii::t('backend', 'Discount By'),
                         'enableError' => true,
                         'items' => CustomerPayment::DISCOUNT,
                         'defaultValue' => 1,
@@ -165,7 +165,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     [
                         'name' => 'reason_discount',
                         'type' => 'textarea',
-                        'title' => CustomerModule::t('customer', 'Reason Discount'),
+                        'title' => Yii::t('backend', 'Reason Discount'),
                         'enableError' => true,
                         'options' => [
                             'class' => ''
@@ -173,7 +173,7 @@ if (Yii::$app->controller->action->id == 'create') {
                     ],
                     [
                         'name' => 'total',
-                        'title' => CustomerModule::t('customer', 'Total'),
+                        'title' => Yii::t('backend', 'Total'),
                         'enableError' => true,
                         'defaultValue' => 0,
                         'options' => [
@@ -215,7 +215,7 @@ if (Yii::$app->controller->action->id == 'create') {
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton(CustomerModule::t('customer', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
 <?php ActiveForm::end(); ?>
