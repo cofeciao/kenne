@@ -35,7 +35,7 @@ class DropdownsConfig extends DropdownsConfigTable
     public function rules()
     {
         return [
-            [['table_name', 'field_name',], 'unique', 'targetAttribute' => ['table_name', 'field_name'], 'message' => IwayModule::t('iway', 'Đã tồn tại record chứ tên table và tên field này')],
+            [['table_name', 'field_name',], 'unique', 'targetAttribute' => ['table_name', 'field_name'], 'message' => Yii::t('backend', 'Đã tồn tại record chứ tên table và tên field này')],
             [['table_name', 'field_name',], 'required'],
             [['dropdown_value'], 'safe'],
             [['table_name', 'field_name'], 'string', 'max' => 100],
@@ -49,10 +49,10 @@ class DropdownsConfig extends DropdownsConfigTable
     public function attributeLabels()
     {
         return [
-            'id' => IwayModule::t('iway', 'ID'),
-            'field_name' => IwayModule::t('iway', 'Tên field'),
-            'dropdown_value' => IwayModule::t('iway', 'Danh sách giá trị dropdown'),
-            'table_name' => IwayModule::t('iway', 'Tên table'),
+            'id' => Yii::t('backend', 'ID'),
+            'field_name' => Yii::t('backend', 'Tên field'),
+            'dropdown_value' => Yii::t('backend', 'Danh sách giá trị dropdown'),
+            'table_name' => Yii::t('backend', 'Tên table'),
         ];
     }
 
@@ -125,12 +125,12 @@ class DropdownsConfig extends DropdownsConfigTable
 
             foreach ($this->dropdown_value as $i => $dropdownValue) {
                 // Check required
-                if (!$dropdownValue['key']) $this->addError("dropdown_value[$i][key]", IwayModule::t('iway', 'Vui lòng nhập'));
-                if (!$dropdownValue['value']) $this->addError("dropdown_value[$i][value]", IwayModule::t('iway', 'Vui lòng nhập'));
+                if (!$dropdownValue['key']) $this->addError("dropdown_value[$i][key]", Yii::t('backend', 'Vui lòng nhập'));
+                if (!$dropdownValue['value']) $this->addError("dropdown_value[$i][value]", Yii::t('backend', 'Vui lòng nhập'));
 
                 // Check Duplicate
                 if (array_key_exists($dropdownValue['key'], $duplicateTable)) {
-                    $this->addError("dropdown_value[$i][key]", IwayModule::t('iway', '{key} đã tồn tại', ['key' => $dropdownValue['key']]));
+                    $this->addError("dropdown_value[$i][key]", Yii::t('backend', '{key} đã tồn tại', ['key' => $dropdownValue['key']]));
                 } else {
                     $duplicateTable[$dropdownValue['key']] = $i;
                 }

@@ -5,7 +5,7 @@ return [
     'iwayName' => 'Iway',
     'iwayVersion' => '1.0',
     'status' => [
-        '0' => IwayModule::t('iway', 'Tạm ngưng'),
-        '1' => IwayModule::t('iway', 'Hiển thị'),
+        '0' => Yii::t('backend', 'Tạm ngưng'),
+        '1' => Yii::t('backend', 'Hiển thị'),
     ]
 ];

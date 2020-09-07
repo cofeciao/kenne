@@ -2,6 +2,7 @@
 
 namespace modava\iway\controllers;
 
+use backend\components\MyComponent;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
@@ -9,18 +10,17 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use modava\iway\IwayModule;
 use backend\components\MyController;
-use modava\iway\models\DropdownsConfig;
-use modava\iway\models\search\DropdownsConfigSearch;
-use yii\web\Response;
+use modava\iway\models\CoSo;
+use modava\iway\models\search\CoSoSearch;
 
 /**
- * DropdownsConfigController implements the CRUD actions for DropdownsConfig model.
+ * CoSoController implements the CRUD actions for CoSo model.
  */
-class DropdownsConfigController extends MyController
+class CoSoController extends MyController
 {
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function behaviors()
     {
         return [
@@ -34,27 +34,29 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-     * Lists all DropdownsConfig models.
-     * @return mixed
-     */
+    * Lists all CoSo models.
+    * @return mixed
+    */
     public function actionIndex()
     {
-        $searchModel = new DropdownsConfigSearch();
+        $searchModel = new CoSoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $totalPage = $this->getTotalPage($dataProvider);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'totalPage'    => $totalPage,
         ]);
-    }
-
+            }
 
     /**
-     * Displays a single DropdownsConfig model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Displays a single CoSo model.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -63,13 +65,13 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-     * Creates a new DropdownsConfig model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+    * Creates a new CoSo model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
     public function actionCreate()
     {
-        $model = new DropdownsConfig();
+        $model = new CoSo();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -98,18 +100,18 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-     * Updates an existing DropdownsConfig model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Updates an existing CoSo model.
+    * If update is successful, the browser will be redirected to the 'view' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
+            if($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -137,12 +139,12 @@ class DropdownsConfigController extends MyController
     }
 
     /**
-     * Deletes an existing DropdownsConfig model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Deletes an existing CoSo model.
+    * If deletion is successful, the browser will be redirected to the 'index' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -174,34 +176,45 @@ class DropdownsConfigController extends MyController
         return $this->redirect(['index']);
     }
 
-    public function actionGetColumns()
+    /**
+    * @param $perpage
+    */
+    public function actionPerpage($perpage)
     {
-        if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $tableName = Yii::$app->request->get('table_name');
-            $data = DropdownsConfig::getAllColumns($tableName);
-
-            return [
-                'code' => 200,
-                'data' => $data
-            ];
-        }
-
-        return Yii::t('backend', 'Không thể truy cập');
+        MyComponent::setCookies('pageSize', $perpage);
     }
 
     /**
-     * Finds the DropdownsConfig model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return DropdownsConfig the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * @param $dataProvider
+    * @return float|int
+    */
+    public function getTotalPage($dataProvider)
+    {
+        if (MyComponent::hasCookies('pageSize')) {
+            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
+        } else {
+            $dataProvider->pagination->pageSize = 10;
+        }
+
+        $pageSize   = $dataProvider->pagination->pageSize;
+        $totalCount = $dataProvider->totalCount;
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+
+        return $totalPage;
+    }
+
+    /**
+    * Finds the CoSo model based on its primary key value.
+    * If the model is not found, a 404 HTTP exception will be thrown.
+    * @param integer $id
+    * @return CoSo the loaded model
+    * @throws NotFoundHttpException if the model cannot be found
+    */
 
 
     protected function findModel($id)
     {
-        if (($model = DropdownsConfig::findOne($id)) !== null) {
+        if (($model = CoSo::findOne($id)) !== null) {
             return $model;
         }
 

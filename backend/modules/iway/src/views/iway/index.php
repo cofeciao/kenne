@@ -4,7 +4,7 @@ use modava\iway\IwayModule;
 use modava\iway\widgets\NavbarWidgets;
 use modava\iway\models\Customer;
 
-$this->title = IwayModule::t('iway', 'Iway');
+$this->title = Yii::t('backend', 'Iway');
 $this->params['breadcrumbs'][] = $this->title;
 
 /* @var $model */

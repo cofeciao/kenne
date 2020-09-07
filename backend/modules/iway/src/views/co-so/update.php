@@ -6,13 +6,13 @@ use yii\helpers\Url;
 use modava\iway\IwayModule;
 
 /* @var $this yii\web\View */
-/* @var $model modava\iway\models\DropdownsConfig */
+/* @var $model modava\iway\models\CoSo */
 
 $this->title = Yii::t('backend', 'Update : {name}', [
-    'name' => $model->id,
+    'name' => $model->title,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Cấu hình Dropdowns'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Co Sos'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -32,12 +32,9 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
     <!-- Row -->
     <div class="row">
         <div class="col-xl-12">
-            <section class="hk-sec-wrapper">
-                <?= $this->render('_form', [
-                    'model' => $model,
-                ]) ?>
-
-            </section>
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
         </div>
     </div>
 </div>

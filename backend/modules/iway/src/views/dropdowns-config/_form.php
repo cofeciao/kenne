@@ -21,7 +21,7 @@ use \modava\iway\models\DropdownsConfig;
             <?= $form->field($model, 'table_name')->widget(Select2::class, [
                 'data' => DropdownsConfig::getAllTables(),
                 'options' => [
-                    'placeholder' => IwayModule::t('iway', 'Chọn table...'),
+                    'placeholder' => Yii::t('backend', 'Chọn table...'),
                     'load-data-element' => '#field_name',
                     'load-data-url' => Url::toRoute(['get-columns']),
                     'load-data-key' => 'table_name',
@@ -38,7 +38,7 @@ use \modava\iway\models\DropdownsConfig;
                 'field_name')->widget(Select2::class, [
                 'data' => DropdownsConfig::getAllColumns($model->table_name),
                 'options' => [
-                    'placeholder' => IwayModule::t('iway', 'Chọn table...'),
+                    'placeholder' => Yii::t('backend', 'Chọn table...'),
                     'id' => 'field_name'
                 ],
                 'pluginOptions' => [
@@ -72,7 +72,7 @@ use \modava\iway\models\DropdownsConfig;
                             'defaultValue' => '',
                             'options' => [
                                 'class' => 'dropdown-value',
-                                'placeholder' => IwayModule::t('iway', 'Gõ ở đây...')
+                                'placeholder' => Yii::t('backend', 'Gõ ở đây...')
                             ]
                         ],
                     ]
@@ -83,7 +83,7 @@ use \modava\iway\models\DropdownsConfig;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton(IwayModule::t('iway', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

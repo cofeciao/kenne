@@ -190,6 +190,5 @@ class CustomerController extends MyController
         }
 
         throw new NotFoundHttpException(Yii::t('iway', 'The requested page does not exist.'));
-        throw new NotFoundHttpException(IwayModule::t('iway','The requested page does not exist.'));
     }
 }
