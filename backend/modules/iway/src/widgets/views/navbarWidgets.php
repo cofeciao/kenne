@@ -19,44 +19,14 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
-        'controllerId' => 'order',
-        'label' => Yii::t('backend', 'Đơn hàng'),
-        'icon' => '<i class="ion ion-md-contacts"></i>',
-    ],
-    [
-        'module' => 'iway',
-        'controllerId' => 'product',
-        'label' => Yii::t('backend', 'Sản phẩm'),
-        'icon' => '<i class="ion ion-md-contacts"></i>',
-    ],
-    [
-        'module' => 'iway',
-        'controllerId' => 'payment',
-        'label' => Yii::t('backend', 'Thanh toán'),
-        'icon' => '<i class="ion ion-md-contacts"></i>',
-    ],
-    [
-        'module' => 'iway',
         'controllerId' => 'co-so',
         'label' => Yii::t('backend', 'Cơ sở'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
     ],
     [
         'module' => 'iway',
-        'controllerId' => 'origin',
-        'label' => Yii::t('backend', 'Origin'),
-        'icon' => '<i class="ion ion-md-contacts"></i>',
-    ],
-    [
-        'module' => 'iway',
-        'controllerId' => 'agency',
-        'label' => Yii::t('backend', 'Agency'),
-        'icon' => '<i class="ion ion-md-contacts"></i>',
-    ],
-    [
-        'module' => 'iway',
-        'controllerId' => 'fanpage',
-        'label' => Yii::t('backend', 'Fanpage'),
+        'controllerId' => 'call',
+        'label' => Yii::t('backend', 'Cuộc gọi'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
     ],
     [

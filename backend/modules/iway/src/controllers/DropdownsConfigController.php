@@ -205,6 +205,6 @@ class DropdownsConfigController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('iway', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }
