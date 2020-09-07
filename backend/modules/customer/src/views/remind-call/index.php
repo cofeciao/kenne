@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\customer\models\search\RemindCallSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CustomerModule::t('customer', 'Nhắc lịch chăm sóc');
+$this->title = Yii::t('backend', 'Nhắc lịch chăm sóc');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -64,10 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => CustomerModule::t('customer', 'First'),
-                                            'lastPageLabel' => CustomerModule::t('customer', 'Last'),
-                                            'prevPageLabel' => CustomerModule::t('customer', 'Previous'),
-                                            'nextPageLabel' => CustomerModule::t('customer', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
@@ -153,13 +153,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'header' => CustomerModule::t('customer', 'Actions'),
+                                                'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '{update}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['/customer/customer/update', 'id' => $model->id], [
-                                                            'title' => CustomerModule::t('customer', 'Update'),
-                                                            'alia-label' => CustomerModule::t('customer', 'Update'),
+                                                            'title' => Yii::t('backend', 'Update'),
+                                                            'alia-label' => Yii::t('backend', 'Update'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-info btn-xs'
                                                         ]);

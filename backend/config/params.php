@@ -35,6 +35,10 @@ return [
     'video-category-size' => '150x150px',
     'project-size' => '150x150px',
     'project-image-size' => '150x150px',
+    'status' => [
+        '0' => Yii::t('backend', 'Tạm ngưng'),
+        '1' => Yii::t('backend', 'Hiển thị'),
+    ],
     'product_tech' => [
         'Đường kính dây thép' => 'Đường kính dây thép',
         'Kích thước ô lưới' => 'Kích thước ô lưới',

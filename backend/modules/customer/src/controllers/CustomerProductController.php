@@ -228,7 +228,7 @@ class CustomerProductController extends MyController
         }
         return [
             'code' => 403,
-            'data' => CustomerModule::t('customer', 'Permission denined!')
+            'data' => Yii::t('backend', 'Permission denined!')
         ];
     }
 
@@ -238,6 +238,6 @@ class CustomerProductController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(CustomerModule::t('customer', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

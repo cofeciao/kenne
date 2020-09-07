@@ -43,7 +43,7 @@ use modava\location\models\table\LocationCountryTable;
                     'attribute' => 'CountryId',
                     'data' => ArrayHelper::map(LocationCountryTable::getAllCountry(Yii::$app->language), 'id', 'CommonName'),
                     'options' => [
-                        'prompt' => LocationModule::t('location', 'Chọn quốc gia...'),
+                        'prompt' => Yii::t('backend', 'Chọn quốc gia...'),
                         'id' => 'select-country'
                     ]
                 ]) ?>

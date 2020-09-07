@@ -23,8 +23,8 @@ use modava\slide\models\table\SlideTypeTable;
         </div>
         <div class="col-4">
             <?= $form->field($model, 'language')
-                ->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => SlideModule::t('slide', 'Chọn ngôn ngữ...')])
-                ->label(SlideModule::t('slide', 'Ngôn ngữ')) ?>
+                ->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => Yii::t('backend', 'Chọn ngôn ngữ...')])
+                ->label(Yii::t('backend', 'Ngôn ngữ')) ?>
 
         </div>
     </div>
@@ -52,13 +52,13 @@ use modava\slide\models\table\SlideTypeTable;
         'model' => $model,
         'attribute' => 'image',
         'path' => $path,
-        'label' => SlideModule::t('slide', 'Hình ảnh') . ': ' . Yii::$app->params['slide-size'],
+        'label' => Yii::t('backend', 'Hình ảnh') . ': ' . Yii::$app->params['slide-size'],
     ]); ?>
 
     <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
     <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
-        <?= Html::submitButton(SlideModule::t('slide', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

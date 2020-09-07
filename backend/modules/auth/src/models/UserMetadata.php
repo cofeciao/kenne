@@ -2,9 +2,7 @@
 
 namespace modava\auth\models;
 
-use modava\auth\AuthModule;
-use modava\auth\models\form\UserMetadataForm;
-use yii\behaviors\AttributeBehavior;
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -54,11 +52,11 @@ class UserMetadata extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Pass' => AuthModule::t('auth', 'Voip24h Pass'),
-            'Display' => AuthModule::t('auth', 'Voip24h Display'),
-            'User' => AuthModule::t('auth', 'Voip24h User'),
-            'Realm' => AuthModule::t('auth', 'Voip24h Realm'),
-            'WSServer' => AuthModule::t('auth', 'Voip24h WSServer'),
+            'Pass' => Yii::t('backend', 'Voip24h Pass'),
+            'Display' => Yii::t('backend', 'Voip24h Display'),
+            'User' => Yii::t('backend', 'Voip24h User'),
+            'Realm' => Yii::t('backend', 'Voip24h Realm'),
+            'WSServer' => Yii::t('backend', 'Voip24h WSServer'),
         ];
     }
 

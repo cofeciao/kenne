@@ -8,11 +8,11 @@ use modava\customer\CustomerModule;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerTreatmentSchedule */
 
-$this->title = CustomerModule::t('customer', 'Create') . ' ' . CustomerModule::t('customer', 'Customer Treatment Schedules');
+$this->title = Yii::t('backend', 'Create') . ' ' . Yii::t('backend', 'Customer Treatment Schedules');
 if ($model->order_id != null) {
     $this->title .= ': ' . $model->orderHasOne->customerHasOne->name . ' (' . $model->orderHasOne->code . ')';
 }
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Customer Treatment Schedules'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Customer Treatment Schedules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

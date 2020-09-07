@@ -97,17 +97,17 @@ class CustomerPayment extends CustomerPaymentTable
     public function attributeLabels()
     {
         return [
-            'id' => CustomerModule::t('customer', 'ID'),
-            'order_id' => CustomerModule::t('customer', 'Order ID'),
-            'price' => CustomerModule::t('customer', 'Price'),
-            'payments' => CustomerModule::t('customer', 'Payments'),
-            'type' => CustomerModule::t('customer', 'Type'),
-            'co_so' => CustomerModule::t('customer', 'Co So'),
-            'payment_at' => CustomerModule::t('customer', 'Payment At'),
-            'created_at' => CustomerModule::t('customer', 'Created At'),
-            'updated_at' => CustomerModule::t('customer', 'Updated At'),
-            'created_by' => CustomerModule::t('customer', 'Created By'),
-            'updated_by' => CustomerModule::t('customer', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'order_id' => Yii::t('backend', 'Order ID'),
+            'price' => Yii::t('backend', 'Price'),
+            'payments' => Yii::t('backend', 'Payments'),
+            'type' => Yii::t('backend', 'Type'),
+            'co_so' => Yii::t('backend', 'Co So'),
+            'payment_at' => Yii::t('backend', 'Payment At'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

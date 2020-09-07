@@ -8,12 +8,12 @@ use modava\comment\CommentModule;
 /* @var $this yii\web\View */
 /* @var $model modava\comment\models\Comment */
 
-$this->title = CommentModule::t('comment', 'Update : {name}', [
+$this->title = Yii::t('backend', 'Update : {name}', [
     'name' => $model->id,
 ]);
-$this->params['breadcrumbs'][] = ['label' => CommentModule::t('comment', 'Comments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Comments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = CommentModule::t('comment', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>

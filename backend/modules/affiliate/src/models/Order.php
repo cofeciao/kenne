@@ -22,10 +22,10 @@ use Yii;
  * @property string $pre_total Số tiền trên đơn hàng
  * @property string $discount Số tiền được chiết khấu
  * @property string $final_total Số tiền còn lại
+ * @property string $other_discount Số tiền còn lại
  * @property string $description Mô tả
  * @property int $date_create Ngày tạo
  * @property int $status Tình trạng đơn hàng
- * @property int $payment_method Phương thức thanh toán
  * @property string $partner_order_code Mã code order hệ thống partner
  * @property string $partner_customer_id Mã KH hệ thống partner
  * @property int $created_at
@@ -97,7 +97,7 @@ class Order extends OrderTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['final_total'],
                     ],
                     'value' => function ($event) {
-                        $this->final_total = (float) $this->pre_total - (float) $this->discount;
+                        $this->final_total = (float) $this->pre_total - (float) $this->discount - (float) $this->other_discount;
 
                         return $this->final_total > 0 ? $this->final_total : 0;
                     },
@@ -112,10 +112,10 @@ class Order extends OrderTable
     public function rules()
     {
         return [
-            [['title', 'slug', 'coupon_id', 'pre_total', 'date_create', 'status', 'payment_method',], 'required'],
+            [['title', 'slug', 'coupon_id', 'pre_total', 'date_create', 'status',], 'required'],
             [['coupon_id', 'status',], 'integer'],
-            [['pre_total', 'discount', 'final_total'], 'number'],
-            [['description', 'payment_method'], 'string'],
+            [['pre_total', 'discount', 'final_total', 'other_discount'], 'number'],
+            [['description',], 'string'],
             [['date_create', 'partner_order_code', 'partner_customer_id'], 'safe'],
             [['title', 'slug', 'partner_order_code'], 'string', 'max' => 255],
             [['slug'], 'unique'],
@@ -131,23 +131,23 @@ class Order extends OrderTable
     public function attributeLabels()
     {
         return [
-            'id' => AffiliateModule::t('affiliate', 'ID'),
-            'title' => AffiliateModule::t('affiliate', 'Title'),
-            'slug' => AffiliateModule::t('affiliate', 'Slug'),
-            'coupon_id' => AffiliateModule::t('affiliate', 'Coupon ID'),
-            'pre_total' => AffiliateModule::t('affiliate', 'Pre Total'),
-            'discount' => AffiliateModule::t('affiliate', 'Discount'),
-            'final_total' => AffiliateModule::t('affiliate', 'Final Total'),
-            'description' => AffiliateModule::t('affiliate', 'Description'),
-            'created_at' => AffiliateModule::t('affiliate', 'Created At'),
-            'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
-            'created_by' => AffiliateModule::t('affiliate', 'Created By'),
-            'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
-            'date_create' => AffiliateModule::t('affiliate', 'Ngày đơn hàng'),
-            'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
-            'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh toán'),
-            'partner_order_code' => AffiliateModule::t('affiliate', 'Mã đơn hàng hệ thống partner'),
-            'partner_customer_id' => AffiliateModule::t('affiliate', 'Mã KH hệ thống partner'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'coupon_id' => Yii::t('backend', 'Coupon ID'),
+            'pre_total' => Yii::t('backend', 'Pre Total'),
+            'discount' => Yii::t('backend', 'Discount'),
+            'final_total' => Yii::t('backend', 'Final Total'),
+            'description' => Yii::t('backend', 'Description'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
+            'date_create' => Yii::t('backend', 'Ngày đơn hàng'),
+            'status' => Yii::t('backend', 'Tình trạng'),
+            'partner_order_code' => Yii::t('backend', 'Mã đơn hàng hệ thống partner'),
+            'partner_customer_id' => Yii::t('backend', 'Mã KH hệ thống partner'),
+            'other_discount' => Yii::t('backend', 'Giảm giá khác'),
         ];
     }
 

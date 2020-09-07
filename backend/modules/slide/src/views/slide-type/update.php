@@ -8,12 +8,12 @@ use modava\slide\SlideModule;
 /* @var $this yii\web\View */
 /* @var $model modava\slide\models\SlideType */
 
-$this->title = SlideModule::t('slide', 'Update : {name}', [
+$this->title = Yii::t('backend', 'Update : {name}', [
     'name' => $model->title,
 ]);
-$this->params['breadcrumbs'][] = ['label' => SlideModule::t('slide', 'Slide Types'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Slide Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = SlideModule::t('slide', 'Update');
+$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <?= NavbarWidgets::widget(); ?>
@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = SlideModule::t('slide', 'Update');
                         class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
         </h4>
         <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-           title="<?= SlideModule::t('slide', 'Create'); ?>">
-            <i class="fa fa-plus"></i> <?= SlideModule::t('slide', 'Create'); ?></a>
+           title="<?= Yii::t('backend', 'Create'); ?>">
+            <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
     </div>
     <!-- /Title -->
 

@@ -38,8 +38,8 @@ class Coupon extends CouponTable
 {
     public $toastr_key = 'coupon';
 
-    const DISCOUNT_PERCENT = 0;
     const DISCOUNT_AMOUNT = 1;
+    const DISCOUNT_PERCENT = 2;
 
     public function behaviors()
     {
@@ -99,9 +99,9 @@ class Coupon extends CouponTable
 			[['coupon_code'], 'unique'],
 			[['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
             ['promotion_value', 'compare', 'compareValue' => 100, 'operator' => '<=', 'type' => 'number', 'when' => function ($model) {
-                return $model->promotion_type == '0';
+                return $model->promotion_type == self::DISCOUNT_PERCENT;
                     }, 'whenClient' => "function (attribute, value) {
-                return $('#promotion-type').val() == '0';
+                return $('#promotion-type').val() == " . self::DISCOUNT_PERCENT . ";
             }"]
 		];
     }
@@ -112,28 +112,28 @@ class Coupon extends CouponTable
     public function attributeLabels()
     {
         return [
-            'id' => AffiliateModule::t('affiliate', 'ID'),
-            'title' => AffiliateModule::t('affiliate', 'Title'),
-            'slug' => AffiliateModule::t('affiliate', 'Slug'),
-            'coupon_code' => AffiliateModule::t('affiliate', 'Coupon Code'),
-            'quantity' => AffiliateModule::t('affiliate', 'Quantity'),
-            'expired_date' => AffiliateModule::t('affiliate', 'Expired Date'),
-            'description' => AffiliateModule::t('affiliate', 'Description'),
-            'customer_id' => AffiliateModule::t('affiliate', 'Customer ID'),
-            'coupon_type_id' => AffiliateModule::t('affiliate', 'Coupon Type ID'),
-            'quantity_used' => AffiliateModule::t('affiliate', 'Quantity Used'),
-            'promotion_type' => AffiliateModule::t('affiliate', 'Promotion Type'),
-            'promotion_value' => AffiliateModule::t('affiliate', 'Promotion Value'),
-            'created_at' => AffiliateModule::t('affiliate', 'Created At'),
-            'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
-            'created_by' => AffiliateModule::t('affiliate', 'Created By'),
-            'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'coupon_code' => Yii::t('backend', 'Coupon Code'),
+            'quantity' => Yii::t('backend', 'Quantity'),
+            'expired_date' => Yii::t('backend', 'Expired Date'),
+            'description' => Yii::t('backend', 'Description'),
+            'customer_id' => Yii::t('backend', 'Customer ID'),
+            'coupon_type_id' => Yii::t('backend', 'Coupon Type ID'),
+            'quantity_used' => Yii::t('backend', 'Quantity Used'),
+            'promotion_type' => Yii::t('backend', 'Promotion Type'),
+            'promotion_value' => Yii::t('backend', 'Promotion Value'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 
     function validateQuantityUsed () {
         if((int) $this->quantity_used > (int) $this->quantity){
-            $this->addError('quantity_used',AffiliateModule::t('affiliate', 'Quantity Used must be less than or equal quantity'));
+            $this->addError('quantity_used',Yii::t('backend', 'Quantity Used must be less than or equal quantity'));
         }
     }
 

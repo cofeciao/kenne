@@ -26,12 +26,12 @@ class FilemanagerModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
-        $this->registerTranslations();
+//        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/filemanager.php'));
-        $handler = $this->get('errorHandler');
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
+//        $handler = $this->get('errorHandler');
+//        Yii::$app->set('errorHandler', $handler);
+//        $handler->register();
         $this->layout = 'filemanager';
     }
 
@@ -47,7 +47,7 @@ class FilemanagerModule extends Module implements BootstrapInterface
         });
     }
 
-    public function registerTranslations()
+    /*public function registerTranslations()
     {
         Yii::$app->i18n->translations['filemanager/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
@@ -62,5 +62,5 @@ class FilemanagerModule extends Module implements BootstrapInterface
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('filemanager/messages/' . $category, $message, $params, $language);
-    }
+    }*/
 }

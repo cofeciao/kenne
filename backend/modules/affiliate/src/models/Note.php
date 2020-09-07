@@ -116,7 +116,7 @@ class Note extends NoteTable
                         if (!Yii::$app->request->isAjax) {
                             Yii::$app->session->setFlash('toastr-' . $this->toastr_key . '-form', [
                                 'title' => 'Thông báo',
-                                'text' => AffiliateModule::t('affiliate', 'Error connection was throw, please contact to IT to check this issue'),
+                                'text' => Yii::t('backend', 'Error connection was throw, please contact to IT to check this issue'),
                                 'type' => 'danger'
                             ]);
                         }
@@ -152,7 +152,7 @@ class Note extends NoteTable
     {
         return [
             [['title', 'slug', 'customer_id', 'call_time', 'note_type'], 'required'],
-            [['customer_id',], 'integer'],
+            [['customer_id', 'is_recall',], 'integer'],
             [
                 ['partner_id',],
                 'required',
@@ -190,19 +190,20 @@ class Note extends NoteTable
     public function attributeLabels()
     {
         return [
-            'id' => AffiliateModule::t('affiliate', 'ID'),
-            'title' => AffiliateModule::t('affiliate', 'Title'),
-            'slug' => AffiliateModule::t('affiliate', 'Slug'),
-            'customer_id' => AffiliateModule::t('affiliate', 'Customer ID'),
-            'call_time' => AffiliateModule::t('affiliate', 'Call Time'),
-            'recall_time' => AffiliateModule::t('affiliate', 'Recall Time'),
-            'description' => AffiliateModule::t('affiliate', 'Description'),
-            'created_at' => AffiliateModule::t('affiliate', 'Created At'),
-            'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
-            'created_by' => AffiliateModule::t('affiliate', 'Created By'),
-            'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
-            'note_type' => AffiliateModule::t('affiliate', 'Note Type'),
-            'partner_id' => AffiliateModule::t('affiliate', 'Partner Id'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'customer_id' => Yii::t('backend', 'Customer ID'),
+            'call_time' => Yii::t('backend', 'Call Time'),
+            'recall_time' => Yii::t('backend', 'Recall Time'),
+            'description' => Yii::t('backend', 'Description'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
+            'note_type' => Yii::t('backend', 'Note Type'),
+            'partner_id' => Yii::t('backend', 'Partner Id'),
+            'is_recall' => Yii::t('backend', 'Đã gọi lại'),
         ];
     }
 
@@ -279,5 +280,13 @@ class Note extends NoteTable
                 'error' => $exception->getMessage()
             ];
         }
+    }
+
+    public static function getComingNote ($forAllUser = false) {
+        $query = self::find()->where('DATE(recall_time) = DATE(NOW())');
+        if (!$forAllUser) {
+            $query->andWhere(['=', 'created_by', Yii::$app->user->id]);
+        }
+        return $query->orderBy(['recall_time' => SORT_ASC])->all();
     }
 }

@@ -8,8 +8,8 @@ use modava\comment\CommentModule;
 /* @var $this yii\web\View */
 /* @var $model modava\comment\models\Comment */
 
-$this->title = CommentModule::t('comment', 'Create');
-$this->params['breadcrumbs'][] = ['label' => CommentModule::t('comment', 'Comments'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Create');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Comments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">

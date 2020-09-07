@@ -25,12 +25,12 @@ class IwayModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
-        $this->registerTranslations();
+//        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/iway.php'));
-        $handler = $this->get('errorHandler');
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
+//        $handler = $this->get('errorHandler');
+//        Yii::$app->set('errorHandler', $handler);
+//        $handler->register();
         $this->layout = 'iway';
     }
 
@@ -46,7 +46,7 @@ class IwayModule extends Module implements BootstrapInterface
         });
     }
 
-    public function registerTranslations()
+    /*public function registerTranslations()
     {
         Yii::$app->i18n->translations['iway/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
@@ -61,5 +61,5 @@ class IwayModule extends Module implements BootstrapInterface
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('iway/messages/' . $category, $message, $params, $language);
-    }
+    }*/
 }

@@ -21,7 +21,8 @@ use Yii;
  * @property int $order_id Mã đơn hàng
  * @property string $total Số tiền
  * @property int $status 0: Thanh toán, 1: Đặt cọc, 2: Hoàn cọc
- * @property string $payment_method Số tiền còn lại
+ * @property string $payment_method Phương thức thanh toán
+ * @property string $partner_code Phương thức thanh toán
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
@@ -75,11 +76,11 @@ class Receipt extends ReceiptTable
     public function rules()
     {
         return [
-            [['slug', 'title', 'order_id', 'total',], 'required'],
+            [['slug', 'title', 'order_id', 'total', 'partner_code'], 'required'],
             [['order_id', 'status',], 'integer'],
             [['total'], 'number'],
             [['slug', 'title', 'payment_method'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
+            [['slug', 'partner_code'], 'unique'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
@@ -92,17 +93,18 @@ class Receipt extends ReceiptTable
     public function attributeLabels()
     {
         return [
-            'id' => AffiliateModule::t('affiliate', 'ID'),
-            'slug' => AffiliateModule::t('affiliate', 'Slug'),
-            'title' => AffiliateModule::t('affiliate', 'Title'),
-            'order_id' => AffiliateModule::t('affiliate', 'Đơn hàng'),
-            'total' => AffiliateModule::t('affiliate', 'Số tiền'),
-            'status' => AffiliateModule::t('affiliate', 'Tình trạng'),
-            'payment_method' => AffiliateModule::t('affiliate', 'Phương thức thanh thoán'),
-            'created_at' => AffiliateModule::t('affiliate', 'Created At'),
-            'updated_at' => AffiliateModule::t('affiliate', 'Updated At'),
-            'created_by' => AffiliateModule::t('affiliate', 'Created By'),
-            'updated_by' => AffiliateModule::t('affiliate', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'title' => Yii::t('backend', 'Title'),
+            'order_id' => Yii::t('backend', 'Đơn hàng'),
+            'total' => Yii::t('backend', 'Số tiền'),
+            'status' => Yii::t('backend', 'Tình trạng'),
+            'payment_method' => Yii::t('backend', 'Phương thức thanh thoán'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
+            'partner_code' => Yii::t('backend', 'Mã phiếu thanh toán ở hệ thống tích hợp'),
         ];
     }
 

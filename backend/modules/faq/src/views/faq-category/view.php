@@ -11,7 +11,7 @@ use modava\faq\FaqModule;
 /* @var $model modava\faq\models\FaqCategory */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => FaqModule::t('faq', 'Faq Categories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Faq Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= FaqModule::t('faq', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= FaqModule::t('faq', 'Create'); ?></a>
-            <?= Html::a(FaqModule::t('faq', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(FaqModule::t('faq', 'Delete'), ['delete', 'id' => $model->id], [
+                title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => FaqModule::t('faq', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -61,11 +61,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => FaqModule::t('faq', 'Created By')
+                            'label' => Yii::t('backend', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => FaqModule::t('faq', 'Updated By')
+                            'label' => Yii::t('backend', 'Updated By')
                         ],
                     ],
                 ]) ?>

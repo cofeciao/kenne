@@ -11,8 +11,8 @@ use modava\location\LocationModule;
 /* @var $model modava\location\models\LocationWard */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Country'), 'url' => ['/location']];
-$this->params['breadcrumbs'][] = ['label' => LocationModule::t('location', 'Ward'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Country'), 'url' => ['/location']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Ward'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -27,13 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-               title="<?= LocationModule::t('location', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= LocationModule::t('location', 'Create'); ?></a>
-            <?= Html::a(LocationModule::t('location', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a(LocationModule::t('location', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => LocationModule::t('location', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -83,11 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => LocationModule::t('location', 'Created By')
+                            'label' => Yii::t('backend', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => LocationModule::t('location', 'Updated By')
+                            'label' => Yii::t('backend', 'Updated By')
                         ],
                     ],
                 ]) ?>

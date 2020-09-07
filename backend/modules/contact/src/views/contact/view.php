@@ -11,9 +11,15 @@ use modava\contact\ContactModule;
 /* @var $model modava\contact\models\Contact */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => ContactModule::t('contact', 'Contacts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Contacts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+try {
+    $contactMetadataView = $model->contactMetadataView;
+    if (!is_array($contactMetadataView)) $contactMetadataView = [];
+} catch (Exception $ex) {
+    $contactMetadataView = [];
+}
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-view']) ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
@@ -22,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?=ContactModule::t('contact', 'Chi tiết'); ?>: <?= Html::encode($this->title) ?>
+                        class="ion ion-md-apps"></span></span><?= Yii::t('backend', 'Chi tiết'); ?>
+            : <?= Html::encode($this->title) ?>
         </h4>
     </div>
     <!-- /Title -->
@@ -33,23 +40,26 @@ $this->params['breadcrumbs'][] = $this->title;
             <section class="hk-sec-wrapper">
                 <?= DetailView::widget([
                     'model' => $model,
-                    'attributes' => [
-						'id',
-						'fullname',
-						'phone',
-						'email:email',
-						'address',
-						'title',
-						'content:html',
-						'ip_address',
+                    'attributes' => array_merge([
+                        'id',
+                        'fullname',
+                        'phone',
+                        'email',
+                        'address',
+                        'title',
+                        'content:html',
+                        'ip_address',
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
                                 return Yii::$app->getModule('contact')->params['status'][$model->status];
                             }
                         ],
-						'created_at:datetime',
-                    ],
+                        [
+                            'attribute' => 'contactCategory.title',
+                        ],
+                        'created_at:datetime',
+                    ], $model->contactMetadataView),
                 ]) ?>
             </section>
         </div>

@@ -25,12 +25,12 @@ class ContactModule extends Module implements BootstrapInterface
     public function init()
     {
         // custom initialization code goes here
-        $this->registerTranslations();
+//        $this->registerTranslations();
         parent::init();
         Yii::configure($this, require(__DIR__ . '/config/contact.php'));
-        $handler = $this->get('errorHandler');
-        Yii::$app->set('errorHandler', $handler);
-        $handler->register();
+//        $handler = $this->get('errorHandler');
+//        Yii::$app->set('errorHandler', $handler);
+//        $handler->register();
         $this->layout = 'contact';
     }
 
@@ -46,7 +46,7 @@ class ContactModule extends Module implements BootstrapInterface
         });
     }
 
-    public function registerTranslations()
+    /*public function registerTranslations()
     {
         Yii::$app->i18n->translations['contact/messages/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
@@ -61,5 +61,5 @@ class ContactModule extends Module implements BootstrapInterface
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('contact/messages/' . $category, $message, $params, $language);
-    }
+    }*/
 }

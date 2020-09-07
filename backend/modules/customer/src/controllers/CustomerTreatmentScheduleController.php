@@ -51,7 +51,7 @@ class CustomerTreatmentScheduleController extends MyController
             )) {
             Yii::$app->session->setFlash('toastr-' . $searchModel->toastr_key . '-index', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Không tìm thấy lịch điều trị theo đơn hàng "' . $order_id . '" hoặc khách hàng chưa đồng ý làm dịch vụ'),
+                'text' => Yii::t('backend', 'Không tìm thấy lịch điều trị theo đơn hàng "' . $order_id . '" hoặc khách hàng chưa đồng ý làm dịch vụ'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['index']);
@@ -99,7 +99,7 @@ class CustomerTreatmentScheduleController extends MyController
             )) {
             Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                 'title' => 'Thông báo',
-                'text' => CustomerModule::t('customer', 'Không tìm thấy đơn hàng "' . $order_id . '" hoặc khách hàng chưa đồng ý làm dịch vụ'),
+                'text' => Yii::t('backend', 'Không tìm thấy đơn hàng "' . $order_id . '" hoặc khách hàng chưa đồng ý làm dịch vụ'),
                 'type' => 'warning'
             ]);
             return $this->redirect(['create']);
@@ -250,6 +250,6 @@ class CustomerTreatmentScheduleController extends MyController
             return $model;
         }
 
-        throw new NotFoundHttpException(CustomerModule::t('customer', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
     }
 }

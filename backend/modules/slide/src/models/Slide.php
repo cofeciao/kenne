@@ -94,21 +94,21 @@ class Slide extends SlideTable
     public function attributeLabels()
     {
         return [
-            'id' => SlideModule::t('slide', 'ID'),
-            'slide_type' => SlideModule::t('slide', 'Slide Type'),
-            'slide_category' => SlideModule::t('slide', 'Slide Category'),
-            'title' => SlideModule::t('slide', 'Title'),
-            'slug' => SlideModule::t('slide', 'Slug'),
-            'image' => SlideModule::t('slide', 'Image'),
-            'link' => SlideModule::t('slide', 'Link'),
-            'description' => SlideModule::t('slide', 'Description'),
-            'position' => SlideModule::t('slide', 'Position'),
-            'status' => SlideModule::t('slide', 'Status'),
-            'language' => SlideModule::t('slide', 'Language'),
-            'created_at' => SlideModule::t('slide', 'Created At'),
-            'updated_at' => SlideModule::t('slide', 'Updated At'),
-            'created_by' => SlideModule::t('slide', 'Created By'),
-            'updated_by' => SlideModule::t('slide', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'slide_type' => Yii::t('backend', 'Slide Type'),
+            'slide_category' => Yii::t('backend', 'Slide Category'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'image' => Yii::t('backend', 'Image'),
+            'link' => Yii::t('backend', 'Link'),
+            'description' => Yii::t('backend', 'Description'),
+            'position' => Yii::t('backend', 'Position'),
+            'status' => Yii::t('backend', 'Status'),
+            'language' => Yii::t('backend', 'Language'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

@@ -5,7 +5,7 @@ return [
     'commentName' => 'Comment',
     'commentVersion' => '1.0',
     'status' => [
-        '0' => CommentModule::t('comment', 'Tạm ngưng'),
-        '1' => CommentModule::t('comment', 'Hiển thị'),
+        '0' => Yii::t('backend', 'Tạm ngưng'),
+        '1' => Yii::t('backend', 'Hiển thị'),
     ]
 ];

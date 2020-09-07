@@ -36,7 +36,6 @@ use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use <?= $ns ?>\<?= $generator->messageCategory ?>\<?= ucfirst($generator->messageCategory) ?>Module;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
@@ -273,6 +272,6 @@ if (count($pks) === 1) {
         }
 
         throw new NotFoundHttpException(<?= $generator->generateString('The requested page does not exist.') ?>);
-        throw new NotFoundHttpException(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>','The requested page does not exist.'));
+        // throw new NotFoundHttpException(<?= ucfirst($generator->messageCategory) ?>Module::t('<?= $generator->messageCategory ?>','The requested page does not exist.'));
     }
 }

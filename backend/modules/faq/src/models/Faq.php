@@ -86,17 +86,17 @@ class Faq extends FaqTable
     public function attributeLabels()
     {
         return [
-            'id' => FaqModule::t('faq', 'ID'),
-            'title' => FaqModule::t('faq', 'Title'),
-            'slug' => FaqModule::t('faq', 'Slug'),
-            'content' => FaqModule::t('faq', 'Content'),
-            'short_content' => FaqModule::t('faq', 'Short Content'),
-            'status' => FaqModule::t('faq', 'Status'),
-            'faq_category_id' => FaqModule::t('faq', 'Faq Category ID'),
-            'created_at' => FaqModule::t('faq', 'Created At'),
-            'updated_at' => FaqModule::t('faq', 'Updated At'),
-            'created_by' => FaqModule::t('faq', 'Created By'),
-            'updated_by' => FaqModule::t('faq', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'content' => Yii::t('backend', 'Content'),
+            'short_content' => Yii::t('backend', 'Short Content'),
+            'status' => Yii::t('backend', 'Status'),
+            'faq_category_id' => Yii::t('backend', 'Faq Category ID'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

@@ -11,8 +11,16 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\contact\models\search\ContactSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = ContactModule::t('contact', 'Contacts');
+$this->title = Yii::t('backend', 'Contacts');
 $this->params['breadcrumbs'][] = $this->title;
+//echo '<pre>';
+//var_dump($searchModel->contactMetadataIndex);die;
+try {
+    $contactMetadataIndex = $searchModel->contactMetadataIndex;
+    if (!is_array($contactMetadataIndex)) $contactMetadataIndex = [];
+} catch (Exception $ex) {
+    $contactMetadataIndex = [];
+}
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
     <div class="container-fluid px-xxl-25 px-xl-10">
@@ -64,10 +72,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => ContactModule::t('contact', 'First'),
-                                            'lastPageLabel' => ContactModule::t('contact', 'Last'),
-                                            'prevPageLabel' => ContactModule::t('contact', 'Previous'),
-                                            'nextPageLabel' => ContactModule::t('contact', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
@@ -87,12 +95,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'firstPageCssClass' => 'paginate_button page-item first',
                                             'lastPageCssClass' => 'paginate_button page-item last',
                                         ],
-                                        'columns' => [
+                                        'columns' => array_merge([
                                             [
                                                 'class' => 'yii\grid\SerialColumn',
                                                 'header' => 'STT',
                                                 'headerOptions' => [
-                                                    'width' => 60,
+                                                    'width' => 50,
                                                     'rowspan' => 2
                                                 ],
                                                 'filterOptions' => [
@@ -109,14 +117,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 }
                                             ],
-
                                             'fullname',
                                             'phone',
-                                            'email:email',
+                                            'email',
                                             'address',
                                             'content:html',
+                                            [
+                                                'attribute' => 'Category',
+                                                'label' => 'Danh mục',
+                                                'value' => 'contactCategory.title',
+                                            ],
                                             'ip_address',
-                                        ],
+                                        ], $contactMetadataIndex)
                                     ]); ?>
                                 </div>
                             </div>

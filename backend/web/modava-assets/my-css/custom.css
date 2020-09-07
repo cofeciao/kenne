@@ -84,3 +84,7 @@
 .hk-footer-wrap .footer p {
     line-height: 30px;
 }
+
+.hk-pg-wrapper.hk-auth-wrapper > header {
+    width: auto;
+}

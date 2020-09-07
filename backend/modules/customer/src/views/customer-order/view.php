@@ -12,8 +12,8 @@ use modava\customer\models\table\CustomerOrderTable;
 /* @var $this yii\web\View */
 /* @var $model modava\customer\models\CustomerOrder */
 
-$this->title = CustomerModule::t('customer', 'Order') . ': ' . $model->customerHasOne->name . ' (' . $model->code . ')';
-$this->params['breadcrumbs'][] = ['label' => CustomerModule::t('customer', 'Đơn hàng'), 'url' => ['index']];
+$this->title = Yii::t('backend', 'Order') . ': ' . $model->customerHasOne->name . ' (' . $model->code . ')';
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Đơn hàng'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -32,25 +32,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 /*if (Yii::$app->user->can(User::DEV) ||
                     Yii::$app->user->can('customer') ||
                     Yii::$app->user->can('customerCustomer-treatment-scheduleCreate')) {
-                    echo Html::a('<i class="glyphicon glyphicon-list-alt"></i> ' . CustomerModule::t('customer', 'Treatment Schedule'), ['/customer/customer-treatment-schedule/create', 'order_id' => $model->primaryKey], ['class' => 'btn btn-warning']);
+                    echo Html::a('<i class="glyphicon glyphicon-list-alt"></i> ' . Yii::t('backend', 'Treatment Schedule'), ['/customer/customer-treatment-schedule/create', 'order_id' => $model->primaryKey], ['class' => 'btn btn-warning']);
                 }*/
                 ?>
                 <?php
                 if (Yii::$app->user->can(User::DEV) ||
                     Yii::$app->user->can('customer') ||
                     Yii::$app->user->can('customerCustomer-paymentIndex')) {
-                    echo Html::a('<i class="glyphicon glyphicon-credit-card"></i> ' . CustomerModule::t('customer', 'Payment'), ['/customer/customer-payment/index', 'order_id' => $model->primaryKey], ['class' => 'btn btn-success btn-sm']);
+                    echo Html::a('<i class="glyphicon glyphicon-credit-card"></i> ' . Yii::t('backend', 'Payment'), ['/customer/customer-payment/index', 'order_id' => $model->primaryKey], ['class' => 'btn btn-success btn-sm']);
                 }
                 ?>
             <?php } ?>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-               title="<?= CustomerModule::t('customer', 'Create'); ?>">
+               title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= CustomerModule::t('customer>', 'Create'); ?></a>
-            <?= Html::a(CustomerModule::t('customer', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a(CustomerModule::t('customer', 'Delete'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => CustomerModule::t('customer', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         [
                             'attribute' => 'customer_id',
-                            'label' => CustomerModule::t('customer', 'Customers'),
+                            'label' => Yii::t('backend', 'Customers'),
                             'format' => 'raw',
                             'value' => function ($model) {
                                 return Html::a($model->customerHasOne->name, ['/customer/customer/view', 'id' => $model->customer_id], [

@@ -83,15 +83,15 @@ class FaqCategory extends FaqCategoryTable
     public function attributeLabels()
     {
         return [
-            'id' => FaqModule::t('faq', 'ID'),
-            'title' => FaqModule::t('faq', 'Title'),
-            'slug' => FaqModule::t('faq', 'Slug'),
-            'status' => FaqModule::t('faq', 'Status'),
-            'description' => FaqModule::t('faq', 'Description'),
-            'created_at' => FaqModule::t('faq', 'Created At'),
-            'updated_at' => FaqModule::t('faq', 'Updated At'),
-            'created_by' => FaqModule::t('faq', 'Created By'),
-            'updated_by' => FaqModule::t('faq', 'Updated By'),
+            'id' => Yii::t('backend', 'ID'),
+            'title' => Yii::t('backend', 'Title'),
+            'slug' => Yii::t('backend', 'Slug'),
+            'status' => Yii::t('backend', 'Status'),
+            'description' => Yii::t('backend', 'Description'),
+            'created_at' => Yii::t('backend', 'Created At'),
+            'updated_at' => Yii::t('backend', 'Updated At'),
+            'created_by' => Yii::t('backend', 'Created By'),
+            'updated_by' => Yii::t('backend', 'Updated By'),
         ];
     }
 

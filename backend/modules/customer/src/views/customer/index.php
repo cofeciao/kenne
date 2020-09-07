@@ -14,7 +14,7 @@ use modava\customer\models\table\CustomerStatusCallTable;
 /* @var $searchModel modava\customer\models\search\CustomerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = CustomerModule::t('customer', 'Customers');
+$this->title = Yii::t('backend', 'Customers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key . '-index']) ?>
@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 Yii::$app->user->can('customerCustomerCreate')) { ?>
                 <div class="mb-0">
                     <a class="btn btn-outline-light btn-sm" href="<?= \yii\helpers\Url::to(['create']); ?>"
-                       title="<?= CustomerModule::t('customer', 'Create'); ?> (Sales Online)">
-                        <i class="fa fa-plus"></i> <?= CustomerModule::t('customer', 'Create'); ?></a>
+                       title="<?= Yii::t('backend', 'Create'); ?> (Sales Online)">
+                        <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
                 </div>
             <?php } ?>
         </div>
@@ -75,10 +75,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'summary pull-right',
                                         ],
                                         'pager' => [
-                                            'firstPageLabel' => CustomerModule::t('customer', 'First'),
-                                            'lastPageLabel' => CustomerModule::t('customer', 'Last'),
-                                            'prevPageLabel' => CustomerModule::t('customer', 'Previous'),
-                                            'nextPageLabel' => CustomerModule::t('customer', 'Next'),
+                                            'firstPageLabel' => Yii::t('backend', 'First'),
+                                            'lastPageLabel' => Yii::t('backend', 'Last'),
+                                            'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                            'nextPageLabel' => Yii::t('backend', 'Next'),
                                             'maxButtonCount' => 5,
 
                                             'options' => [
@@ -199,7 +199,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'header' => CustomerModule::t('customer', 'Actions'),
+                                                'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '<div>{update} {delete}</div><div class="mt-1">{create-order} {list-order}</div>',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
@@ -207,8 +207,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             Yii::$app->user->can('customer') ||
                                                             Yii::$app->user->can('customerCustomerUpdate')) {
                                                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                                'title' => CustomerModule::t('customer', 'Update'),
-                                                                'alia-label' => CustomerModule::t('customer', 'Update'),
+                                                                'title' => Yii::t('backend', 'Update'),
+                                                                'alia-label' => Yii::t('backend', 'Update'),
                                                                 'data-pjax' => 0,
                                                                 'class' => 'btn btn-info btn-xs'
                                                             ]);
@@ -220,9 +220,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             Yii::$app->user->can('customer') ||
                                                             Yii::$app->user->can('customerCustomerDelete')) {
                                                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                                'title' => CustomerModule::t('customer', 'Delete'),
+                                                                'title' => Yii::t('backend', 'Delete'),
                                                                 'class' => 'btn btn-danger btn-xs btn-del',
-                                                                'data-title' => CustomerModule::t('customer', 'Delete?'),
+                                                                'data-title' => Yii::t('backend', 'Delete?'),
                                                                 'data-pjax' => 0,
                                                                 'data-url' => $url,
                                                                 'btn-success-class' => 'success-delete',
@@ -238,8 +238,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             Yii::$app->user->can('customerCustomer-orderCreate')) {
                                                             if ($model->statusDongYHasOne == null || $model->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED) return null;
                                                             return Html::a('<span class="glyphicon glyphicon-plus"></span>', ['/customer/customer-order/create', 'customer_id' => $model->id], [
-                                                                'title' => CustomerModule::t('customer', 'Create Cart'),
-                                                                'alia-label' => CustomerModule::t('customer', 'Create Cart'),
+                                                                'title' => Yii::t('backend', 'Create Cart'),
+                                                                'alia-label' => Yii::t('backend', 'Create Cart'),
                                                                 'data-pjax' => 0,
                                                                 'class' => 'btn btn-success btn-xs'
                                                             ]);
@@ -252,8 +252,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             Yii::$app->user->can('customerCustomer-orderIndex')) {
                                                             if ($model->statusDongYHasOne == null || $model->statusDongYHasOne->accept != CustomerStatusDongYTable::STATUS_PUBLISHED) return null;
                                                             return Html::a('<span class="glyphicon glyphicon-shopping-cart"></span>', ['/customer/customer-order/index', 'customer_id' => $model->id], [
-                                                                'title' => CustomerModule::t('customer', 'List Cart'),
-                                                                'alia-label' => CustomerModule::t('customer', 'List Cart'),
+                                                                'title' => Yii::t('backend', 'List Cart'),
+                                                                'alia-label' => Yii::t('backend', 'List Cart'),
                                                                 'data-pjax' => 0,
                                                                 'class' => 'btn btn-success btn-xs'
                                                             ]);

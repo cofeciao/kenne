@@ -12,19 +12,19 @@ use yii\helpers\Html;
 class AffiliateDisplayHelper
 {
     public static function getCustomerInformation ($model) {
-        $customerInfo = "<strong>". AffiliateModule::t('affiliate', 'Full Name') .": </strong>" . self::getFullName($model) . "<br>";
-        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Sex') . ": </strong>" . self::getSex($model) . "<br>";
-        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Permission User') . ": </strong>{$model['permission_user']}<br>";
-        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Phone') . ": </strong>" . self::getPhone($model) . "<br>";
-        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Direct Sales') . ": </strong>{$model['directsale']}<br>";
-        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Service') . ": </strong>{$model['id_dich_vu']}<br>";
-        $customerInfo .=  "<strong>" . AffiliateModule::t('affiliate', 'Cơ sở') . ": </strong>{$model['co_so']}<br>";
+        $customerInfo = "<strong>". Yii::t('backend', 'Full Name') .": </strong>" . self::getFullName($model) . "<br>";
+        $customerInfo .=  "<strong>" . Yii::t('backend', 'Sex') . ": </strong>" . self::getSex($model) . "<br>";
+        $customerInfo .=  "<strong>" . Yii::t('backend', 'Permission User') . ": </strong>{$model['permission_user']}<br>";
+        $customerInfo .=  "<strong>" . Yii::t('backend', 'Phone') . ": </strong>" . self::getPhone($model) . "<br>";
+        $customerInfo .=  "<strong>" . Yii::t('backend', 'Direct Sales') . ": </strong>{$model['directsale']}<br>";
+        $customerInfo .=  "<strong>" . Yii::t('backend', 'Service') . ": </strong>{$model['id_dich_vu']}<br>";
+        $customerInfo .=  "<strong>" . Yii::t('backend', 'Cơ sở') . ": </strong>{$model['co_so']}<br>";
 
         return $customerInfo;
     }
 
     public static function getFullName ($model) {
-        $message = AffiliateModule::t('affiliate', 'Converted');
+        $message = Yii::t('backend', 'Converted');
         $tick = '';
 
         if (CustomerTable::getRecordByPartnerInfoFromCache(Yii::$app->getModule('affiliate')->params['partner_id']['dashboard-myauris'], $model['id'])) {
@@ -98,8 +98,10 @@ class AffiliateDisplayHelper
                     $content1 = '';
                     $arrThaoTac = [];
 
-                    foreach ($lichDieuTriInfo['thao_tac'] as $thaotac) {
-                        $arrThaoTac[] = $listThaotac[$thaotac];
+                    if (array_key_exists('thao_tac', $lichDieuTriInfo) && $lichDieuTriInfo['thao_tac'] !== null) {
+                        foreach ($lichDieuTriInfo['thao_tac'] as $thaotac) {
+                            $arrThaoTac[] = $listThaotac[$thaotac];
+                        }
                     }
 
                     $content1 = "<strong>Mã HĐ: {$donhang['order_code']}</strong> <i>(" . date('d-m-Y', $donhang['ngay_tao']) . ")</i><br/>";

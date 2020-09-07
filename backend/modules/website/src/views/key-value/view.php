@@ -11,7 +11,7 @@ use modava\website\WebsiteModule;
 /* @var $model modava\website\models\KeyValue */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => WebsiteModule::t('website', 'Key value'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Key value'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
-               title="<?= WebsiteModule::t('website', 'Create'); ?>">
-                <i class="fa fa-plus"></i> <?= WebsiteModule::t('website', 'Create'); ?></a>
-            <?= Html::a(WebsiteModule::t('website', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
-            <?= Html::a(WebsiteModule::t('website', 'Delete'), ['delete', 'id' => $model->id], [
+               title="<?= Yii::t('backend', 'Create'); ?>">
+                <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+            <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
-                    'confirm' => WebsiteModule::t('website', 'Are you sure you want to delete this item?'),
+                    'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -63,11 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'updated_at:date',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => WebsiteModule::t('website', 'Created By')
+                            'label' => Yii::t('backend', 'Created By')
                         ],
                         [
                             'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => WebsiteModule::t('website', 'Updated By')
+                            'label' => Yii::t('backend', 'Updated By')
                         ],
                     ],
                 ]) ?>
