@@ -73,7 +73,7 @@ $routeInfos = [
         <li class="nav-item mb-5">
             <a class="nav-link link-icon-left<?php if (Yii::$app->controller->id == $routeInfo['controllerId']) echo ' active' ?>"
                href="<?= Url::toRoute(["/{$routeInfo['module']}/{$routeInfo['controllerId']}"]); ?>">
-                <?= $routeInfo['icon'] . IwayModule::t($routeInfo['module'], $routeInfo['label']); ?>
+                <?= $routeInfo['icon'] . Yii::t('backend', $routeInfo['label']); ?>
             </a>
         </li>
     <?php endforeach; ?>
