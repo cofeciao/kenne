@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use backend\components\MyController;
 use modava\iway\models\Customer;
 use modava\iway\models\search\CustomerSearch;
+use yii\web\Response;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -135,6 +136,18 @@ class CustomerController extends MyController
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionGetCustomerByKeyWord($q = null, $id = null) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $out = Customer::getCustomerByKeyWord($q);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Customer::findOne($id)->fullname];
+        }
+        return $out;
     }
 
     /**

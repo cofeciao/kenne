@@ -3,7 +3,9 @@
 namespace modava\iway\models;
 
 use common\models\User;
+use modava\affiliate\helpers\Utils;
 use modava\iway\models\table\CallTable;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -47,6 +49,18 @@ class Call extends CallTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['start_time'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['start_time'],
+                    ],
+                    'value' => function ($event) {
+                        if (!$this->start_time) return null;
+
+                        return date('Y-m-d h:i:s', strtotime($this->start_time));
+                    },
+                ],
             ]
         );
     }
@@ -78,7 +92,7 @@ class Call extends CallTable
             'id' => Yii::t('backend', 'ID'),
             'title' => Yii::t('backend', 'Title'),
             'customer_id' => Yii::t('backend', 'Customer ID'),
-            'status' => Yii::t('backend', 'Status'),
+            'status' => Yii::t('backend', 'Tình trạng'),
             'start_time' => Yii::t('backend', 'Thời gian gọi'),
             'description' => Yii::t('backend', 'Description'),
             'created_at' => Yii::t('backend', 'Created At'),
@@ -106,5 +120,9 @@ class Call extends CallTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getCustomer() {
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
     }
 }

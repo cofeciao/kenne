@@ -4,6 +4,9 @@ namespace modava\iway\models;
 
 use common\models\User;
 use modava\iway\models\table\CustomerTable;
+use modava\location\models\LocationDistrict;
+use modava\location\models\LocationProvince;
+use modava\location\models\LocationWard;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -38,10 +41,13 @@ use Yii;
     * @property int $created_by
     * @property int $updated_at
     * @property int $updated_by
+
+    // None table fields
+    * @property string $text
     *
-            * @property IwayAppointmentSchedule[] $iwayAppointmentSchedules
-            * @property IwayCall[] $iwayCalls
-            * @property IwayCoSo $coSo
+            * @property AppointmentSchedule[] $iwayAppointmentSchedules
+            * @property Call[] $iwayCalls
+            * @property CoSo $coSo
             * @property User $createdBy
             * @property User $directSales
             * @property User $onlineSales
@@ -88,7 +94,7 @@ class Customer extends CustomerTable
 			[['code', 'fullname', 'avatar', 'sex', 'address', 'fb_fanpage', 'fb_customer', 'reason_fail'], 'string', 'max' => 255],
 			[['phone'], 'string', 'max' => 30],
 			[['online_source', 'status_customer', 'who_created'], 'string', 'max' => 50],
-			[['co_so_id'], 'exist', 'skipOnError' => true, 'targetClass' => IwayCoSo::class, 'targetAttribute' => ['co_so_id' => 'id']],
+			[['co_so_id'], 'exist', 'skipOnError' => true, 'targetClass' => CoSo::class, 'targetAttribute' => ['co_so_id' => 'id']],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
 			[['direct_sales_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['direct_sales_id' => 'id']],
 			[['online_sales_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['online_sales_id' => 'id']],
@@ -153,5 +159,15 @@ class Customer extends CustomerTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public static function getCustomerByKeyWord($keyWord) {
+        $sql = 'SELECT `id`, concat(fullname, " - ", phone) AS `text` FROM `iway_customer` WHERE fullname LIKE :q OR phone LIKE :q';
+
+        $data = Yii::$app->db->createCommand($sql, [':q' => "%{$keyWord}%"])->queryAll();
+
+        return [
+            'results' => $data
+        ];
     }
 }

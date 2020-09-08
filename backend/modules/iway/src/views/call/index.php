@@ -4,6 +4,7 @@ use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use common\grid\MyGridView;
 use backend\widgets\ToastrWidget;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -115,8 +116,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 }
                                             ],
-                                            'customer_id',
-                                            'start_time',
+                                            [
+                                                'attribute' => 'customer_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->customer->fullname, Url::toRoute(['customer/view', 'id' => $model->customer_id]));
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'status',
+                                                'value' => function ($model) {
+                                                    return $model->getDisplayDropdown($model->status, 'status');
+                                                }
+                                            ],
+                                            'start_time:datetime',
                                             'description:raw',
                                             [
                                                 'attribute' => 'created_by',

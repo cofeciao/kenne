@@ -6,8 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use backend\widgets\ToastrWidget;
-use modava\iway\IwayModule;
-use \modava\iway\models\DropdownsConfig;
+use modava\iway\models\DropdownsConfig;
 
 /* @var $this yii\web\View */
 /* @var $model modava\iway\models\DropdownsConfig */
@@ -58,7 +57,7 @@ use \modava\iway\models\DropdownsConfig;
                     'columns' => [
                         [
                             'name' => 'key',
-                            'title' => IwayModule::t('test', 'Key'),
+                            'title' => Yii::t('backend', 'Key'),
                             'enableError' => true,
                             'defaultValue' => '',
                             'options' => [
@@ -67,7 +66,7 @@ use \modava\iway\models\DropdownsConfig;
                         ],
                         [
                             'name' => 'value',
-                            'title' => IwayModule::t('test', 'Value'),
+                            'title' => Yii::t('backend', 'Value'),
                             'enableError' => true,
                             'defaultValue' => '',
                             'options' => [

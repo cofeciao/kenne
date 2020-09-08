@@ -2,12 +2,10 @@
 
 namespace modava\iway\models\table;
 
-use cheatsheet\Time;
-use modava\iway\models\query\CallQuery;
+use modava\iway\components\MyIwayModel;
 use Yii;
-use yii\db\ActiveRecord;
 
-class CallTable extends \yii\db\ActiveRecord
+class CallTable extends MyIwayModel
 {
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;

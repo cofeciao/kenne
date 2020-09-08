@@ -3,10 +3,10 @@
 namespace modava\iway\models\table;
 
 use cheatsheet\Time;
+use modava\iway\components\MyIwayModel;
 use Yii;
-use yii\db\ActiveRecord;
 
-class CustomerTable extends \yii\db\ActiveRecord
+class CustomerTable extends MyIwayModel
 {
     public static function tableName()
     {
