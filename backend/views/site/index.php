@@ -23,6 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <!-- Row -->
             <div class="row">
                 <div class="col-xl-6">
+                    <?= \modava\charts\LineChart::widget([
+                        'id' => 'm_chart_2',
+                        'col' => 'col-3',
+                        'xkey' => 'y',
+                        'ykeys' => '["a", "b", "c"]',
+                        'linkgetdata' => Url::toRoute(['get-data-line-chart'])
+                    ]) ?>
+                </div>
+                <div class="col-xl-6">
                     <?= MiniList::widget([
                         'title' => Yii::t('backend', 'Note cần gọi trong ngày'),
                         'columns' => [
