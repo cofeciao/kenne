@@ -17,76 +17,83 @@ $model->expired_date = $model->expired_date != null
     : '';
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
-<div class="coupon-form">
-    <?php $form = ActiveForm::begin([
-        'id' => 'coupon_form',
-        'enableAjaxValidation' => true,
-        'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]),
-    ]); ?>
-    <div class="row">
-        <div class="col-6">
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-6">
-                    <?= $form->field($model, 'coupon_code')->textInput(['maxlength' => true,]) ?>
-                </div>
-                <div class="col-6">
-                    <button type="button" class="btn btn-primary" id="js-generate-coupon-code"><?=Yii::t('backend', 'Generate Coupon Code')?></button>
+    <div class="coupon-form">
+        <?php $form = ActiveForm::begin([
+            'id' => 'coupon_form',
+            'enableAjaxValidation' => true,
+            'validationUrl' => Url::toRoute(['/affiliate/coupon/validate', 'id' => $model->primaryKey]),
+        ]); ?>
+        <div class="row">
+            <div class="col-6">
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-6">
+                <div class="row m-0">
+                    <?php if ($model->primaryKey): ?>
+                        <?= $form->field($model, 'coupon_code')->textInput(['maxlength' => true, 'readonly' => 'readonly']) ?>
+                    <?php else: ?>
+                        <div class="col-6">
+                            <?= $form->field($model, 'coupon_code')->textInput(['maxlength' => true,]) ?>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary"
+                                    id="js-generate-coupon-code"><?= Yii::t('backend', 'Generate Coupon Code') ?></button>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'quantity')->textInput() ?>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'expired_date')->widget(DateTimePicker::class, [
-                'template' => '{input}{button}',
-                'pickButtonIcon' => 'btn btn-increment btn-light',
-                'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'dd-mm-yyyy hh:ii',
-                    'todayHighLight' => true,
-                ]
-            ]) ?>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'customer_id')->input('text', ['readonly' => 'readonly']) ?>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'coupon_type_id')->dropDownList(
+            <div class="col-6">
+                <?= $form->field($model, 'quantity')->textInput() ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'expired_date')->widget(DateTimePicker::class, [
+                    'template' => '{input}{button}',
+                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy hh:ii',
+                        'todayHighLight' => true,
+                    ]
+                ]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'customer_id')->input('text', ['readonly' => 'readonly']) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'coupon_type_id')->dropDownList(
                     ArrayHelper::map(\modava\affiliate\models\table\CouponTypeTable::getAllRecords(), 'id', 'title'),
-                    [ 'prompt' => Yii::t('backend', 'Select an option ...') ]
-            ) ?>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'promotion_type')->dropDownList(
-                Yii::$app->getModule('affiliate')->params["promotion_type"],
-                [ 'prompt' => Yii::t('backend', 'Select an option ...'),
-                    'id' => 'promotion-type'
-                ]
-            ) ?>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true]) ?>
-        </div>
+                    ['prompt' => Yii::t('backend', 'Select an option ...')]
+                ) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'promotion_type')->dropDownList(
+                    Yii::$app->getModule('affiliate')->params["promotion_type"],
+                    [
+                        'prompt' => Yii::t('backend', 'Select an option ...'),
+                        'id' => 'promotion-type',
+                        'options' => [\modava\affiliate\models\Coupon::DISCOUNT_AMOUNT => ['disabled' => true]]
+                    ]
+                ) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true]) ?>
+            </div>
 
-        <div class="col-12">
-            <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
-                'options' => ['rows' => 20],
-                'type' => 'content'
-            ]) ?>
+            <div class="col-12">
+                <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
+                    'options' => ['rows' => 20],
+                    'type' => 'content'
+                ]) ?>
+            </div>
         </div>
-    </div>
 
         <div class="form-group">
             <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>
 
-    <?php ActiveForm::end(); ?>
-</div>
+        <?php ActiveForm::end(); ?>
+    </div>
 
 <?= JsCreateModalWidget::widget(['formClassName' => 'coupon_form', 'modelName' => 'Coupon']) ?>
 

@@ -3,8 +3,11 @@
 namespace modava\affiliate\models;
 
 use common\models\User;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\table\CouponTable;
+use modava\website\models\table\KeyValueTable;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -13,27 +16,28 @@ use yii\db\ActiveRecord;
 use Yii;
 
 /**
-* This is the model class for table "coupon".
-*
-    * @property int $id
-    * @property string $title
-    * @property string $slug
-    * @property string $coupon_code
-    * @property int $quantity
-    * @property string $expired_date
-    * @property string $description
-    * @property int $customer_id
-    * @property int $coupon_type_id
-    * @property int $quantity_used
-    * @property int $promotion_type
-    * @property string $promotion_value
-    * @property int $created_at
-    * @property int $updated_at
-    * @property int $created_by
-    * @property int $updated_by
-    *
-            * @property CouponType $couponType
-    */
+ * This is the model class for table "coupon".
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $coupon_code
+ * @property int $quantity
+ * @property string $expired_date
+ * @property string $description
+ * @property int $customer_id
+ * @property int $coupon_type_id
+ * @property int $quantity_used
+ * @property int $promotion_type
+ * @property string $promotion_value
+ * @property int $count_sms_sent
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ *
+ * @property CouponType $couponType
+ */
 class Coupon extends CouponTable
 {
     public $toastr_key = 'coupon';
@@ -82,33 +86,33 @@ class Coupon extends CouponTable
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-			[['title', 'slug','coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
-			[['quantity', 'customer_id', 'coupon_type_id', 'quantity_used', 'promotion_type',], 'integer'],
+            [['title', 'slug', 'coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
+            [['quantity', 'customer_id', 'coupon_type_id', 'quantity_used', 'promotion_type', 'count_sms_sent'], 'integer'],
             ['quantity_used', 'validateQuantityUsed'],
             [['quantity', 'promotion_value'], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
-			[['expired_date'], 'safe'],
-			[['description'], 'string'],
-			[['promotion_value'], 'number'],
-			[['title', 'slug', 'coupon_code'], 'string', 'max' => 255],
-			[['slug'], 'unique'],
-			[['coupon_code'], 'unique'],
-			[['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
-            ['promotion_value', 'compare', 'compareValue' => 100, 'operator' => '<=', 'type' => 'number', 'when' => function ($model) {
+            [['expired_date'], 'safe'],
+            [['description'], 'string'],
+            [['promotion_value'], 'number'],
+            [['title', 'slug', 'coupon_code'], 'string', 'max' => 255],
+            [['slug'], 'unique'],
+            [['coupon_code'], 'unique'],
+            [['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
+            ['promotion_value', 'compare', 'compareValue' => KeyValueTable::getValueByKey('MAX_PROMO_PERCENT_VALUE'), 'operator' => '<=', 'type' => 'number', 'when' => function ($model) {
                 return $model->promotion_type == self::DISCOUNT_PERCENT;
-                    }, 'whenClient' => "function (attribute, value) {
+            }, 'whenClient' => "function (attribute, value) {
                 return $('#promotion-type').val() == " . self::DISCOUNT_PERCENT . ";
             }"]
-		];
+        ];
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
@@ -124,6 +128,7 @@ class Coupon extends CouponTable
             'quantity_used' => Yii::t('backend', 'Quantity Used'),
             'promotion_type' => Yii::t('backend', 'Promotion Type'),
             'promotion_value' => Yii::t('backend', 'Promotion Value'),
+            'count_sms_sent' => Yii::t('backend', 'Số lần gửi SMS'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
             'created_by' => Yii::t('backend', 'Created By'),
@@ -131,51 +136,101 @@ class Coupon extends CouponTable
         ];
     }
 
-    function validateQuantityUsed () {
-        if((int) $this->quantity_used > (int) $this->quantity){
-            $this->addError('quantity_used',Yii::t('backend', 'Quantity Used must be less than or equal quantity'));
+    function validateQuantityUsed()
+    {
+        if ((int)$this->quantity_used > (int)$this->quantity) {
+            $this->addError('quantity_used', Yii::t('backend', 'Quantity Used must be less than or equal quantity'));
         }
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-    * Gets query for [[User]].
-    *
-    * @return \yii\db\ActiveQuery
-    */
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    public function getCouponType() {
+    public function getCouponType()
+    {
         return $this->hasOne(CouponType::class, ['id' => 'coupon_type_id']);
     }
 
-    public function getCustomer() {
+    public function getCustomer()
+    {
         return $this->hasOne(Customer::class, ['id' => 'customer_id']);
     }
 
-    public static function countByCustomer ($customerId) {
-        return (int) self::find()
+    public static function countByCustomer($customerId)
+    {
+        return (int)self::find()
             ->where(['customer_id' => $customerId])
             ->count();
     }
 
-    public static function checkCoupon($code) {
+    public static function checkCoupon($code)
+    {
         return self::find()
             ->where(['coupon_code' => $code])
             ->andWhere('now() <= expired_date')
             ->andWhere('quantity_used < quantity')
             ->one();
+    }
+
+    public function sendSmsToCustomer()
+    {
+        if ($this->count_sms_sent >= 3) {
+            $this->addError('count_sms_sent', Yii::t('backend', 'Quá số lần gửi tin nhắn'));
+            return false;
+        }
+
+        $myauris_config = \Yii::$app->getModule('affiliate')->params['myauris_config'];
+        $url = $myauris_config['url_end_point'] . $myauris_config['endpoint']['send_sms_coupon'];
+        $client = new Client();
+        $params = [
+            'phone' => $this->customer->phone,
+            'promotions_code' => $this->coupon_code . ', với số lượng ' . $this->quantity,
+            'promotions_name' => $this->title,
+            'promotions_expired' => Yii::$app->formatter->asDatetime($this->expired_date),
+            'name' => $this->customer->full_name,
+        ];
+
+        try {
+            $res = $client->request('POST', $url, [
+                'headers' => Yii::$app->getModule('affiliate')->params['myauris_config']['headers'],
+                'form_params' => $params
+            ]);
+
+            $response = \GuzzleHttp\json_decode($res->getBody(), true);
+
+            if ($res->getStatusCode() == 200 && $response['code'] == 200) {
+                $this->count_sms_sent = $this->count_sms_sent + 1;
+                $this->save();
+                return true;
+            }
+
+            if (array_key_exists('msg', $response)) {
+                $this->addError('count_sms_sent', $response['msg']);
+            } else {
+                Yii::warning($response);
+                $this->addError('count_sms_sent', Yii::t('backend', 'Đã có lỗi xảy ra'));
+            }
+            return false;
+        } catch (GuzzleException $exception) {
+            $this->addError('count_sms_sent', Yii::t('backend', $exception->getMessage()));
+            return false;
+        }
     }
 }

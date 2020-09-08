@@ -35,6 +35,9 @@ use modava\affiliate\helpers\Utils;
  * @property int $created_by Người gọi
  * @property int $updated_by
  * @property int $sex
+ * @property int $total_commission Tổng tiền hoa hồng của KH
+ * @property int $total_commission_paid Tổng tiền hoa hồng chi trả cho KH
+ * @property int $total_commission_remain Tổng tiền hoa hồng còn lại
  * @property date $birthday
  * @property date $date_checkin
  * @property date $date_accept_do_service
@@ -124,6 +127,7 @@ class Customer extends CustomerTable
             [['phone'], 'string', 'max' => 15],
             [['slug', 'partner_customer_id', 'phone'], 'unique'],
             [['email'], 'email'],
+            [['total_commission', 'total_commission_paid', 'total_commission_remain'], 'number'],
             [['birthday', 'date_accept_do_service', 'date_checkin'], 'safe'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],

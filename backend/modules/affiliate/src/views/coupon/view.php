@@ -82,6 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
 						'promotion_value',
+                        'count_sms_sent',
 						'created_at:datetime',
 						'updated_at:datetime',
                         [
