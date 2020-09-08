@@ -168,6 +168,9 @@ class Customer extends CustomerTable
             'ward_id' => Yii::t('backend', 'Ward'),
             'address' => Yii::t('backend', 'Address'),
             'status' => Yii::t('backend', 'Customer Status'),
+            'total_commission' => Yii::t('backend', 'Tổng hoa hồng'),
+            'total_commission_paid' => Yii::t('backend', 'Tổng hoa hồng đã trả cho KH'),
+            'total_commission_remain' => Yii::t('backend', 'Tổng hoa hồng còn lại'),
         ];
     }
 

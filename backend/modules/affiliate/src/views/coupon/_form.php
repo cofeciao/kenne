@@ -2,6 +2,7 @@
 
 use modava\affiliate\widgets\JsCreateModalWidget;
 use modava\datetime\DateTimePicker;
+use modava\website\models\table\KeyValueTable;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -15,6 +16,11 @@ use yii\helpers\ArrayHelper;
 $model->expired_date = $model->expired_date != null
     ? date('d-m-Y H:i', strtotime($model->expired_date))
     : '';
+
+if ($model->primaryKey === null) {
+    $model->max_discount = KeyValueTable::getValueByKey('MAX_PROMO_PERCENT_VALUE');
+    $model->min_discount = KeyValueTable::getValueByKey('MIN_PROMO_PERCENT_VALUE');
+}
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="coupon-form">
@@ -77,7 +83,16 @@ $model->expired_date = $model->expired_date != null
                 ) ?>
             </div>
             <div class="col-6">
-                <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'promotion_value')->textInput(['maxlength' => true, 'type' => 'number']) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'commission_for_owner')->textInput(['maxlength' => true, 'readonly' => 'readonly']) ?>
+            </div>
+            <div class="col-3">
+                <?= $form->field($model, 'min_discount')->textInput(['maxlength' => true, 'readonly' => 'readonly']) ?>
+            </div>
+            <div class="col-3">
+                <?= $form->field($model, 'max_discount')->textInput(['maxlength' => true, 'readonly' => 'readonly']) ?>
             </div>
 
             <div class="col-12">
@@ -114,7 +129,7 @@ function generateCouponCode(customerId, upperCase = false) {
     });
 }
 
-$('#js-generate-coupon-code').on('click', function() {
+$('#coupon_form #js-generate-coupon-code').on('click', function() {
     let customerId = $('#coupon_form').find('[name="Coupon[customer_id]"]').val();
     if (!customerId) {
         $.toast({
@@ -142,9 +157,14 @@ $('#js-generate-coupon-code').on('click', function() {
     $('#coupon-coupon_code').val('').trigger('change');
 });
 
-$('#coupon-coupon_code').on('change keyup blur', function() {
+$('#coupon_form #coupon-coupon_code').on('change keyup blur', function() {
     $(this).val($(this).val().toUpperCase());  
 });
 
+$('#coupon_form [name="Coupon[promotion_value]"]').on('change', function () {
+    
+    let value = $(this).val() ? parseFloat($(this).val()) : 0;
+    $('#coupon_form [name="Coupon[commission_for_owner]"]').val(parseFloat($('#coupon_form [name="Coupon[max_discount]"]').val()) - value);
+});
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

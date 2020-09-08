@@ -151,6 +151,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             'coupon_code',
                                             [
+                                                'attribute' => 'count_sms_sent',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right'
+                                                ]
+                                            ],
+                                            [
                                                 'attribute' => 'customer_id',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
@@ -190,15 +196,29 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'count_sms_sent',
+                                                'attribute' => 'min_discount',
                                                 'contentOptions' => [
                                                     'class' => 'text-right'
                                                 ]
                                             ],
-                                            //'description:ntext',
-                                            //'coupon_type_id',
-                                            //'promotion_type',
-                                            //'promotion_value',
+                                            [
+                                                'attribute' => 'max_discount',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right'
+                                                ]
+                                            ],
+                                            [
+                                                'attribute' => 'promotion_value',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right'
+                                                ]
+                                            ],
+                                            [
+                                                'attribute' => 'commission_for_owner',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right'
+                                                ]
+                                            ],
                                             [
                                                 'attribute' => 'created_by',
                                                 'value' => 'userCreated.userProfile.fullname',
@@ -229,7 +249,6 @@ $urlSendSMS = Url::toRoute(['/affiliate/coupon/send-sms-to-customer']);
 $script = <<< JS
 function initSendSMS () {
     $('.send-sms-to-customer').popover({
-        // title: 'Xác nhận gửi Coupon cho khách hàng?',
         html: true,
         content: function () {
             let id = $(this).data('id');

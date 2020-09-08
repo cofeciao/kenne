@@ -31,6 +31,9 @@ use Yii;
  * @property int $promotion_type
  * @property string $promotion_value
  * @property int $count_sms_sent
+ * @property int $min_discount giảm giá tối thiểu
+ * @property int $max_discount giẩm giá tối đa
+ * @property int $commission_for_owner hoa hồng cho chủ coupon
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
@@ -93,16 +96,22 @@ class Coupon extends CouponTable
         return [
             [['title', 'slug', 'coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
             [['quantity', 'customer_id', 'coupon_type_id', 'quantity_used', 'promotion_type', 'count_sms_sent'], 'integer'],
-            ['quantity_used', 'validateQuantityUsed'],
             [['quantity', 'promotion_value'], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
+            [['max_discount', 'commission_for_owner'], 'number'],
             [['expired_date'], 'safe'],
             [['description'], 'string'],
-            [['promotion_value'], 'number'],
+            [['promotion_value', 'min_discount', 'max_discount'], 'number'],
             [['title', 'slug', 'coupon_code'], 'string', 'max' => 255],
             [['slug'], 'unique'],
             [['coupon_code'], 'unique'],
             [['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
-            ['promotion_value', 'compare', 'compareValue' => KeyValueTable::getValueByKey('MAX_PROMO_PERCENT_VALUE'), 'operator' => '<=', 'type' => 'number', 'when' => function ($model) {
+            ['quantity_used', 'compare', 'compareAttribute' => 'quantity', 'operator' => '<=', 'type' => 'number'],
+            ['promotion_value', 'compare', 'compareAttribute' => 'max_discount', 'operator' => '<=', 'type' => 'number', 'when' => function ($model) {
+                return $model->promotion_type == self::DISCOUNT_PERCENT;
+            }, 'whenClient' => "function (attribute, value) {
+                return $('#promotion-type').val() == " . self::DISCOUNT_PERCENT . ";
+            }"],
+            ['promotion_value', 'compare', 'compareAttribute' => 'min_discount', 'operator' => '>=', 'type' => 'number', 'when' => function ($model) {
                 return $model->promotion_type == self::DISCOUNT_PERCENT;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#promotion-type').val() == " . self::DISCOUNT_PERCENT . ";
@@ -129,6 +138,9 @@ class Coupon extends CouponTable
             'promotion_type' => Yii::t('backend', 'Promotion Type'),
             'promotion_value' => Yii::t('backend', 'Promotion Value'),
             'count_sms_sent' => Yii::t('backend', 'Số lần gửi SMS'),
+            'max_discount' => Yii::t('backend', 'Chiết khấu tối đa'),
+            'commission_for_owner' => Yii::t('backend', 'Chiết khấu cho chủ Coupon'),
+            'min_discount' => Yii::t('backend', 'Chiết khấu tối thiểu'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
             'created_by' => Yii::t('backend', 'Created By'),
@@ -136,11 +148,10 @@ class Coupon extends CouponTable
         ];
     }
 
-    function validateQuantityUsed()
+    public function beforeSave($insert)
     {
-        if ((int)$this->quantity_used > (int)$this->quantity) {
-            $this->addError('quantity_used', Yii::t('backend', 'Quantity Used must be less than or equal quantity'));
-        }
+        $this->commission_for_owner = $this->max_discount - $this->promotion_value;
+        return parent::beforeSave($insert);
     }
 
     /**
