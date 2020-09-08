@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xl-12">
                 <section class="hk-sec-wrapper">
 
-                    <?php Pjax::begin(); ?>
+                    <?php Pjax::begin(['id' => 'coupon-gridview']); ?>
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
@@ -254,6 +254,7 @@ $('.send-sms-to-customer').popover({
                        stack: 6,
                        showHideTransition: 'fade'
                    });
+                   $.pjax.reload({container:'#coupon-gridview', url: window.location.href});
                } else {
                    $.toast({
                        heading: 'Thông báo',
