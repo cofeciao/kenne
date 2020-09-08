@@ -8,4 +8,9 @@ class IwayController extends \modava\iway\components\MyIwayController
     {
         return $this->render('index');
     }
+
+    public function actionView()
+    {
+        return $this->render('view');
+    }
 }
