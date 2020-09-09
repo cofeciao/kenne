@@ -200,6 +200,12 @@ class Coupon extends CouponTable
             ->one();
     }
 
+    public function couponCanUse() {
+        if ($this->quantity_used >= $this->quantity) return false;
+        if (date('Y-m-d h:i:s') > $this->expired_date) return false;
+        return true;
+    }
+
     public function sendSmsToCustomer()
     {
         if ($this->count_sms_sent >= 3) {
@@ -212,10 +218,11 @@ class Coupon extends CouponTable
         $client = new Client();
         $params = [
             'phone' => $this->customer->phone,
-            'promotions_code' => $this->coupon_code . ', với số lượng ' . $this->quantity,
+            'promotions_code' => $this->coupon_code,
             'promotions_name' => $this->title,
             'promotions_expired' => Yii::$app->formatter->asDatetime($this->expired_date),
             'name' => $this->customer->full_name,
+            'promotions_qty' => $this->quantity,
         ];
 
         try {

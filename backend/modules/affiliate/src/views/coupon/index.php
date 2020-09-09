@@ -106,6 +106,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                                 'buttons' => [
                                                     'send-sms-to-customer' => function ($url, $model) {
+                                                        if (!$model->couponCanUse()) return '';
+
                                                         return Html::a('<i class="glyphicon glyphicon-send"></i>', 'javascript:;', [
                                                             'title' => Yii::t('backend', 'Gửi cho KH'),
                                                             'alia-label' => Yii::t('backend', 'Gửi cho KH'),
