@@ -1,7 +1,7 @@
 <?php
-use modava\affiliate\AffiliateModule;
 use modava\affiliate\models\Coupon;
 use modava\affiliate\models\Customer;
+use modava\affiliate\models\Payment;
 
 return [
     'affiliateName' => 'Affiliate',
@@ -83,5 +83,9 @@ return [
     'note_is_recall' => [
         '0' => Yii::t('backend', 'Chưa gọi'),
         '1' => Yii::t('backend', 'Đã gọi')
+    ],
+    'payment_status' => [
+        Payment::STATUS_DRAFT => Yii::t('backend', 'Tạo nháp'),
+        Payment::STATUS_PAID => Yii::t('backend', 'Đã chi'),
     ]
 ];

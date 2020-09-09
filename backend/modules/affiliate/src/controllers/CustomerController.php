@@ -22,8 +22,8 @@ use yii\widgets\ActiveForm;
 class CustomerController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -37,9 +37,9 @@ class CustomerController extends MyController
     }
 
     /**
-    * Lists all Customer models.
-    * @return mixed
-    */
+     * Lists all Customer models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new CustomerSearch();
@@ -49,16 +49,15 @@ class CustomerController extends MyController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-            }
-
+    }
 
 
     /**
-    * Displays a single Customer model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Customer model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -67,10 +66,10 @@ class CustomerController extends MyController
     }
 
     /**
-    * Creates a new Customer model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Customer model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Customer();
@@ -102,18 +101,18 @@ class CustomerController extends MyController
     }
 
     /**
-    * Updates an existing Customer model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Customer model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -141,12 +140,12 @@ class CustomerController extends MyController
     }
 
     /**
-    * Deletes an existing Customer model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Customer model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -199,13 +198,13 @@ class CustomerController extends MyController
         try {
             // Check customer trong hệ thống trước
             $customer = CustomerTable::getrecordByPhone($phone);
-            $result =  [
+            $result = [
                 'ho_ten' => null,
                 'phu_trach' => null
             ];
 
             if ($customer !== null) {
-                $result =  [
+                $result = [
                     'ho_ten' => $customer->full_name,
                     'phu_trach' => $customer->userCreated->userProfile->fullname
                 ];
@@ -213,7 +212,7 @@ class CustomerController extends MyController
                 $customer = CustomerPartnerSearch::getCustomerByPhone($phone);
 
                 if ($customer) {
-                    $result =  [
+                    $result = [
                         'ho_ten' => $customer['full_name'],
                         'phu_trach' => null
                     ];
@@ -226,13 +225,25 @@ class CustomerController extends MyController
         }
     }
 
+    public function actionGetCustomerByKeyWord($q = null, $id = null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $out = Customer::getCustomerByKeyWord($q);
+        } elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Customer::findOne($id)->fullname];
+        }
+        return $out;
+    }
+
     /**
-    * Finds the Customer model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Customer the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the Customer model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Customer the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)

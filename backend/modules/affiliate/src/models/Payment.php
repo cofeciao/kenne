@@ -18,18 +18,22 @@ use Yii;
     * @property string $slug
     * @property int $customer_id Khách hàng
     * @property string $amount Số tiền chi
+    * @property int $status Tình trạng
     * @property string $description Mô tả
     * @property int $created_at
     * @property int $updated_at
     * @property int $created_by
     * @property int $updated_by
     *
-            * @property AffiliateCustomer $customer
+            * @property Customer $customer
             * @property User $createdBy
             * @property User $updatedBy
     */
 class Payment extends PaymentTable
 {
+    const STATUS_DRAFT = 1;
+    const STATUS_PAID = 2;
+
     public $toastr_key = 'payment';
     public function behaviors()
     {
@@ -67,13 +71,14 @@ class Payment extends PaymentTable
     public function rules()
     {
         return [
-			[['title', 'slug', 'customer_id', 'created_at', 'updated_at'], 'required'],
-			[['customer_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+			[['title', 'slug', 'customer_id',], 'required'],
+			[['customer_id', 'status'], 'integer'],
 			[['amount'], 'number'],
+            [['amount',], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
 			[['description'], 'string'],
 			[['title', 'slug'], 'string', 'max' => 255],
 			[['slug'], 'unique'],
-			[['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => AffiliateCustomer::class, 'targetAttribute' => ['customer_id' => 'id']],
+			[['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
 		];
@@ -89,7 +94,8 @@ class Payment extends PaymentTable
             'title' => Yii::t('backend', 'Title'),
             'slug' => Yii::t('backend', 'Slug'),
             'customer_id' => Yii::t('backend', 'Customer ID'),
-            'amount' => Yii::t('backend', 'Amount'),
+            'amount' => Yii::t('backend', 'Số tiền'),
+            'status' => Yii::t('backend', 'Tình trạng'),
             'description' => Yii::t('backend', 'Description'),
             'created_at' => Yii::t('backend', 'Created At'),
             'updated_at' => Yii::t('backend', 'Updated At'),
@@ -116,5 +122,10 @@ class Payment extends PaymentTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::class, ['id' => 'customer_id']);
     }
 }

@@ -23,6 +23,7 @@ class m200909_044614_create_table_affiliate_payment extends Migration
             'slug' => $this->string(255)->notNull()->unique(),
             'customer_id' => $this->integer(11)->notNull()->comment('Khách hàng'),
             'amount' => $this->decimal(11)->defaultValue(0)->notNull()->comment('Số tiền chi'),
+            'status' => $this->smallInteger(1)->defaultValue(1)->notNull()->comment('Tình trạng chi'),
             'description' => $this->text()->null()->comment('Mô tả'),
             'created_at' => $this->integer(11)->notNull(),
             'updated_at' => $this->integer(11)->notNull(),

@@ -204,13 +204,25 @@ class Customer extends CustomerTable
                 'name' => \Yii::$app->getModule('affiliate')->params['customer_status'][$record['status']],
                 'value' => $record['count']
             ];
-            $total += (int) $record['count'];
+            $total += (int)$record['count'];
         }
 
         return [
             'total' => $total,
             'data' => $recordForChart,
             'color' => \Yii::$app->getModule('affiliate')->params['customer_status_color'],
+        ];
+    }
+
+
+    public static function getCustomerByKeyWord($keyWord)
+    {
+        $sql = 'SELECT `id`, concat(full_name, " - ", phone) AS `text` FROM `affiliate_customer` WHERE full_name LIKE :q OR phone LIKE :q';
+
+        $data = Yii::$app->db->createCommand($sql, [':q' => "%{$keyWord}%"])->queryAll();
+
+        return [
+            'results' => $data
         ];
     }
 }
