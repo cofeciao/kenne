@@ -106,7 +106,7 @@ class Payment extends PaymentTable
     }
 
     public function validateAmount() {
-        if ($this->amount > $this->customer->total_commission_remain && $this->status == self::STATUS_PAID) {
+        if ($this->customer != null && $this->amount > $this->customer->total_commission_remain && $this->status == self::STATUS_PAID) {
             $this->addError('amount', Yii::t('backend', 'Số tiền không được lớn hơn số tiền còn lại phải trả cho KH'));
         }
     }
@@ -163,5 +163,21 @@ class Payment extends PaymentTable
         $customer = Customer::findOne($this->customer_id);
         $customer->total_commission_paid = $total;
         $customer->save();
+    }
+
+    public function loadFromApi($params)
+    {
+        $formName = $this->formName();
+        $paramsPrepare = [];
+
+        foreach ($params as $k => $v) {
+            $paramsPrepare[$formName][$k] = $v;
+        }
+
+        return $this->load($paramsPrepare);
+    }
+
+    public static function findByCustomer($customerid) {
+        return self::find()->where(['customer_id' => $customerid])->all();
     }
 }

@@ -242,4 +242,9 @@ class Customer extends CustomerTable
             'results' => $data
         ];
     }
+
+    public static function getCustomerForPay()
+    {
+        return self::find()->where('total_commission_remain > 0')->all();
+    }
 }
