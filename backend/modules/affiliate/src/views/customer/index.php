@@ -216,6 +216,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return $model->ward_id ? $model->ward->name : null;
                                             }
                                         ],
+                                        'bank_name',
+                                        'bank_branch',
+                                        'bank_customer_id',
                                         //'description:ntext',
                                         [
                                             'attribute' => 'created_by',

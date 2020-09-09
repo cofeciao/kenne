@@ -41,6 +41,9 @@ use modava\affiliate\helpers\Utils;
  * @property date $birthday
  * @property date $date_checkin
  * @property date $date_accept_do_service
+ * @property string $bank_name
+ * @property string $bank_branch
+ * @property string $bank_customer_id
  *
  * @property Coupon[] $affiliateCoupons
  * @property User $createdBy
@@ -133,8 +136,9 @@ class Customer extends CustomerTable
             [['full_name', 'phone', 'partner_id', 'partner_customer_id', 'status'], 'required'],
             [['partner_id', 'sex', 'partner_customer_id', 'country_id', 'province_id', 'district_id', 'ward_id'], 'integer'],
             [['description', 'address'], 'string'],
-            [['full_name', 'email', 'face_customer'], 'string', 'max' => 255],
+            [['full_name', 'email', 'face_customer', 'bank_customer_id', 'bank_branch', 'bank_name'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 15],
+            [['bank_customer_id'], 'string', 'max' => 35],
             [['slug', 'partner_customer_id', 'phone'], 'unique'],
             [['email'], 'email'],
             [['total_commission', 'total_commission_paid', 'total_commission_remain'], 'number'],
@@ -181,6 +185,9 @@ class Customer extends CustomerTable
             'total_commission' => Yii::t('backend', 'Tổng hoa hồng'),
             'total_commission_paid' => Yii::t('backend', 'Tổng hoa hồng đã trả cho KH'),
             'total_commission_remain' => Yii::t('backend', 'Tổng hoa hồng còn lại'),
+            'bank_branch' => Yii::t('backend', 'Chi nhánh ngân hàng'),
+            'bank_name' => Yii::t('backend', 'Tên ngân hàng'),
+            'bank_customer_id' => Yii::t('backend', 'Số tài khoản ngân hàng'),
         ];
     }
 
