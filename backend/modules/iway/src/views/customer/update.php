@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -9,7 +8,7 @@ use yii\helpers\Url;
 /* @var $model modava\iway\models\Customer */
 
 $this->title = Yii::t('backend', 'Update : {name}', [
-    'name' => $model->id,
+    'name' => $model->fullname,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Customers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];

@@ -7,6 +7,7 @@ use modava\iway\models\table\CustomerTable;
 use modava\location\models\LocationDistrict;
 use modava\location\models\LocationProvince;
 use modava\location\models\LocationWard;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -77,6 +78,17 @@ class Customer extends CustomerTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['birthday'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['birthday'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->birthday == '') return '';
+                        return date('Y-m-d', strtotime($this->birthday));
+                    },
+                ],
             ]
         );
     }
@@ -119,10 +131,10 @@ class Customer extends CustomerTable
             'sex' => Yii::t('backend', 'Sex'),
             'birthday' => Yii::t('backend', 'Birthday'),
             'address' => Yii::t('backend', 'Address'),
-            'province_id' => Yii::t('backend', 'Province ID'),
-            'district_id' => Yii::t('backend', 'District ID'),
-            'ward_id' => Yii::t('backend', 'Ward ID'),
-            'online_source' => Yii::t('backend', 'Online Source'),
+            'province_id' => Yii::t('backend', 'Tỉnh / Tp'),
+            'district_id' => Yii::t('backend', 'Quận / Huyện'),
+            'ward_id' => Yii::t('backend', 'Phường / Xã'),
+            'online_source' => Yii::t('backend', 'Nguồn Online'),
             'fb_fanpage' => Yii::t('backend', 'Fb Fanpage'),
             'fb_customer' => Yii::t('backend', 'Fb Customer'),
             'online_sales_id' => Yii::t('backend', 'Online Sales ID'),

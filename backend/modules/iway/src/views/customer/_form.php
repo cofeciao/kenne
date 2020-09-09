@@ -1,5 +1,6 @@
 <?php
 
+use modava\datetime\DateTimePicker;
 use modava\location\models\table\LocationDistrictTable;
 use modava\location\models\table\LocationProvinceTable;
 use modava\location\models\table\LocationWardTable;
@@ -12,12 +13,16 @@ use backend\widgets\ToastrWidget;
 /* @var $this yii\web\View */
 /* @var $model modava\iway\models\Customer */
 /* @var $form yii\widgets\ActiveForm */
+
+$model->birthday = $model->birthday != null
+    ? date('d-m-Y', strtotime($model->birthday))
+    : '';
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="customer-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'iway-customer']); ?>
     <section class="hk-sec-wrapper">
-        <h5 class="hk-sec-title"><?=Yii::t('backend', 'Thông tin chung')?></h5>
+        <h5 class="hk-sec-title"><?= Yii::t('backend', 'Thông tin chung') ?></h5>
         <div class="row">
             <div class="col-6">
                 <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
@@ -26,10 +31,22 @@ use backend\widgets\ToastrWidget;
                 <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-6">
-                <?= $form->field($model, 'sex')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'sex')->dropDownList($model->getDropdown('sex'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                ]) ?>
             </div>
             <div class="col-6">
-                <?= $form->field($model, 'birthday')->textInput() ?>
+                <?= $form->field($model, 'birthday')->widget(DateTimePicker::class, [
+                    'template' => '{input}{button}',
+                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy',
+                        'todayHighLight' => true,
+                        'endDate' => '+0d'
+                    ]
+                ]) ?>
             </div>
 
             <div class="col-6 col-md-4 col-lg-3">
@@ -69,15 +86,24 @@ use backend\widgets\ToastrWidget;
                     'id' => 'select-ward',
                 ]) ?>
             </div>
-
             <div class="col-6 col-md-4 col-lg-3">
                 <?= $form->field($model, 'address')->textInput() ?>
             </div>
+
             <div class="col-6">
-                <?= $form->field($model, 'online_source')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'online_source')->dropDownList($model->getDropdown('online_source'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                ]) ?>
             </div>
             <div class="col-6">
-                <?= $form->field($model, 'fb_fanpage')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'who_created')->dropDownList($model->getDropdown('who_created'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                ]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'fb_fanpage')->dropDownList($model->getDropdown('fb_fanpage'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                ]) ?>
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'fb_customer')->textInput(['maxlength' => true]) ?>
@@ -87,9 +113,6 @@ use backend\widgets\ToastrWidget;
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'reason_fail')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col-6">
-                <?= $form->field($model, 'who_created')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
@@ -126,3 +149,56 @@ use backend\widgets\ToastrWidget;
 
     <?php ActiveForm::end(); ?>
 </div>
+
+<?php
+
+$script = <<< JS
+const sourceOnlineFbPageDropdownConfig = {
+    'facebook' : [
+        {
+            key: 'my_auris_1',
+            value: 'My Auris 1'
+        },
+        {
+            key: 'my_auris_2',
+            value: 'My Auris 2'
+        },
+        {
+            key: 'iway',
+            value: 'Iway'
+        }
+    ],
+    'google' : []
+};
+
+function handleLoadDropdownDependency(parentEle, ele, dropdownConfig) {
+    let parentDropdown = Object.keys(dropdownConfig),
+        childDropdown = [],
+        eleValue = ele.val(),
+        needTrigger = true;
+    
+    if (parentDropdown.includes(parentEle.val())) {
+        childDropdown = dropdownConfig[parentEle.val()];
+    }
+    
+    let emptyOption = `<option value="">Chọn một giá trị ...</option>`;    
+    
+    /* Refresh option of dropdown */
+    ele.html(emptyOption);
+    childDropdown.forEach((item, index, array) => {
+        ele.append(`<option value="` + item.key + `">` + item.value + `</option>`);
+        if (item.key == eleValue) needTrigger = false;
+    });
+    
+    if (needTrigger) ele.val('').trigger('change');
+};
+
+$(function () {
+    handleLoadDropdownDependency($('#iway-customer [name="Customer[online_source]"]'), $('#iway-customer [name="Customer[fb_fanpage]"]'), sourceOnlineFbPageDropdownConfig);
+    $('#iway-customer [name="Customer[online_source]"]').on('change', function() {
+        handleLoadDropdownDependency($('#iway-customer [name="Customer[online_source]"]'), $('#iway-customer [name="Customer[fb_fanpage]"]'), sourceOnlineFbPageDropdownConfig);
+    });
+});
+JS;
+
+$this->registerJs($script, \yii\web\View::POS_END);
