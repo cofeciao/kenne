@@ -1,6 +1,7 @@
 <?php
 use modava\affiliate\models\Coupon;
 use modava\affiliate\models\Customer;
+use modava\affiliate\models\Order;
 use modava\affiliate\models\Payment;
 
 return [
@@ -76,9 +77,10 @@ return [
         '2' => Yii::t('backend', 'Hoàn Cọc'),
     ],
     'order_status' => [
-        '0' => Yii::t('backend', 'Chưa hoàn thành'),
-        '1' => Yii::t('backend', 'Hoàn thành'),
-        '2' => Yii::t('backend', 'Hủy'),
+        Order::CHUA_HOAN_THANH => Yii::t('backend', 'Chưa hoàn thành'),
+        Order::HOAN_THANH => Yii::t('backend', 'Hoàn thành'),
+        Order::HUY => Yii::t('backend', 'Hủy'),
+        Order::KE_TOAN_DUYET => Yii::t('backend', 'Kế toán đã duyệt')
     ],
     'note_is_recall' => [
         '0' => Yii::t('backend', 'Chưa gọi'),
