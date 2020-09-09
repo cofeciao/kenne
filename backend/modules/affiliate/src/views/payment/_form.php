@@ -47,6 +47,11 @@ if ($model->primaryKey === null) $model->status = Payment::STATUS_DRAFT;
         <div class="col-6">
             <?= $form->field($model, 'amount')->input('number') ?>
         </div>
+        <div class="col-6">
+            <?= $form->field($model, 'status')->dropDownList(Yii::$app->getModule('affiliate')->params['payment_status'], [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+            ]) ?>
+        </div>
         <div class="col-12">
             <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
                 'options' => ['rows' => 20],

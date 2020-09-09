@@ -71,9 +71,10 @@ class Payment extends PaymentTable
     public function rules()
     {
         return [
-			[['title', 'slug', 'customer_id',], 'required'],
+			[['title', 'slug', 'customer_id', 'status'], 'required'],
 			[['customer_id', 'status'], 'integer'],
 			[['amount'], 'number'],
+            ['amount', 'validateAmount'],
             [['amount',], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
 			[['description'], 'string'],
 			[['title', 'slug'], 'string', 'max' => 255],
@@ -104,6 +105,12 @@ class Payment extends PaymentTable
         ];
     }
 
+    public function validateAmount() {
+        if ($this->amount > $this->customer->total_commission_remain && $this->status == self::STATUS_PAID) {
+            $this->addError('amount', Yii::t('backend', 'Số tiền không được lớn hơn số tiền còn lại phải trả cho KH'));
+        }
+    }
+
     /**
     * Gets query for [[User]].
     *
@@ -127,5 +134,34 @@ class Payment extends PaymentTable
     public function getCustomer()
     {
         return $this->hasOne(Customer::class, ['id' => 'customer_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->updateCommissionPaidForCustomer();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete()
+    {
+        $this->updateCommissionPaidForCustomer();
+        return parent::afterDelete();
+    }
+
+    /*
+     * Cập nhật tổng hoa hổng đã chi trả cho KH
+     * Tổng hoa hổng đã chi trả KH bằng tổng tiền của các phiếu chi có tình trạng là đã chi
+     * */
+    public function updateCommissionPaidForCustomer()
+    {
+        $total = (new \yii\db\Query())
+            ->select('amount')
+            ->from('affiliate_payment')
+            ->where('status = :status', [':status' => self::STATUS_PAID])
+            ->sum('amount');
+
+        $customer = Customer::findOne($this->customer_id);
+        $customer->total_commission_paid = $total;
+        $customer->save();
     }
 }

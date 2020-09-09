@@ -110,6 +110,16 @@ class Customer extends CustomerTable
                         return Utils::convertDateToDBFormat($this->date_accept_do_service);
                     },
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['total_commission_remain'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['total_commission_remain'],
+                    ],
+                    'value' => function ($event) {
+                        return $this->total_commission - $this->total_commission_paid;
+                    },
+                ],
             ]
         );
     }
