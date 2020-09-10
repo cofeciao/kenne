@@ -100,10 +100,107 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                         ],
                                         [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => Yii::t('backend', 'Actions'),
+                                            'template' => '{create-coupon} {create-call-note} {hidden-input-customer-info} {update} {delete}',
+                                            'buttons' => [
+                                                'update' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                        'title' => Yii::t('backend', 'Update'),
+                                                        'alia-label' => Yii::t('backend', 'Update'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-info btn-xs m-1',
+                                                    ]);
+                                                },
+                                                'delete' => function ($url, $model) {
+                                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                        'title' => Yii::t('backend', 'Delete'),
+                                                        'class' => 'btn btn-danger btn-xs btn-del m-1',
+                                                        'data-title' => Yii::t('backend', 'Delete?'),
+                                                        'data-pjax' => 0,
+                                                        'data-url' => $url,
+                                                        'btn-success-class' => 'success-delete',
+                                                        'btn-cancel-class' => 'cancel-delete',
+                                                        'data-placement' => 'top'
+                                                    ]);
+                                                },
+                                                'create-coupon' => function ($url, $model) {
+                                                    if (!Utils::isReleaseObject('Coupon')) return '';
+
+                                                    return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
+                                                        'title' => Yii::t('backend', 'Create Coupon'),
+                                                        'alia-label' => Yii::t('backend', 'Create Coupon'),
+                                                        'data-pjax' => 0,
+                                                        'data-partner' => 'myaris',
+                                                        'class' => 'btn btn-info btn-xs create-coupon m-1'
+                                                    ]);
+                                                },
+                                                'create-call-note' => function ($url, $model) {
+                                                    return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
+                                                        'title' => Yii::t('backend', 'Create Call Note'),
+                                                        'alia-label' => Yii::t('backend', 'Create Call Note'),
+                                                        'data-pjax' => 0,
+                                                        'data-partner' => 'myaris',
+                                                        'class' => 'btn btn-success btn-xs create-call-note m-1'
+                                                    ]);
+                                                },
+                                                'hidden-input-customer-info' => function ($url, $model) {
+                                                    return Html::input('hidden', 'customer_info[]', json_encode($model->getAttributes()));
+                                                }
+                                            ],
+                                            'headerOptions' => [
+                                                'class' => 'header-200',
+                                            ],
+                                        ],
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => Yii::t('backend', 'Related Record'),
+                                            'template' => '{list-coupon} {list-note}',
+                                            'buttons' => [
+                                                'list-coupon' => function ($url, $model) {
+                                                    if (!Utils::isReleaseObject('Coupon')) return '';
+
+                                                    $count = count($model->coupons);
+
+                                                    $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+
+                                                    return Html::a('<i class="icon dripicons-ticket"></i> ' . $bage , Url::toRoute(['/affiliate/coupon', 'CouponSearch[customer_id]' => $model->primaryKey]),[
+                                                        'title' => Yii::t('backend', 'List Tickets'),
+                                                        'alia-label' => Yii::t('backend', 'List Tickets'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-info btn-xs list-relate-record m-1',
+                                                        'data-related-id' => $model->primaryKey,
+                                                        'data-related-field' => 'customer_id',
+                                                        'data-model' => 'Coupon',
+                                                        'target' => '_blank'
+                                                    ]);
+                                                },
+                                                'list-note' => function ($url, $model) {
+                                                    $count = count($model->notes);
+
+                                                    $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+
+                                                    return Html::a('<i class="icon dripicons-to-do"></i>' . $bage, Url::toRoute(['/affiliate/note', 'NoteSearch[customer_id]' => $model->primaryKey]),[
+                                                        'title' => Yii::t('backend', 'List Notes'),
+                                                        'alia-label' => Yii::t('backend', 'List Notes'),
+                                                        'data-pjax' => 0,
+                                                        'class' => 'btn btn-success btn-xs list-relate-record m-1',
+                                                        'data-related-id' => $model->primaryKey,
+                                                        'data-related-field' => 'customer_id',
+                                                        'data-model' => 'Note',
+                                                        'target' => '_blank'
+                                                    ]);
+                                                },
+                                            ],
+                                            'headerOptions' => [
+                                                'width' => 150,
+                                            ],
+                                        ],
+                                        [
                                             'attribute' => 'full_name',
                                             'format' => 'raw',
                                             'headerOptions' => [
-                                                'class' => 'header-300',
+                                                'class' => 'header-200',
                                             ],
                                             'value' => function ($model) {
                                                 return Html::a($model->full_name, ['view', 'id' => $model->id], [
@@ -116,6 +213,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'attribute' => 'phone',
                                             'label' => Yii::t('backend', 'Phone'),
                                             'format' => 'raw',
+                                            'headerOptions' => [
+                                                'class' => 'header-100',
+                                            ],
                                             'value' => function ($model) {
                                                 $content = '';
                                                 if (class_exists('modava\voip24h\CallCenter')) $content .= Html::a('<i class="fa fa-phone"></i>', 'javascript: void(0)', [
@@ -134,23 +234,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'attribute' => 'email',
                                             'format' => 'email',
                                             'headerOptions' => [
-                                                'class' => 'header-100',
+                                                'class' => 'header-200',
                                             ],
                                         ],
                                         [
                                             'attribute' => 'face_customer',
                                             'headerOptions' => [
-                                                'class' => 'header-100',
-                                            ],
-                                        ],
-                                        [
-                                            'attribute' => 'partner_id',
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
-                                            },
-                                            'headerOptions' => [
-                                                'class' => 'header-100',
+                                                'class' => 'header-200',
                                             ],
                                         ],
                                         [
@@ -170,6 +260,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'value' => function ($model) {
                                                 return Yii::$app->getModule('affiliate')->params['customer_status'][$model->status];
                                             }
+                                        ],
+                                        [
+                                            'attribute' => 'partner_id',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->partner_id ? Html::a($model->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->partner_id])) : '';
+                                            },
+                                            'headerOptions' => [
+                                                'class' => 'header-100',
+                                            ],
                                         ],
                                         [
                                             'attribute' => 'birthday',
@@ -232,103 +332,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'format' => 'datetime',
                                             'headerOptions' => [
                                                 'class' => 'header-100',
-                                            ],
-                                        ],
-                                        [
-                                            'class' => 'yii\grid\ActionColumn',
-                                            'header' => Yii::t('backend', 'Related Record'),
-                                            'template' => '{list-coupon} {list-note}',
-                                            'buttons' => [
-                                                'list-coupon' => function ($url, $model) {
-                                                    if (!Utils::isReleaseObject('Coupon')) return '';
-
-                                                    $count = count($model->coupons);
-
-                                                    $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
-
-                                                    return Html::a('<i class="icon dripicons-ticket"></i> ' . $bage , Url::toRoute(['/affiliate/coupon', 'CouponSearch[customer_id]' => $model->primaryKey]),[
-                                                        'title' => Yii::t('backend', 'List Tickets'),
-                                                        'alia-label' => Yii::t('backend', 'List Tickets'),
-                                                        'data-pjax' => 0,
-                                                        'class' => 'btn btn-info btn-xs list-relate-record m-1',
-                                                        'data-related-id' => $model->primaryKey,
-                                                        'data-related-field' => 'customer_id',
-                                                        'data-model' => 'Coupon',
-                                                        'target' => '_blank'
-                                                    ]);
-                                                },
-                                                'list-note' => function ($url, $model) {
-                                                    $count = count($model->notes);
-
-                                                    $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
-
-                                                    return Html::a('<i class="icon dripicons-to-do"></i>' . $bage, Url::toRoute(['/affiliate/note', 'NoteSearch[customer_id]' => $model->primaryKey]),[
-                                                        'title' => Yii::t('backend', 'List Notes'),
-                                                        'alia-label' => Yii::t('backend', 'List Notes'),
-                                                        'data-pjax' => 0,
-                                                        'class' => 'btn btn-success btn-xs list-relate-record m-1',
-                                                        'data-related-id' => $model->primaryKey,
-                                                        'data-related-field' => 'customer_id',
-                                                        'data-model' => 'Note',
-                                                        'target' => '_blank'
-                                                    ]);
-                                                },
-                                            ],
-                                            'headerOptions' => [
-                                                'width' => 150,
-                                            ],
-                                        ],
-                                        [
-                                            'class' => 'yii\grid\ActionColumn',
-                                            'header' => Yii::t('backend', 'Actions'),
-                                            'template' => '{create-coupon} {create-call-note} {hidden-input-customer-info} {update} {delete}',
-                                            'buttons' => [
-                                                'update' => function ($url, $model) {
-                                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                        'title' => Yii::t('backend', 'Update'),
-                                                        'alia-label' => Yii::t('backend', 'Update'),
-                                                        'data-pjax' => 0,
-                                                        'class' => 'btn btn-info btn-xs m-1',
-                                                    ]);
-                                                },
-                                                'delete' => function ($url, $model) {
-                                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                        'title' => Yii::t('backend', 'Delete'),
-                                                        'class' => 'btn btn-danger btn-xs btn-del m-1',
-                                                        'data-title' => Yii::t('backend', 'Delete?'),
-                                                        'data-pjax' => 0,
-                                                        'data-url' => $url,
-                                                        'btn-success-class' => 'success-delete',
-                                                        'btn-cancel-class' => 'cancel-delete',
-                                                        'data-placement' => 'top'
-                                                    ]);
-                                                },
-                                                'create-coupon' => function ($url, $model) {
-                                                    if (!Utils::isReleaseObject('Coupon')) return '';
-
-                                                    return Html::a('<i class="icon dripicons-ticket"></i>', 'javascript:;', [
-                                                        'title' => Yii::t('backend', 'Create Coupon'),
-                                                        'alia-label' => Yii::t('backend', 'Create Coupon'),
-                                                        'data-pjax' => 0,
-                                                        'data-partner' => 'myaris',
-                                                        'class' => 'btn btn-info btn-xs create-coupon m-1'
-                                                    ]);
-                                                },
-                                                'create-call-note' => function ($url, $model) {
-                                                    return Html::a('<i class="icon dripicons-to-do"></i>', 'javascript:;', [
-                                                        'title' => Yii::t('backend', 'Create Call Note'),
-                                                        'alia-label' => Yii::t('backend', 'Create Call Note'),
-                                                        'data-pjax' => 0,
-                                                        'data-partner' => 'myaris',
-                                                        'class' => 'btn btn-success btn-xs create-call-note m-1'
-                                                    ]);
-                                                },
-                                                'hidden-input-customer-info' => function ($url, $model) {
-                                                    return Html::input('hidden', 'customer_info[]', json_encode($model->getAttributes()));
-                                                }
-                                            ],
-                                            'headerOptions' => [
-                                                'class' => 'header-200',
                                             ],
                                         ],
                                     ],
