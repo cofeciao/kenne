@@ -31,7 +31,7 @@ $this->registerCss('
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <button class="btn btn-outline-light btn-sm" type="button"
-                    onclick="openCreateModal({model: 'Faq'rrrrrrrrrrrrrrrrrrrrrr1});"
+                    onclick="openCreateModal({model: 'Faq'});"
                     title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create Question'); ?></button>
         </div>
@@ -48,7 +48,7 @@ $this->registerCss('
                             <?= ListView::widget([
                                 'dataProvider' => $dataProvider,
                                 'layout' => '<div class="summary mb-4">{summary}</div>{items}',
-                                'summary' => Yii::t('faq', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.'),
+                                'summary' => Yii::t('backend', 'Showing <b>{begin, number}-{end, number}</b> of <b>{totalCount, number}</b> {totalCount, plural, one{item} other{items}}.'),
                                 'itemView' => function ($model, $key, $index, $widget) {
                                     $buttonAnswer = '';
                                     $buttonDelete = '';
@@ -59,7 +59,7 @@ $this->registerCss('
                                             $message = Yii::t('backend', 'Update Answer');
                                             $class = 'text-info';
                                         } else {
-                                            $message = Yii::t('faq', 'Answer the Question');
+                                            $message = Yii::t('backend', 'Answer the Question');
                                         }
 
                                         $buttonAnswer = Html::button($message,
@@ -70,9 +70,9 @@ $this->registerCss('
                                     }
                                     if (Yii::$app->user->can('faqFaqDelete') || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
                                         $buttonDelete = Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                            'title' => Yii::t('faq', 'Delete'),
+                                            'title' => Yii::t('backend', 'Delete'),
                                             'class' => 'btn btn-link btn-xs btn-del float-right text-danger',
-                                            'data-title' => Yii::t('faq', 'Delete?'),
+                                            'data-title' => Yii::t('backend', 'Delete?'),
                                             'data-pjax' => 0,
                                             'data-url' => Url::toRoute(['delete', 'id' => $model->primaryKey]),
                                             'btn-success-class' => 'success-delete',
@@ -91,10 +91,10 @@ $this->registerCss('
                                         ";
                                 },
                                 'pager' => [
-                                    'firstPageLabel' => Yii::t('faq', 'First'),
-                                    'lastPageLabel' => Yii::t('faq', 'Last'),
-                                    'prevPageLabel' => Yii::t('faq', 'Previous'),
-                                    'nextPageLabel' => Yii::t('faq', 'Next'),
+                                    'firstPageLabel' => Yii::t('backend', 'First'),
+                                    'lastPageLabel' => Yii::t('backend', 'Last'),
+                                    'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                    'nextPageLabel' => Yii::t('backend', 'Next'),
                                     'maxButtonCount' => 5,
 
                                     'options' => [
