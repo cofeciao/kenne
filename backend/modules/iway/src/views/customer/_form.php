@@ -135,19 +135,20 @@ $model->birthday = $model->birthday != null
         </section>
 
         <section class="hk-sec-wrapper mt-4">
-            <h5 class="hk-sec-title"><?=Yii::t('backend', 'Thông tin quản lý')?></h5>
+            <h5 class="hk-sec-title"><?= Yii::t('backend', 'Thông tin quản lý') ?></h5>
             <div class="row">
                 <div class="col-6">
-                     <?= Select2::widget([
-                        'model' => $model,
-                        'attribute' => 'online_sales_id',
+                    <?= $form->field($model, 'online_sales_id')->label(false)->widget(Select2::class, [
                         'data' => ArrayHelper::map(User::getUserByRole('online_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                        'options' => []
-                    ]) ?>
+                        'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ]); ?>
                 </div>
                 <div class="col-6">
                     <?= $form->field($model, 'status_customer')->dropDownList($model->getDropdown('status_customer'), [
-                            'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                        'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                     ]) ?>
                 </div>
                 <div class="col-12">
@@ -157,12 +158,13 @@ $model->birthday = $model->birthday != null
                     ]) ?>
                 </div>
                 <div class="col-6">
-                    <?= Select2::widget([
-                        'model' => $model,
-                        'attribute' => 'direct_sales_id',
+                    <?= $form->field($model, 'direct_sales_id')->label(false)->widget(Select2::class, [
                         'data' => ArrayHelper::map(User::getUserByRole('direct_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                        'options' => []
-                    ]) ?>
+                        'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); ?>
                 </div>
                 <div class="col-12">
                     <?= $form->field($model, 'direct_sales_note')->widget(\modava\tiny\TinyMce::class, [
