@@ -127,6 +127,7 @@ class SmsVht extends Component
     public function getStatusCode(string $phone = '')
     {
         if ($phone != '') {
+            if (substr($phone, 0, 1) == 0) $phone = '84' . substr($phone, 1);
             if (is_array($this->statusCode) && array_key_exists($phone, $this->statusCode)) return $this->statusCode[$phone];
             return null;
         }
