@@ -99,7 +99,7 @@ class Customer extends CustomerTable
     public function rules()
     {
         return [
-			[['fullname', 'phone', 'online_sales_id', 'co_so_id'], 'required'],
+			[['fullname', 'phone', 'online_sales_id', 'co_so_id', 'status_customer'], 'required'],
 			[['birthday'], 'safe'],
 			[['province_id', 'district_id', 'ward_id', 'online_sales_id', 'direct_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
 			[['online_sales_note', 'direct_sales_note', 'description'], 'string'],
@@ -137,13 +137,13 @@ class Customer extends CustomerTable
             'online_source' => Yii::t('backend', 'Nguồn Online'),
             'fb_fanpage' => Yii::t('backend', 'Fb Fanpage'),
             'fb_customer' => Yii::t('backend', 'Fb Customer'),
-            'online_sales_id' => Yii::t('backend', 'Online Sales ID'),
+            'online_sales_id' => Yii::t('backend', 'Online Sales'),
             'online_sales_note' => Yii::t('backend', 'Online Sales Note'),
-            'direct_sales_id' => Yii::t('backend', 'Direct Sales ID'),
+            'direct_sales_id' => Yii::t('backend', 'Direct Sales'),
             'direct_sales_note' => Yii::t('backend', 'Direct Sales Note'),
             'status_customer' => Yii::t('backend', 'Status Customer'),
             'co_so_id' => Yii::t('backend', 'Co So ID'),
-            'reason_fail' => Yii::t('backend', 'Reason Fail'),
+            'reason_fail' => Yii::t('backend', 'Lý do Fail'),
             'who_created' => Yii::t('backend', 'Who Created'),
             'description' => Yii::t('backend', 'Description'),
             'created_at' => Yii::t('backend', 'Created At'),
