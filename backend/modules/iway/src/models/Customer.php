@@ -182,4 +182,21 @@ class Customer extends CustomerTable
             'results' => $data
         ];
     }
+
+    public function getCoSo()
+    {
+        return $this->hasOne(CoSo::class, ['id' => 'co_so_id']);
+    }
+
+    public function getProvince() {
+        return $this->hasOne(LocationProvince::class, ['id' => 'province_id']);
+    }
+
+    public function getDistrict() {
+        return $this->hasOne(LocationDistrict::class, ['id' => 'district_id']);
+    }
+
+    public function getWard() {
+        return $this->hasOne(LocationWard::class, ['id' => 'ward_id']);
+    }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -10,7 +9,7 @@ use modava\iway\widgets\NavbarWidgets;
 /* @var $this yii\web\View */
 /* @var $model modava\iway\models\Customer */
 
-$this->title = $model->id;
+$this->title = $model->fullname;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Customers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -22,11 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?=Yii::t('backend', 'Chi tiết'); ?>: <?= Html::encode($this->title) ?>
+                        class="ion ion-md-apps"></span></span><?= Yii::t('backend', 'Chi tiết'); ?>
+            : <?= Html::encode($this->title) ?>
         </h4>
         <p>
             <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= Yii::t('backend', 'Create'); ?>">
+               title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
             <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
@@ -47,31 +47,80 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'code',
-						'fullname',
-						'avatar',
-						'phone',
-						'sex',
-						'birthday',
-						'address',
-						'province_id',
-						'district_id',
-						'ward_id',
-						'online_source',
-						'fb_fanpage',
-						'fb_customer',
-						'online_sales_id',
-						'online_sales_note:raw',
-						'direct_sales_id',
-						'direct_sales_note:raw',
-						'status_customer',
-						'co_so_id',
-						'reason_fail',
-						'who_created',
-						'description:raw',
-						'created_at',
-						'updated_at',
+                        'fullname',
+                        'code',
+                        'avatar',
+                        'phone',
+                        [
+                            'attribute' => 'sex',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->sex, 'sex');
+                            }
+                        ],
+                        'birthday:date',
+                        'address',
+                        [
+                            'attribute' => 'province_id',
+                            'value' => function ($model) {
+                                return $model->province_id ? $model->province->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'district_id',
+                            'value' => function ($model) {
+                                return $model->district_id ? $model->district->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'ward_id',
+                            'value' => function ($model) {
+                                return $model->ward_id ? $model->ward->name : null;
+                            }
+                        ],
+                        [
+                            'attribute' => 'online_source',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->online_source, 'online_source');
+                            }
+                        ],
+                        [
+                            'attribute' => 'fb_fanpage',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->fb_fanpage, 'fb_fanpage');
+                            }
+                        ],
+                        'fb_customer',
+                        'online_sales_id',
+                        'online_sales_note:raw',
+                        'direct_sales_id',
+                        'direct_sales_note:raw',
+                        [
+                            'attribute' => 'status_customer',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->status_customer, 'status_customer');
+                            }
+                        ],
+                        [
+                            'attribute' => 'co_so_id',
+                            'value' => function ($model) {
+                                return $model->coSo->title;
+                            }
+                        ],
+                        [
+                            'attribute' => 'reason_fail',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->reason_fail, 'reason_fail');
+                            }
+                        ],
+                        [
+                            'attribute' => 'who_created',
+                            'value' => function ($model) {
+                                return $model->getDisplayDropdown($model->who_created, 'who_created');
+                            }
+                        ],
+                        'description:raw',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => Yii::t('backend', 'Created By')

@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use modava\auth\models\User;
 use modava\auth\models\UserProfile;
 use modava\datetime\DateTimePicker;
@@ -7,7 +8,6 @@ use modava\iway\models\table\CoSoTable;
 use modava\location\models\table\LocationDistrictTable;
 use modava\location\models\table\LocationProvinceTable;
 use modava\location\models\table\LocationWardTable;
-use modava\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -138,7 +138,7 @@ $model->birthday = $model->birthday != null
             <h5 class="hk-sec-title"><?= Yii::t('backend', 'Thông tin quản lý') ?></h5>
             <div class="row">
                 <div class="col-6">
-                    <?= $form->field($model, 'online_sales_id')->label(false)->widget(Select2::class, [
+                    <?= $form->field($model, 'online_sales_id')->widget(Select2::class, [
                         'data' => ArrayHelper::map(User::getUserByRole('online_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
                         'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
                         'pluginOptions' => [
@@ -158,7 +158,7 @@ $model->birthday = $model->birthday != null
                     ]) ?>
                 </div>
                 <div class="col-6">
-                    <?= $form->field($model, 'direct_sales_id')->label(false)->widget(Select2::class, [
+                    <?= $form->field($model, 'direct_sales_id')->widget(Select2::class, [
                         'data' => ArrayHelper::map(User::getUserByRole('direct_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
                         'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
                         'pluginOptions' => [
@@ -173,11 +173,11 @@ $model->birthday = $model->birthday != null
                     ]) ?>
                 </div>
             </div>
-        </section>
 
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
-        </div>
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
+            </div>
+        </section>
 
         <?php ActiveForm::end(); ?>
     </div>
