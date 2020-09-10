@@ -151,6 +151,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
 						'address:raw',
+                        'bank_name',
+                        'bank_branch',
+                        'bank_customer_id',
 						'description:raw',
 						'created_at:datetime',
 						'updated_at:datetime',

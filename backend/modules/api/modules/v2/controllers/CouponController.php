@@ -2,6 +2,9 @@
 
 namespace backend\modules\api\modules\v2\controllers;
 
+use modava\affiliate\models\Customer;
+use modava\affiliate\models\Payment;
+use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use modava\affiliate\models\Order;
 use modava\affiliate\models\Receipt;
@@ -128,6 +131,47 @@ class CouponController extends RestfullController
                     $model->addError('coupon_code', 'Mã coupon không được để trống');
                 }
             }
+
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 400,
+                    'message' => $model->getErrors()
+                ]
+            ];
+        }
+    }
+
+    public function actionSavePayment()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->get('id');
+
+        if ($id) {
+            $model = Payment::findOne($id);
+            if ($model === null) {
+                Yii::$app->response->statusCode = 404;
+                return [
+                    'success' => false,
+                    'error' => [
+                        'code' => 404,
+                        'message' => "not found"
+                    ]
+                ];
+            }
+        } else {
+            $model = new Payment();
+        }
+
+        if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+            Yii::$app->response->statusCode = 200;
+            return [
+                'success' => true,
+                'code' => 200,
+                'data' => $model->getAttributes(),
+            ];
+        } else {
+            Yii::$app->response->statusCode = 400;
 
             return [
                 'success' => false,
@@ -330,6 +374,49 @@ class CouponController extends RestfullController
                 'code' => $code,
                 'message' => $message
             ]
+        ];
+    }
+
+    public function actionPayments($customerId)
+    {
+        if (!$customerId) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 400,
+                    'message' => "customer-id is required"
+                ]
+            ];
+        }
+
+        if (!Customer::findOne($customerId)) {
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 404,
+                    'message' => "Không tìm thấy khách hàng"
+                ]
+            ];
+        }
+
+        return [
+            'success' => true,
+            'data' => Payment::findByCustomer($customerId)
+        ];
+    }
+
+    public function actionCustomersForPay() {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Customer::find()->where('total_commission_remain > 0'),
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
+        ]);
+
+        return [
+            'success' => true,
+            'data' => $dataProvider->getModels(),
+            'total_count' => $dataProvider->getTotalCount()
         ];
     }
 }
