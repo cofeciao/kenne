@@ -49,6 +49,7 @@ Yii::setAlias('modava/tiny', dirname(dirname(__DIR__)) . '/backend/widgets/tiny/
 Yii::setAlias('modava/select2', dirname(dirname(__DIR__)) . '/backend/widgets/select2/src');
 Yii::setAlias('modava/imagick', dirname(dirname(__DIR__)) . '/package/imagick/src');
 Yii::setAlias('modava/giaohang', dirname(dirname(__DIR__)) . '/package/giaohang/src');
+Yii::setAlias('modava/vht', dirname(dirname(__DIR__)) . '/package/vht/src');
 Yii::setAlias('modava/datetime', dirname(dirname(__DIR__)) . '/backend/widgets/datetime/src');
 Yii::setAlias('modava/chart', dirname(dirname(__DIR__)) . '/backend/widgets/chart/src');
 Yii::setAlias('modava/charts', dirname(dirname(__DIR__)) . '/backend/widgets/charts/src');
