@@ -31,6 +31,12 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
+        'controllerId' => 'appointment-schedule',
+        'label' => Yii::t('backend', 'Lịch hẹn'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
         'controllerId' => 'dropdowns-config',
         'label' => Yii::t('backend', 'Cấu hình dropdowns'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
