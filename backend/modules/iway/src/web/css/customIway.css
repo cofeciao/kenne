@@ -24,3 +24,15 @@ li.nav-item.mb-5 {
 .form-group .help-block {
     color: red;
 }
+
+.md-full {
+    display: inline-block;
+    width: 100%;
+}
+
+.card {
+    border: none;
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: none;
+}
