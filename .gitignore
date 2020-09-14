@@ -267,6 +267,10 @@ phpunit.phar
 /backend/modules/slide/.git
 
 #package
+/package/vht/.git
+/package/vht/README.md
+/package/vht/composer.json
+
 /package/imagick/.git
 /package/imagick/README.md
 /package/imagick/composer.json

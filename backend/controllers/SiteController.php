@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\components\MyController;
+use modava\vht\SmsVht;
 use Yii;
 use yii\web\Response;
 
@@ -19,6 +20,20 @@ class SiteController extends MyController
 
     public function actionIndex()
     {
+        /*$data = [
+            '0762296277',
+            '0979883765'
+        ];
+        $sms = new SmsVht([
+            'username' => 'myauriscskh',
+            'password' => 'amkycdaubcrs5uim8akzlvfatx',
+            'prefixId' => 'MY AURIS',
+            'commandCode' => 'MY AURIS',
+            'debug' => true,
+            'phones' => $data,
+            'messages' => 'abc'
+        ]);
+        $sms->send();*/
         return $this->render('index', [
         ]);
     }
@@ -40,36 +55,42 @@ class SiteController extends MyController
                 'y' => '500', 'a' => 10, 'b' => 40, 'c' => 100],
 
         ];
-//        return [
-//            [
-//                'period' => "2010",
-//                'iphone' => '50',
-//            ],
-//            [
-//                'period' => "2011",
-//                'iphone' => 130,
-//            ],
-//            [
-//                'period' => "2012",
-//                'iphone' => 80,
-//            ],
-//            [
-//                'period' => "2013",
-//                'iphone' => 70,
-//            ],
-//            [
-//                'period' => "2014",
-//                'iphone' => 180,
-//            ],
-//            [
-//                'period' => "2015",
-//                'iphone' => 105,
-//            ],
-//            [
-//                'period' => "2016",
-//                'iphone' => 250,
-//            ],
-//        ];
+    }
+
+    public function actionGetDataLineCharts()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return [
+            [
+                'period' => "2010",
+                'iphone' => '50',
+            ],
+            [
+                'period' => "2011",
+                'iphone' => 130,
+            ],
+            [
+                'period' => "2012",
+                'iphone' => 80,
+            ],
+            [
+                'period' => "2013",
+                'iphone' => 70,
+            ],
+            [
+                'period' => "2014",
+                'iphone' => 180,
+            ],
+            [
+                'period' => "2015",
+                'iphone' => 105,
+            ],
+            [
+                'period' => "2016",
+                'iphone' => 250,
+            ],
+        ];
     }
 
     public function actionError()

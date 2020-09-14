@@ -14,7 +14,6 @@ class ModavaAsset extends AssetBundle
         'vendors/vectormap/jquery-jvectormap-2.0.3.css',
         'vendors/jquery-toggles/css/toggles.css',
         'vendors/jquery-toggles/css/themes/toggles-light.css',
-        'vendors/morris.js/morris.css',
         'vendors/jquery-toast-plugin/dist/jquery.toast.min.css',
         'dist/css/style.css',
     ];
@@ -27,7 +26,6 @@ class ModavaAsset extends AssetBundle
         'vendors/jquery-toggles/toggles.min.js',
         'dist/js/toggle-data.js',
         'vendors/raphael/raphael.min.js',
-        'vendors/morris.js/morris.min.js',
         'vendors/waypoints/lib/jquery.waypoints.min.js',
         'vendors/jquery.counterup/jquery.counterup.min.js',
         'vendors/echarts/dist/echarts-en.min.js',

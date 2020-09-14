@@ -155,6 +155,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
+                                                'attribute' => 'commision_for_coupon_owner',
+                                                'format' => 'currency',
+                                                'contentOptions' => [
+                                                    'class' => 'text-right',
+                                                ],
+                                            ],
+                                            [
                                                 'attribute' => 'other_discount',
                                                 'format' => 'currency',
                                                 'contentOptions' => [

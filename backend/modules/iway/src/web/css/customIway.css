@@ -1,3 +1,14 @@
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly] {
+    background-color: #f5f5f5 !important;
+    border-color: #ddd !important;
+    cursor: not-allowed !important;
+}
+
 li.page-disabled {
     position: relative;
     display: block;
@@ -35,4 +46,9 @@ li.nav-item.mb-5 {
     border-radius: 3px;
     background-color: #ffffff;
     box-shadow: none;
+}
+
+form div.required label.control-label:after {
+    content: " * ";
+    color: red;
 }

@@ -14,12 +14,6 @@ class LineChart extends Widget
     public $id = 'line-chart';
 
     /*
-     * col này nằm trong class row
-     * hiển thị độ dài của chart
-     */
-    public $col = 'col-sm';
-
-    /*
      * Chiều cao của chart
      */
     public $height = '294px';
@@ -117,7 +111,7 @@ class LineChart extends Widget
         $view = $this->getView();
         LineChartAssets::register($view);
 
-        echo $this->renderLineChart($this->id, $this->col, $this->height);
+        echo $this->renderLineChart($this->id, $this->height);
 
         $js = $this->renderLineChartJs(
             $this->id,
@@ -137,9 +131,9 @@ class LineChart extends Widget
         $view->registerJs($js);
     }
 
-    private function renderLineChart($id, $col, $height)
+    private function renderLineChart($id, $height)
     {
-        return '<div class="' . $col . '"><div id="' . $id . '" class="" style="height: ' . $height . '"></div></div>';
+        return '<div id="' . $id . '" class="" style="height: ' . $height . '"></div>';
     }
 
     private function renderLineChartJs($id, $linkgetdata, $xkey, $ykeys, $labelY, $pointSize,
