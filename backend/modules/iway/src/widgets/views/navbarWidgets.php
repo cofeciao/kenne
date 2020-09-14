@@ -19,12 +19,6 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
-        'controllerId' => 'co-so',
-        'label' => Yii::t('backend', 'Cơ sở'),
-        'icon' => '<i class="ion ion-md-contacts"></i>',
-    ],
-    [
-        'module' => 'iway',
         'controllerId' => 'call',
         'label' => Yii::t('backend', 'Cuộc gọi'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
@@ -33,6 +27,12 @@ $routeInfos = [
         'module' => 'iway',
         'controllerId' => 'appointment-schedule',
         'label' => Yii::t('backend', 'Lịch hẹn'),
+        'icon' => '<i class="ion ion-md-contacts"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'co-so',
+        'label' => Yii::t('backend', 'Cơ sở'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
     ],
     [

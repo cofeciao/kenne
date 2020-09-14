@@ -107,50 +107,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'title',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                        'title' => $model->title,
-                                                        'data-pjax' => 0,
-                                                    ]);
-                                                }
-                                            ],
-                                            [
-                                                'attribute' => 'customer_id',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a($model->customer->fullname, Url::toRoute(['/iway/customer/view', 'id' => $model->customer_id]));
-                                                }
-                                            ],
-                                            [
-                                                'attribute' => 'co_so_id',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a($model->coSo->title, Url::toRoute(['/iway/co-so/view', 'id' => $model->customer_id]));
-                                                }
-                                            ],
-                                            'start_time:datetime',
-                                            'status_service',
-                                            //'accept_for_service',
-                                            //'reason_fail',
-                                            //'check_in_time',
-                                            //'description:ntext',
-                                            [
-                                                'attribute' => 'created_by',
-                                                'value' => 'userCreated.userProfile.fullname',
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            [
-                                                'attribute' => 'created_at',
-                                                'format' => 'date',
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '{update} {delete}',
@@ -176,6 +132,65 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         ]);
                                                     }
                                                 ],
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'title',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
+                                                        'title' => $model->title,
+                                                        'data-pjax' => 0,
+                                                    ]);
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'customer_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->customer->fullname, Url::toRoute(['/iway/customer/view', 'id' => $model->customer_id]));
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'co_so_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->coSo->title, Url::toRoute(['/iway/co-so/view', 'id' => $model->customer_id]));
+                                                }
+                                            ],
+                                            'start_time:datetime',
+                                            [
+                                                'attribute' => 'status_service',
+                                                'value' => function ($model) {
+                                                    return $model->getDisplayDropdown($model->status_service, 'status_service');
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'accept_for_service',
+                                                'value' => function ($model) {
+                                                    return $model->getDisplayDropdown($model->accept_for_service, 'accept_for_service');
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'reason_fail',
+                                                'value' => function ($model) {
+                                                    return $model->getDisplayDropdown($model->reason_fail, 'reason_fail');
+                                                }
+                                            ],
+                                            'check_in_time:datetime',
+                                            //'description:ntext',
+                                            [
+                                                'attribute' => 'created_by',
+                                                'value' => 'userCreated.userProfile.fullname',
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'created_at',
+                                                'format' => 'date',
                                                 'headerOptions' => [
                                                     'width' => 150,
                                                 ],

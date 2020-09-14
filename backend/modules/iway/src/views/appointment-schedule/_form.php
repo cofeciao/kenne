@@ -78,11 +78,6 @@ $model->check_in_time = $model->check_in_time != null
             ]) ?>
         </div>
         <div class="col-6">
-            <?= $form->field($model, 'status_service')->dropDownList($model->getDropdown('status_service'), [
-                'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
-            ]) ?>
-        </div>
-        <div class="col-6">
             <?= $form->field($model, 'reason_fail')->dropDownList($model->getDropdown('reason_fail'), [
                 'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
             ]) ?>
