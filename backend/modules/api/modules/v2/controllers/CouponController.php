@@ -283,11 +283,11 @@ class CouponController extends RestfullController
         }
 
         if ($model == null) {
-            Yii::$app->response->statusCode = 400;
+            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
-                    'code' => 400,
+                    'code' => 404,
                     'message' => [Yii::t('backend', '{target} không tồn tại', ['target' => $target])]
                 ]
             ];
@@ -417,6 +417,47 @@ class CouponController extends RestfullController
             'success' => true,
             'data' => $dataProvider->getModels(),
             'total_count' => $dataProvider->getTotalCount()
+        ];
+    }
+
+    public function actionGetRecord() {
+        $target = Yii::$app->request->get('target');
+        $id = Yii::$app->request->get('id');
+
+        switch ($target) {
+            case 'Receipt':
+                $model = Receipt::findOne($id);
+                break;
+            case 'Order':
+                $model = Order::findOne($id);
+                break;
+            case 'Customer':
+                $model = Customer::findOne($id);
+                break;
+            default:
+                $model = null;
+                break;
+        }
+
+        if ($model == null) {
+            Yii::$app->response->statusCode = 404;
+            return [
+                'success' => false,
+                'error' => [
+                    'code' => 404,
+                    'message' => [Yii::t('backend', '{target} không tồn tại', ['target' => $target])]
+                ]
+            ];
+        }
+
+        Yii::$app->response->statusCode = 200;
+        return [
+            'success' => true,
+            'error' => [
+                'code' => 200,
+                'message' => [Yii::t('backend', 'Thành công')],
+                'data' => $model->getAttributes()
+            ]
         ];
     }
 }
