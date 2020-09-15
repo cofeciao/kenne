@@ -102,6 +102,7 @@ class Coupon extends CouponTable
             [['description'], 'string'],
             [['promotion_value', 'min_discount', 'max_discount'], 'number'],
             [['title', 'slug', 'coupon_code'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 10],
             [['slug'], 'unique'],
             [['coupon_code'], 'unique'],
             [['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
@@ -110,12 +111,12 @@ class Coupon extends CouponTable
                 return $model->promotion_type == self::DISCOUNT_PERCENT;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#promotion-type').val() == " . self::DISCOUNT_PERCENT . ";
-            }"],
+            }", 'message' => Yii::t('backend', '"Giá trị chiếu khấu" phải nhỏ hơn hoặc bằng "Chiết khấu tối đa"')],
             ['promotion_value', 'compare', 'compareAttribute' => 'min_discount', 'operator' => '>=', 'type' => 'number', 'when' => function ($model) {
                 return $model->promotion_type == self::DISCOUNT_PERCENT;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#promotion-type').val() == " . self::DISCOUNT_PERCENT . ";
-            }"]
+            }", 'message' => Yii::t('backend', '"Giá trị chiếu khấu" phải lớn hơn hoặc bằng "Chiết khấu tối thiểu"')]
         ];
     }
 
@@ -215,13 +216,16 @@ class Coupon extends CouponTable
 
         $myauris_config = \Yii::$app->getModule('affiliate')->params['myauris_config'];
         $url = $myauris_config['url_end_point'] . $myauris_config['endpoint']['send_sms_coupon'];
+
+        $arrayName = explode(' ', $this->customer->full_name);
+
         $client = new Client();
         $params = [
             'phone' => $this->customer->phone,
             'promotions_code' => $this->coupon_code,
             'promotions_name' => $this->title,
             'promotions_expired' => Yii::$app->formatter->asDatetime($this->expired_date),
-            'name' => $this->customer->full_name,
+            'name' => array_pop($arrayName),
             'promotions_qty' => $this->quantity,
         ];
 

@@ -1,11 +1,18 @@
 <?php
 
+
 namespace modava\iway\controllers;
 
-class IwayController extends \modava\iway\components\MyIwayController
+
+use modava\iway\components\MyIwayController;
+use yii\helpers\Url;
+
+class IwayController extends MyIwayController
 {
+
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(Url::toRoute(['/iway/co-so']));
     }
+
 }

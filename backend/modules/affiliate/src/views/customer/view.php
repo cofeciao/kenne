@@ -4,6 +4,7 @@ use modava\affiliate\helpers\Utils;
 use modava\affiliate\models\Coupon;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
+use modava\charts\BarChart;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -31,11 +32,8 @@ $dataProvider = new ActiveDataProvider([
 
         <!-- Title -->
         <div class="hk-pg-header">
-            <h4 class="hk-pg-title">
-                <span class="pg-title-icon">
-                    <span class="ion ion-md-apps"></span>
-                </span>
-                <?= Html::encode($this->title) ?>
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span
+                            class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <p>
                 <button class="btn btn-primary js-more-info btn-sm" data-customer-id="<?= $model->partner_customer_id ?>"><?= Yii::t('backend', 'More Information') ?></button>
@@ -57,17 +55,34 @@ $dataProvider = new ActiveDataProvider([
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#menu1"><?= Yii::t('backend', 'Tổng quan') ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#detail"><?= Yii::t('backend', 'Chi tiết') ?></a>
+                    </li>
+                </ul>
 
-                <nav>
-                    <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#tong-quan" role="tab" aria-controls="nav-home" aria-selected="true">
-                            Chi tiết
-                        </a>
-                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#chi-tiet" role="tab" aria-controls="nav-profile" aria-selected="false">Tổng quan</a>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="menu1">
+                        <div class="row">
+                            <div class="col-12 my-3">
+                                <?= BarChart::widget([
+                                    'id' => 'tong_hoa_hong_theo_kh',
+                                    'url_get_data' => Url::toRoute(['/affiliate/customer/total-commission', 'id' => $model->primaryKey]),
+                                    'height' => '400px',
+                                    'title' => Yii::t('backend', 'Tổng hoa hồng theo tháng'),
+                                    'options' => [
+                                        'color' => ['#69c982']
+                                    ]
+                                ]) ?>
+                            </div>
+                        </div>
                     </div>
-                </nav>
-                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="tong-quan" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="tab-pane fade" id="detail">
                         <section class="hk-sec-wrapper">
                             <?= DetailView::widget([
                                 'model' => $model,
@@ -191,11 +206,6 @@ $dataProvider = new ActiveDataProvider([
                                 ],
                             ]) ?>
                         </section>
-                    </div>
-                    <div class="tab-pane fade" id="chi-tiet" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <div class="hk-sec-wrapper">
-                            Tổng quan
-                        </div>
                     </div>
                 </div>
             </div>

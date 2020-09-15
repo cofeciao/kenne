@@ -254,48 +254,51 @@ function initSendSMS () {
         html: true,
         content: function () {
             let id = $(this).data('id');
-            return $(`<div><button class="btn btn-success btn-sm save" data-id="` + id + `">Xác nhận</button><button class="ml-2 btn btn-secondary btn-sm cancel">Hủy</button></div>`);
+            return $(`<div><button class="btn btn-success btn-sm popover-save" data-id="` + id + `">Xác nhận</button><button class="ml-2 btn btn-secondary btn-sm popover-cancel">Hủy</button></div>`);
         }
-    }).on('shown.bs.popover', function () {
-        var popup = $('#' + $(this).attr('aria-describedby'));
-        popup.find('button.cancel').click(function (e) {
-            popup.popover('hide');
-        });
-        popup.find('button.save').click(function (e) {
-            popup.myLoading({size: 'sm'});
-             $.get('$urlSendSMS', {id: $(this).data('id')}, function(response) {
-                   popup.popover('hide');
-                   popup.myUnloading({size: 'sm'});
-                   if (response.success) {
-                       $.toast({
-                           heading: 'Thông báo',
-                           text: response.message,
-                           position: 'top-right',
-                           class: 'jq-toast-success',
-                           hideAfter: 2000,
-                           stack: 6,
-                           showHideTransition: 'fade'
-                       });
-                       $.pjax.reload({container:'#coupon-gridview', url: window.location.href});
-                   } else {
-                       $.toast({
-                           heading: 'Thông báo',
-                           text: response.message,
-                           position: 'top-right',
-                           class: 'jq-toast-warning',
-                           hideAfter: 2000,
-                           stack: 6,
-                           showHideTransition: 'fade'
-                       });
-                   }
-               })
-        });
+    })
+    
+    $('body').on('click', '.popover-cancel', function (e) {
+        let popover = $(this).closest('.popover');
+        popover.popover('hide');
+    });
+    $('body').on('click', '.popover-save', function (e) {
+        let popup = $(this).closest('.popover');
+        popup.myLoading({size: 'sm'});
+         $.get('$urlSendSMS', {id: $(this).data('id')}, function(response) {
+               popup.popover('hide');
+               popup.myUnloading({size: 'sm'});
+               if (response.success) {
+                   $.toast({
+                       heading: 'Thông báo',
+                       text: response.message,
+                       position: 'top-right',
+                       class: 'jq-toast-success',
+                       hideAfter: 2000,
+                       stack: 6,
+                       showHideTransition: 'fade'
+                   });
+                   $.pjax.reload({container:'#coupon-gridview', url: window.location.href});
+               } else {
+                   $.toast({
+                       heading: 'Thông báo',
+                       text: response.message,
+                       position: 'top-right',
+                       class: 'jq-toast-warning',
+                       hideAfter: 2000,
+                       stack: 6,
+                       showHideTransition: 'fade'
+                   });
+               }
+           })
     });
 }
+
 initSendSMS();
 $(document).on('pjax:complete', function() {
   initSendSMS()
 })
+
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();
     var url = $(this).attr('href') || null;

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\components\MyController;
+use modava\vht\SmsVht;
 use Yii;
 use yii\web\Response;
 
@@ -19,6 +20,20 @@ class SiteController extends MyController
 
     public function actionIndex()
     {
+        /*$data = [
+            '0762296277',
+            '0979883765'
+        ];
+        $sms = new SmsVht([
+            'username' => 'myauriscskh',
+            'password' => 'amkycdaubcrs5uim8akzlvfatx',
+            'prefixId' => 'MY AURIS',
+            'commandCode' => 'MY AURIS',
+            'debug' => true,
+            'phones' => $data,
+            'messages' => 'abc'
+        ]);
+        $sms->send();*/
         return $this->render('index', [
         ]);
     }
@@ -41,6 +56,7 @@ class SiteController extends MyController
 
         ];
     }
+
     public function actionGetDataLineCharts()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;

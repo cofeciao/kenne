@@ -53,7 +53,7 @@ class CouponController extends RestfullController
             return [
                 'success' => false,
                 'error' => [
-                    'code' => 404,
+                    'code' => 400,
                     'message' => [
                         'partner_order_code' => 'partner_order_code Không được để trống'
                     ]
