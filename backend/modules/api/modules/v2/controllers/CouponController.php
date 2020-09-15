@@ -453,11 +453,8 @@ class CouponController extends RestfullController
         Yii::$app->response->statusCode = 200;
         return [
             'success' => true,
-            'error' => [
-                'code' => 200,
-                'message' => [Yii::t('backend', 'Thành công')],
-                'data' => $model->getAttributes()
-            ]
+            'data' => $model->getAttributes(),
+            'code' => 200,
         ];
     }
 }
