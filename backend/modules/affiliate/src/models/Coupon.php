@@ -229,6 +229,12 @@ class Coupon extends CouponTable
             'promotions_qty' => $this->quantity,
         ];
 
+        $smsLog = new SmsLog();
+        $smsLog->customer_id = $this->customer_id;
+        $smsLog->to_number = $this->customer->phone;
+        $smsLog->to_number = $this->customer->phone;
+        $smsLog->request_log = json_encode($params);
+
         try {
             $res = $client->request('POST', $url, [
                 'headers' => Yii::$app->getModule('affiliate')->params['myauris_config']['headers'],
@@ -237,9 +243,20 @@ class Coupon extends CouponTable
 
             $response = \GuzzleHttp\json_decode($res->getBody(), true);
 
+            $smsLog->response_log = json_encode($response);
+
+            if (array_key_exists('messageContent', $response)) {
+                $smsLog->message = $response['messageContent'];
+            } else {
+                $smsLog->message = Yii::t('backend', 'Lỗi kết nối');
+            }
+
             if ($res->getStatusCode() == 200 && $response['code'] == 200) {
                 $this->count_sms_sent = $this->count_sms_sent + 1;
                 $this->save();
+
+                $smsLog->status = SmsLog::STATUS_SUCCESS;
+                $smsLog->save();
                 return true;
             }
 
@@ -249,9 +266,15 @@ class Coupon extends CouponTable
                 Yii::warning($response);
                 $this->addError('count_sms_sent', Yii::t('backend', 'Đã có lỗi xảy ra'));
             }
+
+            $smsLog->status = SmsLog::STATUS_FAIL;
+            $smsLog->save();
             return false;
         } catch (GuzzleException $exception) {
             $this->addError('count_sms_sent', Yii::t('backend', $exception->getMessage()));
+
+            $smsLog->status = SmsLog::STATUS_FAIL;
+            $smsLog->save();
             return false;
         }
     }
