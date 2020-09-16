@@ -277,6 +277,9 @@ class CouponController extends RestfullController
             case 'Order':
                 $model = Order::findOne($id);
                 break;
+            case 'Payment':
+                $model = Payment::findOne($id);
+                break;
             default:
                 $model = null;
                 break;
