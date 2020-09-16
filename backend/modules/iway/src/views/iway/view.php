@@ -61,19 +61,19 @@ $this->registerCssFile('http://admin.iway.paditech.org/iway/assets/css/lightslid
                         <div class="tab-pane fade" id="pills-1-button" role="tabpanel"
                              aria-labelledby="pills-1-tab-button">
                             <div class="card-body">
-                                <?= $this->render('_ho-so-kham-benh') ?>
+                                <?= $this->render('ho-so-kham-benh/index') ?>
                             </div>
                         </div>
                         <div class="tab-pane fade active show" id="pills-2-button" role="tabpanel"
                              aria-labelledby="pills-2-tab-button">
                             <div class="card-body">
-                                <?= $this->render('_ho-so-thiet-ke') ?>
+                                <?= $this->render('ho-so-thiet-ke/index') ?>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-3-button" role="tabpanel"
                              aria-labelledby="pills-3-tab-button">
                             <div class="card-body">
-                                <?= $this->render('_lich-dieu-tri') ?>
+                                <?= $this->render('lich-dieu-tri/index') ?>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-4-button" role="tabpanel"
@@ -95,6 +95,5 @@ $this->registerCssFile('http://admin.iway.paditech.org/iway/assets/css/lightslid
     </div>
 </div>
 <?php
-$this->registerCssFile(Yii::$app->assetManager->publish('@backendWeb/call-center/css/main.css')[1], ['depends' => \yii\bootstrap\BootstrapAsset::class]);
 $this->registerJsFile('http://admin.iway.paditech.org/iway/assets/js/lightslider.js', ['depends' => \backend\assets\AppAsset::class]);
 ?>

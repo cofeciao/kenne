@@ -41,14 +41,90 @@ li.nav-item.mb-5 {
     width: 100%;
 }
 
-.card {
+.tab-pane .card {
     border: none;
     border-radius: 3px;
     background-color: #ffffff;
     box-shadow: none;
 }
 
+.tab-pane .card-footer {
+
+}
+
 form div.required label.control-label:after {
     content: " * ";
     color: red;
+}
+
+.preview-images-zone {
+    width: 100%;
+    border: 1px solid #ddd;
+    min-height: 120px;
+    padding: 5px 5px 0px 5px;
+    position: relative;
+    overflow: auto;
+}
+
+.upload-file {
+    float: left;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-file .result {
+    float: left;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-file.icon-ok .result > div {
+    float: left;
+    width: 30%;
+    margin-right: 2%;
+    position: relative;
+}
+
+.upload-file.icon-ok .result a {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    float: left;
+}
+
+.upload-file .result img {
+    width: 30%;
+    margin-right: 10px;
+    height: 200px;
+    object-fit: cover;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.upload-file.icon-ok .result img {
+    margin: 0;
+    width: 100%;
+}
+
+.upload-file.icon-ok .result .btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.upload-file.icon-ok .result .btn.download-file {
+    left: inherit;
+    right: 0;
+    top: inherit;
+    bottom: 0;
+    width: unset;
+}
+
+.upload-file.icon-ok .result .patient-file-checkbox {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2rem;
 }
