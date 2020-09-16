@@ -81,7 +81,7 @@ class Coupon extends CouponTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['expired_date'],
                     ],
                     'value' => function ($event) {
-                        return date('Y-m-d H:i:s', strtotime($this->expired_date));
+                        return date('Y-m-d', strtotime($this->expired_date));
                     },
                 ],
             ]
@@ -94,7 +94,7 @@ class Coupon extends CouponTable
     public function rules()
     {
         return [
-            [['title', 'slug', 'coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value',], 'required'],
+            [['title', 'slug', 'coupon_code', 'quantity', 'customer_id', 'coupon_type_id', 'promotion_type', 'promotion_value', 'expired_date'], 'required'],
             [['quantity', 'customer_id', 'coupon_type_id', 'quantity_used', 'promotion_type', 'count_sms_sent'], 'integer'],
             [['quantity', 'promotion_value'], 'compare', 'compareValue' => 0, 'operator' => '>=', 'type' => 'number'],
             [['max_discount', 'commission_for_owner'], 'number'],
@@ -102,7 +102,7 @@ class Coupon extends CouponTable
             [['description'], 'string'],
             [['promotion_value', 'min_discount', 'max_discount'], 'number'],
             [['title', 'slug', 'coupon_code'], 'string', 'max' => 255],
-            [['title'], 'string', 'max' => 10],
+            [['title'], 'string', 'max' => 50],
             [['slug'], 'unique'],
             [['coupon_code'], 'unique'],
             [['coupon_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponType::class, 'targetAttribute' => ['coupon_type_id' => 'id']],
@@ -196,14 +196,14 @@ class Coupon extends CouponTable
     {
         return self::find()
             ->where(['coupon_code' => $code])
-            ->andWhere('now() <= expired_date')
+            ->andWhere('CURRENT_DATE() <= expired_date')
             ->andWhere('quantity_used < quantity')
             ->one();
     }
 
     public function couponCanUse() {
         if ($this->quantity_used >= $this->quantity) return false;
-        if (date('Y-m-d h:i:s') > $this->expired_date) return false;
+        if (date('Y-m-d') > $this->expired_date) return false;
         return true;
     }
 
