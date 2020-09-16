@@ -300,8 +300,12 @@ class CouponController extends RestfullController
             if ($model->delete()) {
                 $code = 200;
                 Yii::$app->response->statusCode = $code;
-                $message = Yii::t('backend', 'Xóa thành công');
-                $status = true;
+
+                return [
+                    'success' => true,
+                    'code' => $code,
+                    'message' =>  Yii::t('backend', 'Xóa thành công'),
+                ];
             } else {
                 $code = 406;
                 Yii::$app->response->statusCode = $code;
@@ -315,11 +319,12 @@ class CouponController extends RestfullController
             $status = false;
         }
 
+
         return [
             'success' => $status,
             'error' => [
+                'message' => $message,
                 'code' => $code,
-                'message' => $message
             ]
         ];
     }
