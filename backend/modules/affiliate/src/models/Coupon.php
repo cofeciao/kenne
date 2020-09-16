@@ -224,7 +224,7 @@ class Coupon extends CouponTable
             'phone' => $this->customer->phone,
             'promotions_code' => $this->coupon_code,
             'promotions_name' => $this->title,
-            'promotions_expired' => Yii::$app->formatter->asDatetime($this->expired_date),
+            'promotions_expired' => Yii::$app->formatter->asDate($this->expired_date),
             'name' => array_pop($arrayName),
             'promotions_qty' => $this->quantity,
         ];
