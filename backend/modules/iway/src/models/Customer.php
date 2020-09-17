@@ -11,6 +11,7 @@ use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
 * This is the model class for table "iway_customer".
@@ -60,6 +61,8 @@ use Yii;
 class Customer extends CustomerTable
 {
     public $toastr_key = 'customer';
+    const PREFIX_CODE = 'iway';
+
     public function behaviors()
     {
         return array_merge(
@@ -151,6 +154,15 @@ class Customer extends CustomerTable
             'updated_at' => Yii::t('backend', 'Updated At'),
             'updated_by' => Yii::t('backend', 'Updated By'),
         ];
+    }
+
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->updateAttributes([
+            'code' => self::PREFIX_CODE . $this->primaryKey
+        ]);
+        parent::afterSave($insert, $changedAttributes);
     }
 
     /**
