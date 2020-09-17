@@ -4,10 +4,10 @@ namespace modava\iway\models;
 
 use common\models\User;
 use modava\iway\models\table\AppointmentScheduleTable;
+use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
-use Yii;
 
 /**
  * This is the model class for table "iway_appointment_schedule".
@@ -35,6 +35,9 @@ use Yii;
  */
 class AppointmentSchedule extends AppointmentScheduleTable
 {
+    const STATUS_DEN = 'den';
+    const SERVICE_STATUS_KHONG_DONG_Y_LAM = 'khong_dong_y_lam';
+    const SERVICE_STATUS_DONG_Y_LAM = 'dong_y_lam';
     public $toastr_key = 'appointment-schedule';
 
     public function behaviors()
@@ -89,12 +92,27 @@ class AppointmentSchedule extends AppointmentScheduleTable
     public function rules()
     {
         return [
-            [['title', 'customer_id', 'co_so_id', 'start_time', 'status', 'status_service'], 'required'],
+            [['title', 'customer_id', 'co_so_id', 'start_time', 'status'], 'required'],
             [['customer_id', 'co_so_id',], 'integer'],
             [['start_time', 'check_in_time'], 'safe'],
             [['description'], 'string'],
             [['title', 'accept_for_service', 'reason_fail'], 'string', 'max' => 255],
             [['status', 'status_service'], 'string', 'max' => 50],
+            [['status_service', 'check_in_time'], 'required', 'when' => function () {
+                return $this->status === self::STATUS_DEN;
+            }, 'whenClient' => "function() {
+			    return $('#appointmentschedule-status').val() === '" . self::STATUS_DEN . "';
+			}"],
+            ['reason_fail', 'required', 'when' => function () {
+                return $this->status_service === self::SERVICE_STATUS_KHONG_DONG_Y_LAM;
+            }, 'whenClient' => "function() {
+			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_KHONG_DONG_Y_LAM . "';
+			}"],
+            ['accept_for_service', 'required',  'when' => function () {
+                return $this->status_service === self::SERVICE_STATUS_DONG_Y_LAM;
+            }, 'whenClient' => "function() {
+			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_DONG_Y_LAM . "';
+			}"],
             [['co_so_id'], 'exist', 'skipOnError' => true, 'targetClass' => CoSo::class, 'targetAttribute' => ['co_so_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],

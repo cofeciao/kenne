@@ -28,7 +28,7 @@ class m200906_165714_create_table_iway_appointment_schedule extends Migration
                 'co_so_id' => $this->integer(11)->notNull()->comment('Cơ sở'),
                 'start_time' => $this->dateTime()->notNull()->comment('Ngày hẹn'),
                 'status' => $this->string(50)->notNull()->comment('Tình trạng: đặt hẹn, đến, không đến.'),
-                'status_service' => $this->string(50)->notNull()->comment('Tình trạng làm dịch vụ: Đồng ý, không đồng ý'),
+                'status_service' => $this->string(50)->null()->comment('Tình trạng làm dịch vụ: Đồng ý, không đồng ý'),
                 'accept_for_service' => $this->string()->null()->comment('Dịch vụ chọn khi đồng ý'),
                 'reason_fail' => $this->string(255)->null()->comment('Lý do không làm dịch vụ mặc dù đã đến'),
                 'check_in_time' => $this->dateTime()->null()->comment('Thời gian khách đến'),

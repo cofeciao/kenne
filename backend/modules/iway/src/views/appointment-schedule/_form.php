@@ -1,14 +1,16 @@
 <?php
 
+use backend\widgets\ToastrWidget;
 use kartik\select2\Select2;
 use modava\datetime\DateTimePicker;
+use modava\iway\models\AppointmentSchedule;
 use modava\iway\models\table\CoSoTable;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
+use yii\web\View;
 use yii\widgets\ActiveForm;
-use backend\widgets\ToastrWidget;
 
 /* @var $this yii\web\View */
 /* @var $model modava\iway\models\AppointmentSchedule */
@@ -83,7 +85,6 @@ $model->check_in_time = $model->check_in_time != null
             ]) ?>
         </div>
         <div class="col-6">
-
             <?= $form->field($model, 'check_in_time')->widget(DateTimePicker::class, [
                 'template' => '{input}{button}',
                 'pickButtonIcon' => 'btn btn-increment btn-light',
@@ -93,6 +94,11 @@ $model->check_in_time = $model->check_in_time != null
                     'format' => 'dd-mm-yyyy hh:ii',
                     'todayHighLight' => true,
                 ]
+            ]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'accept_for_service')->dropDownList($model->getDropdown('accept_for_service'), [
+                'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
             ]) ?>
         </div>
         <div class="col-12">
@@ -109,3 +115,53 @@ $model->check_in_time = $model->check_in_time != null
 
     <?php ActiveForm::end(); ?>
 </div>
+
+<?php
+
+$statusDen = AppointmentSchedule::STATUS_DEN;
+$serviceStatusDenKhongDongY = AppointmentSchedule::SERVICE_STATUS_KHONG_DONG_Y_LAM;
+$serviceStatusDenDongY = AppointmentSchedule::SERVICE_STATUS_DONG_Y_LAM;
+
+$script = <<<JS
+function handleReasonFail() {
+    debugger;
+    let reasonFail = $('#appointmentschedule-reason_fail'),
+        acceptForService = $('#appointmentschedule-accept_for_service'),
+        statusService = $('#appointmentschedule-status_service');
+    
+    if (statusService.val() === '$serviceStatusDenKhongDongY') {
+        reasonFail.closest('.form-group').show(300);
+        acceptForService.val('').trigger('change').closest('.form-group').hide(300);
+    } else if (statusService.val() === '$serviceStatusDenDongY') {
+        acceptForService.closest('.form-group').show(300);
+        reasonFail.val('').trigger('change').closest('.form-group').hide(300);
+    } else {
+        reasonFail.val('').trigger('change').closest('.form-group').hide(300);
+        acceptForService.val('').trigger('change').closest('.form-group').hide(300);
+    }
+}
+function handleServiceStatus() {
+    let serviceStatus = $('#appointmentschedule-status_service'),
+        checkinTime = $('#appointmentschedule-check_in_time');
+    
+  if ($('#appointmentschedule-status').val() !== '$statusDen') {
+      serviceStatus.val('').trigger('change').closest('.form-group').hide(300);
+      checkinTime.val('').trigger('change').closest('.form-group').hide(300);
+  } else {
+      serviceStatus.closest('.form-group').show(300);
+      checkinTime.closest('.form-group').show(300);
+  }
+}
+
+handleReasonFail();
+$('#appointmentschedule-status_service').on('change', function() {
+    handleReasonFail();
+})
+handleServiceStatus();
+$('#appointmentschedule-status').on('change', function() {
+    handleServiceStatus();
+})
+JS;
+
+$this->registerJs($script, View::POS_END);
+?>
