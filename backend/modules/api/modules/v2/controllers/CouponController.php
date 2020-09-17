@@ -277,6 +277,9 @@ class CouponController extends RestfullController
             case 'Order':
                 $model = Order::findOne($id);
                 break;
+            case 'Payment':
+                $model = Payment::findOne($id);
+                break;
             default:
                 $model = null;
                 break;
@@ -297,8 +300,12 @@ class CouponController extends RestfullController
             if ($model->delete()) {
                 $code = 200;
                 Yii::$app->response->statusCode = $code;
-                $message = Yii::t('backend', 'Xóa thành công');
-                $status = true;
+
+                return [
+                    'success' => true,
+                    'code' => $code,
+                    'message' =>  Yii::t('backend', 'Xóa thành công'),
+                ];
             } else {
                 $code = 406;
                 Yii::$app->response->statusCode = $code;
@@ -312,11 +319,12 @@ class CouponController extends RestfullController
             $status = false;
         }
 
+
         return [
             'success' => $status,
             'error' => [
+                'message' => $message,
                 'code' => $code,
-                'message' => $message
             ]
         ];
     }
@@ -433,6 +441,9 @@ class CouponController extends RestfullController
                 break;
             case 'Customer':
                 $model = Customer::findOne($id);
+                break;
+            case 'Payment':
+                $model = Payment::findOne($id);
                 break;
             default:
                 $model = null;
