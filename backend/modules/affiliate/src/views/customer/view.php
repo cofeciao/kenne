@@ -108,9 +108,7 @@ $dataProvider = new ActiveDataProvider([
 
                                             if (Utils::isReleaseObject('Coupon')) {
                                                 $count = count($model->coupons);
-
                                                 $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
-
                                                 $listButton .= Html::a('<i class="icon dripicons-ticket"></i> ' . $bage, Url::toRoute(['/affiliate/coupon', 'CouponSearch[customer_id]' => $model->primaryKey]), [
                                                     'title' => Yii::t('backend', 'List Tickets'),
                                                     'alia-label' => Yii::t('backend', 'List Tickets'),
@@ -125,9 +123,7 @@ $dataProvider = new ActiveDataProvider([
 
                                             if (Utils::isReleaseObject('Note')) {
                                                 $count = count($model->notes);
-
                                                 $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
-
                                                 $listButton .= Html::a('<i class="icon dripicons-to-do"></i>' . $bage, Url::toRoute(['/affiliate/note', 'NoteSearch[customer_id]' => $model->primaryKey]), [
                                                     'title' => Yii::t('backend', 'List Notes'),
                                                     'alia-label' => Yii::t('backend', 'List Notes'),
@@ -139,6 +135,19 @@ $dataProvider = new ActiveDataProvider([
                                                     'target' => '_blank'
                                                 ]);
                                             }
+
+                                            $count = count($model->feedbacks);
+                                            $bage = $count ? '<span class="badge badge-light ml-1">' . $count . '</span>' : '';
+                                            $listButton .= Html::a('<span class="material-icons" style="font-size: 12px">feedback</span>' . $bage, Url::toRoute(['/affiliate/feedback', 'FeedbackSearch[customer_id]' => $model->primaryKey]), [
+                                                'title' => Yii::t('backend', 'List Feedback'),
+                                                'alia-label' => Yii::t('backend', 'List Feedback'),
+                                                'data-pjax' => 0,
+                                                'class' => 'btn btn-success btn-xs list-relate-record m-1',
+                                                'data-related-id' => $model->primaryKey,
+                                                'data-related-field' => 'customer_id',
+                                                'data-model' => 'Feedback',
+                                                'target' => '_blank'
+                                            ]);
 
                                             return $listButton;
                                         },
