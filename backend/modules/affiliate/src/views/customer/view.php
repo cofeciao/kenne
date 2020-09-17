@@ -2,6 +2,7 @@
 
 use modava\affiliate\helpers\Utils;
 use modava\affiliate\models\Coupon;
+use modava\affiliate\models\search\PartnerSearch;
 use modava\chart\MiniList;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
@@ -37,7 +38,9 @@ $dataProvider = new ActiveDataProvider([
                             class="ion ion-md-apps"></span></span><?= Html::encode($this->title) ?>
             </h4>
             <p>
+                <?php if ($model->partner_id === PartnerSearch::getRecordBySlug('dashboard-myauris')->id) :?>
                 <button class="btn btn-primary js-more-info btn-sm" data-customer-id="<?= $model->partner_customer_id ?>"><?= Yii::t('backend', 'More Information') ?></button>
+                <?php endif; ?>
                 <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                    title="<?= Yii::t('backend', 'Create'); ?>">
                     <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
@@ -59,16 +62,16 @@ $dataProvider = new ActiveDataProvider([
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#menu1"><?= Yii::t('backend', 'Tổng quan') ?></a>
+                        <a class="nav-link active" data-toggle="tab" href="#menu1"><?= Yii::t('backend', 'Tổng quan') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#detail"><?= Yii::t('backend', 'Chi tiết') ?></a>
+                        <a class="nav-link" data-toggle="tab" href="#detail"><?= Yii::t('backend', 'Chi tiết') ?></a>
                     </li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane fade" id="menu1">
+                    <div class="tab-pane active" id="menu1">
                         <div class="row">
                             <div class="col-6 my-3">
                                 <?= BarChart::widget([
@@ -95,7 +98,7 @@ $dataProvider = new ActiveDataProvider([
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane active" id="detail">
+                    <div class="tab-pane fade" id="detail">
                         <section class="hk-sec-wrapper">
                             <?= DetailView::widget([
                                 'model' => $model,
@@ -152,8 +155,6 @@ $dataProvider = new ActiveDataProvider([
                                             return $listButton;
                                         },
                                     ],
-                                    'id',
-                                    'slug',
                                     'full_name',
                                     'phone',
                                     'email:email',
@@ -162,23 +163,16 @@ $dataProvider = new ActiveDataProvider([
                                     [
                                         'attribute' => 'sex',
                                         'value' => function ($model) {
+                                            if (!$model->sex) return '';
                                             return Yii::$app->getModule('affiliate')->params['sex'][$model->sex];
                                         }
                                     ],
-                                    [
-                                        'attribute' => 'status',
-                                        'headerOptions' => [
-                                            'class' => 'header-100',
-                                        ],
-                                        'value' => function ($model) {
-                                            return Yii::$app->getModule('affiliate')->params['customer_status'][$model->status];
-                                        }
-                                    ],
-                                    'date_accept_do_service:date',
-                                    'date_checkin:date',
                                     'total_commission:currency',
                                     'total_commission_paid:currency',
                                     'total_commission_remain:currency',
+                                    'bank_name',
+                                    'bank_branch',
+                                    'bank_customer_id',
                                     [
                                         'attribute' => 'country_id',
                                         'value' => function ($model) {
@@ -211,9 +205,17 @@ $dataProvider = new ActiveDataProvider([
                                         }
                                     ],
                                     'address:raw',
-                                    'bank_name',
-                                    'bank_branch',
-                                    'bank_customer_id',
+                                    [
+                                        'attribute' => 'status',
+                                        'headerOptions' => [
+                                            'class' => 'header-100',
+                                        ],
+                                        'value' => function ($model) {
+                                            return Yii::$app->getModule('affiliate')->params['customer_status'][$model->status];
+                                        }
+                                    ],
+                                    'date_accept_do_service:date',
+                                    'date_checkin:date',
                                     'description:raw',
                                     'created_at:datetime',
                                     'updated_at:datetime',

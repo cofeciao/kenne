@@ -234,7 +234,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             'data-pjax' => 0,
                                                         ]) . '<br/>';
 
-                                                    $content .= "<strong>Giới tính: </strong>" . Yii::$app->getModule('affiliate')->params['sex'][$model->sex] . '<br/>';
+                                                    $gender = $model->sex ? Yii::$app->getModule('affiliate')->params['sex'][$model->sex] : '';
+                                                    $content .= "<strong>Giới tính: </strong>" . $gender . '<br/>';
                                                     if (class_exists('modava\voip24h\CallCenter')) $content .= Html::a('<i class="fa fa-phone"></i>', 'javascript: void(0)', [
                                                         'class' => 'btn btn-xs btn-success call-to',
                                                         'title' => 'Gọi',
