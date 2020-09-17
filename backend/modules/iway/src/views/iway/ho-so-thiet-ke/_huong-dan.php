@@ -43,7 +43,7 @@
             <article class="upload-file icon-ok">
                 <output class="result">
                     <div class="m-b-30 box-image">
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bd-example-modal-tk2">
                             <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/logo.png')[1] ?>"
                                  class="thumbnail">
                         </a>
@@ -57,7 +57,7 @@
                                class="form-control patient-file-checkbox">
                     </div>
                     <div class="mb-30 box-image">
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bd-example-modal-tk2">
                             <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/logo.png')[1] ?>"
                                  class="thumbnail">
                         </a>

@@ -1,3 +1,16 @@
+/*::-webkit-scrollbar {
+    width: 0;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}*/
+
 input[disabled],
 select[disabled],
 textarea[disabled],
@@ -20,6 +33,14 @@ li.page-disabled {
     border: 1px solid #ddd;
 }
 
+.col-formlabel {
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+}
+
 li.nav-item.mb-5 {
     margin-right: 10px;
 }
@@ -39,6 +60,55 @@ li.nav-item.mb-5 {
 .md-full {
     display: inline-block;
     width: 100%;
+}
+
+.nav-pills.custom-tab-button {
+    text-align: center;
+}
+
+.nav-pills.custom-tab-button .nav-item {
+    margin-right: 20px;
+}
+
+.nav-pills.custom-tab-button .nav-item:last-child {
+    margin-right: 0;
+}
+
+.nav-pills.custom-tab-button .nav-link .tab-btn-icon {
+    display: block;
+}
+
+.tab-pane .nav-tabs {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03)!important;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.tab-pane .nav-tabs.custom-tab-line .nav-item {
+    margin-right: 20px;
+}
+
+.tab-pane .nav-tabs.custom-tab-line .nav-item:last-child {
+    margin-right: 0px;
+}
+
+.tab-pane .nav-tabs li {
+    display: inline-block;
+}
+
+.tab-pane .nav-tabs li .nav-link {
+    color: #141d46;
+}
+
+.tab-pane .nav.nav-tabs .nav-link.active {
+    color: #22af47
+}
+
+.tab-pane .nav-tabs.custom-tab-line .nav-link {
+    border-bottom-width: 2px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .tab-pane .card {
@@ -127,4 +197,120 @@ form div.required label.control-label:after {
     top: 0;
     right: 0;
     width: 2rem;
+}
+
+.news .modal-dialog {
+    max-width: 1024px;
+}
+
+.chat-detail .chat-body {
+    padding: 30px 40px;
+}
+
+.chat-detail .chat-body .chat-message {
+    margin-bottom: 20px;
+}
+
+.chat-popup .chat-body .chat-message-right {
+    position: relative;
+    padding-right: 70px;
+}
+
+.chat-popup .chat-body .chat-message-left {
+    position: relative;
+    padding-left: 70px;
+}
+
+.chat-detail .chat-body .chat-message.chat-message-right {
+    text-align: right;
+}
+
+.chat-detail .chat-body .chat-message.chat-message-left {
+    text-align: left;
+}
+
+.chat-popup .chat-body .chat-message-right .media {
+    position: absolute;
+    width: 66px;
+    height: 66px;
+    top: 0;
+    right: 0;
+    display: inline-block;
+}
+
+.chat-popup .chat-body .chat-message-left .media {
+    position: absolute;
+    width: 66px;
+    height: 66px;
+    top: 0;
+    left: 0;
+    display: inline-block;
+}
+
+.chat-detail .chat-body .chat-message .chat-message-text {
+    background-color: #f2f3f7;
+    color: #141d46;
+    padding: 5px 15px;
+    display: inline-block;
+    border-radius: 3px;
+    position: relative;
+}
+
+.chat-detail .chat-body .chat-message.chat-message-right .chat-message-text {
+    background-color: #22af47;
+    color: #ffffff;
+}
+
+.chat-detail .chat-body .chat-message.chat-message-right .chat-message-text:after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -10px;
+    top: auto;
+    bottom: 0;
+    border: 6px solid #22af47;
+    border-color: transparent transparent #22af47 #22af47;
+}
+
+.chat-detail .chat-body .chat-message .chat-message-meta {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.chat-detail .chat-body .chat-message.chat-message-right .chat-message-meta {
+    text-align: right;
+}
+
+.chat-detail .chat-bottom {
+    padding: 15px 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.chat-detail .chat-bottom .chat-messagebar input[type=text] {
+    background-color: transparent;
+    color: #8A98AC;
+    font-size: 16px;
+    border-radius: 0;
+}
+
+.chat-detail .chat-bottom .chat-messagebar .input-group-append {
+    margin-left: 0px;
+}
+
+.chat-detail .chat-bottom .chat-messagebar .btn {
+    border-radius: 50% !important;
+    margin: 0 5px;
+}
+
+.btn-primary-rgba {
+    background-color: rgba(34, 175, 71, 0.1);
+    border: none;
+    color: #22af47;
+}
+
+.btn-primary-rgba:hover {
+    background-color: rgba(34, 175, 71, 1);
+    color: #fff;
 }

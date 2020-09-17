@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-sm-6">
             <div class="row">
-                <label class="col-lg-4 col-formlabel text-left">- Họ:</label>
+                <label class="col-lg-4 col-formlabel text-right">- Họ:</label>
                 <div class="col-lg-8">
                     <input type="text" class="form-control" placeholder="Họ">
                 </div>
@@ -228,7 +228,7 @@
         </div>
     </div>
 
-    <div class="row m-t 15">
+    <div class="row mt-15">
         <label class="col-lg-3 col-formlabel text-right">- Khác:</label>
         <div class="col-lg-9">
             <input type="text" name="clinical_conditions_other" class="form-control setInputTextYcommand"
@@ -239,17 +239,16 @@
     <div class="row mt-15">
         <label class="col-lg-3 col-formlabel text-right">- Ghi chú chung:</label>
         <div class="col-lg-9">
-                    <textarea name="clinical_conditions_general_note" rows="4"
-                              class="md-full form-control setInputTextYcommand"></textarea>
+            <textarea name="clinical_conditions_general_note" rows="4"
+                      class="md-full form-control setInputTextYcommand"></textarea>
         </div>
     </div>
 
     <div class="row mt-15">
         <label class="col-lg-3 col-formlabel text-right">- Mong muốn của bệnh nhân:</label>
         <div class="col-lg-9">
-                    <textarea name="clinical_conditions_desire" rows="4"
-                              class="md-full form-control setInputTextYcommand"
-                    ></textarea>
+            <textarea name="clinical_conditions_desire" rows="4"
+                      class="md-full form-control setInputTextYcommand"></textarea>
         </div>
     </div>
     <div class="row mb-10">
@@ -467,9 +466,9 @@
         </div>
     </div>
     <div class="row mb-10 mx-0">
-        <div class="card-body">
+        <div class="w-100">
             <div class="table-responsive">
-                <table id="default-datatable" class="display table table-striped table-bordered td-height-40">
+                <table id="default-datatable" class="display table table-striped table-bordered td-height-40 mb-0">
                     <tbody>
                     <tr>
                         <td class="rotate-90" rowspan="4">

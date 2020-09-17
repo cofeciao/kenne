@@ -44,7 +44,7 @@
             <article class="upload-file icon-ok">
                 <output class="result">
                     <div class="mb-30 box-image">
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bd-example-modal-tk">
                             <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/logo.png')[1] ?>" class="thumbnail">
                         </a>
                         <a href="javascript:void(0"
@@ -66,7 +66,7 @@
             <article class="upload-file icon-ok">
                 <output class="result">
                     <div class="mb-30 box-image">
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bd-example-modal-tk">
                             <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/logo.png')[1] ?>" class="thumbnail">
                         </a>
                         <a href="javascript:void(0"

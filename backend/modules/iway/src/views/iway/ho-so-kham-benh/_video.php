@@ -6,6 +6,7 @@
  * Time: 11:10
  */
 ?>
+
 <form class="" action="" method="post">
     <div class="setHidden">
         <div class="text-center">
@@ -42,7 +43,7 @@
             <article class="upload-file icon-ok">
                 <output class="result">
                     <div class="mb-30 box-image">
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target=".bd-example-modal-tk1">
                             <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/iway/video.png')[1] ?>"
                                  class="thumbnail">
                         </a>
