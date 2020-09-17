@@ -1,5 +1,4 @@
 <?php
-
 use modava\iway\IwayModule;
 use modava\iway\widgets\NavbarWidgets;
 use modava\iway\models\Customer;
@@ -25,3 +24,4 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+>>>>>>> master

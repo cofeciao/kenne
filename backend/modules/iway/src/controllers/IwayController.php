@@ -15,4 +15,8 @@ class IwayController extends MyIwayController
         return $this->redirect(Url::toRoute(['/iway/co-so']));
     }
 
+    public function actionView()
+    {
+        return $this->render('view');
+    }
 }

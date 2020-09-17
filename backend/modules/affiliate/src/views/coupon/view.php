@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						    'attribute' => 'expired_date',
                             'value' => function ($model) {
                                 return $model->expired_date
-                                    ? date('d-m-Y H:i', strtotime($model->expired_date))
+                                    ? date('d-m-Y', strtotime($model->expired_date))
                                     : '';
                             }
                         ],
