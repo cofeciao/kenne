@@ -5,7 +5,6 @@ namespace modava\affiliate\models;
 use common\helpers\MyHelper;
 use common\models\User;
 use modava\affiliate\models\search\CustomerPartnerSearch;
-use modava\affiliate\models\search\PartnerSearch;
 use modava\affiliate\models\table\OrderTable;
 use Yii;
 use yii\behaviors\AttributeBehavior;
@@ -223,7 +222,7 @@ class Order extends OrderTable
     {
         $this->updateCouponUses();
         $this->updateCommissionForCustomer();
-        $this->createCustomer();
+        $this->initCustomerPartnerForCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -268,32 +267,8 @@ class Order extends OrderTable
         $customer->save();
     }
 
-    public function createCustomer()
+    public function initCustomerPartnerForCache()
     {
-        $myAurisPartner = PartnerSearch::getRecordBySlug('dashboard-myauris');
-        $existCustomer = Customer::find()->where('partner_id = :partner_id AND partner_customer_id = :partner_customer_id', [
-            ':partner_id' => $myAurisPartner->id,
-            ':partner_customer_id' => $this->partner_customer_id,
-        ])->one() === null ? false : true;
-
-        if (!$existCustomer) {
-            $customerPartner = CustomerPartnerSearch::getCustomerById($this->partner_customer_id);
-            $customer = new Customer();
-            $customer->full_name = $customerPartner['full_name'];
-            $customer->phone = $customerPartner['phone'];
-            $customer->partner_id = $myAurisPartner->id;
-            $customer->partner_customer_id = $this->partner_customer_id;
-            $customer->sex = $customerPartner['sex'];
-            $customer->face_customer = $customerPartner['face_customer'];
-            $customer->birthday = $customerPartner['birthday'];
-            $customer->status = Customer::STATUS_HOAN_THANH_DICH_VU;
-            $customer->date_accept_do_service = date('d-m-Y', $customerPartner['customer_come_date']);
-            $customer->date_checkin = date('d-m-Y', $customerPartner['time_lichhen']);
-            $customer->country_id = 237;
-            $customer->province_id = $customerPartner['province'];
-            $customer->district_id = $customerPartner['district'];
-            $customer->address = $customerPartner['address'];
-            $customer->save();
-        }
+        CustomerPartnerSearch::getCustomerById($this->partner_customer_id);
     }
 }
