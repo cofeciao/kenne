@@ -2,15 +2,15 @@
 
 namespace modava\affiliate\models;
 
+use common\helpers\MyHelper;
 use common\models\User;
-use modava\affiliate\AffiliateModule;
+use modava\affiliate\models\search\CustomerPartnerSearch;
 use modava\affiliate\models\table\OrderTable;
+use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
-use common\helpers\MyHelper;
 use yii\db\ActiveRecord;
-use Yii;
 
 /**
  * This is the model class for table "affiliate_order".
@@ -222,6 +222,7 @@ class Order extends OrderTable
     {
         $this->updateCouponUses();
         $this->updateCommissionForCustomer();
+        $this->initCustomerPartnerForCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -264,5 +265,10 @@ class Order extends OrderTable
         $customer = Customer::findOne($this->coupon->customer_id);
         $customer->total_commission = $sumCommission;
         $customer->save();
+    }
+
+    public function initCustomerPartnerForCache()
+    {
+        CustomerPartnerSearch::getCustomerById($this->partner_customer_id);
     }
 }

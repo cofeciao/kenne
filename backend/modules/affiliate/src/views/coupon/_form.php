@@ -160,8 +160,14 @@ function generateCouponCode(customerId, upperCase = false) {
     });
 }
 
+function generateCouponCodeRandom(upperCase = false) {
+    let code = Math.random(10).toString(36).substring(2,12);
+    return upperCase ? code.toUpperCase() : code;
+}
+
 $('#coupon_form #js-generate-coupon-code').on('click', function() {
-    let customerId = $('#coupon_form').find('[name="Coupon[customer_id]"]').val();
+    /* Comment because change logic for short code*/
+    /*let customerId = $('#coupon_form').find('[name="Coupon[customer_id]"]').val();
     if (!customerId) {
         $.toast({
             heading: 'Thông báo',
@@ -184,8 +190,8 @@ $('#coupon_form #js-generate-coupon-code').on('click', function() {
             $('#coupon-coupon_code').val(data).trigger('change');
             loading.fadeOut(300);
         })
-    }
-    $('#coupon-coupon_code').val('').trigger('change');
+    }*/
+    $('#coupon-coupon_code').val(generateCouponCodeRandom(true)).trigger('change');
 });
 
 $('#coupon_form #coupon-coupon_code').on('change keyup blur', function() {
