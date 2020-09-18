@@ -13,8 +13,8 @@ class m200910_093829_create_insert_dropdowns extends Migration
     public function safeUp()
     {
         $this->execute(
-            "INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES (9, 'sex', 'iway_customer', '[{\"key\": \"nam\", \"value\": \"Nam\"}, {\"key\": \"nu\", \"value\": \"Nữ\"}, {\"key\": \"khac\", \"value\": \"Khác\"}]');
-INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES (10, 'type', 'iway_customer', '[{\"key\": \"vang_lai\", \"value\": \"Vãng lai\"}, {\"key\": \"online\", \"value\": \"Online\"}]');
+            "INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES ('sex', 'iway_customer', '[{\"key\": \"nam\", \"value\": \"Nam\"}, {\"key\": \"nu\", \"value\": \"Nữ\"}, {\"key\": \"khac\", \"value\": \"Khác\"}]');
+INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES ('type', 'iway_customer', '[{\"key\": \"vang_lai\", \"value\": \"Vãng lai\"}, {\"key\": \"online\", \"value\": \"Online\"}]');
 INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES ('category', 'iway_product', '[{\"key\": \"nien\", \"value\": \"Niền\"}, {\"key\": \"implant\", \"value\": \"Implant\"}]');
 INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES ('type', 'iway_payment', '[{\"key\": \"thanh_toan\", \"value\": \"Thanh toán\"}, {\"key\": \"dat_coc\", \"value\": \"Đặt cọc\"}, {\"key\": \"hoan_coc\", \"value\": \"Hoàn cọc\"}]');
 INSERT INTO `dropdowns_config`(`field_name`, `table_name`, `dropdown_value`) VALUES ('method', 'iway_payment', '[{\"key\": \"tien_mat\", \"value\": \"Tiền mặt\"}, {\"key\": \"chuyen_khoan\", \"value\": \"Chuyển khoản\"}]');
