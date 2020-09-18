@@ -12,9 +12,11 @@ class IwayCustomAsset extends AssetBundle
     public $sourcePath = '@iwayweb';
     public $css = [
         'css/customIway.css',
+        'css/lightslider.css'
     ];
     public $js = [
-        'js/customIway.js'
+        'js/customIway.js',
+        'js/lightslider.js'
     ];
     public $jsOptions = array(
         'position' => \yii\web\View::POS_END
