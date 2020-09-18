@@ -11,7 +11,6 @@ use yii\helpers\Html;
 $this->title = 'iWay';
 $this->title = Yii::t('backend', 'iWay');
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('http://admin.iway.paditech.org/iway/assets/css/lightslider.css');
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <!-- Title -->
@@ -501,5 +500,4 @@ $this->registerCssFile('http://admin.iway.paditech.org/iway/assets/css/lightslid
     </div>
 </div>
 <?php
-$this->registerJsFile('http://admin.iway.paditech.org/iway/assets/js/lightslider.js', ['depends' => \backend\assets\AppAsset::class]);
 ?>
