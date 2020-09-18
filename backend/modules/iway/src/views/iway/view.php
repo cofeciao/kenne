@@ -236,7 +236,7 @@ $this->registerCssFile('http://admin.iway.paditech.org/iway/assets/css/lightslid
                             <div style="display: flex; align-items: center;">
                                 <div class="md-full">
                                     <video width="100%" height="300" controls="">
-                                        <source src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/Sirius Độ Đẹp.mp4')[1] ?>"
+                                        <source src="<?= Yii::$app->assetManager->publish('@modava/iway/web/uploads/Sirius Độ Đẹp.mp4')[1] ?>"
                                                 type="video/mp4">
                                         Your browser does not support the video tag
                                     </video>
@@ -373,10 +373,10 @@ $this->registerCssFile('http://admin.iway.paditech.org/iway/assets/css/lightslid
                                         </ol>
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/logo.png')[1] ?>" class="d-block w-100" alt="...">
+                                                <img src="<?= Yii::$app->assetManager->publish('@modava/iway/web/uploads/logo.png')[1] ?>" class="d-block w-100" alt="...">
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/patient/logo.png')[1] ?>" class="d-block w-100" alt="...">
+                                                <img src="<?= Yii::$app->assetManager->publish('@modava/iway/web/uploads/logo.png')[1] ?>" class="d-block w-100" alt="...">
                                             </div>
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
