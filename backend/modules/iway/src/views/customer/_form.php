@@ -204,10 +204,11 @@ const sourceOnlineFbPageDropdownConfig = {
 };
 
 function handleLoadDropdownDependency(parentEle, ele, dropdownConfig) {
+    debugger;
     let parentDropdown = Object.keys(dropdownConfig),
         childDropdown = [],
         eleValue = ele.val(),
-        needTrigger = true;
+        preValue = '';
     
     if (parentDropdown.includes(parentEle.val())) {
         childDropdown = dropdownConfig[parentEle.val()];
@@ -219,10 +220,10 @@ function handleLoadDropdownDependency(parentEle, ele, dropdownConfig) {
     ele.html(emptyOption);
     childDropdown.forEach((item, index, array) => {
         ele.append(`<option value="` + item.key + `">` + item.value + `</option>`);
-        if (item.key == eleValue) needTrigger = false;
+        if (item.key == eleValue) preValue = eleValue;
     });
     
-    if (needTrigger) ele.val('').trigger('change');
+    ele.val(eleValue).trigger('change');
 };
 
 $(function () {

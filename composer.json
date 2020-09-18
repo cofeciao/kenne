@@ -47,7 +47,13 @@
     "2amigos/yii2-date-picker-widget" : "*",
     "2amigos/yii2-date-time-picker-widget" : "*",
     "2amigos/yii2-arrayquery-component" : "*",
-    "tuyakhov/yii2-json-api": "*"
+    "tuyakhov/yii2-json-api": "*",
+    "phpoffice/phpspreadsheet": "^1.14",
+    "modava/imagick": "@dev",
+    "modava/location": "@dev",
+    "modava/generator": "@dev",
+    "modava/select2": "@dev",
+    "modava/voip24h": "@dev"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

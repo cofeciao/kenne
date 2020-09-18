@@ -118,7 +118,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'code',
                                             'avatar',
                                             'phone',
-                                            'sex',
+                                            [
+                                                'attribute' => 'sex',
+                                                'value' => function ($model) {
+                                                    return $model->getDisplayDropdown($model->sex, 'sex');
+                                                }
+                                            ],
                                             //'birthday',
                                             //'address',
                                             //'province_id',
