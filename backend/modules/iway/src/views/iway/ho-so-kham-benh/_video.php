@@ -44,7 +44,7 @@
                 <output class="result">
                     <div class="mb-30 box-image">
                         <a href="javascript:void(0)" data-toggle="modal" data-target=".bd-example-modal-tk1">
-                            <img src="<?= Yii::$app->assetManager->publish('@backendWeb/uploads/iway/video.png')[1] ?>"
+                            <img src="<?= Yii::$app->assetManager->publish('@modava/iway/web/uploads/video.png')[1] ?>"
                                  class="thumbnail">
                         </a>
                         <a href="javascript:void(0"
