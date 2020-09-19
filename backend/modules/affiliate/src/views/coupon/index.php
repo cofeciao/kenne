@@ -6,11 +6,13 @@ use modava\affiliate\widgets\DropdownWidget;
 use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\CouponSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $kolsFanForm modava\affiliate\models\KolsFanForm */
 
 $this->title = Yii::t('backend', 'Coupon');
 $this->params['breadcrumbs'][] = $this->title;
@@ -128,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'send-sms-to-customer' => function ($url, $model) {
                                                         if (!$model->couponCanUse() || $model->count_sms_sent >= 3 || $model->customer->partner_id == 2) return '';
 
-                                                        return Html::a('<i class="glyphicon glyphicon-send"></i> ' . Yii::t('backend', 'Gửi SMS đến SMS'), 'javascript:;', [
+                                                        return Html::a('<i class="glyphicon glyphicon-send"></i> ' . Yii::t('backend', 'Gửi SMS đến KH'), 'javascript:;', [
                                                             'title' => Yii::t('backend', 'Gửi cho KH'),
                                                             'alia-label' => Yii::t('backend', 'Gửi cho KH'),
                                                             'data-pjax' => 0,
@@ -157,7 +159,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         ]);
                                                     },
                                                     'show-sms-coupon-content' => function ($url, $model) {
-                                                        return '<button type="button" class="btn btn-primary btn-xs m-1" data-action="show-sms-coupon-content" data-coupon-id="' . $model->primaryKey . '" data-toggle="modal" data-target="#coupon-index-modal">Xem tin nhắn</button>';
+                                                        if ($model->customer->partner->slug !== 'kols') return '';
+
+                                                        return '<button type="button" class="btn btn-primary btn-xs m-1" data-action="show-sms-coupon-content" data-coupon-id="' . $model->primaryKey . '" data-toggle="modal" data-target="#coupon-index-modal">Gửi SMS đến Fan</button>';
                                                     }
                                                 ],
                                             ],
@@ -285,11 +289,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    Modal body..
+                    <?php $form = ActiveForm::begin(['method' => 'GET', 'id' => 'send-sms-to-fan-form', 'action' => Url::toRoute(['/affiliate/coupon/send-sms-coupon-to-fan'])]); ?>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <?= $form->field($kolsFanForm, 'name')->label(Yii::t('backend', 'Tên'))->textInput() ?>
+                            </div>
+                            <div class="col-12">
+                                <?= $form->field($kolsFanForm, 'phone')->label(Yii::t('backend', 'Số điện thoại'))->textInput() ?>
+                                <?= $form->field($kolsFanForm, 'coupon_id')->label(false)->input('hidden') ?>
+                            </div>
+                        </div>
+                    <strong>Nội dung:</strong>
+                        <div class="row">
+                            <div class="col-12 message-conatiner"></div>
+                        </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" form="send-sms-to-fan-form" value="Submit">Gửi</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                 </div>
 
@@ -360,25 +380,81 @@ $('body').on('click', '.success-delete', function(e){
     return false;
 });
 
-$('#coupon-index-modal').on('show.bs.modal', function (event) {
-    let btnClicked = $(event.relatedTarget);
+$('#coupon-index-modal')
+    .on('show.bs.modal', function (event) {
+        let btnClicked = $(event.relatedTarget);
+        $(this).find('[name="KolsFanForm[coupon_id]"]').val(btnClicked.data('coupon-id'));
+    
+        switch (btnClicked.data('action')) {
+            case 'show-sms-coupon-content':
+                $(this).find('.modal-title').text('Gửi đến Fan');
+                $('#coupon-index-modal').find('.message-conatiner').myLoading();
+                
+                $.get('$urlGetSms', {coupon_id: btnClicked.data('coupon-id')}, function(response) {
+                   $('#coupon-index-modal').find('.message-conatiner').html(response.success ? response.data : response.message).myUnloading();
+               })
+                break;
+        }
+    })
+    .on('hide.bs.modal', function() {
+        $('#send-sms-to-fan-form').find('input').val('');
+    });
 
-    switch (btnClicked.data('action')) {
-        case 'show-sms-coupon-content':
-            $(this).find('.modal-title').text('Xem trước tin nhắn');
-            $(this).find('.modal-body').myLoading();
-            $.get('$urlGetSms', {coupon_id: btnClicked.data('coupon-id')}, function(response) {
-                debugger;
-               $('#coupon-index-modal').find('.modal-body').html(response.success ? response.data : response.message).myUnloading();
-           })
-            break;
-    }
+$('#send-sms-to-fan-form').on('beforeSubmit', function(e) {    
+    e.preventDefault();
+    let self = $(this);
+    
+    $.ajax({
+            type: 'post',
+            url: self.attr('action'),
+            dataType: 'json',
+            data: self.serialize()
+        }).done(res => {
+            $('#coupon-index-modal').modal('hide');
+            if (res.success) {
+                self.modal('hide');
+                $.toast({
+                    heading: 'Thông báo',
+                    text: 'Thành công',
+                    position: 'top-right',
+                    class: 'jq-toast-success',
+                    hideAfter: 6000,
+                    stack: 6,
+                    showHideTransition: 'fade'
+                });
+            }
+            else {
+                self.modal('hide');
+                $.toast({
+                    heading: 'Thông báo',
+                    text: res.message,
+                    position: 'top-right',
+                    class: 'jq-toast-danger',
+                    hideAfter: 6000,
+                    stack: 6,
+                    showHideTransition: 'fade'
+                });
+            }
+        }).fail(f => {
+            self.modal('hide');
+            $.toast({
+                heading: 'Thông báo',
+                text: 'Thất bại',
+                position: 'top-right',
+                class: 'jq-toast-danger',
+                hideAfter: 6000,
+                stack: 6,
+                showHideTransition: 'fade'
+            });
+        });
+
+    return false;
 });
 
 var customPjax = new myGridView();
 customPjax.init({
-pjaxId: '#coupon-gridview',
-urlChangePageSize: '$urlChangePageSize',
+    pjaxId: '#coupon-gridview',
+    urlChangePageSize: '$urlChangePageSize',
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

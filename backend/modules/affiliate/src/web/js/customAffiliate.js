@@ -118,4 +118,5 @@ $(function () {
         e.stopImmediatePropagation();
         $(this).closest('.input-group').find('input, select').val('').trigger('change');
     });
+
 });
