@@ -278,4 +278,48 @@ class Coupon extends CouponTable
             return false;
         }
     }
+
+    public function getContentSmsCoupon()
+    {
+        $myauris_config = \Yii::$app->getModule('affiliate')->params['myauris_config'];
+        $url = $myauris_config['url_end_point'] . $myauris_config['endpoint']['get_sms_coupon'];
+
+        $arrayName = explode(' ', $this->customer->full_name);
+
+        $client = new Client();
+        $params = [
+            'phone' => $this->customer->phone,
+            'promotions_code' => $this->coupon_code,
+            'promotions_name' => $this->title,
+            'promotions_expired' => Yii::$app->formatter->asDate($this->expired_date),
+            'name' => array_pop($arrayName),
+            'promotions_qty' => $this->quantity,
+        ];
+
+        try {
+            $res = $client->request('POST', $url, [
+                'headers' => Yii::$app->getModule('affiliate')->params['myauris_config']['headers'],
+                'form_params' => $params
+            ]);
+
+            $response = \GuzzleHttp\json_decode($res->getBody(), true);
+
+            if ($res->getStatusCode() == 200 && $response['code'] == 200) {
+                return [
+                    'success' => true,
+                    'data' => $response['messageContent']
+                ];
+            }
+
+            return [
+                'success' => false,
+                'message' => array_key_exists('msg', $response) ? $response['msg'] : Yii::t('backend', 'Đã có lỗi xảy ra')
+            ];
+        } catch (GuzzleException $exception) {
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
 }

@@ -266,6 +266,20 @@ class CouponController extends MyController
         }
     }
 
+    public function actionGetContentSmsCoupon() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $coupon = Coupon::findOne(Yii::$app->request->get('coupon_id'));
+
+        if ($coupon === null) {
+            return [
+                'success' => false,
+                'message' => Yii::t('backend', 'Coupon không tìm thấy')
+            ];
+        }
+
+        return $coupon->getContentSmsCoupon();
+    }
+
     /**
      * @param $perpage
      */
