@@ -29,11 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <!-- Row -->
+
+        <?php Pjax::begin(['id' => 'coupon-gridview']); ?>
         <div class="row">
             <div class="col-xl-12">
-                <section class="hk-sec-wrapper index">
+                <?= $this->render('_search', ['model' => $searchModel]); ?>
 
-                    <?php Pjax::begin(['id' => 'coupon-gridview']); ?>
+                <section class="hk-sec-wrapper index">
                     <div class="row">
                         <div class="col-sm">
                             <div class="table-wrap">
@@ -167,7 +169,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'customer_id',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return $model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '';
+                                                    $content = '<strong>Tên: </strong>' . ($model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '') . '<br/>';
+                                                    $content .= '<strong>Đối tác: </strong>' . Html::a($model->customer->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->customer->partner_id]));
+                                                    return $content;
                                                 },
                                                 'headerOptions' => [
                                                     'class' => 'header-200',
@@ -246,16 +250,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <?php Pjax::end(); ?>
                 </section>
             </div>
         </div>
+        <?php Pjax::end(); ?>
     </div>
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $urlSendSMS = Url::toRoute(['/affiliate/coupon/send-sms-to-customer']);
 $script = <<< JS
-function initSendSMS () {
+function initPopoverSMS () {
     $('.send-sms-to-customer').popover({
         html: true,
         content: function () {
@@ -263,47 +267,47 @@ function initSendSMS () {
             return $(`<div><button class="btn btn-success btn-sm popover-save" data-id="` + id + `">Xác nhận</button><button class="ml-2 btn btn-secondary btn-sm popover-cancel">Hủy</button></div>`);
         }
     })
-    
-    $('body').on('click', '.popover-cancel', function (e) {
-        let popover = $(this).closest('.popover');
-        popover.popover('hide');
-    });
-    $('body').on('click', '.popover-save', function (e) {
-        let popup = $(this).closest('.popover');
-        popup.myLoading({size: 'sm'});
-         $.get('$urlSendSMS', {id: $(this).data('id')}, function(response) {
-               popup.popover('hide');
-               popup.myUnloading({size: 'sm'});
-               if (response.success) {
-                   $.toast({
-                       heading: 'Thông báo',
-                       text: response.message,
-                       position: 'top-right',
-                       class: 'jq-toast-success',
-                       hideAfter: 2000,
-                       stack: 6,
-                       showHideTransition: 'fade'
-                   });
-                   $.pjax.reload({container:'#coupon-gridview', url: window.location.href});
-               } else {
-                   $.toast({
-                       heading: 'Thông báo',
-                       text: response.message,
-                       position: 'top-right',
-                       class: 'jq-toast-warning',
-                       hideAfter: 2000,
-                       stack: 6,
-                       showHideTransition: 'fade'
-                   });
-               }
-           })
-    });
 }
 
-initSendSMS();
+initPopoverSMS();
 $(document).on('pjax:complete', function() {
-  initSendSMS()
+  initPopoverSMS()
 })
+
+$('body').on('click', '.popover-cancel', function (e) {
+    let popover = $(this).closest('.popover');
+    popover.popover('hide');
+});
+$('body').on('click', '.popover-save', function (e) {
+    let popup = $(this).closest('.popover');
+    popup.myLoading({size: 'sm'});
+     $.get('$urlSendSMS', {id: $(this).data('id')}, function(response) {
+           popup.popover('hide');
+           popup.myUnloading({size: 'sm'});
+           if (response.success) {
+               $.toast({
+                   heading: 'Thông báo',
+                   text: response.message,
+                   position: 'top-right',
+                   class: 'jq-toast-success',
+                   hideAfter: 2000,
+                   stack: 6,
+                   showHideTransition: 'fade'
+               });
+               $.pjax.reload({container:'#coupon-gridview', url: window.location.href});
+           } else {
+               $.toast({
+                   heading: 'Thông báo',
+                   text: response.message,
+                   position: 'top-right',
+                   class: 'jq-toast-warning',
+                   hideAfter: 2000,
+                   stack: 6,
+                   showHideTransition: 'fade'
+               });
+           }
+       })
+});
 
 $('body').on('click', '.success-delete', function(e){
     e.preventDefault();

@@ -45,6 +45,8 @@ class Coupon extends CouponTable
 {
     public $toastr_key = 'coupon';
 
+    public $partner_id; // Đối tác của KH
+
     const DISCOUNT_AMOUNT = 1;
     const DISCOUNT_PERCENT = 2;
 

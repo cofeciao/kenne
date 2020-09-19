@@ -113,4 +113,9 @@ $(function () {
             console.log('Load data fail');
         });
     });
+
+    $('body').on('click', '.clear-value', function(e) {
+        e.stopImmediatePropagation();
+        $(this).closest('.input-group').find('input, select').val('').trigger('change');
+    });
 });
