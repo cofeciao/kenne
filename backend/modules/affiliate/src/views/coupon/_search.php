@@ -16,6 +16,7 @@ use yii\widgets\ActiveForm;
 $templateInput = [
     'template' => '{label}<div class="input-group">{input}<button type="button" class="btn btn-light clear-value"><span class="fa fa-times"></span></button></div>{error}{hint}'
 ];
+$datapickerAddon = '<button type="button" class="btn btn-light clear-value"><span class="fa fa-times"></span></button><button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>';
 ?>
 
     <div class="coupon-search">
@@ -71,7 +72,7 @@ $templateInput = [
                 <div class="col-md-3 col-sm-4 col-lg-3">
                     <div class="form-group row">
                         <div class="col-12">
-                            <?= $form->field($model, 'partner_id', $templateInput)->label('Đối tác')->dropDownList(ArrayHelper::map(Partner::getAllRecords(), 'id', 'title'), [
+                            <?= $form->field($model, 'partner_id', $templateInput)->label('KH: Đối tác')->dropDownList(ArrayHelper::map(Partner::getAllRecords(), 'id', 'title'), [
                                 'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                             ]) ?>
                         </div>
@@ -81,13 +82,15 @@ $templateInput = [
                     <div class="form-group row">
                         <div class="col-12">
                             <?= $form->field($model, 'created_at')->widget(DatePicker::class, [
-                                'addon' => '<button type="button" class="btn btn-increment btn-light"><i class="ion ion-md-calendar"></i></button>',
+                                'addon' => $datapickerAddon,
                                 'clientOptions' => [
                                     'autoclose' => true,
                                     'format' => 'dd-mm-yyyy',
                                     'todayHighlight' => true,
-                                    'endDate' => '+0d'
-                                ]
+                                ],
+                                'options' => [
+                                    'placeholder' => Yii::t('backend', 'Ngày tạo')
+                                ],
                             ]) ?>
                         </div>
                     </div>
