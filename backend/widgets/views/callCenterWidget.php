@@ -87,7 +87,7 @@ use backend\assets\AppAsset;
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Sip Error</h4>
+                    <h6 class="modal-title">Sip Error</h6>
                 </div>
                 <div class="modal-body text-center text-danger">
                     <h3><i class="fa fa-3x fa-ban"></i></h3>

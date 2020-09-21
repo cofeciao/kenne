@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleLargeModalLabel">Hình ảnh file</h5>
+                <h6 class="modal-title" id="exampleLargeModalLabel">Hình ảnh file</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="ti-close"></i>
                 </button>
@@ -223,7 +223,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleLargeModalLabel">Chi tiết video</h5>
+                <h6 class="modal-title" id="exampleLargeModalLabel">Chi tiết video</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="ti-close"></i>
                 </button>
@@ -353,7 +353,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleLargeModalLabel">Chi tiết hình ảnh</h5>
+                <h6 class="modal-title" id="exampleLargeModalLabel">Chi tiết hình ảnh</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="ti-close"></i>
                 </button>
