@@ -1,11 +1,11 @@
 <?php
 
 use backend\widgets\ToastrWidget;
+use common\grid\MyGridView;
 use modava\affiliate\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-use common\grid\MyGridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel modava\affiliate\models\search\NoteSearch */
@@ -108,13 +108,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'title',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                        'title' => $model->title,
-                                                        'data-pjax' => 0,
-                                                    ]);
+                                                    $content = '<strong>Tiêu đề: </strong>' . Html::a($model->title, ['view', 'id' => $model->id], [
+                                                            'title' => $model->title,
+                                                            'data-pjax' => 0,
+                                                        ]) . '<br/>';
+
+                                                    $content .= '<strong>Thời gian gọi: </strong>' . ($model->call_time
+                                                            ? Yii::$app->formatter->asDatetime($model->call_time)
+                                                            : '') . '<br/>';
+
+                                                    $content .= '<strong>Thời gian gọi lại: </strong>' . ($model->recall_time
+                                                            ? Yii::$app->formatter->asDatetime($model->recall_time)
+                                                            : '') . '<br/>';
+
+
+                                                    return $content;
                                                 },
                                                 'headerOptions' => [
-                                                    'class' => 'header-200',
+                                                    'class' => 'header-300',
                                                 ],
                                             ],
                                             [
@@ -130,35 +141,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'call_time',
-                                                'value' => function ($model) {
-                                                    return $model->call_time
-                                                        ? date('d-m-Y H:i', strtotime($model->call_time))
-                                                        : '';
-                                                },
-                                                'headerOptions' => [
-                                                    'class' => 'header-200',
-                                                ],
-                                            ],
-                                            [
-                                                'attribute' => 'recall_time',
-                                                'value' => function ($model) {
-                                                    return $model->recall_time
-                                                        ? date('d-m-Y H:i', strtotime($model->recall_time))
-                                                        : '';
-                                                },
-                                                'headerOptions' => [
-                                                    'class' => 'header-200',
-                                                ],
-                                            ],
-                                            [
                                                 'attribute' => 'is_recall',
+                                                'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Yii::$app->getModule('affiliate')->params['note_is_recall'][$model->is_recall];
+                                                    if ($model->is_recall === 0) $class = 'badge-light';
+                                                    else $class = 'badge-success';
+
+                                                    $tag = Html::tag('span', Yii::$app->getModule('affiliate')->params['note_is_recall'][$model->is_recall], ['class' => "badge p-2 {$class}"]);
+
+                                                    return Html::tag('h5', $tag);
                                                 },
                                                 'headerOptions' => [
-                                                    'class' => 'header-200',
+                                                    'class' => 'header-200 text-center',
                                                 ],
+                                                'contentOptions' => [
+                                                    'class' => 'text-center '
+                                                ]
                                             ],
                                             [
                                                 'attribute' => 'description',
