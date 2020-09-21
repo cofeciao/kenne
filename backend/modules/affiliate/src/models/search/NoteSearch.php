@@ -93,7 +93,6 @@ class NoteSearch extends Note
         }
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', Customer::tableName() . '.partner_id', $this->partner_id])
             ->andFilterWhere(['like', 'description', $this->description]);
 

@@ -130,7 +130,7 @@ $datapickerAddon = '<button type="button" class="btn btn-light clear-value"><spa
                 <div class="col-md-3 col-sm-4 col-lg-3">
                     <div class="form-group row">
                         <div class="col-12">
-                            <?= $form->field($model, 'is_recall')->dropDownList(
+                            <?= $form->field($model, 'is_recall', $templateInput)->dropDownList(
                                 Yii::$app->getModule('affiliate')->params['note_is_recall'],
                                 ['prompt' => Yii::t('backend', 'Chọn một giá trị ...')]
                             ) ?>
