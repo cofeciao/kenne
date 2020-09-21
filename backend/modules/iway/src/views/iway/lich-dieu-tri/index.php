@@ -38,7 +38,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleLargeModalLabel">Xóa lịch thay khay</h5>
+                    <h6 class="modal-title" id="exampleLargeModalLabel">Xóa lịch thay khay</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="la la-close"></i>
                     </button>
@@ -51,8 +51,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary">Xóa lịch khay tay</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-sm btn-primary">Xóa lịch khay tay</button>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleLargeModalLabel">Chỉnh sửa vật tư</h5>
+                    <h6 class="modal-title" id="exampleLargeModalLabel">Chỉnh sửa vật tư</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="la la-close"></i>
                     </button>
@@ -106,8 +106,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary">Cập nhật</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-sm btn-primary">Cập nhật</button>
                 </div>
             </div>
         </div>

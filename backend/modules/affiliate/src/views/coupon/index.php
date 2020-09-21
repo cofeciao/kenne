@@ -287,7 +287,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title"></h4>
+                    <h6 class="modal-title"></h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -313,8 +313,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" form="send-sms-to-fan-form" value="Submit">Gửi</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-sm btn-success" form="send-sms-to-fan-form" value="Submit">Gửi</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Đóng</button>
                 </div>
 
             </div>
