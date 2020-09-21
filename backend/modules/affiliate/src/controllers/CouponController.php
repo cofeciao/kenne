@@ -5,11 +5,13 @@ namespace modava\affiliate\controllers;
 use backend\components\MyComponent;
 use modava\affiliate\helpers\Utils;
 use modava\affiliate\models\Customer;
+use modava\affiliate\models\KolsFanForm;
 use modava\affiliate\models\search\CustomerPartnerSearch;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use modava\affiliate\AffiliateModule;
 use backend\components\MyController;
@@ -47,12 +49,15 @@ class CouponController extends MyController
         $searchModel = new CouponSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $kolsFanForm = new KolsFanForm();
+
         $totalPage = $this->getTotalPage($dataProvider);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'totalPage' => $totalPage,
+            'kolsFanForm' => $kolsFanForm
         ]);
     }
 
@@ -115,6 +120,15 @@ class CouponController extends MyController
     {
         $model = $this->findModel($id);
 
+        if ($model->quantity_used > 0) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                'title' => 'Thông báo',
+                'text' => 'Không thể sửa Coupon đã sử dụng',
+                'type' => 'warning'
+            ]);
+            return $this->redirect(Url::toRoute(['view', 'id' => $id]));
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 if ($model->save()) {
@@ -153,6 +167,16 @@ class CouponController extends MyController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+
+        if ($model->quantity_used > 0) {
+            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                'title' => 'Thông báo',
+                'text' => 'Không thể xoá Coupon đã sử dụng',
+                'type' => 'warning'
+            ]);
+            return $this->redirect(Url::toRoute(['view', 'id' => $id]));
+        }
+
         try {
             if ($model->delete()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
@@ -257,6 +281,62 @@ class CouponController extends MyController
         } else {
             $errors = Html::tag('p', Yii::t('backend', 'Gửi thất bại'));
             foreach ($model->getErrors() as $error) {
+                $errors .= Html::tag('p', $error[0]);
+            }
+            return [
+                'success' => false,
+                'message' => $errors
+            ];
+        }
+    }
+
+    public function actionGetContentSmsCoupon() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $coupon = Coupon::findOne(Yii::$app->request->get('coupon_id'));
+
+        if ($coupon === null) {
+            return [
+                'success' => false,
+                'message' => Yii::t('backend', 'Coupon không tìm thấy')
+            ];
+        }
+
+        return $coupon->getContentSmsCoupon('{ten}');
+    }
+
+    public function actionSendSmsCouponToFan() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new KolsFanForm();
+        $model->load(Yii::$app->request->post());
+
+        $coupon = Coupon::findOne($model->coupon_id);
+
+        if (!$model->validate()) {
+            $errors = Html::tag('p', Yii::t('backend', 'Gửi thất bại'));
+            foreach ($model->getErrors() as $error) {
+                $errors .= Html::tag('p', $error[0]);
+            }
+            return [
+                'success' => false,
+                'message' => $errors
+            ];
+        }
+
+        if ($coupon === null) {
+            return [
+                'success' => false,
+                'message' => Yii::t('backend', 'Coupon không tồn tại')
+            ];
+        }
+
+        if ($coupon->sendSmsToFan($model->name, $model->phone)) {
+            return [
+                'success' => true,
+                'message' => Yii::t('backend', 'Gửi thành công')
+            ];
+        } else {
+            $errors = Html::tag('p', Yii::t('backend', 'Gửi thất bại'));
+            foreach ($coupon->getErrors() as $error) {
                 $errors .= Html::tag('p', $error[0]);
             }
             return [

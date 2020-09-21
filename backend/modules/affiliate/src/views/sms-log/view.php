@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             : <?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
+            <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
             <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -53,6 +53,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'customer_id',
                             'format' => 'raw',
                             'value' => function ($model) {
+                                if (!$model->customer_id) return '';
+
                                 return Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id]));
                             }
                         ],
