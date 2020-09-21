@@ -31,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
+                <?= $this->render('_search', ['model' => $searchModel]); ?>
+
                 <section class="hk-sec-wrapper index">
 
                     <?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
@@ -119,10 +121,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'customer_id',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return $model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '';
+                                                    $content = '<strong>Tên: </strong>' . ($model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '') . '<br/>';
+                                                    $content .= '<strong>Đối tác: </strong>' . Html::a($model->customer->partner->title, Url::toRoute(['/affiliate/partner/view', 'id' => $model->customer->partner_id]));
+                                                    return $content;
                                                 },
                                                 'headerOptions' => [
-                                                    'class' => 'header-200',
+                                                    'class' => 'header-300',
                                                 ],
                                             ],
                                             [
