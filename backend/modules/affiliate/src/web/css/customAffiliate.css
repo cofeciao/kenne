@@ -80,3 +80,7 @@ textarea[readonly] {
     width: 100%;
     display: none;
 }
+#affiliate-search label,
+#affiliate-search .form-group {
+    margin-bottom: .3rem;
+}
