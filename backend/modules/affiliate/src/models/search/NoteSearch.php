@@ -22,7 +22,7 @@ class NoteSearch extends Note
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'updated_at', 'created_by', 'updated_by', 'partner_id'], 'integer'],
+            [['id', 'customer_id', 'updated_at', 'created_by', 'updated_by', 'partner_id', 'is_recall'], 'integer'],
             [['title', 'slug', 'call_time', 'recall_time', 'description', 'created_at'], 'safe'],
         ];
     }
@@ -71,6 +71,7 @@ class NoteSearch extends Note
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
+            'is_recall' => $this->is_recall,
         ]);
 
         if ($this->created_at) {
