@@ -143,7 +143,7 @@ class SmsVht extends Component
     /**
      * @return string
      */
-    public function getResponseMessage($code = null, string $phone = ''): string
+    public function getResponseMessage($code = null, $phone = ''): string
     {
 
         $errors = [
