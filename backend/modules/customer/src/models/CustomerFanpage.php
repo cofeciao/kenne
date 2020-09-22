@@ -43,7 +43,6 @@ class CustomerFanpage extends CustomerFanpageTable
                 ],
                 'timestamp' => [
                     'class' => 'yii\behaviors\TimestampBehavior',
-                    'preserveNonEmptyValues' => true,
                     'attributes' => [
                         ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
