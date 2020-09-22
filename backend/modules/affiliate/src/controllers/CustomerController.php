@@ -69,7 +69,7 @@ class CustomerController extends MyController
             'orderDataProvider' => $dataProvider = new ActiveDataProvider([
                 'query' => Order::getListOrderUsedCoupon($id),
                 'pagination' => [
-                    'pageSize' => 1,
+                    'pageSize' => 50,
                 ],
                 'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
             ])
