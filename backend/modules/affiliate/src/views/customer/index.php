@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
                                                 'template' => DropdownWidget::widget([
-                                                        'title' => Yii::t('t', 'Hành động'),
+                                                        'title' => Yii::t('backend', 'Hành động'),
                                                         'dropdowns' => [
                                                             '{create-coupon}',
                                                             '{create-call-note}',
@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             'class' => 'btn-success btn-sm fs-12'
                                                         ]
                                                     ]) . DropdownWidget::widget([
-                                                        'title' => Yii::t('t', 'DS liên quan'),
+                                                        'title' => Yii::t('backend', 'DS liên quan'),
                                                         'dropdowns' => [
                                                             '{list-coupon}',
                                                             '{list-note}',
