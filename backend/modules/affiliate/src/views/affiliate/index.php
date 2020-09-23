@@ -373,9 +373,9 @@ $(function () {
     }).on('post-object-created', function() {
         window.location.reload();
     }).on('shown.bs.collapse hidden.bs.collapse', '.save-state-search', function () {
-            customPjax.setHeightContent();
+        customPjax.setHeightContent();
     });
-})
+});
 
 $('.customer-img-container').lightGallery();
 JS;
