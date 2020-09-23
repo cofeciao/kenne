@@ -372,8 +372,8 @@ $(function () {
         });
     }).on('post-object-created', function() {
         window.location.reload();
-    }).on('click', '.btn-hide-search', function () {
-        customPjax.setHeightContent();
+    }).on('shown.bs.collapse hidden.bs.collapse', '.save-state-search', function () {
+            customPjax.setHeightContent();
     });
 })
 

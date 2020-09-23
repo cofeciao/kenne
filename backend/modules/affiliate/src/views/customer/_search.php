@@ -24,7 +24,7 @@ $templateInput = [
         ],
     ]); ?>
 
-    <section class="hk-sec-wrapper mb-2">
+    <section class="hk-sec-wrapper p-1">
         <div class="row collapse show save-state-search" data-search-panel="affiliate-customer-search-panel" id="search-panel">
             <div class="col-md-3 col-sm-4 col-lg-3">
                 <div class="form-group row">
