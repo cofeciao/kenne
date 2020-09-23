@@ -370,10 +370,6 @@ $(function () {
             'Customer[date_accept_do_service]' : customerInfo.customer_come_date ? moment.unix(customerInfo.customer_come_date).format("YYYY-MM-DD") : '', 
             'Customer[date_checkin]' : customerInfo.time_lichhen ? moment.unix(customerInfo.time_lichhen).format("YYYY-MM-DD") : ''
         });
-    }).on('post-object-created', function() {
-        window.location.reload();
-    }).on('shown.bs.collapse hidden.bs.collapse', '.save-state-search', function () {
-            customPjax.setHeightContent();
     });
 })
 

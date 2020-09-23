@@ -135,6 +135,10 @@ $(function () {
     $('body').on('click', '.clear-value', function (e) {
         e.stopImmediatePropagation();
         $(this).closest('.input-group').find('input, select').val('').trigger('change');
+    }).on('post-object-created', function() {
+        window.location.reload();
+    }).on('shown.bs.collapse hidden.bs.collapse', '.save-state-search', function () {
+        customPjax.setHeightContent();
     });
 
     $('.save-state-search').each(function () {
