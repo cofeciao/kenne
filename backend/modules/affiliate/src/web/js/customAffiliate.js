@@ -3,8 +3,8 @@ function saveStateSearchPanel(searchPanel, button, key) {
         window.localStorage.setItem(key, 'show');
     }
 
-    if (window.localStorage.getItem(key) === 'show') $(searchPanel).addClass('show');
-    else $(searchPanel).removeClass('show');
+    if (window.localStorage.getItem(key) === 'show') $(searchPanel).collapse('show');
+    else $(searchPanel).collapse('hide');
 
     $(button).on('click', function() {
         if (window.localStorage.getItem(key) === 'show') {
