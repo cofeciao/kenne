@@ -374,5 +374,10 @@ $(function () {
 })
 
 $('.customer-img-container').lightGallery();
+$(document).on('pjax:complete', function() {
+    $('.customer-img-container').lightGallery();
+    $('[data-toggle="popover"]').popover();
+})
+
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);
