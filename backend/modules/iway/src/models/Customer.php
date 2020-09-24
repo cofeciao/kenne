@@ -104,6 +104,7 @@ class Customer extends CustomerTable
         return [
 			[['fullname', 'phone', 'online_sales_id', 'co_so_id', 'status_customer'], 'required'],
 			[['birthday'], 'safe'],
+            ['phone', 'unique'],
 			[['province_id', 'district_id', 'ward_id', 'online_sales_id', 'direct_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
 			[['online_sales_note', 'direct_sales_note', 'description'], 'string'],
 			[['code', 'fullname', 'avatar', 'sex', 'address', 'fb_fanpage', 'fb_customer', 'reason_fail'], 'string', 'max' => 255],
