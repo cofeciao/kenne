@@ -22,7 +22,73 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-12 col-xl-12">
             <div class="card mb-30">
-                <div class="card-header"></div>
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3 col-md-4">
+                            <select class="form-control" id="formControlSelect">
+                                <option>Liệu trình số 1</option>
+                                <option checked="">Liệu trình số 2</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="widgetbar">
+                                <button class="btn btn-primary md-full" data-toggle="modal" data-target=".bd-example-modal-add-lt"><i class="feather icon-plus mr-2"></i>Thêm liệu trình</button>
+                                <div class="modal fade bd-example-modal-add-lt" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleLargeModalLabel">Thêm liệu trình</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i class="la la-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="card-body">
+                                                    <p class="text-primary font-16">
+                                                        Bạn chắc chắn muốn thêm mới một liệu trình mới?
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="button" class="btn btn-primary">Thêm liệu trình</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="widgetbar">
+                                <button class="btn btn-primary md-full" data-toggle="modal" data-target=".bd-example-modal-save-lt"><i class="feather icon-plus mr-2"></i>Lưu liệu trình</button>
+                                <div class="modal fade bd-example-modal-save-lt" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleLargeModalLabel">Lưu liệu trình</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i class="la la-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="card-body">
+                                                    <p class="text-primary font-16">
+                                                        Bạn chắc chắn muốn lưu liệu trình này?
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="button" class="btn btn-primary">Lưu liệu trình</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <ul class="nav nav-pills justify-content-center custom-tab-button mb-3">
                         <li class="nav-item">
