@@ -102,7 +102,7 @@ class Customer extends CustomerTable
     public function rules()
     {
         return [
-			[['fullname', 'phone', 'online_sales_id', 'co_so_id', 'status_customer'], 'required'],
+			[['fullname', 'phone', 'online_sales_id', 'status_customer'], 'required'],
 			[['birthday'], 'safe'],
             ['phone', 'unique'],
 			[['province_id', 'district_id', 'ward_id', 'online_sales_id', 'direct_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
@@ -146,7 +146,7 @@ class Customer extends CustomerTable
             'direct_sales_id' => Yii::t('backend', 'Direct Sales'),
             'direct_sales_note' => Yii::t('backend', 'Direct Sales Note'),
             'status_customer' => Yii::t('backend', 'Status Customer'),
-            'co_so_id' => Yii::t('backend', 'Co So ID'),
+            'co_so_id' => Yii::t('backend', 'Cơ sở'),
             'reason_fail' => Yii::t('backend', 'Lý do Fail'),
             'who_created' => Yii::t('backend', 'Who Created'),
             'description' => Yii::t('backend', 'Description'),

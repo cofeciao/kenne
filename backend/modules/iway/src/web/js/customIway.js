@@ -14,6 +14,30 @@ function change_alias(alias) {
     return str;
 }
 
+/*
+* Implement by Hoang Duc
+* Date: 2020-09-24
+* Purpose: handle show hide child with parent value
+* Example: handleShowHide($('[name="Customer[online_source]"]'), ['facebook'], $('[name="Customer[fb_fanpage]"], [name="Customer[fb_customer]"]'));
+* */
+function handleShowHide(parrentEle, parrentValues = [], childEles) {
+    let onlineSource = $(parrentEle).val();
+
+    if (parrentValues.includes(onlineSource)) {
+        $(childEles).closest('.form-group').show(300);
+    } else {
+        $(childEles).closest('.form-group').hide(300);
+        $(childEles).val('').trigger('change');
+    }
+}
+function registerShowHide(parrentEle, parrentValues = [], childEles, eventName = 'change') {
+    handleShowHide($(parrentEle), parrentValues, childEles);
+    $(parrentEle).on(eventName, function () {
+        handleShowHide($(parrentEle), parrentValues, childEles);
+    });
+}
+
+
 $(function () {
     "use strict";
 
