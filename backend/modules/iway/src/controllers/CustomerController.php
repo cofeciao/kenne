@@ -3,14 +3,14 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
-use yii\db\Exception;
-use Yii;
-use yii\helpers\Html;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use backend\components\MyController;
 use modava\iway\models\Customer;
 use modava\iway\models\search\CustomerSearch;
+use Yii;
+use yii\db\Exception;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -19,8 +19,8 @@ use yii\web\Response;
 class CustomerController extends MyController
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -34,9 +34,9 @@ class CustomerController extends MyController
     }
 
     /**
-    * Lists all Customer models.
-    * @return mixed
-    */
+     * Lists all Customer models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new CustomerSearch();
@@ -47,16 +47,16 @@ class CustomerController extends MyController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'totalPage'    => $totalPage,
+            'totalPage' => $totalPage,
         ]);
-            }
+    }
 
     /**
-    * Displays a single Customer model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Displays a single Customer model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -65,10 +65,10 @@ class CustomerController extends MyController
     }
 
     /**
-    * Creates a new Customer model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
+     * Creates a new Customer model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
         $model = new Customer();
@@ -100,18 +100,18 @@ class CustomerController extends MyController
     }
 
     /**
-    * Updates an existing Customer model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Updates an existing Customer model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
+            if ($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -138,25 +138,25 @@ class CustomerController extends MyController
         ]);
     }
 
-    public function actionGetCustomerByKeyWord($q = null, $id = null) {
+    public function actionGetCustomerByKeyWord($q = null, $id = null)
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $out = Customer::getCustomerByKeyWord($q);
-        }
-        elseif ($id > 0) {
+        } elseif ($id > 0) {
             $out['results'] = ['id' => $id, 'text' => Customer::findOne($id)->fullname];
         }
         return $out;
     }
 
     /**
-    * Deletes an existing Customer model.
-    * If deletion is successful, the browser will be redirected to the 'index' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Deletes an existing Customer model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -189,17 +189,17 @@ class CustomerController extends MyController
     }
 
     /**
-    * @param $perpage
-    */
+     * @param $perpage
+     */
     public function actionPerpage($perpage)
     {
         MyComponent::setCookies('pageSize', $perpage);
     }
 
     /**
-    * @param $dataProvider
-    * @return float|int
-    */
+     * @param $dataProvider
+     * @return float|int
+     */
     public function getTotalPage($dataProvider)
     {
         if (MyComponent::hasCookies('pageSize')) {
@@ -208,20 +208,20 @@ class CustomerController extends MyController
             $dataProvider->pagination->pageSize = 10;
         }
 
-        $pageSize   = $dataProvider->pagination->pageSize;
+        $pageSize = $dataProvider->pagination->pageSize;
         $totalCount = $dataProvider->totalCount;
-        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
+        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
 
         return $totalPage;
     }
 
     /**
-    * Finds the Customer model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Customer the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
+     * Finds the Customer model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Customer the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
 
     protected function findModel($id)
