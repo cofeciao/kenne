@@ -5,7 +5,7 @@ return [
     'rules' => [
         [
             'allow' => true,
-            'actions' => ['login', 'submit-login'],
+            'actions' => ['login', 'submit-login', 'request-password-reset', 'reset-password'],
             'roles' => ['?']
         ],
         [

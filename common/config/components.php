@@ -68,4 +68,14 @@ return [
         'thousandSeparator' => ',',
 //        'currencyCode' => '₫',
     ],
+    'commandBus' => [
+        'class' => trntv\bus\CommandBus::class,
+        'middlewares' => [
+            [
+                'class' => trntv\bus\middlewares\BackgroundCommandMiddleware::class,
+                'backgroundHandlerPath' => '@console/yii',
+                'backgroundHandlerRoute' => 'command-bus/handle',
+            ]
+        ]
+    ],
 ];

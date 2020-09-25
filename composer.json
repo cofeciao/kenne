@@ -49,6 +49,7 @@
     "2amigos/yii2-arrayquery-component" : "*",
     "tuyakhov/yii2-json-api": "*",
     "phpoffice/phpspreadsheet": "^1.14",
+    "trntv/yii2-command-bus": "^1.0",
     "modava/imagick": "@dev",
     "modava/location": "@dev",
     "modava/generator": "@dev",
