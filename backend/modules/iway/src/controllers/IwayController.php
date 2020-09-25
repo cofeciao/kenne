@@ -12,7 +12,7 @@ class IwayController extends MyIwayController
 
     public function actionIndex()
     {
-        return $this->redirect(Url::toRoute(['/iway/co-so']));
+        return $this->redirect(Url::toRoute(['/iway/customer']));
     }
 
     public function actionView()
