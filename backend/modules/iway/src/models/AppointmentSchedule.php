@@ -23,6 +23,10 @@ use yii\db\ActiveRecord;
  * @property string $reason_fail Lý do không làm dịch vụ mặc dù đã đến
  * @property string $check_in_time Thời gian khách đến
  * @property string $description
+ * @property string $direct_sales_note
+ * @property integer $direct_sales_id
+ * @property integer $doctor_thamkham_id
+ * @property string $doctor_thamkham_note
  * @property int $created_at
  * @property int $created_by
  * @property int $updated_at
@@ -92,10 +96,10 @@ class AppointmentSchedule extends AppointmentScheduleTable
     public function rules()
     {
         return [
-            [['title', 'customer_id', 'co_so_id', 'start_time', 'status'], 'required'],
-            [['customer_id', 'co_so_id',], 'integer'],
+            [['title', 'customer_id', 'co_so_id', 'start_time', 'status', 'direct_sales_id', 'doctor_thamkham_id'], 'required'],
+            [['customer_id', 'co_so_id', 'direct_sales_id'], 'integer'],
             [['start_time', 'check_in_time'], 'safe'],
-            [['description'], 'string'],
+            [['description', 'direct_sales_note'], 'string'],
             [['title', 'accept_for_service', 'reason_fail'], 'string', 'max' => 255],
             [['status', 'status_service'], 'string', 'max' => 50],
             [['status_service', 'check_in_time'], 'required', 'when' => function () {
@@ -113,6 +117,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
             }, 'whenClient' => "function() {
 			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_DONG_Y_LAM . "';
 			}"],
+            [['direct_sales_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['direct_sales_id' => 'id']],
             [['co_so_id'], 'exist', 'skipOnError' => true, 'targetClass' => CoSo::class, 'targetAttribute' => ['co_so_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
@@ -135,6 +140,10 @@ class AppointmentSchedule extends AppointmentScheduleTable
             'status_service' => Yii::t('backend', 'Tình trạng dịch vụ'),
             'accept_for_service' => Yii::t('backend', 'Đồng ý dịch vụ nào'),
             'reason_fail' => Yii::t('backend', 'Lý do Fail dù đã đến'),
+            'direct_sales_note' => Yii::t('backend', 'Ghi chú của Direct Sales'),
+            'direct_sales_id' => Yii::t('backend', 'Direct Sales'),
+            'doctor_thamkham_id' => Yii::t('backend', 'Bác sĩ thăm khám'),
+            'doctor_thamkham_note' => Yii::t('backend', 'Ghi chú của Bác sĩ thăm khám'),
             'check_in_time' => Yii::t('backend', 'Ngày đến'),
             'description' => Yii::t('backend', 'Description'),
             'created_at' => Yii::t('backend', 'Created At'),
@@ -174,4 +183,11 @@ class AppointmentSchedule extends AppointmentScheduleTable
         return $this->hasOne(CoSo::class, ['id' => 'co_so_id']);
     }
 
+    public function getDirectSales() {
+        return $this->hasOne(User::class, ['id' => 'direct_sales_id']);
+    }
+
+    public function getDoctorThamkham() {
+        return $this->hasOne(User::class, ['id' => 'doctor_thamkham_id']);
+    }
 }

@@ -18,8 +18,8 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['id', 'province_id', 'district_id', 'ward_id', 'online_sales_id', 'direct_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['code', 'fullname', 'avatar', 'phone', 'sex', 'birthday', 'address', 'online_source', 'fb_fanpage', 'fb_customer', 'online_sales_note', 'direct_sales_note', 'status_customer', 'reason_fail', 'who_created', 'description'], 'safe'],
+            [['id', 'province_id', 'district_id', 'ward_id', 'online_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['code', 'fullname', 'avatar', 'phone', 'sex', 'birthday', 'address', 'online_source', 'fb_fanpage', 'fb_customer', 'online_sales_note', 'status_customer', 'reason_fail', 'who_created', 'description'], 'safe'],
         ];
     }
 
@@ -66,7 +66,6 @@ class CustomerSearch extends Customer
             'district_id' => $this->district_id,
             'ward_id' => $this->ward_id,
             'online_sales_id' => $this->online_sales_id,
-            'direct_sales_id' => $this->direct_sales_id,
             'co_so_id' => $this->co_so_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -84,7 +83,6 @@ class CustomerSearch extends Customer
             ->andFilterWhere(['like', 'fb_fanpage', $this->fb_fanpage])
             ->andFilterWhere(['like', 'fb_customer', $this->fb_customer])
             ->andFilterWhere(['like', 'online_sales_note', $this->online_sales_note])
-            ->andFilterWhere(['like', 'direct_sales_note', $this->direct_sales_note])
             ->andFilterWhere(['like', 'status_customer', $this->status_customer])
             ->andFilterWhere(['like', 'reason_fail', $this->reason_fail])
             ->andFilterWhere(['like', 'who_created', $this->who_created])

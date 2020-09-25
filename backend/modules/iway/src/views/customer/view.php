@@ -92,8 +92,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'fb_customer',
                         'online_sales_id',
                         'online_sales_note:raw',
-                        'direct_sales_id',
-                        'direct_sales_note:raw',
                         [
                             'attribute' => 'status_customer',
                             'value' => function ($model) {

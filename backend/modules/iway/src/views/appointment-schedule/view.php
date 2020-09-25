@@ -86,8 +86,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->getDisplayDropdown($model->reason_fail, 'reason_fail');
                             }
                         ],
+                        'description:raw',
 						'check_in_time:datetime',
-						'description:raw',
+                        [
+                            'attribute' => 'direct_sales_id',
+                            'value' => function ($model) {
+                                return $model->direct_sales_id ? $model->directSales->userProfile->fullname : '';
+                            }
+                        ],
+                        'direct_sales_note:raw',
+                        [
+                            'attribute' => 'doctor_thamkham_id',
+                            'value' => function ($model) {
+                                return $model->doctor_thamkham_id ? $model->doctorThamkham->userProfile->fullname : '';
+                            }
+                        ],
+                        'doctor_thamkham_note:raw',
 						'created_at:datetime',
 						'updated_at:datetime',
                         [

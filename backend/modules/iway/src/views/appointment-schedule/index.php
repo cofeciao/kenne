@@ -180,6 +180,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                             ],
                                             'check_in_time:datetime',
+                                            [
+                                                'attribute' => 'direct_sales_id',
+                                                'value' => function ($model) {
+                                                    return $model->direct_sales_id ? $model->directSales->userProfile->fullname : '';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'doctor_thamkham_id',
+                                                'value' => function ($model) {
+                                                    return $model->doctor_thamkham_id ? $model->doctorThamkham->userProfile->fullname : '';
+                                                }
+                                            ],
                                             //'description:ntext',
                                             [
                                                 'attribute' => 'created_by',
