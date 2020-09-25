@@ -83,6 +83,9 @@ $model->check_in_time = $model->check_in_time != null
             <?= $form->field($model, 'reason_fail')->dropDownList($model->getDropdown('reason_fail'), [
                 'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
             ]) ?>
+            <?= $form->field($model, 'accept_for_service')->dropDownList($model->getDropdown('accept_for_service'), [
+                'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+            ]) ?>
         </div>
         <div class="col-6">
             <?= $form->field($model, 'check_in_time')->widget(DateTimePicker::class, [
@@ -94,11 +97,6 @@ $model->check_in_time = $model->check_in_time != null
                     'format' => 'dd-mm-yyyy hh:ii',
                     'todayHighLight' => true,
                 ]
-            ]) ?>
-        </div>
-        <div class="col-6">
-            <?= $form->field($model, 'accept_for_service')->dropDownList($model->getDropdown('accept_for_service'), [
-                'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
             ]) ?>
         </div>
         <div class="col-12">

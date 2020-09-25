@@ -54,7 +54,8 @@
     "modava/location": "@dev",
     "modava/generator": "@dev",
     "modava/select2": "@dev",
-    "modava/voip24h": "@dev"
+    "modava/voip24h": "@dev",
+    "trntv/yii2-command-bus": "^1.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
