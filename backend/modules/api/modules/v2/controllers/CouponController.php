@@ -49,7 +49,6 @@ class CouponController extends RestfullController
                 $model = new Order();
             }
         } else {
-            Yii::$app->response->statusCode = 400;
             return [
                 'success' => false,
                 'error' => [
@@ -62,15 +61,12 @@ class CouponController extends RestfullController
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            Yii::$app->response->statusCode = 200;
             return [
                 'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
         } else {
-            Yii::$app->response->statusCode = 400;
-
             if ($model->hasErrors('coupon_id')) {
                 $model->clearErrors('coupon_id');
 
@@ -99,7 +95,6 @@ class CouponController extends RestfullController
         if ($id) {
             $model = Order::findOne($id);
             if ($model === null) {
-                Yii::$app->response->statusCode = 404;
                 return [
                     'success' => false,
                     'error' => [
@@ -113,15 +108,12 @@ class CouponController extends RestfullController
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            Yii::$app->response->statusCode = 200;
             return [
                 'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
         } else {
-            Yii::$app->response->statusCode = 400;
-
             if ($model->hasErrors('coupon_id')) {
                 $model->clearErrors('coupon_id');
 
@@ -150,7 +142,6 @@ class CouponController extends RestfullController
         if ($id) {
             $model = Payment::findOne($id);
             if ($model === null) {
-                Yii::$app->response->statusCode = 404;
                 return [
                     'success' => false,
                     'error' => [
@@ -164,15 +155,12 @@ class CouponController extends RestfullController
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            Yii::$app->response->statusCode = 200;
             return [
                 'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
         } else {
-            Yii::$app->response->statusCode = 400;
-
             return [
                 'success' => false,
                 'error' => [
@@ -191,7 +179,6 @@ class CouponController extends RestfullController
         if ($id) {
             $model = Receipt::findOne($id);
             if ($model === null) {
-                Yii::$app->response->statusCode = 404;
                 return [
                     'success' => false,
                     'error' => [
@@ -205,15 +192,12 @@ class CouponController extends RestfullController
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            Yii::$app->response->statusCode = 200;
             return [
                 'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
         } else {
-            Yii::$app->response->statusCode = 400;
-
             return [
                 'success' => false,
                 'error' => [
@@ -235,7 +219,6 @@ class CouponController extends RestfullController
                 $model = new Receipt();
             }
         } else {
-            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
@@ -246,15 +229,12 @@ class CouponController extends RestfullController
         }
 
         if ($model->loadFromApi(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            Yii::$app->response->statusCode = 200;
             return [
                 'success' => true,
                 'code' => 200,
                 'data' => $model->getAttributes(),
             ];
         } else {
-            Yii::$app->response->statusCode = 400;
-
             return [
                 'success' => false,
                 'error' => [
@@ -286,7 +266,6 @@ class CouponController extends RestfullController
         }
 
         if ($model == null) {
-            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
@@ -299,8 +278,6 @@ class CouponController extends RestfullController
         try {
             if ($model->delete()) {
                 $code = 200;
-                Yii::$app->response->statusCode = $code;
-
                 return [
                     'success' => true,
                     'code' => $code,
@@ -308,13 +285,11 @@ class CouponController extends RestfullController
                 ];
             } else {
                 $code = 406;
-                Yii::$app->response->statusCode = $code;
                 $message = $model->getErrors();
                 $status = false;
             }
         } catch (Exception $ex) {
             $code = 406;
-            Yii::$app->response->statusCode = $code;
             $message = [$ex->getMessage()];
             $status = false;
         }
@@ -347,7 +322,6 @@ class CouponController extends RestfullController
         }
 
         if ($model == null) {
-            Yii::$app->response->statusCode = 400;
             return [
                 'success' => false,
                 'error' => [
@@ -360,18 +334,15 @@ class CouponController extends RestfullController
         try {
             if ($model->delete()) {
                 $code = 200;
-                Yii::$app->response->statusCode = $code;
                 $message = Yii::t('backend', 'Xóa thành công');
                 $status = true;
             } else {
                 $code = 406;
-                Yii::$app->response->statusCode = $code;
                 $message = $model->getErrors();
                 $status = false;
             }
         } catch (Exception $ex) {
             $code = 406;
-            Yii::$app->response->statusCode = $code;
             $message = [$ex->getMessage()];
             $status = false;
         }
@@ -388,7 +359,6 @@ class CouponController extends RestfullController
     public function actionPayments($customerId)
     {
         if (!$customerId) {
-            Yii::$app->response->statusCode = 400;
             return [
                 'success' => false,
                 'error' => [
@@ -399,7 +369,6 @@ class CouponController extends RestfullController
         }
 
         if (!Customer::findOne($customerId)) {
-            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
@@ -451,7 +420,6 @@ class CouponController extends RestfullController
         }
 
         if ($model == null) {
-            Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
                 'error' => [
@@ -461,7 +429,6 @@ class CouponController extends RestfullController
             ];
         }
 
-        Yii::$app->response->statusCode = 200;
         return [
             'success' => true,
             'data' => $model->getAttributes(),
