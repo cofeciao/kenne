@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use modava\datetime\DateTimePicker;
 use modava\iway\models\AppointmentSchedule;
 use modava\iway\models\table\CoSoTable;
+use modava\iway\widgets\JsCreateModalWidget;
 use modava\tiny\TinyMce;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -30,7 +31,7 @@ $user = User::findOne(Yii::$app->user->id);
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="appointment-schedule-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'lich_hen_form']); ?>
 
     <section class="hk-sec-wrapper mb-4">
         <h5 class="hk-sec-title">Thông tin chung</h5>
@@ -180,6 +181,8 @@ $user = User::findOne(Yii::$app->user->id);
 
 <?php ActiveForm::end(); ?>
 </div>
+
+<?= JsCreateModalWidget::widget(['formClassName' => 'lich_hen_form', 'modelName' => 'AppointmentSchedule']) ?>
 
 <?php
 

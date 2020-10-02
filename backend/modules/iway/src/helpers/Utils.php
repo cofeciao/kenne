@@ -19,7 +19,7 @@ class Utils
     const DISPLAY_DATETIME_FORMART = 'd-m-Y h:i:s';
 
     public static function decamelize($string) {
-        return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
+        return str_replace('_', '-', strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string)));
     }
 
     public static function convertDateToDBFormat ($date) {

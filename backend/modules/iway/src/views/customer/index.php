@@ -1,9 +1,10 @@
 <?php
 
+use backend\widgets\ToastrWidget;
+use common\grid\MyGridView;
+use modava\iway\widgets\JsUtils;
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
-use common\grid\MyGridView;
-use backend\widgets\ToastrWidget;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -108,8 +109,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
-                                                'template' => '{update} {delete}',
+                                                'template' => '{create-call} {create-lich-hen} {update} {delete}',
                                                 'buttons' => [
+                                                    'create-call' => function ($url, $model) {
+                                                        return Html::a('<i class="icon dripicons-phone"></i>' . ' ' . Yii::t('backend', 'Tạo cuộc gọi'), 'javascript:;', [
+                                                            'title' => Yii::t('backend', 'Tạo cuộc gọi'),
+                                                            'alia-label' => Yii::t('backend', 'Tạo cuộc gọi'),
+                                                            'data-pjax' => 0,
+                                                            'data-partner' => 'myaris',
+                                                            'class' => 'btn btn-success btn-xs create-call m-1'
+                                                        ]);
+                                                    },
+                                                    'create-lich-hen' => function ($url, $model) {
+                                                        return Html::a('<i class="icon dripicons-to-do"></i>' . ' ' . Yii::t('backend', 'Tạo lịch hẹn'), 'javascript:;', [
+                                                            'title' => Yii::t('backend', 'Tạo lịch hẹn'),
+                                                            'alia-label' => Yii::t('backend', 'Tạo lịch hẹn'),
+                                                            'data-pjax' => 0,
+                                                            'data-partner' => 'myaris',
+                                                            'class' => 'btn btn-success btn-xs create-lich-hen m-1'
+                                                        ]);
+                                                    },
                                                     'update' => function ($url, $model) {
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                                             'title' => Yii::t('backend', 'Update'),
@@ -133,6 +152,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                                 'headerOptions' => [
                                                     'width' => 150,
+                                                    'class' => 'text-center'
+                                                ],
+                                                'contentOptions' => [
+                                                    'width' => 150,
+                                                    'class' => 'text-center'
                                                 ],
                                             ],
                                             [
@@ -196,6 +220,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+
+<?= JsUtils::widget() ?>
+
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
 $script = <<< JS
@@ -211,6 +238,18 @@ var customPjax = new myGridView();
 customPjax.init({
 pjaxId: '#dt-pjax',
 urlChangePageSize: '$urlChangePageSize',
+});
+
+$('body').on('click', '.create-call',function() {
+    let customerId = $(this).closest('tr').data('key');
+    openCreateModal({model: 'Call', 
+        'Call[customer_id]' : customerId,
+    });
+}).on('click', '.create-lich-hen',function() {
+    let customerId = $(this).closest('tr').data('key');
+    openCreateModal({model: 'AppointmentSchedule', 
+        'AppointmentSchedule[customer_id]' : customerId,
+    });
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);
