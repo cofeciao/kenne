@@ -32,8 +32,6 @@ use yii\helpers\ArrayHelper;
     * @property string $fb_customer Nếu khách đến từ nguồn FB, thì fb của khách là gì
     * @property int $online_sales_id Sales Online Tư vấn
     * @property string $online_sales_note Ghi chú của Sales Online
-    * @property int $direct_sales_id Direct Sale phụ trách
-    * @property string $direct_sales_note Ghi chú của Direct Sale
     * @property string $status_customer Tình trạng khách hàng: Đặt hẹn, Chờ chăm sóc lại, Fail
     * @property int $co_so_id Cơ sở
     * @property string $reason_fail lý do fail
@@ -105,14 +103,13 @@ class Customer extends CustomerTable
 			[['fullname', 'phone', 'online_sales_id', 'status_customer'], 'required'],
 			[['birthday'], 'safe'],
             ['phone', 'unique'],
-			[['province_id', 'district_id', 'ward_id', 'online_sales_id', 'direct_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-			[['online_sales_note', 'direct_sales_note', 'description'], 'string'],
+			[['province_id', 'district_id', 'ward_id', 'online_sales_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+			[['online_sales_note', 'description'], 'string'],
 			[['code', 'fullname', 'avatar', 'sex', 'address', 'fb_fanpage', 'fb_customer', 'reason_fail'], 'string', 'max' => 255],
 			[['phone'], 'string', 'max' => 30],
 			[['online_source', 'status_customer', 'who_created'], 'string', 'max' => 50],
 			[['co_so_id'], 'exist', 'skipOnError' => true, 'targetClass' => CoSo::class, 'targetAttribute' => ['co_so_id' => 'id']],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['direct_sales_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['direct_sales_id' => 'id']],
 			[['online_sales_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['online_sales_id' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
 			[['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => LocationDistrict::class, 'targetAttribute' => ['district_id' => 'id']],
@@ -144,7 +141,6 @@ class Customer extends CustomerTable
             'online_sales_id' => Yii::t('backend', 'Online Sales'),
             'online_sales_note' => Yii::t('backend', 'Online Sales Note'),
             'direct_sales_id' => Yii::t('backend', 'Direct Sales'),
-            'direct_sales_note' => Yii::t('backend', 'Direct Sales Note'),
             'status_customer' => Yii::t('backend', 'Status Customer'),
             'co_so_id' => Yii::t('backend', 'Cơ sở'),
             'reason_fail' => Yii::t('backend', 'Lý do Fail'),

@@ -158,27 +158,6 @@ $user = \common\models\User::findOne(Yii::$app->user->id);
                         'type' => 'content'
                     ]) ?>
                 </div>
-                <div class="col-6">
-                    <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === 'direct_sales') {
-                        $model->direct_sales_id = Yii::$app->user->id;
-                    }
-                    ?>
-                    <?= $form->field($model, 'direct_sales_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map(User::getUserByRole('direct_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                        'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); ?>
-                </div>
-                <div class="col-12">
-                    <?= $form->field($model, 'direct_sales_note')->widget(\modava\tiny\TinyMce::class, [
-                        'options' => ['rows' => 12],
-                        'type' => 'content'
-                    ]) ?>
-                </div>
-            </div>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
