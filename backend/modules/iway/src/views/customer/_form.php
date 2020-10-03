@@ -24,16 +24,25 @@ $model->birthday = Utils::convertDateToDisplayFormat($model->birthday);
 
 $user = \common\models\User::findOne(Yii::$app->user->id);
 
+$btnListCall = '';
+$btnListAS = '';
+
+if ($model->primaryKey) {
+    $btnListAS  = Html::a('<i class="icon dripicons-to-do"></i>', Url::toRoute(['appointment-schedule/index', 'AppointmentScheduleSearch[customer_id]' => $model->primaryKey]), [ 'class' => 'btn btn-info', 'target' => '_blank', 'title' => 'Danh sách Lịch hẹn' ]);
+    $btnListCall = Html::a('<i class="icon dripicons-phone"></i>', Url::toRoute(['call/index', 'CallSearch[customer_id]' => $model->primaryKey]), [ 'class' => 'btn btn-info', 'target' => '_blank', 'title' => 'Danh sách Cuộc gọi' ]);
+}
+
 $templateStatus = '
     {label}
     <div class="input-group">
         {input}
         <button type="button" class="btn btn-success create-appointment-schedule" title="Tạo lịch hẹn" style="display: none">
             <i class="icon dripicons-to-do"></i>
-        </button>
+        </button>' . $btnListAS . '
         <button type="button" class="btn btn-success create-call" title="Tạo cuộc gọi"  style="display: none">
             <i class="icon dripicons-phone"></i>
         </button>
+        ' . $btnListCall . '
     </div>
     {error}{hint}';
 ?>
