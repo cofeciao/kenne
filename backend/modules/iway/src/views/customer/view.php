@@ -50,7 +50,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'fullname',
                         'code',
                         'avatar',
-                        'phone',
+                        [
+                            'attribute' => 'phone',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return $model->phone . ' ' . $model->getPhone();
+                            }
+                        ],
                         [
                             'attribute' => 'sex',
                             'value' => function ($model) {

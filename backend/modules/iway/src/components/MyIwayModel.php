@@ -4,6 +4,7 @@ namespace modava\iway\components;
 
 use modava\iway\models\DropdownsConfig;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 
 /**
@@ -36,5 +37,21 @@ class MyIwayModel extends ActiveRecord
             return $dropDown[$value];
         }
         return null;
+    }
+
+    public function getPhone()
+    {
+        $content = '';
+        if (class_exists('modava\voip24h\CallCenter')) $content .= Html::a('<i class="fa fa-phone"></i>', 'javascript: void(0)', [
+            'class' => 'btn btn-xs btn-success call-to',
+            'title' => 'Gọi',
+            'data-uri' => $this->phone
+        ]);
+        $content .= Html::a('<i class="fa fa-paste"></i>', 'javascript: void(0)', [
+            'class' => 'btn btn-xs btn-info copy ml-1',
+            'title' => 'Copy',
+            'data-copy' => $this->phone
+        ]);
+        return $content;
     }
 }

@@ -37,6 +37,25 @@ function registerShowHide(parrentEle, parrentValues = [], childEles, eventName =
     });
 }
 
+function copyToClipboard(text) {
+    let dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.setAttribute("id", "dummy_id");
+    document.getElementById("dummy_id").value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    $.toast({
+        heading: 'Thông báo',
+        text: 'Copy thành công',
+        position: 'top-right',
+        class: 'jq-toast-success',
+        hideAfter: 2000,
+        stack: 6,
+        showHideTransition: 'fade'
+    });
+}
+
 
 $(function () {
     "use strict";
@@ -156,6 +175,10 @@ $(function () {
         }).fail(function (f) {
             console.log('Load data fail');
         });
+    });
+
+    $('body').on('click', '.copy', function () {
+        copyToClipboard($(this).data('copy'));
     });
 });
 
