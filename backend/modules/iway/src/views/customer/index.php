@@ -2,9 +2,11 @@
 
 use backend\widgets\ToastrWidget;
 use common\grid\MyGridView;
+use modava\iway\widgets\DropdownWidget;
 use modava\iway\widgets\JsUtils;
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -109,7 +111,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
-                                                'template' => '{create-call} {create-lich-hen} {update} {delete}',
+                                                'template' => DropdownWidget::widget([
+                                                    'title' => Yii::t('backend', 'Hành động'),
+                                                    'isCustomItem' => true,
+                                                    'options' => [
+                                                            'class' => 'btn-info btn-sm'
+                                                    ],
+                                                    'dropdowns' => [
+                                                        '{create-call}',
+                                                        '{create-lich-hen}',
+                                                        '{list-lich-hen}',
+                                                        '{list-call}',
+                                                        '{update}',
+                                                        '{delete}',
+                                                    ]]),
                                                 'buttons' => [
                                                     'create-call' => function ($url, $model) {
                                                         return Html::a('<i class="icon dripicons-phone"></i>' . ' ' . Yii::t('backend', 'Tạo cuộc gọi'), 'javascript:;', [
@@ -129,18 +144,36 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             'class' => 'btn btn-success btn-xs create-lich-hen m-1'
                                                         ]);
                                                     },
+                                                    'list-lich-hen' => function ($url, $model) {
+                                                        return Html::a('<i class="icon dripicons-to-do"></i>' . ' ' . Yii::t('backend', 'DS Lịch hẹn'), Url::toRoute(['appointment-schedule/index', 'AppointmentScheduleSearch[customer_id]' => $model->primaryKey]), [
+                                                            'title' => Yii::t('backend', 'DS Lịch hẹn'),
+                                                            'alia-label' => Yii::t('backend', 'DS Lịch hẹn'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-info btn-xs m-1',
+                                                            'target' => '_blank'
+                                                        ]);
+                                                    },
+                                                    'list-call' => function ($url, $model) {
+                                                        return Html::a('<i class="icon dripicons-phone"></i>' . ' ' . Yii::t('backend', 'DS Cuộc gọi'), Url::toRoute(['call/index', 'CallSearch[customer_id]' => $model->primaryKey]), [
+                                                            'title' => Yii::t('backend', 'DS Cuộc gọi'),
+                                                            'alia-label' => Yii::t('backend', 'DS Cuộc gọi'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-info btn-xs m-1',
+                                                            'target' => '_blank'
+                                                        ]);
+                                                    },
                                                     'update' => function ($url, $model) {
-                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>' . ' ' . Yii::t('backend', 'Update'), $url, [
                                                             'title' => Yii::t('backend', 'Update'),
                                                             'alia-label' => Yii::t('backend', 'Update'),
                                                             'data-pjax' => 0,
-                                                            'class' => 'btn btn-info btn-xs'
+                                                            'class' => 'btn btn-info btn-xs m-1'
                                                         ]);
                                                     },
                                                     'delete' => function ($url, $model) {
-                                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>' . ' ' . Yii::t('backend', 'Delete'), 'javascript:;', [
                                                             'title' => Yii::t('backend', 'Delete'),
-                                                            'class' => 'btn btn-danger btn-xs btn-del',
+                                                            'class' => 'btn btn-danger btn-xs btn-del m-1',
                                                             'data-title' => Yii::t('backend', 'Delete?'),
                                                             'data-pjax' => 0,
                                                             'data-url' => $url,
