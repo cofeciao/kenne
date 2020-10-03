@@ -68,7 +68,7 @@ class HandleAjaxController extends MyIwayController
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true ];
+                return [ 'success' => true, 'data' => $model ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
