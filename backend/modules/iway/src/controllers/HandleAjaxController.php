@@ -2,7 +2,7 @@
 
 namespace modava\iway\controllers;
 
-use modava\iway\components\MyiwayController;
+use modava\iway\components\MyIwayController;
 use modava\iway\helpers\Utils;
 use Yii;
 use yii\web\Response;
@@ -13,7 +13,7 @@ use yii\web\Response;
  * Purpose: Provide a controller handle ajax request
  * */
 
-class HandleAjaxController extends MyiwayController
+class HandleAjaxController extends MyIwayController
 {
     var $modelName = null;
     var $classModelName = null;
