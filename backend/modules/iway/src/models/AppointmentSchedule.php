@@ -32,6 +32,7 @@ use yii\db\ActiveRecord;
  * @property int $created_by
  * @property int $updated_at
  * @property int $updated_by
+ * @property int new_appointment_schedule_id
  *
  * @property CoSo $coSo
  * @property User $createdBy
@@ -41,6 +42,8 @@ use yii\db\ActiveRecord;
 class AppointmentSchedule extends AppointmentScheduleTable
 {
     const STATUS_DEN = 'den';
+    const STATUS_DOI_LICH = 'doi_lich';
+
     const SERVICE_STATUS_KHONG_DONG_Y_LAM = 'khong_dong_y_lam';
     const SERVICE_STATUS_DONG_Y_LAM = 'dong_y_lam';
     public $toastr_key = 'appointment-schedule';
@@ -94,7 +97,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
     {
         return [
             [['title', 'customer_id', 'co_so_id', 'start_time', 'status',], 'required'],
-            [['customer_id', 'co_so_id', 'direct_sales_id'], 'integer'],
+            [['customer_id', 'co_so_id', 'direct_sales_id', 'new_appointment_schedule_id'], 'integer'],
             [['start_time', 'check_in_time'], 'safe'],
             [['description', 'direct_sales_note'], 'string'],
             [['title', 'accept_for_service', 'reason_fail'], 'string', 'max' => 255],
@@ -119,6 +122,10 @@ class AppointmentSchedule extends AppointmentScheduleTable
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            ['new_appointment_schedule_id', 'required', 'when' => function () { return $this->status == 'doi_lich'; },
+                'whenClient' => "function() {
+			    return $('#appointmentschedule-status').val() === '" . self::STATUS_DOI_LICH . "';
+			}"],
         ];
     }
 

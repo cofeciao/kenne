@@ -28,6 +28,14 @@ $model->check_in_time = $model->check_in_time != null
     : '';
 
 $user = User::findOne(Yii::$app->user->id);
+
+$disableCustomer = false;
+
+$user = new \modava\auth\models\User();
+$userRoleName = $user->getRoleName(Yii::$app->user->id);
+
+if ($userRoleName == 'online_sales') $disableCustomer = true;
+
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="appointment-schedule-form">
@@ -59,6 +67,7 @@ $user = User::findOne(Yii::$app->user->id);
                         'templateResult' => new JsExpression('function(model) { return model.text; }'),
                         'templateSelection' => new JsExpression('function (model) { return model.text; }'),
                     ],
+                    'disabled' => $disableCustomer
                 ]); ?>
             </div>
             <div class="col-6">
@@ -188,6 +197,7 @@ $user = User::findOne(Yii::$app->user->id);
 $statusDen = AppointmentSchedule::STATUS_DEN;
 $serviceStatusDenKhongDongY = AppointmentSchedule::SERVICE_STATUS_KHONG_DONG_Y_LAM;
 $serviceStatusDenDongY = AppointmentSchedule::SERVICE_STATUS_DONG_Y_LAM;
+$statusDoiLich = AppointmentSchedule::STATUS_DOI_LICH;
 
 $script = <<<JS
 function handleReasonFail() {
@@ -227,6 +237,8 @@ handleServiceStatus();
 $('#appointmentschedule-status').on('change', function() {
     handleServiceStatus();
 })
+
+registerShowHide($('#appointmentschedule-status'), ['$statusDoiLich'], $('[name="AppointmentSchedule[none_db_new_start_time]"]'));
 JS;
 
 $this->registerJs($script, View::POS_END);
