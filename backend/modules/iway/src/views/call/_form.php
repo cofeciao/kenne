@@ -2,6 +2,7 @@
 
 use kartik\select2\Select2;
 use modava\datetime\DateTimePicker;
+use modava\iway\widgets\JsCreateModalWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -19,7 +20,7 @@ $model->start_time = $model->start_time != null
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="call-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'call_form']); ?>
     <section class="hk-sec-wrapper">
         <h5 class="hk-sec-title"><?= Yii::t('backend', 'Thông tin chung') ?></h5>
         <div class="row">
@@ -81,3 +82,5 @@ $model->start_time = $model->start_time != null
 
     <?php ActiveForm::end(); ?>
 </div>
+
+<?= JsCreateModalWidget::widget(['formClassName' => 'call_form', 'modelName' => 'Call']) ?>

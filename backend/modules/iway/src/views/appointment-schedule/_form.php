@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use modava\datetime\DateTimePicker;
 use modava\iway\models\AppointmentSchedule;
 use modava\iway\models\table\CoSoTable;
+use modava\iway\widgets\JsCreateModalWidget;
 use modava\tiny\TinyMce;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -27,10 +28,18 @@ $model->check_in_time = $model->check_in_time != null
     : '';
 
 $user = User::findOne(Yii::$app->user->id);
+
+$disableCustomer = false;
+
+$user = new \modava\auth\models\User();
+$userRoleName = $user->getRoleName(Yii::$app->user->id);
+
+if ($userRoleName == 'online_sales') $disableCustomer = true;
+
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="appointment-schedule-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'lich_hen_form']); ?>
 
     <section class="hk-sec-wrapper mb-4">
         <h5 class="hk-sec-title">Thông tin chung</h5>
@@ -58,6 +67,7 @@ $user = User::findOne(Yii::$app->user->id);
                         'templateResult' => new JsExpression('function(model) { return model.text; }'),
                         'templateSelection' => new JsExpression('function (model) { return model.text; }'),
                     ],
+                    'disabled' => $disableCustomer
                 ]); ?>
             </div>
             <div class="col-6">
@@ -85,6 +95,18 @@ $user = User::findOne(Yii::$app->user->id);
             <div class="col-6">
                 <?= $form->field($model, 'status_service')->dropDownList($model->getDropdown('status_service'), [
                     'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                ]) ?>
+            </div>
+            <div class="col-6">
+                <?= $form->field($model, 'none_db_new_start_time')->widget(DateTimePicker::class, [
+                    'template' => '{input}{button}',
+                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy hh:ii',
+                        'todayHighLight' => true,
+                    ],
                 ]) ?>
             </div>
             <div class="col-6">
@@ -171,21 +193,23 @@ $user = User::findOne(Yii::$app->user->id);
                 </div>
             <?php endif; ?>
         </div>
+
+        <div class="form-group">
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
     </section>
 </div>
 
-<div class="form-group">
-    <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
-</div>
-
 <?php ActiveForm::end(); ?>
-</div>
+
+<?= JsCreateModalWidget::widget(['formClassName' => 'lich_hen_form', 'modelName' => 'AppointmentSchedule']) ?>
 
 <?php
 
 $statusDen = AppointmentSchedule::STATUS_DEN;
 $serviceStatusDenKhongDongY = AppointmentSchedule::SERVICE_STATUS_KHONG_DONG_Y_LAM;
 $serviceStatusDenDongY = AppointmentSchedule::SERVICE_STATUS_DONG_Y_LAM;
+$statusDoiLich = AppointmentSchedule::STATUS_DOI_LICH;
 
 $script = <<<JS
 function handleReasonFail() {
@@ -225,6 +249,8 @@ handleServiceStatus();
 $('#appointmentschedule-status').on('change', function() {
     handleServiceStatus();
 })
+
+registerShowHide($('#appointmentschedule-status'), ['$statusDoiLich'], $('[name="AppointmentSchedule[none_db_new_start_time]"]'));
 JS;
 
 $this->registerJs($script, View::POS_END);
