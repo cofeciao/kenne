@@ -69,6 +69,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         [
+                            'attribute' => 'new_appointment_schedule_id',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                if (!$model->new_appointment_schedule_id) return null;
+
+                                return Html::a($model->newAppointmentSchedule->title, ['view', 'id' => $model->new_appointment_schedule_id], [
+                                    'title' => $model->newAppointmentSchedule->title,
+                                    'data-pjax' => 0,
+                                ]);
+                            }
+                        ],
+                        [
                             'attribute' => 'status_service',
                             'value' => function ($model) {
                                 return $model->getDisplayDropdown($model->status_service, 'status_service');

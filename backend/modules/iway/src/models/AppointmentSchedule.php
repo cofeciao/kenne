@@ -48,6 +48,8 @@ class AppointmentSchedule extends AppointmentScheduleTable
     const SERVICE_STATUS_DONG_Y_LAM = 'dong_y_lam';
     public $toastr_key = 'appointment-schedule';
 
+    public $none_db_new_start_time;
+
     public function behaviors()
     {
         return array_merge(
@@ -112,7 +114,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
             }, 'whenClient' => "function() {
 			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_KHONG_DONG_Y_LAM . "';
 			}"],
-            ['accept_for_service', 'required',  'when' => function () {
+            ['accept_for_service', 'required', 'when' => function () {
                 return $this->status_service === self::SERVICE_STATUS_DONG_Y_LAM;
             }, 'whenClient' => "function() {
 			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_DONG_Y_LAM . "';
@@ -122,10 +124,13 @@ class AppointmentSchedule extends AppointmentScheduleTable
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
-            ['new_appointment_schedule_id', 'required', 'when' => function () { return $this->status == 'doi_lich'; },
+            ['none_db_new_start_time', 'required', 'when' => function () {
+                return $this->status == 'doi_lich';
+            },
                 'whenClient' => "function() {
 			    return $('#appointmentschedule-status').val() === '" . self::STATUS_DOI_LICH . "';
 			}"],
+            ['status', 'validateStatus']
         ];
     }
 
@@ -154,7 +159,48 @@ class AppointmentSchedule extends AppointmentScheduleTable
             'created_by' => Yii::t('backend', 'Created By'),
             'updated_at' => Yii::t('backend', 'Updated At'),
             'updated_by' => Yii::t('backend', 'Updated By'),
+            'new_appointment_schedule_id' => Yii::t('backend', 'Lịch mới'),
+            'none_db_new_start_time' => Yii::t('backend', 'Thời gian lịch mới'),
         ];
+    }
+
+    public function validateStatus()
+    {
+        if ($this->new_appointment_schedule_id) $this->addError('doi_lich', 'Lịch đã dời không thể Cập nhật');
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->createNewAs();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function createNewAs()
+    {
+        if ($this->status == 'doi_lich') {
+            $model = new AppointmentSchedule();
+
+            foreach ($this->getAttributes() as $key => $value) {
+                if ($key == 'id') {
+                    continue;
+                }
+                $model->setAttribute($key, $value);
+            }
+
+            $model->title .= ' (Mới)';
+            $model->start_time = $this->none_db_new_start_time;
+            $model->status = 'dat_hen';
+            $model->new_appointment_schedule_id = null;
+            $model->save();
+
+            $this->new_appointment_schedule_id = $model->primaryKey;
+        } else {
+            $this->new_appointment_schedule_id = null;
+        }
+
+        $this->updateAttributes([
+            'new_appointment_schedule_id' => $this->new_appointment_schedule_id
+        ]);
     }
 
     /**
@@ -187,11 +233,18 @@ class AppointmentSchedule extends AppointmentScheduleTable
         return $this->hasOne(CoSo::class, ['id' => 'co_so_id']);
     }
 
-    public function getDirectSales() {
+    public function getDirectSales()
+    {
         return $this->hasOne(User::class, ['id' => 'direct_sales_id']);
     }
 
-    public function getDoctorThamkham() {
+    public function getDoctorThamkham()
+    {
         return $this->hasOne(User::class, ['id' => 'doctor_thamkham_id']);
+    }
+
+    public function getNewAppointmentSchedule()
+    {
+        return $this->hasOne(self::class, ['id' => 'new_appointment_schedule_id']);
     }
 }

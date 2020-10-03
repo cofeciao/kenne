@@ -98,6 +98,18 @@ if ($userRoleName == 'online_sales') $disableCustomer = true;
                 ]) ?>
             </div>
             <div class="col-6">
+                <?= $form->field($model, 'none_db_new_start_time')->widget(DateTimePicker::class, [
+                    'template' => '{input}{button}',
+                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-mm-yyyy hh:ii',
+                        'todayHighLight' => true,
+                    ],
+                ]) ?>
+            </div>
+            <div class="col-6">
                 <?= $form->field($model, 'reason_fail')->dropDownList($model->getDropdown('reason_fail'), [
                     'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                 ]) ?>
