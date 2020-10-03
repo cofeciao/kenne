@@ -3,6 +3,7 @@
 namespace modava\iway\models;
 
 use common\models\User;
+use modava\iway\helpers\Utils;
 use modava\iway\models\table\AppointmentScheduleTable;
 use Yii;
 use yii\behaviors\AttributeBehavior;
@@ -69,9 +70,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['start_time'],
                     ],
                     'value' => function ($event) {
-                        if (!$this->start_time) return null;
-
-                        return date('Y-m-d h:i:s', strtotime($this->start_time));
+                        return Utils::convertDateTimeToDBFormat($this->start_time);
                     },
                 ],
                 [
@@ -81,9 +80,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['check_in_time'],
                     ],
                     'value' => function ($event) {
-                        if (!$this->check_in_time) return null;
-
-                        return date('Y-m-d h:i:s', strtotime($this->check_in_time));
+                        return Utils::convertDateTimeToDBFormat($this->check_in_time);
                     },
                 ],
             ]
@@ -96,7 +93,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
     public function rules()
     {
         return [
-            [['title', 'customer_id', 'co_so_id', 'start_time', 'status', 'direct_sales_id', 'doctor_thamkham_id'], 'required'],
+            [['title', 'customer_id', 'co_so_id', 'start_time', 'status',], 'required'],
             [['customer_id', 'co_so_id', 'direct_sales_id'], 'integer'],
             [['start_time', 'check_in_time'], 'safe'],
             [['description', 'direct_sales_note'], 'string'],
