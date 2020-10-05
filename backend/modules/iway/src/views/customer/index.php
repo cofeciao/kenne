@@ -29,12 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?>        </a>
         </div>
 
+        <?php Pjax::begin(['id' => 'customer-index-pjax', 'options' => ['class' => 'pjax-container'], 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
+                <?= $this->render('_search', ['model' => $searchModel]); ?>
                 <section class="hk-sec-wrapper index">
-
-                    <?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
                     <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key .
                         '-index']) ?>
                     <div class="row">
@@ -97,17 +97,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'lastPageCssClass' => 'paginate_button page-item last',
                                         ],
                                         'columns' => [
-                                            [
-                                                'class' => 'yii\grid\SerialColumn',
-                                                'header' => 'STT',
-                                                'headerOptions' => [
-                                                    'width' => 60,
-                                                    'rowspan' => 2
-                                                ],
-                                                'filterOptions' => [
-                                                    'class' => 'd-none',
-                                                ],
-                                            ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
@@ -203,7 +192,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                             ],
                                             'code',
-                                            'avatar',
                                             [
                                                 'attribute' => 'phone',
                                                 'format' => 'raw',
@@ -254,10 +242,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <?php Pjax::end(); ?>
                 </section>
             </div>
         </div>
+        <?php Pjax::end(); ?>
     </div>
 
 <?= JsUtils::widget() ?>

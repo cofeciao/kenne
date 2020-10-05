@@ -56,6 +56,24 @@ function copyToClipboard(text) {
     });
 }
 
+function saveStateSearchPanel(searchPanel, button, key) {
+    if (!window.localStorage.getItem(key)) {
+        window.localStorage.setItem(key, 'show');
+    }
+
+    if (window.localStorage.getItem(key) === 'show') $(searchPanel).collapse('show');
+    else $(searchPanel).collapse('hide');
+
+    $(button).on('click', function() {
+        if (window.localStorage.getItem(key) === 'show') {
+            window.localStorage.setItem(key, 'hide');
+        }
+        else {
+            window.localStorage.setItem(key, 'show');
+        }
+    });
+}
+
 
 $(function () {
     "use strict";
@@ -179,6 +197,30 @@ $(function () {
 
     $('body').on('click', '.copy', function () {
         copyToClipboard($(this).data('copy'));
+    }).on('click', '.clear-value', function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        let input = $(this).closest('.input-group').find('input, select');
+
+        if (input.hasClass('data-krajee-daterangepicker')) {
+            input.trigger('cancel.daterangepicker');
+        } else {
+            input.val('').trigger('change');
+        }
+    }).on('post-object-created', function() {
+        if ($('.pjax-container').length) {
+            $.pjax.reload({container: '#' + $('.pjax-container').attr('id')});
+        } else {
+            window.location.reload();
+        }
+
+    }).on('shown.bs.collapse hidden.bs.collapse', '.save-state-search', function () {
+        customPjax.setHeightContent();
+    });
+
+    $('.save-state-search').each(function () {
+        saveStateSearchPanel($(this), $(this).closest('.hk-sec-wrapper').find('.btn-hide-search'), $(this).data('search-panel'));
     });
 });
 
