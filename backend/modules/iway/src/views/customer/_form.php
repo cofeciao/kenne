@@ -150,12 +150,12 @@ $templateStatus = '
             <div class="row">
                 <div class="col-3">
                     <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === 'online_sales') {
+                    if ($model->primaryKey === null && $user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_online_sales']) {
                         $model->online_sales_id = Yii::$app->user->id;
                     }
                     ?>
                     <?= $form->field($model, 'online_sales_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map(User::getUserByRole('online_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                        'data' => ArrayHelper::map(User::getUserByRole(Yii::$app->getModule('iway')->params['role_online_sales'], [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
                         'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
                         'pluginOptions' => [
                             'allowClear' => true,

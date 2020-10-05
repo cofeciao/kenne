@@ -99,7 +99,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
     {
         return [
             [['title', 'customer_id', 'co_so_id', 'start_time', 'status',], 'required'],
-            [['customer_id', 'co_so_id', 'direct_sales_id', 'new_appointment_schedule_id'], 'integer'],
+            [['customer_id', 'co_so_id', 'direct_sales_id', 'new_appointment_schedule_id', 'doctor_thamkham_id'], 'integer'],
             [['start_time', 'check_in_time'], 'safe'],
             [['description', 'direct_sales_note'], 'string'],
             [['title', 'accept_for_service', 'reason_fail'], 'string', 'max' => 255],

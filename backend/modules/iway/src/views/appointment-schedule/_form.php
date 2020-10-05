@@ -34,7 +34,7 @@ $disableCustomer = false;
 $user = new \modava\auth\models\User();
 $userRoleName = $user->getRoleName(Yii::$app->user->id);
 
-if ($userRoleName == 'online_sales') $disableCustomer = true;
+if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) $disableCustomer = true;
 
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
@@ -143,7 +143,7 @@ if ($userRoleName == 'online_sales') $disableCustomer = true;
     <section class="hk-sec-wrapper">
         <h5 class="hk-sec-title">Thông tin thêm</h5>
         <div class="row">
-            <?php if (in_array($user->getRoleName($user->id), ['le_tan', 'direct_sales']) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
+            <?php if (in_array($user->getRoleName($user->id), [Yii::$app->getModule('iway')->params['role_le_tan'], 'direct_sales']) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-6">
                     <?php
                     if ($model->primaryKey === null && $user->getRoleName($user->id) === 'direct_sales') {
@@ -168,15 +168,15 @@ if ($userRoleName == 'online_sales') $disableCustomer = true;
                     ]) ?>
                 </div>
             <?php endif; ?>
-            <?php if (in_array($user->getRoleName($user->id), ['le_tan', 'doctor_thamkham']) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
+            <?php if (in_array($user->getRoleName($user->id), [Yii::$app->getModule('iway')->params['role_le_tan'], Yii::$app->getModule('iway')->params['role_doctor_thamkham']]) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-6">
                     <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === 'doctor_thamkham') {
+                    if ($model->primaryKey === null && $user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_doctor_thamkham']) {
                         $model->doctor_thamkham_id = Yii::$app->user->id;
                     }
                     ?>
                     <?= $form->field($model, 'doctor_thamkham_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map(User::getUserByRole('doctor_thamkham', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                        'data' => ArrayHelper::map(User::getUserByRole(Yii::$app->getModule('iway')->params['role_doctor_thamkham'], [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
                         'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
                         'pluginOptions' => [
                             'allowClear' => true
@@ -184,7 +184,7 @@ if ($userRoleName == 'online_sales') $disableCustomer = true;
                     ]); ?>
                 </div>
             <?php endif; ?>
-            <?php if ($user->getRoleName($user->id) === 'doctor_thamkham' || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
+            <?php if ($user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_doctor_thamkham'] || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-12">
                     <?= $form->field($model, 'doctor_thamkham_note')->widget(TinyMce::class, [
                         'options' => ['rows' => 12],
