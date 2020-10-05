@@ -143,23 +143,28 @@ if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) 
     <section class="hk-sec-wrapper">
         <h5 class="hk-sec-title">Thông tin thêm</h5>
         <div class="row">
-            <?php if (in_array($user->getRoleName($user->id), [Yii::$app->getModule('iway')->params['role_le_tan'], 'direct_sales']) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
-                <div class="col-6">
-                    <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === 'direct_sales') {
-                        $model->direct_sales_id = Yii::$app->user->id;
-                    }
-                    $directSales = User::getUserByRole('direct_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']);
-                    ?>
-                    <?= $form->field($model, 'direct_sales_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map($directSales, 'id', 'fullname'),
-                        'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); ?>
-                </div>
-            <?php endif; ?>
+            <?php
+            $disableDirectSales = true;
+            if (in_array($user->getRoleName($user->id), [Yii::$app->getModule('iway')->params['role_le_tan'], 'direct_sales']) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin'))
+                $disableDirectSales = false;
+            ?>
+            <div class="col-6">
+                <?php
+                if ($model->primaryKey === null && $user->getRoleName($user->id) === 'direct_sales') {
+                    $model->direct_sales_id = Yii::$app->user->id;
+                }
+                $directSales = User::getUserByRole('direct_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']);
+                ?>
+                <?= $form->field($model, 'direct_sales_id')->widget(Select2::class, [
+                    'data' => ArrayHelper::map($directSales, 'id', 'fullname'),
+                    'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                    'disabled' => $disableDirectSales
+                ]); ?>
+            </div>
+
             <?php if ($user->getRoleName($user->id) === 'direct_sales' || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-12">
                     <?= $form->field($model, 'direct_sales_note')->widget(TinyMce::class, [
@@ -167,29 +172,58 @@ if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) 
                         'type' => 'content'
                     ]) ?>
                 </div>
-            <?php endif; ?>
-            <?php if (in_array($user->getRoleName($user->id), [Yii::$app->getModule('iway')->params['role_le_tan'], Yii::$app->getModule('iway')->params['role_doctor_thamkham']]) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
-                <div class="col-6">
-                    <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_doctor_thamkham']) {
-                        $model->doctor_thamkham_id = Yii::$app->user->id;
-                    }
-                    ?>
-                    <?= $form->field($model, 'doctor_thamkham_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map(User::getUserByRole(Yii::$app->getModule('iway')->params['role_doctor_thamkham'], [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                        'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); ?>
+            <?php else: ?>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="" class="control-label">
+                            Ghi chú của direct sales
+                        </label>
+                        <div>
+                            <?= $model->direct_sales_note ? $model->direct_sales_note : ' - ' ?>
+                        </div>
+                    </div>
                 </div>
             <?php endif; ?>
+
+            <?php
+            $disableDoctorThamKham = true;
+            if (in_array($user->getRoleName($user->id), [Yii::$app->getModule('iway')->params['role_le_tan'], Yii::$app->getModule('iway')->params['role_doctor_thamkham']]) || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')) {
+                $disableDoctorThamKham = false;
+            }
+            ?>
+            <div class="col-6">
+                <?php
+                if ($model->primaryKey === null && $user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_doctor_thamkham']) {
+                    $model->doctor_thamkham_id = Yii::$app->user->id;
+                }
+                ?>
+                <?= $form->field($model, 'doctor_thamkham_id')->widget(Select2::class, [
+                    'data' => ArrayHelper::map(User::getUserByRole(Yii::$app->getModule('iway')->params['role_doctor_thamkham'], [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                    'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                    'disabled' => $disableDoctorThamKham
+                ]); ?>
+            </div>
+
             <?php if ($user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_doctor_thamkham'] || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-12">
                     <?= $form->field($model, 'doctor_thamkham_note')->widget(TinyMce::class, [
                         'options' => ['rows' => 12],
                         'type' => 'content'
                     ]) ?>
+                </div>
+            <?php else: ?>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="" class="control-label">
+                            Ghi chú của Bác sĩ thăm khám
+                        </label>
+                        <div>
+                            <?= $model->doctor_thamkham_note ? $model->doctor_thamkham_note : ' - ' ?>
+                        </div>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>
