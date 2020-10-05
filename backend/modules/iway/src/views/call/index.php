@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
+                <?= $this->render('_search', ['model' => $searchModel]); ?>
                 <section class="hk-sec-wrapper index">
 
                     <?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>

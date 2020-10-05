@@ -13,7 +13,7 @@ $templateInput = [
 ];
 $dateTemplateInput = [
     'template' => '{label}<div class="input-group">
-                            <div class="input-group" style="width: auto;">{input}
+                            <div class="input-group" style="width: calc(100% - 41px);">{input}
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="fa fa-calendar"></i>
