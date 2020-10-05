@@ -4,6 +4,7 @@ namespace backend\modules\api\modules\v2\controllers;
 
 use modava\affiliate\models\Customer;
 use modava\affiliate\models\Payment;
+use modava\affiliate\models\search\OrderSearch;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use modava\affiliate\models\Order;
@@ -398,10 +399,8 @@ class CouponController extends RestfullController
     }
 
     public function actionGetOrdersByCustomer($customerId) {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Order::getListOrderUsedCoupon($customerId),
-            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
-        ]);
+        $order = new OrderSearch();
+        $dataProvider = $order->search(Yii::$app->request->get(), $customerId,true);
 
         return [
             'success' => true,
