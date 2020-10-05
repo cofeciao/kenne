@@ -397,6 +397,19 @@ class CouponController extends RestfullController
         ];
     }
 
+    public function actionGetOrdersByCustomer($customerId) {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Order::getListOrderUsedCoupon($customerId),
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
+        ]);
+
+        return [
+            'success' => true,
+            'data' => $dataProvider->getModels(),
+            'total_count' => $dataProvider->getTotalCount()
+        ];
+    }
+
     public function actionGetRecord() {
         $target = Yii::$app->request->get('target');
         $id = Yii::$app->request->get('id');
