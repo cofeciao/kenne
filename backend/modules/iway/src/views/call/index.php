@@ -97,14 +97,33 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'columns' => [
                                             [
-                                                'class' => 'yii\grid\SerialColumn',
-                                                'header' => 'STT',
-                                                'headerOptions' => [
-                                                    'width' => 60,
-                                                    'rowspan' => 2
+                                                'class' => 'yii\grid\ActionColumn',
+                                                'header' => Yii::t('backend', 'Actions'),
+                                                'template' => '{update} {delete}',
+                                                'buttons' => [
+                                                    'update' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                                            'title' => Yii::t('backend', 'Update'),
+                                                            'alia-label' => Yii::t('backend', 'Update'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-info btn-xs'
+                                                        ]);
+                                                    },
+                                                    'delete' => function ($url, $model) {
+                                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
+                                                            'title' => Yii::t('backend', 'Delete'),
+                                                            'class' => 'btn btn-danger btn-xs btn-del',
+                                                            'data-title' => Yii::t('backend', 'Delete?'),
+                                                            'data-pjax' => 0,
+                                                            'data-url' => $url,
+                                                            'btn-success-class' => 'success-delete',
+                                                            'btn-cancel-class' => 'cancel-delete',
+                                                            'data-placement' => 'top'
+                                                        ]);
+                                                    }
                                                 ],
-                                                'filterOptions' => [
-                                                    'class' => 'd-none',
+                                                'headerOptions' => [
+                                                    'width' => 150,
                                                 ],
                                             ],
                                             [
@@ -142,36 +161,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'attribute' => 'created_at',
                                                 'format' => 'date',
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            [
-                                                'class' => 'yii\grid\ActionColumn',
-                                                'header' => Yii::t('backend', 'Actions'),
-                                                'template' => '{update} {delete}',
-                                                'buttons' => [
-                                                    'update' => function ($url, $model) {
-                                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                            'title' => Yii::t('backend', 'Update'),
-                                                            'alia-label' => Yii::t('backend', 'Update'),
-                                                            'data-pjax' => 0,
-                                                            'class' => 'btn btn-info btn-xs'
-                                                        ]);
-                                                    },
-                                                    'delete' => function ($url, $model) {
-                                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', 'javascript:;', [
-                                                            'title' => Yii::t('backend', 'Delete'),
-                                                            'class' => 'btn btn-danger btn-xs btn-del',
-                                                            'data-title' => Yii::t('backend', 'Delete?'),
-                                                            'data-pjax' => 0,
-                                                            'data-url' => $url,
-                                                            'btn-success-class' => 'success-delete',
-                                                            'btn-cancel-class' => 'cancel-delete',
-                                                            'data-placement' => 'top'
-                                                        ]);
-                                                    }
-                                                ],
                                                 'headerOptions' => [
                                                     'width' => 150,
                                                 ],
