@@ -39,49 +39,37 @@ $dateTemplateInput = [
     <section class="hk-sec-wrapper p-1">
         <div class="row collapse show save-state-search" data-search-panel="iway-customer-search-panel" id="search-panel">
             <div class="col-md-3 col-sm-4 col-lg-3">
-                <div class="form-group row">
-                    <div class="col-12">
-                        <?= $form->field($model, 'keyword', $templateInput)
-                            ->textInput(['maxlength' => true])
-                            ->label(Yii::t('backend', 'Tên, SĐT, Code'))
-                            ->input('text',
-                                ['placeholder' => Yii::t('backend', 'Tên, SĐT, Code')]) ?>
-                    </div>
-                </div>
+                <?= $form->field($model, 'keyword', $templateInput)
+                    ->textInput(['maxlength' => true])
+                    ->label(Yii::t('backend', 'Tên, SĐT, Code'))
+                    ->input('text',
+                        ['placeholder' => Yii::t('backend', 'Tên, SĐT, Code')]) ?>
             </div>
             <div class="col-md-3 col-sm-4 col-lg-3">
-                <div class="form-group row">
-                    <div class="col-12">
-                        <?= $form->field($model, 'sex', $templateInput)->dropDownList($model->getDropdown('sex'), [
-                            'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
-                        ]) ?>
-                    </div>
-                </div>
+                <?= $form->field($model, 'sex', $templateInput)->dropDownList($model->getDropdown('sex'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                ]) ?>
             </div>
             <div class="col-md-3 col-sm-4 col-lg-3">
-                <div class="form-group row">
-                    <div class="col-12">
-                        <?= $form->field($model, 'created_at', $dateTemplateInput)->widget(DateRangePicker::class, [
-                            'convertFormat' => true,
-                            'useWithAddon' => true,
-                            'readonly' => true,
-                            'options' => [
-                                'class' => 'data-krajee-daterangepicker form-control',
-                            ],
-                            'pluginOptions' => [
-                                'locale' => [
-                                    'format' => 'd-m-Y',
-                                    'cancelLabel' => 'Clear',
-                                ],
-                                'autoApply' => true,
-                                'showDropdowns' => true,
-                            ],
-                            'pluginEvents' => [
-                                "cancel.daterangepicker" => "function() { $(this).find('input').val('').trigger('change'); }",
-                            ]
-                        ]); ?>
-                    </div>
-                </div>
+                <?= $form->field($model, 'created_at', $dateTemplateInput)->widget(DateRangePicker::class, [
+                    'convertFormat' => true,
+                    'useWithAddon' => true,
+                    'readonly' => true,
+                    'options' => [
+                        'class' => 'data-krajee-daterangepicker form-control',
+                    ],
+                    'pluginOptions' => [
+                        'locale' => [
+                            'format' => 'd-m-Y',
+                            'cancelLabel' => 'Clear',
+                        ],
+                        'autoApply' => true,
+                        'showDropdowns' => true,
+                    ],
+                    'pluginEvents' => [
+                        "cancel.daterangepicker" => "function() { $(this).find('input').val('').trigger('change'); }",
+                    ]
+                ]); ?>
             </div>
         </div>
         <div class="row">
