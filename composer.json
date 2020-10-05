@@ -49,12 +49,14 @@
     "2amigos/yii2-arrayquery-component" : "*",
     "tuyakhov/yii2-json-api": "*",
     "phpoffice/phpspreadsheet": "^1.14",
+    "modava/tiny": "@dev",
     "modava/imagick": "@dev",
     "modava/location": "@dev",
     "modava/generator": "@dev",
     "modava/select2": "@dev",
     "modava/voip24h": "@dev",
-    "trntv/yii2-command-bus": "^1.0"
+    "trntv/yii2-command-bus": "^1.0",
+    "kartik-v/yii2-date-range": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
