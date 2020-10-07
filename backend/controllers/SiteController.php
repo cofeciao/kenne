@@ -24,22 +24,6 @@ class SiteController extends MyController
 
     public function actionIndex()
     {
-        $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
-            'email' => 'hoaitam.it94@gmail.com',
-        ]);
-        $token = UserToken::create($user->id, UserToken::TYPE_PASSWORD_RESET, Time::SECONDS_IN_A_DAY);
-        $a = \Yii::$app->commandBus->handle(new SendEmailCommand([
-            'to' => 'hoaitam.it94@gmail.com',
-            'subject' => \Yii::t('frontend', 'Yêu cầu lấy lại mật khẩu từ {name}', ['name' => \Yii::$app->name]),
-            'view' => 'passwordResetToken',
-            'params' => [
-                'user' => $user,
-                'token' => $token->token,
-            ]
-        ]));
-        var_dump($a);
-        die;
         /*$data = [
             '0762296277',
             '0979883765'
