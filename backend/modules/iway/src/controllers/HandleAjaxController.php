@@ -1,14 +1,11 @@
 <?php
 
-namespace modava\affiliate\controllers;
+namespace modava\iway\controllers;
 
-use modava\affiliate\AffiliateModule;
-use modava\affiliate\components\MyAffiliateController;
-use modava\affiliate\helpers\Utils;
-use modava\affiliate\models\search\CustomerPartnerSearch;
+use modava\iway\components\MyIwayController;
+use modava\iway\helpers\Utils;
 use Yii;
 use yii\web\Response;
-use modava\affiliate\helpers\MyAurisApi;
 
 /*
  * Implement by Duc Huynh
@@ -16,7 +13,7 @@ use modava\affiliate\helpers\MyAurisApi;
  * Purpose: Provide a controller handle ajax request
  * */
 
-class HandleAjaxController extends MyAffiliateController
+class HandleAjaxController extends MyIwayController
 {
     var $modelName = null;
     var $classModelName = null;
@@ -37,19 +34,17 @@ class HandleAjaxController extends MyAffiliateController
     public function actionGetCreateModal()
     {
         $formView = Utils::decamelize($this->modelName);
-        $filePath = \Yii::getAlias('@modava/affiliate/views/' . $formView . '/_form.php');
+        $filePath = \Yii::getAlias('@modava/iway/views/' . $formView . '/_form.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
                 'errorMessage' => Yii::t('backend', 'Form is not existed'),
             ]);
         }
 
-        $filePath = '@modava/affiliate/views/' . $formView . '/_form.php';
+        $filePath = '@modava/iway/views/' . $formView . '/_form.php';
 
         $model = new $this->classModelName();
         $model->load(\Yii::$app->request->get());
-
-        $data = \Yii::$app->request->get('data');
 
         return $this->renderAjax('create-modal', [
             'modelName' => $this->modelName,
@@ -73,7 +68,7 @@ class HandleAjaxController extends MyAffiliateController
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
-                return [ 'success' => true ];
+                return [ 'success' => true, 'data' => $model ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -108,23 +103,14 @@ class HandleAjaxController extends MyAffiliateController
     {
         $modelName = \Yii::$app->request->get('model');
         if (!$modelName) $modelName = \Yii::$app->request->post('model');
-        $className = 'modava\affiliate\models\\' . $modelName;
-        $classNameTable = 'modava\affiliate\models\table\\' . $modelName . 'Table';
-        $classNameSearch = 'modava\affiliate\models\search\\' . $modelName . 'Search';
+        $className = 'modava\iway\models\\' . $modelName;
+        $classNameTable = 'modava\iway\models\table\\' . $modelName . 'Table';
+        $classNameSearch = 'modava\iway\models\search\\' . $modelName . 'Search';
 
         // Validate Query Param
         if (!$modelName || !class_exists($className) || !class_exists($classNameTable) || !class_exists($classNameSearch)) {
             echo $this->renderAjax('error-modal', [
                 'errorMessage' => Yii::t('backend', 'Object is not existed'),
-            ]);
-
-            Yii::$app->end();
-        }
-
-
-        if (in_array($modelName, Yii::$app->getModule('affiliate')->params['not_release_object'])) {
-            echo $this->renderAjax('error-modal', [
-                'errorMessage' => Yii::t('backend', 'Object is not released'),
             ]);
 
             Yii::$app->end();
@@ -140,7 +126,7 @@ class HandleAjaxController extends MyAffiliateController
 
     public function actionGetListRelatedRecordsModal () {
         $formView = Utils::decamelize($this->modelName);
-        $filePath = \Yii::getAlias('@modava/affiliate/views/' . $formView . '/related-list.php');
+        $filePath = \Yii::getAlias('@modava/iway/views/' . $formView . '/related-list.php');
         if (!file_exists($filePath)) {
             return $this->renderAjax('error-modal', [
                 'errorMessage' => Yii::t('backend', 'File is not existed'),
@@ -155,39 +141,6 @@ class HandleAjaxController extends MyAffiliateController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'filePath' => $filePath
-        ]);
-    }
-
-    public function actionGetCustomerMoreInfo () {
-        $customerId = Yii::$app->request->get('customerId');
-        $data = CustomerPartnerSearch::getCustomerById($customerId);
-        $customerSearch = new CustomerPartnerSearch();
-        $listThaoTac = $customerSearch->getDropdown('thao_tac');
-
-        if (!$data || (isset($data['status']) && $data['status'] == 500)) {
-            if (isset($data['status']) && $data['status'] == 500) {
-                Yii::warning($data['message']);
-            }
-
-            return $this->renderAjax('error-modal', [
-                'errorMessage' => Yii::t('backend', 'Error connection!'),
-            ]);
-        }
-
-        return $this->renderAjax('dashboard-myauris-customer-modal', [
-            'model' => $data['data'],
-            'listThaotac' => $listThaoTac
-        ]);
-    }
-
-    public function actionGetCallLogModal() {
-        $phone = Yii::$app->request->get('phone');
-
-        $callLog = CustomerPartnerSearch::getCallLog($phone);
-
-        return $this->renderAjax('call-log-modal', [
-            'data' => $callLog,
-            'phone' => $phone,
         ]);
     }
 }

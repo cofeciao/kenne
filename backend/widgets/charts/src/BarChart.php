@@ -70,7 +70,7 @@ JS;
             <div class="card-header card-header-action">
                 <h6>' . $this->title . '</h6>
                 <div class="d-flex align-items-center card-action-wrap">
-                    <a href="#" class="inline-block refresh mr-15" title="' . \Yii::t('affiliate', 'Làm mới') . '">
+                    <a href="#" class="inline-block refresh mr-15" title="' . \Yii::t('backend', 'Làm mới') . '">
                         <i class="ion ion-md-radio-button-off"></i>
                     </a>
                 </div>
