@@ -1,11 +1,10 @@
 <?php
 
-use Yii;
-use yii\helpers\Url;
-use yii\helpers\Html;
-use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
 use modava\iway\widgets\NavbarWidgets;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model modava\iway\models\Order */
@@ -22,15 +21,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Title -->
     <div class="hk-pg-header">
         <h4 class="hk-pg-title"><span class="pg-title-icon"><span
-                        class="ion ion-md-apps"></span></span><?=Yii::t('backend', 'Chi tiết'); ?>: <?= Html::encode($this->title) ?>
+                        class="ion ion-md-apps"></span></span><?= Yii::t('backend', 'Chi tiết'); ?>
+            : <?= Html::encode($this->title) ?>
         </h4>
         <p>
-            <a class="btn btn-outline-light" href="<?= Url::to(['create']); ?>"
-                title="<?= Yii::t('backend', 'Create'); ?>">
+            <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
+               title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
-            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
             <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
+                'class' => 'btn btn-danger btn-sm',
                 'data' => [
                     'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
@@ -47,25 +47,46 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-						'id',
-						'title',
-						'code',
-						'co_so_id',
-						'customer_id',
-						'order_date',
+                        'title',
+                        'code',
                         [
-                            'attribute' => 'status',
-                            'value' => function ($model) {
-                                return Yii::$app->params['status'][$model->status];
+                            'attribute' => 'co_so_id',
+                            'format' => 'raw',
+                            'value' => function (modava\iway\models\Order $model) {
+                                return Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id]));
                             }
                         ],
-						'payment_status',
-						'service_status',
-						'total',
-						'discount',
-						'final_total',
-						'created_at',
-						'updated_at',
+                        [
+                            'attribute' => 'customer_id',
+                            'format' => 'raw',
+                            'value' => function (modava\iway\models\Order $model) {
+                                return Html::a($model->customer->fullname, Url::toRoute(['co-so/view', 'id' => $model->customer_id]));
+                            }
+                        ],
+                        'order_date:date',
+                        [
+                            'attribute' => 'status',
+                            'value' => function (modava\iway\models\Order $model) {
+                                return $model->getDisplayDropdown($model->status, 'status');
+                            }
+                        ],
+                        [
+                            'attribute' => 'payment_status',
+                            'value' => function (modava\iway\models\Order $model) {
+                                return $model->getDisplayDropdown($model->payment_status, 'payment_status');
+                            }
+                        ],
+                        [
+                            'attribute' => 'service_status',
+                            'value' => function (modava\iway\models\Order $model) {
+                                return $model->getDisplayDropdown($model->service_status, 'service_status');
+                            }
+                        ],
+                        'total',
+                        'discount',
+                        'final_total',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => Yii::t('backend', 'Created By')

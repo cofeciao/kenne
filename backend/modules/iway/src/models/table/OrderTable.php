@@ -2,12 +2,11 @@
 
 namespace modava\iway\models\table;
 
-use cheatsheet\Time;
+use modava\iway\components\MyIwayModel;
 use modava\iway\models\query\OrderQuery;
 use Yii;
-use yii\db\ActiveRecord;
 
-class OrderTable extends \yii\db\ActiveRecord
+class OrderTable extends MyIwayModel
 {
     const STATUS_DISABLED = 0;
     const STATUS_PUBLISHED = 1;

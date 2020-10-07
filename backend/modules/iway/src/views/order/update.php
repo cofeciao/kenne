@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
