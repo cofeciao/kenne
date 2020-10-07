@@ -18,7 +18,6 @@ $ns = explode('\\', $generator->modelClass)[0];
 echo "<?php\n";
 ?>
 
-use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;

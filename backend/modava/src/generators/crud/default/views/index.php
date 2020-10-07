@@ -16,7 +16,6 @@ $alias = $generator->getYiiAlias();
 echo "<?php\n";
 ?>
 
-use Yii;
 use <?= $alias ?>widgets\NavbarWidgets;
 use yii\helpers\Html;
 use common\grid\MyGridView;
