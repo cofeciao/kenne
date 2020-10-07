@@ -1,6 +1,5 @@
 <?php
 
-use Yii;
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
 
@@ -26,11 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Row -->
     <div class="row">
         <div class="col-xl-12">
-            <section class="hk-sec-wrapper">
-                <?= $this->render('_form', [
-                    'model' => $model,
-                ]) ?>
-            </section>
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
         </div>
     </div>
 

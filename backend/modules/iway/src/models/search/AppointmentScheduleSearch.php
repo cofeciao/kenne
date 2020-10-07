@@ -18,7 +18,7 @@ class AppointmentScheduleSearch extends AppointmentSchedule
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'customer_id', 'co_so_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'doctor_thamkham_id'], 'integer'],
             [['title', 'start_time', 'status', 'status_service', 'accept_for_service', 'reason_fail', 'check_in_time', 'description'], 'safe'],
         ];
     }
@@ -63,6 +63,7 @@ class AppointmentScheduleSearch extends AppointmentSchedule
             'id' => $this->id,
             'customer_id' => $this->customer_id,
             'co_so_id' => $this->co_so_id,
+            'doctor_thamkham_id' => $this->doctor_thamkham_id,
             'start_time' => $this->start_time,
             'check_in_time' => $this->check_in_time,
             'created_at' => $this->created_at,

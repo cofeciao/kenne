@@ -27,12 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?>        </a>
         </div>
 
+
+        <?php Pjax::begin(['id' => 'appointment-schedule-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
         <!-- Row -->
         <div class="row">
             <div class="col-xl-12">
+                <?= $this->render('_search', ['model' => $searchModel]); ?>
                 <section class="hk-sec-wrapper index">
-
-                    <?php Pjax::begin(['id' => 'dt-pjax', 'timeout' => false, 'enablePushState' => true, 'clientOptions' => ['method' => 'GET']]); ?>
                     <?= ToastrWidget::widget(['key' => 'toastr-' . $searchModel->toastr_key .
                         '-index']) ?>
                     <div class="row">
@@ -96,17 +97,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'columns' => [
                                             [
-                                                'class' => 'yii\grid\SerialColumn',
-                                                'header' => 'STT',
-                                                'headerOptions' => [
-                                                    'width' => 60,
-                                                    'rowspan' => 2
-                                                ],
-                                                'filterOptions' => [
-                                                    'class' => 'd-none',
-                                                ],
-                                            ],
-                                            [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '{update} {delete}',
@@ -162,6 +152,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             'start_time:datetime',
                                             [
+                                                'attribute' => 'status',
+                                                'value' => function ($model) {
+                                                    return $model->getDisplayDropdown($model->status, 'status');
+                                                }
+                                            ],
+                                            [
                                                 'attribute' => 'status_service',
                                                 'value' => function ($model) {
                                                     return $model->getDisplayDropdown($model->status_service, 'status_service');
@@ -180,6 +176,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                             ],
                                             'check_in_time:datetime',
+                                            [
+                                                'attribute' => 'direct_sales_id',
+                                                'value' => function ($model) {
+                                                    return $model->direct_sales_id ? $model->directSales->userProfile->fullname : '';
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'doctor_thamkham_id',
+                                                'value' => function ($model) {
+                                                    return $model->doctor_thamkham_id ? $model->doctorThamkham->userProfile->fullname : '';
+                                                }
+                                            ],
                                             //'description:ntext',
                                             [
                                                 'attribute' => 'created_by',
@@ -201,10 +209,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <?php Pjax::end(); ?>
                 </section>
             </div>
         </div>
+        <?php Pjax::end(); ?>
     </div>
 <?php
 $urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);

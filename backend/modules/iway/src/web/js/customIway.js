@@ -14,6 +14,67 @@ function change_alias(alias) {
     return str;
 }
 
+/*
+* Implement by Hoang Duc
+* Date: 2020-09-24
+* Purpose: handle show hide child with parent value
+* Example: handleShowHide($('[name="Customer[online_source]"]'), ['facebook'], $('[name="Customer[fb_fanpage]"], [name="Customer[fb_customer]"]'));
+* */
+function handleShowHide(parrentEle, parrentValues = [], childEles) {
+    let onlineSource = $(parrentEle).val();
+
+    if (parrentValues.includes(onlineSource)) {
+        $(childEles).closest('.form-group').show(300);
+    } else {
+        $(childEles).closest('.form-group').hide(300);
+        $(childEles).val('').trigger('change');
+    }
+}
+function registerShowHide(parrentEle, parrentValues = [], childEles, eventName = 'change') {
+    handleShowHide($(parrentEle), parrentValues, childEles);
+    $(parrentEle).on(eventName, function () {
+        handleShowHide($(parrentEle), parrentValues, childEles);
+    });
+}
+
+function copyToClipboard(text) {
+    let dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.setAttribute("id", "dummy_id");
+    document.getElementById("dummy_id").value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    $.toast({
+        heading: 'Thông báo',
+        text: 'Copy thành công',
+        position: 'top-right',
+        class: 'jq-toast-success',
+        hideAfter: 2000,
+        stack: 6,
+        showHideTransition: 'fade'
+    });
+}
+
+function saveStateSearchPanel(searchPanel, button, key) {
+    if (!window.localStorage.getItem(key)) {
+        window.localStorage.setItem(key, 'show');
+    }
+
+    if (window.localStorage.getItem(key) === 'show') $(searchPanel).collapse('show');
+    else $(searchPanel).collapse('hide');
+
+    $(button).on('click', function() {
+        if (window.localStorage.getItem(key) === 'show') {
+            window.localStorage.setItem(key, 'hide');
+        }
+        else {
+            window.localStorage.setItem(key, 'show');
+        }
+    });
+}
+
+
 $(function () {
     "use strict";
 
@@ -132,6 +193,34 @@ $(function () {
         }).fail(function (f) {
             console.log('Load data fail');
         });
+    });
+
+    $('body').on('click', '.copy', function () {
+        copyToClipboard($(this).data('copy'));
+    }).on('click', '.clear-value', function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        let input = $(this).closest('.input-group').find('input, select');
+
+        if (input.hasClass('data-krajee-daterangepicker')) {
+            input.trigger('cancel.daterangepicker');
+        } else {
+            input.val('').trigger('change');
+        }
+    }).on('post-object-created', function() {
+        if ($('.pjax-container').length) {
+            $.pjax.reload({container: '#' + $('.pjax-container').attr('id')});
+        } else {
+            window.location.reload();
+        }
+
+    }).on('shown.bs.collapse hidden.bs.collapse', '.save-state-search', function () {
+        customPjax.setHeightContent();
+    });
+
+    $('.save-state-search').each(function () {
+        saveStateSearchPanel($(this), $(this).closest('.hk-sec-wrapper').find('.btn-hide-search'), $(this).data('search-panel'));
     });
 });
 

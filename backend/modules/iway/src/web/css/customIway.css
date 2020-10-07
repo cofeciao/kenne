@@ -314,3 +314,12 @@ form div.required label.control-label:after {
     background-color: rgba(34, 175, 71, 1);
     color: #fff;
 }
+
+.select2-container .select2-selection--single .select2-selection__clear {
+    position: absolute !important;
+    right: 25px !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__clear:hover {
+    cursor: pointer !important;
+}
