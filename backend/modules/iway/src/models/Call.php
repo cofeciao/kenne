@@ -3,7 +3,7 @@
 namespace modava\iway\models;
 
 use common\models\User;
-use modava\affiliate\helpers\Utils;
+use modava\iway\helpers\Utils;
 use modava\iway\models\table\CallTable;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
@@ -56,9 +56,7 @@ class Call extends CallTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['start_time'],
                     ],
                     'value' => function ($event) {
-                        if (!$this->start_time) return null;
-
-                        return date('Y-m-d h:i:s', strtotime($this->start_time));
+                        return Utils::convertDateTimeToDBFormat($this->start_time);
                     },
                 ],
             ]

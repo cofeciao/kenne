@@ -1,5 +1,6 @@
 <?php
 
+use modava\auth\models\UserProfile;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -156,12 +157,12 @@ use yii\helpers\Url;
                         <span class="badge badge-success badge-indicator"></span>
                     </div>
                     <div class="media-body">
-                        <span>Madelyn Shane<i class="zmdi zmdi-chevron-down"></i></span>
+                        <span><?= UserProfile::findOne(Yii::$app->user->id)->fullname ?><i class="zmdi zmdi-chevron-down"></i></span>
                     </div>
                 </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
-                <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
+                <a class="dropdown-item" href="<?= Url::toRoute(['/auth/user/view', 'id' => Yii::$app->user->id]) ?>"><i class="dropdown-icon zmdi zmdi-account"></i><span>Profile</span></a>
                 <a class="dropdown-item" href="#"><i
                             class="dropdown-icon zmdi zmdi-card"></i><span>My balance</span></a>
                 <a class="dropdown-item" href="inbox.html"><i

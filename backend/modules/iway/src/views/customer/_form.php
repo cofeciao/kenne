@@ -5,6 +5,8 @@ use dosamigos\datepicker\DatePicker;
 use kartik\select2\Select2;
 use modava\auth\models\User;
 use modava\auth\models\UserProfile;
+use modava\datetime\DateTimePicker;
+use modava\iway\helpers\Utils;
 use modava\iway\models\table\CoSoTable;
 use modava\location\models\table\LocationDistrictTable;
 use modava\location\models\table\LocationProvinceTable;
@@ -18,16 +20,39 @@ use yii\widgets\ActiveForm;
 /* @var $model modava\iway\models\Customer */
 /* @var $form yii\widgets\ActiveForm */
 
-$model->birthday = $model->birthday != null
-    ? date('d-m-Y', strtotime($model->birthday))
-    : '';
-
+$model->birthday = Utils::convertDateToDisplayFormat($model->birthday);
 
 $user = \common\models\User::findOne(Yii::$app->user->id);
+
+$btnListCall = '';
+$btnListAS = '';
+
+if ($model->primaryKey) {
+    $btnListAS  = Html::a('<i class="icon dripicons-to-do"></i>', Url::toRoute(['appointment-schedule/index', 'AppointmentScheduleSearch[customer_id]' => $model->primaryKey]), [ 'class' => 'btn btn-info', 'target' => '_blank', 'title' => 'Danh sách Lịch hẹn' ]);
+    $btnListCall = Html::a('<i class="icon dripicons-phone"></i>', Url::toRoute(['call/index', 'CallSearch[customer_id]' => $model->primaryKey]), [ 'class' => 'btn btn-info', 'target' => '_blank', 'title' => 'Danh sách Cuộc gọi' ]);
+}
+
+$templateStatus = '
+    {label}
+    <div class="input-group">
+        {input}
+        <button type="button" class="btn btn-success create-appointment-schedule" title="Tạo lịch hẹn" style="display: none">
+            <i class="icon dripicons-to-do"></i>
+        </button>' . $btnListAS . '
+        <button type="button" class="btn btn-success create-call" title="Tạo cuộc gọi"  style="display: none">
+            <i class="icon dripicons-phone"></i>
+        </button>
+        ' . $btnListCall . '
+    </div>
+    {error}{hint}';
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="customer-form">
         <?php $form = ActiveForm::begin(['id' => 'iway-customer']); ?>
+
+        <?= $form->field($model, 'none_db_ac_is_create')->input('hidden')->label(false) ?>
+        <?= $form->field($model, 'none_db_call_is_create')->input('hidden')->label(false) ?>
+
         <section class="hk-sec-wrapper">
             <h5 class="hk-sec-title"><?= Yii::t('backend', 'Thông tin chung') ?></h5>
             <div class="row">
@@ -125,12 +150,12 @@ $user = \common\models\User::findOne(Yii::$app->user->id);
             <div class="row">
                 <div class="col-3">
                     <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === 'online_sales') {
+                    if ($model->primaryKey === null && $user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_online_sales']) {
                         $model->online_sales_id = Yii::$app->user->id;
                     }
                     ?>
                     <?= $form->field($model, 'online_sales_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map(User::getUserByRole('online_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
+                        'data' => ArrayHelper::map(User::getUserByRole(Yii::$app->getModule('iway')->params['role_online_sales'], [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
                         'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
                         'pluginOptions' => [
                             'allowClear' => true,
@@ -138,7 +163,7 @@ $user = \common\models\User::findOne(Yii::$app->user->id);
                     ]); ?>
                 </div>
                 <div class="col-3">
-                    <?= $form->field($model, 'status_customer')->dropDownList($model->getDropdown('status_customer'), [
+                    <?= $form->field($model, 'status_customer', [ 'template' => $templateStatus ])->dropDownList($model->getDropdown('status_customer'), [
                         'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                     ]) ?>
                 </div>
@@ -147,10 +172,64 @@ $user = \common\models\User::findOne(Yii::$app->user->id);
                         'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                     ]) ?>
                 </div>
-                <div class="col-3">
-                    <?= $form->field($model, 'co_so_id')->dropDownList(ArrayHelper::map(CoSoTable::getAll(), 'id', 'title'), [
-                        'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
-                    ]) ?>
+                <div class="col-12 mb-4">
+                    <section class="hk-sec-wrapper w-50" id="appointment-schedule-sec" style="display: none">
+                        <h5 class="hk-sec-title">Thông tin lịch hẹn</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <?= $form->field($model, 'none_db_ac_title')->textInput(['maxlength' => true]) ?>
+                            </div>
+                            <div class="col-6">
+                                <?= $form->field($model, 'co_so_id')->dropDownList(ArrayHelper::map(CoSoTable::getAll(), 'id', 'title'), [
+                                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                                ]) ?>
+                            </div>
+                            <div class="col-6">
+                                <?= $form->field($model, 'none_db_ac_start_time')->widget(DateTimePicker::class, [
+                                    'template' => '{input}{button}',
+                                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                                    'clientOptions' => [
+                                        'autoclose' => true,
+                                        'format' => 'dd-mm-yyyy hh:ii',
+                                        'todayHighLight' => true,
+                                    ]
+                                ]) ?>
+                            </div>
+                            <div class="col-12">
+                                <?= $form->field($model, 'none_db_ac_note')->widget(\modava\tiny\TinyMce::class, [
+                                    'options' => ['rows' => 12],
+                                    'type' => 'content'
+                                ]) ?>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="hk-sec-wrapper w-50" id="call-sec" style="display: none">
+                        <h5 class="hk-sec-title">Thông tin cuộc gọi</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <?= $form->field($model, 'none_db_call_title')->textInput(['maxlength' => true]) ?>
+                            </div>
+                            <div class="col-6">
+                                <?= $form->field($model, 'none_db_call_start_time')->widget(DateTimePicker::class, [
+                                    'template' => '{input}{button}',
+                                    'pickButtonIcon' => 'btn btn-increment btn-light',
+                                    'pickIconContent' => Html::tag('span', '', ['class' => 'glyphicon glyphicon-th']),
+                                    'clientOptions' => [
+                                        'autoclose' => true,
+                                        'format' => 'dd-mm-yyyy hh:ii',
+                                        'todayHighLight' => true,
+                                    ]
+                                ]) ?>
+                            </div>
+                            <div class="col-12">
+                                <?= $form->field($model, 'none_db_call_note')->widget(\modava\tiny\TinyMce::class, [
+                                    'options' => ['rows' => 12],
+                                    'type' => 'content'
+                                ]) ?>
+                            </div>
+                        </div>
+                    </section>
                 </div>
                 <div class="col-12">
                     <?= $form->field($model, 'online_sales_note')->widget(\modava\tiny\TinyMce::class, [
@@ -158,27 +237,6 @@ $user = \common\models\User::findOne(Yii::$app->user->id);
                         'type' => 'content'
                     ]) ?>
                 </div>
-                <div class="col-6">
-                    <?php
-                    if ($model->primaryKey === null && $user->getRoleName($user->id) === 'direct_sales') {
-                        $model->direct_sales_id = Yii::$app->user->id;
-                    }
-                    ?>
-                    <?= $form->field($model, 'direct_sales_id')->widget(Select2::class, [
-                        'data' => ArrayHelper::map(User::getUserByRole('direct_sales', [User::tableName() . '.id', UserProfile::tableName() . '.fullname']), 'id', 'fullname'),
-                        'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ]); ?>
-                </div>
-                <div class="col-12">
-                    <?= $form->field($model, 'direct_sales_note')->widget(\modava\tiny\TinyMce::class, [
-                        'options' => ['rows' => 12],
-                        'type' => 'content'
-                    ]) ?>
-                </div>
-            </div>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
