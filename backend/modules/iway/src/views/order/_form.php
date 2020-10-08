@@ -191,10 +191,7 @@ if (!$model->primaryKey) {
                             'type' => 'dropdownList',
                             'enableError' => true,
                             'defaultValue' => '',
-                            'items' => [
-                                '1' => 'đ',
-                                '2' => '%'
-                            ],
+                            'items' => Yii::$app->getModule('iway')->params['discount_type'],
                             'options' => [
                                 'style' => 'width: 60px',
                                 'class' => 'discount-type'
@@ -236,15 +233,12 @@ if (!$model->primaryKey) {
             <div class="row justify-content-end p-1">
                 <div class="col-3 form-group mb-0 position-relative">
                     <span><?= $model->getAttributeLabel('discount') ?>:</span>
-                    <div class="discount-container" style="position: absolute;left: 100%;top: -8px;width: 300px;z-index: 1000;">
+                    <div class="discount-container" style="position: absolute;left: 100%;top: -8px;width: 350px;z-index: 1000;">
                         <div class="input-group w-50">
                             <div class="input-group-prepend">
-                                <select name="discount" class="form-control" id="" style="width: 60px">
-                                    <option value="1">đ</option>
-                                    <option value="2">%</option>
-                                </select>
+                                <?= $form->field($model, 'discount_type', ['template' => '{input}', 'options' => ['tag' => false]])->dropDownList(Yii::$app->getModule('iway')->params['discount_type']) ?>
                             </div>
-                            <input type="text" class="form-control" style="width: 100px">
+                            <?= $form->field($model, 'discount_value', ['template' => '{input}', 'options' => ['tag' => false]])->textInput() ?>
                         </div>
                     </div>
                 </div>

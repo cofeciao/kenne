@@ -23,7 +23,9 @@ use yii\db\ActiveRecord;
  * @property string $payment_status Tình trạng thanh toán
  * @property string $service_status Tình trạng dịch vụ
  * @property string $total Tổng tiền (trước chiết khấu)
- * @property string $discount Giảm giá
+ * @property string $discount_type Loại giảm giá
+ * @property string $discount_value Giảm giá theo loại
+ * @property string $discount Giảm giá cuối cùng: nếu loại là percent thì = discount_value * total / 100, nếu loại là trực tiếp thì = discount_value
  * @property string $final_total Tổng tiền
  * @property int $created_at
  * @property int $created_by
@@ -81,8 +83,8 @@ class Order extends OrderTable
             [['title', 'co_so_id', 'customer_id', 'order_date'], 'required'],
             [['co_so_id', 'customer_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['order_date'], 'safe'],
-            [['total', 'discount', 'final_total'], 'number'],
-            [['title', 'code'], 'string', 'max' => 255],
+            [['total', 'discount', 'final_total', 'discount_value'], 'number'],
+            [['title', 'code', 'discount_type'], 'string', 'max' => 255],
             [['status', 'payment_status', 'service_status'], 'string', 'max' => 50],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
