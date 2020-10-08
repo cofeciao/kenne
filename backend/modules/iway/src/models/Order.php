@@ -38,6 +38,8 @@ class Order extends OrderTable
 {
     public $toastr_key = 'order';
 
+    public $none_db_line_item; /* Field ảo */
+
     public function behaviors()
     {
         return array_merge(
