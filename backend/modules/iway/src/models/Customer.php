@@ -3,6 +3,7 @@
 namespace modava\iway\models;
 
 use common\models\User;
+use modava\iway\helpers\Utils;
 use modava\iway\models\table\CustomerTable;
 use modava\location\models\LocationDistrict;
 use modava\location\models\LocationProvince;
@@ -106,8 +107,7 @@ class Customer extends CustomerTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['birthday'],
                     ],
                     'value' => function ($event) {
-                        if ($this->birthday == '') return '';
-                        return date('Y-m-d', strtotime($this->birthday));
+                        return Utils::convertDateToDBFormat($this->birthday);
                     },
                 ],
             ]

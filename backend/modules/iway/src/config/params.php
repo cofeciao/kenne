@@ -10,4 +10,8 @@ return [
     'role_direct_sales' => 'direct_sales',
     'role_doctor_thamkham' => 'doctor_thamkham',
     'role_le_tan' => 'le_tan',
+    'discount_type' => [
+        '1' => '₫',
+        '2' => '%',
+    ]
 ];
