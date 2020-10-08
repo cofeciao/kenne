@@ -31,6 +31,12 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
+        'controllerId' => 'order',
+        'label' => Yii::t('backend', 'Đơn hàng'),
+        'icon' => '<i class="glyphicon glyphicon-cog"></i>',
+    ],
+    [
+        'module' => 'iway',
         'controllerId' => 'co-so',
         'label' => Yii::t('backend', 'Cơ sở'),
         'icon' => '<i class="ion ion-md-contacts"></i>',
@@ -45,12 +51,6 @@ $routeInfos = [
         'module' => 'iway',
         'controllerId' => 'iway/view',
         'label' => Yii::t('backend', 'View doctor'),
-        'icon' => '<i class="glyphicon glyphicon-cog"></i>',
-    ],
-    [
-        'module' => 'iway',
-        'controllerId' => 'order',
-        'label' => Yii::t('backend', 'Đơn hàng'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
     ],
 ];
