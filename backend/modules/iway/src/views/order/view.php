@@ -2,6 +2,7 @@
 
 use backend\widgets\ToastrWidget;
 use modava\auth\models\UserProfile;
+use modava\iway\models\Order;
 use modava\iway\models\OrderDetail;
 use modava\iway\widgets\NavbarWidgets;
 use yii\data\ActiveDataProvider;
@@ -182,6 +183,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'label' => Yii::t('backend', 'Giảm giá'),
                                             'value' => function ($model) {
+                                                if ($model->discount_type == Order::GIAM_GIA_TRUC_TIEP) {
+                                                    return Yii::$app->formatter->asDecimal($model->discount_value) . ' ' . Yii::$app->getModule('iway')->params['discount_type'][$model->discount_type];
+                                                }
                                                 return $model->discount_value . ' ' . Yii::$app->getModule('iway')->params['discount_type'][$model->discount_type];
                                             },
                                             'contentOptions' => [

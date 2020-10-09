@@ -25,6 +25,8 @@ if (!$model->primaryKey) {
     $model->total = 0;
     $model->discount = 0;
     $model->discount_value = 0;
+    $model->payment_status = 'chua_thanh_toan';
+    $model->service_status = 'chua_dieu_tri';
 } else {
     $model->order_date = Utils::convertDateToDisplayFormat($model->order_date);
     $model->discount_value = Yii::$app->formatter->asDecimal($model->discount_value);
