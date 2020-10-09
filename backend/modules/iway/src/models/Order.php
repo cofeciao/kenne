@@ -4,6 +4,7 @@ namespace modava\iway\models;
 
 use common\models\User;
 use modava\iway\helpers\Utils;
+use modava\iway\models\table\OrderDetailTable;
 use modava\iway\models\table\OrderTable;
 use Yii;
 use yii\behaviors\AttributeBehavior;
@@ -40,7 +41,10 @@ class Order extends OrderTable
 {
     public $toastr_key = 'order';
 
-    public $none_db_line_item; /* Field ảo */
+    public $order_detail; /* Field ảo */
+
+    const GIAM_GIA_TRUC_TIEP = '1';
+    const GIAM_GIA_PHAN_TRAM = '2';
 
     public function behaviors()
     {
@@ -89,6 +93,7 @@ class Order extends OrderTable
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            ['order_detail', 'validateSalesOrderDetail'],
         ];
     }
 
@@ -145,5 +150,49 @@ class Order extends OrderTable
     public function getCoSo()
     {
         return $this->hasOne(CoSo::class, ['id' => 'co_so_id']);
+    }
+
+    public function getSalesOrderDetails() {
+        return $this->hasMany(OrderDetail::class, ['order_id' => 'id']);
+    }
+
+    public function saveSalesOrderDetail () {
+
+        $orderNotDelete = [];
+
+        foreach ($this->order_detail as $orderDetail) {
+            if ($orderDetail['id']) {
+                $orderDetailModel = OrderDetail::find()->where(['id' => $orderDetail['id']])->one();
+            }
+            else {
+                $orderDetailModel = new OrderDetail();
+            }
+
+            $orderDetailModel->setAttributes($orderDetail, false);
+            $orderDetailModel->setAttribute('order_id', $this->primaryKey);
+            $orderDetailModel->save();
+
+
+            $orderNotDelete[] = $orderDetailModel->id;
+        }
+
+        OrderDetailTable::deleteAll(['AND', ['order_id' => $this->primaryKey], ['NOT IN', 'id', $orderNotDelete]]);
+
+        return true;
+    }
+
+    public function validateSalesOrderDetail()
+    {
+        if (!$this->hasErrors() && is_array($this->order_detail)) {
+            foreach ($this->order_detail as $i => $salesorder_detail) {
+                $salesOrderDetail = new OrderDetail();
+                $salesOrderDetail->setAttributes($salesorder_detail, false);
+                if (!$salesOrderDetail->validate()) {
+                    foreach ($salesOrderDetail->getErrors() as $k => $error) {
+                        $this->addError("order_detail[$i][$k]", $error[0]);
+                    }
+                }
+            }
+        }
     }
 }

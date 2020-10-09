@@ -30,7 +30,7 @@ if (!$model->primaryKey) {
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="order-form">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
         <section class="hk-sec-wrapper mb-4">
             <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
             <div class="row">
@@ -107,7 +107,7 @@ if (!$model->primaryKey) {
         <section class="hk-sec-wrapper mb-4 text-right">
             <h5 class="hk-sec-title text-left">Chi tiết đơn hàng</h5>
             <div class="row text-left p-4">
-                <?= $form->field($model, 'line_item')->widget(MultipleInput::class, [
+                <?= $form->field($model, 'order_detail')->widget(MultipleInput::class, [
                     'id' => 'salesorder_detail',
                     'max' => 30,
                     'allowEmptyList' => false,
@@ -152,7 +152,7 @@ if (!$model->primaryKey) {
                             ],
                         ],
                         [
-                            'name' => 'quantity',
+                            'name' => 'qty',
                             'title' => Yii::t('backend', 'Số lượng'),
                             'enableError' => true,
                             'defaultValue' => 1,
@@ -176,7 +176,7 @@ if (!$model->primaryKey) {
                             ]
                         ],
                         [
-                            'name' => 'discount',
+                            'name' => 'discount_value',
                             'title' => Yii::t('backend', 'Chiết khấu'),
                             'enableError' => true,
                             'defaultValue' => 0,

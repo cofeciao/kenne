@@ -2,9 +2,11 @@
 
 use backend\widgets\ToastrWidget;
 use modava\iway\widgets\NavbarWidgets;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model modava\iway\models\Order */
@@ -44,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
@@ -97,6 +100,126 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ]) ?>
+            </section>
+
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title">Chi tiết đơn hàng</h5>
+                <?php Pjax::begin(); ?>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="table-wrap">
+                            <div class="dataTables_wrapper dt-bootstrap4">
+                                <?= GridView::widget([
+                                    'dataProvider' => $orderDetailDataProvider,
+                                    'layout' => '
+                                        {errors}
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                {items}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" role="status" aria-live="polite">
+                                                    {pager}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    {summary}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ',
+                                    'pager' => [
+                                        'firstPageLabel' => Yii::t('backend', 'First'),
+                                        'lastPageLabel' => Yii::t('backend', 'Last'),
+                                        'prevPageLabel' => Yii::t('backend', 'Previous'),
+                                        'nextPageLabel' => Yii::t('backend', 'Next'),
+                                        'maxButtonCount' => 5,
+
+                                        'options' => [
+                                            'tag' => 'ul',
+                                            'class' => 'pagination',
+                                        ],
+
+                                        // Customzing CSS class for pager link
+                                        'linkOptions' => ['class' => 'page-link'],
+                                        'activePageCssClass' => 'active',
+                                        'disabledPageCssClass' => 'disabled page-disabled',
+                                        'pageCssClass' => 'page-item',
+
+                                        // Customzing CSS class for navigating link
+                                        'prevPageCssClass' => 'paginate_button page-item',
+                                        'nextPageCssClass' => 'paginate_button page-item',
+                                        'firstPageCssClass' => 'paginate_button page-item',
+                                        'lastPageCssClass' => 'paginate_button page-item',
+                                    ],
+                                    'columns' => [
+                                        [
+                                            'class' => 'yii\grid\SerialColumn',
+                                            'header' => 'STT',
+                                            'headerOptions' => [
+                                                'width' => 60,
+                                                'rowspan' => 2
+                                            ],
+                                            'filterOptions' => [
+                                                'class' => 'd-none',
+                                            ],
+                                        ],
+
+                                        [
+                                            'attribute' => 'product_id',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return Html::a($model->product->title, ['/product/product/view', 'id' => $model->product->id], ['target' => '_blank', 'data-pjax' => 0]);
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'qty',
+                                            'format' => 'decimal',
+                                            'contentOptions' => [
+                                                'class' => 'text-right',
+                                            ]
+                                        ],
+                                        [
+                                            'attribute' => 'price',
+                                            'format' => 'currency',
+                                            'contentOptions' => [
+                                                'class' => 'text-right',
+                                            ]
+                                        ],
+                                        [
+                                            'label' => Yii::t('backend', 'Giảm giá'),
+                                            'value' => function ($model) {
+                                                return $model->discount_value . ' ' . Yii::$app->getModule('iway')->params['discount_type'][$model->discount_type];
+                                            },
+                                            'contentOptions' => [
+                                                'class' => 'text-right',
+                                            ]
+                                        ],
+                                        [
+                                            'attribute' => 'discount',
+                                            'format' => 'currency',
+                                            'contentOptions' => [
+                                                'class' => 'text-right',
+                                            ]
+                                        ],
+                                        'description',
+                                        [
+                                            'attribute' => 'final_total',
+                                            'format' => 'currency',
+                                            'contentOptions' => [
+                                                'class' => 'text-right',
+                                            ],
+                                        ],
+                                    ],
+                                ]); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php Pjax::end(); ?>
             </section>
         </div>
     </div>
