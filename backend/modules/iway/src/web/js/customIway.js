@@ -83,6 +83,10 @@ function formatAsDecimal(number) {
     return new Intl.NumberFormat('en-US').format(formatToRawNumber(number));
 }
 
+function formatAsCurrency(number, symbol = '₫') {
+    return formatAsDecimal(number) + ' ' + symbol;
+}
+
 $(function () {
     "use strict";
 

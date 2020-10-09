@@ -61,12 +61,8 @@ class OrderController extends MyController
     */
     public function actionView($id)
     {
-        $searchModelOrderDetail = new OrderDetailSearch();
-        $orderDetailDataProvider = $searchModelOrderDetail->search(array_merge(Yii::$app->request->queryParams, ['order_id' => $id]));
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'orderDetailDataProvider' => $orderDetailDataProvider,
         ]);
     }
 

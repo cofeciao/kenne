@@ -1,11 +1,13 @@
 <?php
 
 use backend\widgets\ToastrWidget;
+use modava\auth\models\UserProfile;
+use modava\iway\models\OrderDetail;
 use modava\iway\widgets\NavbarWidgets;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -45,72 +47,60 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Row -->
     <div class="row">
         <div class="col-xl-12">
-            <section class="hk-sec-wrapper">
+            <section class="hk-sec-wrapper mb-2">
                 <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
-                <?= DetailView::widget([
-                    'model' => $model,
-                    'attributes' => [
-                        'title',
-                        'code',
-                        [
-                            'attribute' => 'co_so_id',
-                            'format' => 'raw',
-                            'value' => function (modava\iway\models\Order $model) {
-                                return Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id]));
-                            }
-                        ],
-                        [
-                            'attribute' => 'customer_id',
-                            'format' => 'raw',
-                            'value' => function (modava\iway\models\Order $model) {
-                                return Html::a($model->customer->fullname, Url::toRoute(['co-so/view', 'id' => $model->customer_id]));
-                            }
-                        ],
-                        'order_date:date',
-                        [
-                            'attribute' => 'status',
-                            'value' => function (modava\iway\models\Order $model) {
-                                return $model->getDisplayDropdown($model->status, 'status');
-                            }
-                        ],
-                        [
-                            'attribute' => 'payment_status',
-                            'value' => function (modava\iway\models\Order $model) {
-                                return $model->getDisplayDropdown($model->payment_status, 'payment_status');
-                            }
-                        ],
-                        [
-                            'attribute' => 'service_status',
-                            'value' => function (modava\iway\models\Order $model) {
-                                return $model->getDisplayDropdown($model->service_status, 'service_status');
-                            }
-                        ],
-                        'total',
-                        'discount',
-                        'final_total',
-                        'created_at:datetime',
-                        'updated_at:datetime',
-                        [
-                            'attribute' => 'userCreated.userProfile.fullname',
-                            'label' => Yii::t('backend', 'Created By')
-                        ],
-                        [
-                            'attribute' => 'userUpdated.userProfile.fullname',
-                            'label' => Yii::t('backend', 'Updated By')
-                        ],
-                    ],
-                ]) ?>
+                <table class="table table-no-bordered">
+                    <tr>
+                        <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('title') ?></td>
+                        <td class="w-30 border-top-0 py-2 px-3"><?= $model->title ?></td>
+                        <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('co_so_id') ?></td>
+                        <td class="w-30 border-top-0 py-2 px-3"><?= Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id]))?></td>
+                    </tr>
+                    <tr>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('customer_id') ?></td>
+                        <td class="w-30 py-2 px-3"><?= Html::a($model->customer->fullname, Url::toRoute(['customer/view', 'id' => $model->customer_id])) ?></td>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('order_date') ?></td>
+                        <td class="w-30 py-2 px-3"><?= Yii::$app->formatter->asDate($model->order_date) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('status') ?></td>
+                        <td class="w-30 py-2 px-3"><?= $model->getDisplayDropdown($model->status, 'status') ?></td>
+                        <td class="w-20 py-2 px-3"></td>
+                        <td class="w-30 py-2 px-3"></td>
+                    </tr>
+                    <tr>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('payment_status') ?></td>
+                        <td class="w-30 py-2 px-3"><?= $model->getDisplayDropdown($model->payment_status, 'payment_status') ?></td>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('service_status') ?></td>
+                        <td class="w-30 py-2 px-3"><?= $model->getDisplayDropdown($model->service_status, 'service_status') ?></td>
+                    </tr>
+                    <tr>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('created_at') ?></td>
+                        <td class="w-30 py-2 px-3"><?= Yii::$app->formatter->asDatetime($model->created_at) ?></td>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('updated_at') ?></td>
+                        <td class="w-30 py-2 px-3"><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('created_by') ?></td>
+                        <td class="w-30 py-2 px-3"><?= UserProfile::findOne($model->created_by)->fullname ?></td>
+                        <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('updated_by') ?></td>
+                        <td class="w-30 py-2 px-3"><?= UserProfile::findOne($model->updated_by)->fullname ?></td>
+                    </tr>
+                </table>
             </section>
 
             <section class="hk-sec-wrapper">
                 <h5 class="hk-sec-title">Chi tiết đơn hàng</h5>
                 <?php Pjax::begin(); ?>
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-sm">
                         <div class="table-wrap">
                             <div class="dataTables_wrapper dt-bootstrap4">
                                 <?= GridView::widget([
-                                    'dataProvider' => $orderDetailDataProvider,
+                                    'dataProvider' => new ActiveDataProvider([
+                                        'query' => OrderDetail::find()->where(['order_id' => $model->primaryKey]),
+                                        'sort' => false
+                                    ]),
                                     'layout' => '
                                         {errors}
                                         <div class="row">
@@ -220,6 +210,38 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <?php Pjax::end(); ?>
+
+
+                <div class="row justify-content-end p-1 text-right">
+                    <div class="col-3 border-top pt-2"><?= $model->getAttributeLabel('total') ?>:</div>
+                    <div class="col-4 border-top pt-2">
+                        <p id="total" class="text-right"><?= Yii::$app->formatter->asCurrency($model->total) ?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-end p-1 text-right">
+                    <div class="col-3 form-group mb-0 position-relative">
+                        <span><?= $model->getAttributeLabel('discount') ?>:</span>
+                        <div class="discount-container" style="position: absolute;left: 100%;top: -8px;width: 350px;z-index: 1000;">
+                            <div class="input-group w-50">
+                                <div class="input-group-prepend">
+                                    <select name="" id="" class="form-control" disabled>
+                                        <option value="" selected><?= Yii::$app->getModule('iway')->params['discount_type'][$model->discount_type] ?></option>
+                                    </select>
+                                </div>
+                                <input type="text" value="<?= Yii::$app->formatter->asDecimal($model->discount_value) ?>" class="form-control text-right" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <p id="discount" class="text-right"><?= Yii::$app->formatter->asCurrency($model->discount) ?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-end p-1 text-right">
+                    <div class="col-3 font-18"><?= $model->getAttributeLabel('final_total') ?>:</div>
+                    <div class="col-4">
+                        <p id="final_total" class="font-weight-bold font-18"><?= Yii::$app->formatter->asCurrency($model->final_total) ?></p>
+                    </div>
+                </div>
             </section>
         </div>
     </div>

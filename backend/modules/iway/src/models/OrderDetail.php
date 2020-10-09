@@ -39,6 +39,7 @@ class OrderDetail extends OrderDetailTable
 {
     const SCENARIO_SAVE = 'save';
     public $toastr_key = 'order-detail';
+    protected $numberFields = ['price', 'discount_value', 'discount', 'total', 'final_total'];
 
     public function behaviors()
     {
@@ -156,19 +157,6 @@ class OrderDetail extends OrderDetailTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
-    }
-
-    public function beforeValidate()
-    {
-        $numberFields = [
-            'price', 'discount_value', 'discount', 'total', 'final_total'
-        ];
-
-        foreach ($numberFields as $field) {
-            $this->$field = Utils::convertToRawNumber($this->$field);
-        }
-
-        return parent::beforeValidate();
     }
 
     public function getProduct()

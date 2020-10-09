@@ -40,7 +40,7 @@ use yii\db\ActiveRecord;
 class Order extends OrderTable
 {
     public $toastr_key = 'order';
-
+    protected $numberFields = ['discount_value', 'total', 'discount', 'final_total'];
     public $order_detail; /* Field ảo */
 
     const GIAM_GIA_TRUC_TIEP = '1';
@@ -86,8 +86,8 @@ class Order extends OrderTable
         return [
             [['title', 'co_so_id', 'customer_id', 'order_date'], 'required'],
             [['co_so_id', 'customer_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['order_date'], 'safe'],
-            [['total', 'discount', 'final_total', 'discount_value'], 'number'],
+            [['order_date', 'discount_value'], 'safe'],
+            [['total', 'discount', 'final_total'], 'number'],
             [['title', 'code', 'discount_type'], 'string', 'max' => 255],
             [['status', 'payment_status', 'service_status'], 'string', 'max' => 50],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -122,6 +122,39 @@ class Order extends OrderTable
         ];
     }
 
+    function afterSave($insert, $changedAttributes)
+    {
+        $this->calcAndUpdateTotalDiscountFinalTotal();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function calcAndUpdateTotalDiscountFinalTotal()
+    {
+        $total = 0;
+
+        // Tính tổng tiền (trước giảm giá)
+        foreach ($this->salesOrderDetails as $orderDetail) {
+            $total += $orderDetail->final_total;
+        }
+
+        // Tính Giảm giá
+        if ($this->discount_type == Order::GIAM_GIA_TRUC_TIEP) {
+            $discount = $this->discount_value;
+        } else {
+            $discount = $this->discount_value * $total / 100;
+        }
+
+        // Tính tổng tiền
+        $finalTotal = $total - $discount;
+
+        // Update cho record
+        $this->updateAttributes([
+            'total' => $total,
+            'discount' => $discount,
+            'final_total' => $finalTotal
+        ]);
+    }
+
     /**
      * Gets query for [[User]].
      *
@@ -152,19 +185,20 @@ class Order extends OrderTable
         return $this->hasOne(CoSo::class, ['id' => 'co_so_id']);
     }
 
-    public function getSalesOrderDetails() {
+    public function getSalesOrderDetails()
+    {
         return $this->hasMany(OrderDetail::class, ['order_id' => 'id']);
     }
 
-    public function saveSalesOrderDetail () {
+    public function saveSalesOrderDetail()
+    {
 
         $orderNotDelete = [];
 
         foreach ($this->order_detail as $orderDetail) {
             if ($orderDetail['id']) {
                 $orderDetailModel = OrderDetail::find()->where(['id' => $orderDetail['id']])->one();
-            }
-            else {
+            } else {
                 $orderDetailModel = new OrderDetail();
             }
 
