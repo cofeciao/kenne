@@ -1,4 +1,7 @@
 <?php
+
+use modava\iway\models\Order;
+
 return [
     'iwayName' => 'Iway',
     'iwayVersion' => '1.0',
@@ -11,7 +14,7 @@ return [
     'role_doctor_thamkham' => 'doctor_thamkham',
     'role_le_tan' => 'le_tan',
     'discount_type' => [
-        '1' => '₫',
-        '2' => '%',
+        Order::GIAM_GIA_TRUC_TIEP => '₫',
+        Order::GIAM_GIA_PHAN_TRAM => '%',
     ]
 ];

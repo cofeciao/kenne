@@ -132,6 +132,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 }
                                             ],
                                             'order_date:date',
+                                            [
+                                                'attribute' => 'status',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return $model->status === 'hoan_thanh' ? Html::tag('span', $model->getDisplayDropdown($model->status, 'status'), ['class' => 'badge badge-success font-12']) : $model->getDisplayDropdown($model->status, 'status');
+                                                }
+                                            ],
                                             //'payment_status',
                                             //'service_status',
                                             //'total',

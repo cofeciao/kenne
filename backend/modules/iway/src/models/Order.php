@@ -4,6 +4,7 @@ namespace modava\iway\models;
 
 use common\models\User;
 use modava\iway\helpers\Utils;
+use modava\iway\models\table\OrderDetailTable;
 use modava\iway\models\table\OrderTable;
 use Yii;
 use yii\behaviors\AttributeBehavior;
@@ -38,9 +39,11 @@ use yii\db\ActiveRecord;
  */
 class Order extends OrderTable
 {
-    public $toastr_key = 'order';
-
-    public $none_db_line_item; /* Field ảo */
+    const GIAM_GIA_TRUC_TIEP = '1';
+    const GIAM_GIA_PHAN_TRAM = '2';
+        public $toastr_key = 'order'; /* Field ảo */
+public $order_detail;
+    protected $numberFields = ['discount_value', 'total', 'discount', 'final_total'];
 
     public function behaviors()
     {
@@ -70,6 +73,43 @@ class Order extends OrderTable
                         return Utils::convertDateToDBFormat($this->order_date);
                     },
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['payment_status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['payment_status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->isNewRecord) $this->payment_status = 'chua_thanh_toan';
+                        return $this->payment_status;
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['service_status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['service_status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->isNewRecord) $this->service_status = 'chua_dieu_tri';
+                        return $this->service_status;
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->isNewRecord) return 'moi';
+                        if ($this->payment_status === 'thanh_toan_du' && $this->service_status === 'hoan_thanh') return 'hoan_thanh';
+                        if ($this->payment_status === 'hoan_coc') return 'huy';
+                        if ($this->service_status === 'dang_thuc_hien' || $this->payment_status === 'thanh_toan_1_phan') return 'dang_thuc_hien';
+
+                        return $this->status;
+                    },
+                ],
             ]
         );
     }
@@ -82,13 +122,14 @@ class Order extends OrderTable
         return [
             [['title', 'co_so_id', 'customer_id', 'order_date'], 'required'],
             [['co_so_id', 'customer_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['order_date'], 'safe'],
-            [['total', 'discount', 'final_total', 'discount_value'], 'number'],
+            [['order_date', 'discount_value'], 'safe'],
+            [['total', 'discount', 'final_total'], 'number'],
             [['title', 'code', 'discount_type'], 'string', 'max' => 255],
             [['status', 'payment_status', 'service_status'], 'string', 'max' => 50],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+            ['order_detail', 'validateSalesOrderDetail'],
         ];
     }
 
@@ -115,6 +156,45 @@ class Order extends OrderTable
             'updated_at' => Yii::t('backend', 'Updated At'),
             'updated_by' => Yii::t('backend', 'Updated By'),
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->calcAndUpdateTotalDiscountFinalTotal();
+        return parent::beforeSave($insert);
+    }
+
+    public function calcAndUpdateTotalDiscountFinalTotal()
+    {
+        $total = 0;
+
+        // Tính tổng tiền (trước giảm giá)
+        foreach ($this->order_detail as $orderDetail) {
+            $finalTotalLineItem = 0;
+            $totalLineItem = Utils::convertToRawNumber($orderDetail['price']) * $orderDetail['qty'];
+
+            if ($orderDetail['discount_type'] == Order::GIAM_GIA_TRUC_TIEP) {
+                $finalTotalLineItem = $totalLineItem - Utils::convertToRawNumber($orderDetail['discount_value']);
+            } else {
+                $finalTotalLineItem = $totalLineItem - ($orderDetail['discount_value'] * $totalLineItem / 100);
+            }
+
+            $total += $finalTotalLineItem;
+        }
+
+        // Tính Giảm giá
+        if ($this->discount_type == Order::GIAM_GIA_TRUC_TIEP) {
+            $discount = $this->discount_value;
+        } else {
+            $discount = $this->discount_value * $total / 100;
+        }
+
+        // Tính tổng tiền
+        $finalTotal = $total - $discount;
+
+        $this->total = $total;
+        $this->discount = $discount;
+        $this->final_total = $finalTotal;
     }
 
     /**
@@ -145,5 +225,50 @@ class Order extends OrderTable
     public function getCoSo()
     {
         return $this->hasOne(CoSo::class, ['id' => 'co_so_id']);
+    }
+
+    public function getSalesOrderDetails()
+    {
+        return $this->hasMany(OrderDetail::class, ['order_id' => 'id']);
+    }
+
+    public function saveSalesOrderDetail()
+    {
+
+        $orderNotDelete = [];
+
+        foreach ($this->order_detail as $orderDetail) {
+            if ($orderDetail['id']) {
+                $orderDetailModel = OrderDetail::find()->where(['id' => $orderDetail['id']])->one();
+            } else {
+                $orderDetailModel = new OrderDetail();
+            }
+
+            $orderDetailModel->setAttributes($orderDetail, false);
+            $orderDetailModel->setAttribute('order_id', $this->primaryKey);
+            $orderDetailModel->save();
+
+
+            $orderNotDelete[] = $orderDetailModel->id;
+        }
+
+        OrderDetailTable::deleteAll(['AND', ['order_id' => $this->primaryKey], ['NOT IN', 'id', $orderNotDelete]]);
+
+        return true;
+    }
+
+    public function validateSalesOrderDetail()
+    {
+        if (!$this->hasErrors() && is_array($this->order_detail)) {
+            foreach ($this->order_detail as $i => $salesorder_detail) {
+                $salesOrderDetail = new OrderDetail();
+                $salesOrderDetail->setAttributes($salesorder_detail, false);
+                if (!$salesOrderDetail->validate()) {
+                    foreach ($salesOrderDetail->getErrors() as $k => $error) {
+                        $this->addError("order_detail[$i][$k]", $error[0]);
+                    }
+                }
+            }
+        }
     }
 }

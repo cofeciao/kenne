@@ -18,20 +18,25 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 if (!$model->primaryKey) {
+    /* Default value khi tạo mới */
     $model->order_date = date('d-m-Y');
     $model->status = 'moi';
     $model->final_total = 0;
     $model->total = 0;
     $model->discount = 0;
+    $model->discount_value = 0;
+    $model->payment_status = 'chua_thanh_toan';
+    $model->service_status = 'chua_dieu_tri';
 } else {
     $model->order_date = Utils::convertDateToDisplayFormat($model->order_date);
+    $model->discount_value = Yii::$app->formatter->asDecimal($model->discount_value);
 }
 
 ?>
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
     <div class="order-form">
-        <?php $form = ActiveForm::begin(); ?>
-        <section class="hk-sec-wrapper mb-4">
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
+        <section class="hk-sec-wrapper mb-2">
             <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
             <div class="row">
                 <div class="col-6">
@@ -77,7 +82,8 @@ if (!$model->primaryKey) {
                 <div class="col-6">
 
                     <?= $form->field($model, 'status')->dropDownList($model->getDropdown('status'), [
-                        'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                        'prompt' => Yii::t('backend', 'Chọn một giá trị ...'),
+                        'disabled' => true
                     ]) ?>
                 </div>
                 <div class="col-3">
@@ -107,7 +113,7 @@ if (!$model->primaryKey) {
         <section class="hk-sec-wrapper mb-4 text-right">
             <h5 class="hk-sec-title text-left">Chi tiết đơn hàng</h5>
             <div class="row text-left p-4">
-                <?= $form->field($model, 'line_item')->widget(MultipleInput::class, [
+                <?= $form->field($model, 'order_detail')->widget(MultipleInput::class, [
                     'id' => 'salesorder_detail',
                     'max' => 30,
                     'allowEmptyList' => false,
@@ -152,7 +158,7 @@ if (!$model->primaryKey) {
                             ],
                         ],
                         [
-                            'name' => 'quantity',
+                            'name' => 'qty',
                             'title' => Yii::t('backend', 'Số lượng'),
                             'enableError' => true,
                             'defaultValue' => 1,
@@ -169,6 +175,10 @@ if (!$model->primaryKey) {
                             'title' => Yii::t('backend', 'Giá') . ' (₫)',
                             'enableError' => true,
                             'defaultValue' => '0',
+                            'value' => function ($model) {
+                                if (!$model) return 0;
+                                return Yii::$app->formatter->asDecimal($model->price);
+                            },
                             'options' => [
                                 'style' => 'width: 130px',
                                 'class' => 'text-right product-price',
@@ -176,10 +186,14 @@ if (!$model->primaryKey) {
                             ]
                         ],
                         [
-                            'name' => 'discount',
+                            'name' => 'discount_value',
                             'title' => Yii::t('backend', 'Chiết khấu'),
                             'enableError' => true,
                             'defaultValue' => 0,
+                            'value' => function ($model) {
+                                if (!$model) return 0;
+                                return Yii::$app->formatter->asDecimal($model->discount_value);
+                            },
                             'options' => [
                                 'style' => 'width: 120px',
                                 'class' => 'discount-value text-right',
@@ -207,12 +221,16 @@ if (!$model->primaryKey) {
                             ]
                         ],
                         [
-                            'name' => 'sub_total',
+                            'name' => 'final_total',
                             'type' => 'static',
                             'defaultValue' => 0,
+                            'value' => function ($model) {
+                                if (!$model) return 0;
+                                return Yii::$app->formatter->asDecimal($model->final_total);
+                            },
                             'options' => [
                                 'style' => 'min-width: 150px',
-                                'class' => 'text-right lineitem-total'
+                                'class' => 'text-right lineitem-total',
                             ],
                             'title' => Yii::t('backend', 'Thành tiền') . ' (₫)'
                         ]
@@ -224,10 +242,7 @@ if (!$model->primaryKey) {
             <div class="row justify-content-end p-1">
                 <div class="col-3 border-top pt-2"><?= $model->getAttributeLabel('total') ?>:</div>
                 <div class="col-4 border-top pt-2">
-                    <h5 id="total"><?= Yii::$app->formatter->asCurrency($model->total) ?></h5>
-                    <div class="d-none">
-                        <?= $form->field($model, 'total')->input('hidden')->label(false) ?>
-                    </div>
+                    <p id="total"><?= Yii::$app->formatter->asCurrency($model->total) ?></p>
                 </div>
             </div>
             <div class="row justify-content-end p-1">
@@ -236,32 +251,27 @@ if (!$model->primaryKey) {
                     <div class="discount-container" style="position: absolute;left: 100%;top: -8px;width: 350px;z-index: 1000;">
                         <div class="input-group w-50">
                             <div class="input-group-prepend">
-                                <?= $form->field($model, 'discount_type', ['template' => '{input}', 'options' => ['tag' => false]])->dropDownList(Yii::$app->getModule('iway')->params['discount_type']) ?>
+                                <?= $form->field($model, 'discount_type', ['template' => '{input}{error}', 'options' => ['tag' => false]])->dropDownList(Yii::$app->getModule('iway')->params['discount_type']) ?>
                             </div>
-                            <?= $form->field($model, 'discount_value', ['template' => '{input}', 'options' => ['tag' => false]])->textInput() ?>
+                            <?= $form->field($model, 'discount_value', ['template' => '{input}{error}', 'options' => ['tag' => false]])->textInput(['class' => 'text-right form-control']) ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-4">
-                    <h5 id="discount"><?= Yii::$app->formatter->asCurrency($model->discount) ?></h5>
-                    <div class="d-none">
-                        <?= $form->field($model, 'discount')->input('hidden')->label(false) ?>
-                    </div>
+                    <p id="discount"><?= Yii::$app->formatter->asCurrency($model->discount) ?></p>
                 </div>
             </div>
             <div class="row justify-content-end p-1">
-                <div class="col-3"><?= $model->getAttributeLabel('final_total') ?>:</div>
+                <div class="col-3 font-18"><?= $model->getAttributeLabel('final_total') ?>:</div>
                 <div class="col-4">
-                    <h4 id="final_total"><?= Yii::$app->formatter->asCurrency($model->final_total) ?></h4>
-                    <div class="d-none">
-                        <?= $form->field($model, 'final_total')->input('hidden')->label(false) ?>
-                    </div>
+                    <p id="final_total" class="font-weight-bold font-18"><?= Yii::$app->formatter->asCurrency($model->final_total) ?></p>
                 </div>
             </div>
         </section>
 
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-sm btn-success']) ?>
+            <?= Html::a(Yii::t('backend', 'Hủy'), 'javascript:window.history.back();', ['class' => 'btn btn-sm btn-danger']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
