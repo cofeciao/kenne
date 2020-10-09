@@ -74,6 +74,28 @@ class Order extends OrderTable
                         return Utils::convertDateToDBFormat($this->order_date);
                     },
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['payment_status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['payment_status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->isNewRecord) $this->payment_status = 'chua_thanh_toan';
+                        return $this->payment_status;
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['service_status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['service_status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->isNewRecord) $this->service_status = 'chua_dieu_tri';
+                        return $this->service_status;
+                    },
+                ],
             ]
         );
     }

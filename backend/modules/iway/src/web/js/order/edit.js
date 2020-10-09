@@ -63,6 +63,7 @@ function calcGrandTotal() {
     return grandTotal;
 }
 function handleDiscountValue(maxPrice, discountType, self) {
+    debugger;
     let discountValue = formatToRawNumber(self.val());
 
     if (discountType === GIAM_GIA_TRUC_TIEP) {
@@ -77,7 +78,11 @@ function handleDiscountValue(maxPrice, discountType, self) {
 
 $(function () {
     $('body')
-        .on('change', '.product-price, .product-qty, .discount-value, .discount-type', function(e) {
+        .on('change', '.product-price, .product-qty', function(e) {
+            calcLineTotal($(this).closest('tr'));
+        })
+        .on('change', '.discount-value, .discount-type', function () {
+            handleDiscountValue(formatToRawNumber($(this).closest('tr').find('.product-price').val()), $(this).closest('tr').find('.discount-type').val(), $(this));
             calcLineTotal($(this).closest('tr'));
         })
         .on('change', '.product-id', function(e){
@@ -101,6 +106,7 @@ $(function () {
             calcGrandTotal();
         })
         .on('change', '#order-discount_type, #order-discount_value', function () {
+            handleDiscountValue(calcTotal(), $('#order-discount_type').val(), $(this));
             calcGrandTotal();
         })
         .on('change', '.discount-type', function () {
