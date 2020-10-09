@@ -267,7 +267,8 @@ if (!$model->primaryKey) {
         </section>
 
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-sm btn-success']) ?>
+            <?= Html::a(Yii::t('backend', 'Hủy'), 'javascript:window.history.back();', ['class' => 'btn btn-sm btn-danger']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
