@@ -144,10 +144,10 @@ class Order extends OrderTable
         ];
     }
 
-    function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
         $this->calcAndUpdateTotalDiscountFinalTotal();
-        parent::afterSave($insert, $changedAttributes);
+        return parent::beforeSave($insert);
     }
 
     public function calcAndUpdateTotalDiscountFinalTotal()
@@ -155,8 +155,17 @@ class Order extends OrderTable
         $total = 0;
 
         // Tính tổng tiền (trước giảm giá)
-        foreach ($this->salesOrderDetails as $orderDetail) {
-            $total += $orderDetail->final_total;
+        foreach ($this->order_detail as $orderDetail) {
+            $finalTotalLineItem = 0;
+            $totalLineItem = Utils::convertToRawNumber($orderDetail['price']) * $orderDetail['qty'];
+
+            if ($orderDetail['discount_type'] == Order::GIAM_GIA_TRUC_TIEP) {
+                $finalTotalLineItem = $totalLineItem - Utils::convertToRawNumber($orderDetail['discount_value']);
+            } else {
+                $finalTotalLineItem = $totalLineItem - ($orderDetail['discount_value'] * $totalLineItem / 100);
+            }
+
+            $total += $finalTotalLineItem;
         }
 
         // Tính Giảm giá
@@ -169,12 +178,9 @@ class Order extends OrderTable
         // Tính tổng tiền
         $finalTotal = $total - $discount;
 
-        // Update cho record
-        $this->updateAttributes([
-            'total' => $total,
-            'discount' => $discount,
-            'final_total' => $finalTotal
-        ]);
+        $this->total = $total;
+        $this->discount = $discount;
+        $this->final_total = $finalTotal;
     }
 
     /**
