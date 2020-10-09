@@ -12,7 +12,7 @@ class m201008_101912_modify_table_iway_order extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('iway_order', 'discount_type', $this->string(20)->null()->comment('Loại giảm giá'));
+        $this->addColumn('iway_order', 'discount_type', $this->smallInteger(1)->null()->comment('Loại giảm giá'));
         $this->addColumn('iway_order', 'discount_value', $this->decimal(12)->null()->comment('Giá trị giảm giá'));
     }
 
