@@ -39,12 +39,11 @@ use yii\db\ActiveRecord;
  */
 class Order extends OrderTable
 {
-    public $toastr_key = 'order';
-    protected $numberFields = ['discount_value', 'total', 'discount', 'final_total'];
-    public $order_detail; /* Field ảo */
-
     const GIAM_GIA_TRUC_TIEP = '1';
     const GIAM_GIA_PHAN_TRAM = '2';
+        public $toastr_key = 'order'; /* Field ảo */
+public $order_detail;
+    protected $numberFields = ['discount_value', 'total', 'discount', 'final_total'];
 
     public function behaviors()
     {
@@ -94,6 +93,21 @@ class Order extends OrderTable
                     'value' => function ($event) {
                         if ($this->isNewRecord) $this->service_status = 'chua_dieu_tri';
                         return $this->service_status;
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->isNewRecord) return 'moi';
+                        if ($this->payment_status === 'thanh_toan_du' && $this->service_status === 'hoan_thanh') return 'hoan_thanh';
+                        if ($this->payment_status === 'hoan_coc') return 'huy';
+                        if ($this->service_status === 'dang_thuc_hien' || $this->payment_status === 'thanh_toan_1_phan') return 'dang_thuc_hien';
+
+                        return $this->status;
                     },
                 ],
             ]

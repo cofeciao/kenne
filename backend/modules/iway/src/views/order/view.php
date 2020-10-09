@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     <tr>
                         <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('status') ?></td>
-                        <td class="w-30 py-2 px-3"><?= $model->getDisplayDropdown($model->status, 'status') ?></td>
+                        <td class="w-30 py-2 px-3"><?= $model->status === 'hoan_thanh' ? Html::tag('span', $model->getDisplayDropdown($model->status, 'status'), ['class' => 'badge badge-success font-12']) : $model->getDisplayDropdown($model->status, 'status') ?></td>
                         <td class="w-20 py-2 px-3"></td>
                         <td class="w-30 py-2 px-3"></td>
                     </tr>

@@ -82,7 +82,8 @@ if (!$model->primaryKey) {
                 <div class="col-6">
 
                     <?= $form->field($model, 'status')->dropDownList($model->getDropdown('status'), [
-                        'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
+                        'prompt' => Yii::t('backend', 'Chọn một giá trị ...'),
+                        'disabled' => true
                     ]) ?>
                 </div>
                 <div class="col-3">
