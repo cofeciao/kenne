@@ -4,7 +4,6 @@ function getProductInfo(id){
     });
 }
 function calcLineTotal(trDOM) {
-    debugger;
     let qty = parseFloat(trDOM.find('.product-qty').val()),
         price = parseFloat(formatToRawNumber(trDOM.find('.product-price').val())),
         discountValue = parseFloat(formatToRawNumber(trDOM.find('.discount-value').val())),
@@ -25,39 +24,65 @@ function calcLineTotal(trDOM) {
 
     return total;
 }
-
 function calcDiscount() {
-    return 0;
-}
+    let discountType = $('#order-discount_type').val(),
+        discountValue = formatToRawNumber($('#order-discount_value').val()),
+        discount = 0;
 
+    if (discountType === GIAM_GIA_TRUC_TIEP) {
+        discount = discountValue;
+    } else {
+        discount = calcTotal() * discountValue / 100;
+    }
+
+    $('#discount').html(formatAsCurrency(discount));
+    return discount;
+}
 function calcTotal () {
     let total = 0;
 
     $('.line_item').each(function() {
-        let temp = parseFloat($(this).find('.lineitem-total').attr('data-value'));
+        let temp = formatToRawNumber($(this).find('.lineitem-total').text());
         if (isNaN(temp)) temp = 0;
+
         total += temp;
     });
 
-    $('#total').html(formatAsDecimal(total) + ' ₫');
+    $('#total').html(formatAsCurrency(total));
 
     return total;
 }
-
 function calcGrandTotal() {
     let grandTotal = 0,
         total = calcTotal();
 
     grandTotal = total - calcDiscount();
 
-    $('#final_total').html(formatAsDecimal(grandTotal) + ' ₫');
+    $('#final_total').html(formatAsCurrency(grandTotal));
 
     return grandTotal;
 }
+function handleDiscountValue(maxPrice, discountType, self) {
+    debugger;
+    let discountValue = formatToRawNumber(self.val());
+
+    if (discountType === GIAM_GIA_TRUC_TIEP) {
+        if (discountValue > maxPrice) discountValue = maxPrice;
+    } else {
+        if (discountValue > 100) discountValue = 100;
+        if (discountValue < 0) discountValue = 0;
+    }
+
+    self.val(formatAsDecimal(discountValue));
+}
 
 $(function () {
-    $('#salesorder_detail')
-        .on('change', '.product-price, .product-qty, .discount-value, .discount-type', function(e) {
+    $('body')
+        .on('change', '.product-price, .product-qty', function(e) {
+            calcLineTotal($(this).closest('tr'));
+        })
+        .on('change', '.discount-value, .discount-type', function () {
+            handleDiscountValue(formatToRawNumber($(this).closest('tr').find('.product-price').val()), $(this).closest('tr').find('.discount-type').val(), $(this));
             calcLineTotal($(this).closest('tr'));
         })
         .on('change', '.product-id', function(e){
@@ -80,22 +105,20 @@ $(function () {
         }).on('afterDeleteRow', function(){
             calcGrandTotal();
         })
+        .on('change', '#order-discount_type, #order-discount_value', function () {
+            handleDiscountValue(calcTotal(), $('#order-discount_type').val(), $(this));
+            calcGrandTotal();
+        })
         .on('change', '.discount-type', function () {
             $(this).closest('tr').find('.discount-value').trigger('keyup').trigger('change');
         })
         .on('keyup', '.discount-value', function () {
-            let productPrice = formatToRawNumber($(this).closest('tr').find('.product-price').val()),
-                discountValue = formatToRawNumber($(this).val()),
-                discountType = $(this).closest('tr').find('.discount-type').val();
-
-            if (discountType === GIAM_GIA_TRUC_TIEP) {
-                if (discountValue > productPrice) discountValue = productPrice;
-            } else {
-                if (discountValue > 100) discountValue = 100;
-                if (discountValue < 0) discountValue = 0;
-            }
-
-
-            $(this).val(formatAsDecimal(discountValue));
+            handleDiscountValue(formatToRawNumber($(this).closest('tr').find('.product-price').val()), $(this).closest('tr').find('.discount-type').val(), $(this));
+        })
+        .on('change', '#order-discount_type', function () {
+            $('#order-discount_value').trigger('keyup').trigger('change');
+        })
+        .on('keyup', '#order-discount_value', function () {
+            handleDiscountValue(calcTotal(), $('#order-discount_type').val(), $(this));
         });
 })

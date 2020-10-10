@@ -2,6 +2,7 @@
 
 namespace modava\iway\components;
 
+use modava\iway\helpers\Utils;
 use modava\iway\models\DropdownsConfig;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -17,6 +18,8 @@ use yii\helpers\Html;
  */
 class MyIwayModel extends ActiveRecord
 {
+    protected $numberFields = [];
+
     public function getDropdowns()
     {
         return DropdownsConfig::getDropdowns(get_class($this)::tableName());
@@ -53,5 +56,14 @@ class MyIwayModel extends ActiveRecord
             'data-copy' => $this->phone
         ]);
         return $content;
+    }
+
+    public function beforeValidate()
+    {
+        foreach ($this->numberFields as $field) {
+            $this->$field = Utils::convertToRawNumber($this->$field);
+        }
+
+        return parent::beforeValidate();
     }
 }

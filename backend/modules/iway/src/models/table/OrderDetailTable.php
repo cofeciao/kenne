@@ -2,11 +2,10 @@
 
 namespace modava\iway\models\table;
 
-use cheatsheet\Time;
+use modava\iway\components\MyIwayModel;
 use Yii;
-use yii\db\ActiveRecord;
 
-class OrderDetailTable extends \yii\db\ActiveRecord
+class OrderDetailTable extends MyIwayModel
 {
     public static function tableName()
     {
