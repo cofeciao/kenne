@@ -28,6 +28,8 @@ use yii\db\ActiveRecord;
  * @property string $discount_value Giảm giá theo loại
  * @property string $discount Giảm giá cuối cùng: nếu loại là percent thì = discount_value * total / 100, nếu loại là trực tiếp thì = discount_value
  * @property string $final_total Tổng tiền
+ * @property string $received Đã thu
+ * @property string $balance còn lại
  * @property int $created_at
  * @property int $created_by
  * @property int $updated_at
@@ -41,9 +43,13 @@ class Order extends OrderTable
 {
     const GIAM_GIA_TRUC_TIEP = '1';
     const GIAM_GIA_PHAN_TRAM = '2';
-        public $toastr_key = 'order'; /* Field ảo */
-public $order_detail;
+    const SCENARIO_NONE_LINE_ITEM = 'none_line_item';
+
+    public $toastr_key = 'order'; /* Field ảo */
+
+    public $order_detail;
     protected $numberFields = ['discount_value', 'total', 'discount', 'final_total'];
+
 
     public function behaviors()
     {
@@ -110,6 +116,28 @@ public $order_detail;
                         return $this->status;
                     },
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['balance'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['balance'],
+                    ],
+                    'value' => function ($event) {
+                        return $this->final_total - $this->received;
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['payment_status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['payment_status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->balance == 0) return 'thanh_toan_du';
+                        if ($this->balance > 0 && $this->balance < $this->final_total) return 'thanh_toan_1_phan';
+                        return 'chua_thanh_toan';
+                    },
+                ],
             ]
         );
     }
@@ -123,13 +151,14 @@ public $order_detail;
             [['title', 'co_so_id', 'customer_id', 'order_date'], 'required'],
             [['co_so_id', 'customer_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['order_date', 'discount_value'], 'safe'],
-            [['total', 'discount', 'final_total'], 'number'],
+            [['total', 'discount', 'final_total', 'received', 'balance'], 'number'],
             [['title', 'code', 'discount_type'], 'string', 'max' => 255],
             [['status', 'payment_status', 'service_status'], 'string', 'max' => 50],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
             ['order_detail', 'validateSalesOrderDetail'],
+            ['order_detail', 'safe', 'on' => self::SCENARIO_NONE_LINE_ITEM],
         ];
     }
 
@@ -155,6 +184,8 @@ public $order_detail;
             'created_by' => Yii::t('backend', 'Created By'),
             'updated_at' => Yii::t('backend', 'Updated At'),
             'updated_by' => Yii::t('backend', 'Updated By'),
+            'received' => Yii::t('backend', 'Đã thu'),
+            'balance' => Yii::t('backend', 'Còn lại'),
         ];
     }
 
@@ -166,6 +197,8 @@ public $order_detail;
 
     public function calcAndUpdateTotalDiscountFinalTotal()
     {
+        if ($this->scenario === self::SCENARIO_NONE_LINE_ITEM) return;
+
         $total = 0;
 
         // Tính tổng tiền (trước giảm giá)

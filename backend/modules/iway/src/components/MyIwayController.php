@@ -25,10 +25,14 @@ class MyIwayController extends MyController
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $out = ['results' => ['id' => '', 'text' => '']];
+
         if (!is_null($q)) {
             $out = $this->model::getByKeyWord($q);
         } elseif ($id > 0) {
-            $out['results'] = ['id' => $id, 'text' => $this->model::findOne($id)->title];
+            $record = $this->model::findOne($id);
+            if ($record) {
+                $out['results'] = ['id' => $id, 'text' => $record->title];
+            }
         }
         return $out;
     }

@@ -35,7 +35,7 @@ class MyIwayModel extends ActiveRecord
     }
     public function convertToDisplayNumber () {
         foreach ($this->numberFields as $field) {
-            $this->$field = Yii::$app->formatter->asDecimal($this->$field);
+            $this->$field = $this->$field === null ? 0 : Yii::$app->formatter->asDecimal($this->$field);
         }
     }
 
@@ -94,5 +94,10 @@ class MyIwayModel extends ActiveRecord
         return [
             'results' => $data
         ];
+    }
+
+    public function transformValueForRecord()
+    {
+        $this->convertToDisplayNumber();
     }
 }
