@@ -4,23 +4,22 @@ namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
 use modava\iway\components\MyIwayController;
-use modava\iway\models\DropdownsConfig;
-use modava\iway\models\search\DropdownsConfigSearch;
-use Yii;
 use yii\db\Exception;
-use yii\filters\VerbFilter;
+use Yii;
 use yii\helpers\Html;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
+use modava\iway\models\Receipt;
+use modava\iway\models\search\ReceiptSearch;
 
 /**
- * DropdownsConfigController implements the CRUD actions for DropdownsConfig model.
+ * ReceiptController implements the CRUD actions for Receipt model.
  */
-class DropdownsConfigController extends MyIwayController
+class ReceiptController extends MyIwayController
 {
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function behaviors()
     {
         return [
@@ -34,12 +33,12 @@ class DropdownsConfigController extends MyIwayController
     }
 
     /**
-     * Lists all DropdownsConfig models.
-     * @return mixed
-     */
+    * Lists all Receipt models.
+    * @return mixed
+    */
     public function actionIndex()
     {
-        $searchModel = new DropdownsConfigSearch();
+        $searchModel = new ReceiptSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $totalPage = $this->getTotalPage($dataProvider);
@@ -47,17 +46,16 @@ class DropdownsConfigController extends MyIwayController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'totalPage' => $totalPage,
+            'totalPage'    => $totalPage,
         ]);
-    }
-
+            }
 
     /**
-     * Displays a single DropdownsConfig model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Displays a single Receipt model.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -66,13 +64,13 @@ class DropdownsConfigController extends MyIwayController
     }
 
     /**
-     * Creates a new DropdownsConfig model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+    * Creates a new Receipt model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
     public function actionCreate()
     {
-        $model = new DropdownsConfig();
+        $model = new Receipt();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate() && $model->save()) {
@@ -101,18 +99,18 @@ class DropdownsConfigController extends MyIwayController
     }
 
     /**
-     * Updates an existing DropdownsConfig model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Updates an existing Receipt model.
+    * If update is successful, the browser will be redirected to the 'view' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
+            if($model->validate()) {
                 if ($model->save()) {
                     Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                         'title' => 'Thông báo',
@@ -140,12 +138,12 @@ class DropdownsConfigController extends MyIwayController
     }
 
     /**
-     * Deletes an existing DropdownsConfig model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Deletes an existing Receipt model.
+    * If deletion is successful, the browser will be redirected to the 'index' page.
+    * @param integer $id
+    * @return mixed
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -178,17 +176,17 @@ class DropdownsConfigController extends MyIwayController
     }
 
     /**
-     * @param $perpage
-     */
+    * @param $perpage
+    */
     public function actionPerpage($perpage)
     {
         MyComponent::setCookies('pageSize', $perpage);
     }
 
     /**
-     * @param $dataProvider
-     * @return float|int
-     */
+    * @param $dataProvider
+    * @return float|int
+    */
     public function getTotalPage($dataProvider)
     {
         if (MyComponent::hasCookies('pageSize')) {
@@ -197,47 +195,29 @@ class DropdownsConfigController extends MyIwayController
             $dataProvider->pagination->pageSize = 10;
         }
 
-        $pageSize = $dataProvider->pagination->pageSize;
+        $pageSize   = $dataProvider->pagination->pageSize;
         $totalCount = $dataProvider->totalCount;
-        $totalPage = (($totalCount + $pageSize - 1) / $pageSize);
+        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
 
         return $totalPage;
     }
 
     /**
-     * @return array|string
-     */
-    public function actionGetColumns()
-    {
-        if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $tableName = Yii::$app->request->get('table_name');
-            $data = DropdownsConfig::getAllColumns($tableName);
-
-            return [
-                'code' => 200,
-                'data' => $data
-            ];
-        }
-
-        return Yii::t('backend', 'Không thể truy cập');
-    }
-
-    /**
-     * Finds the DropdownsConfig model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return DropdownsConfig the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Finds the Receipt model based on its primary key value.
+    * If the model is not found, a 404 HTTP exception will be thrown.
+    * @param integer $id
+    * @return Receipt the loaded model
+    * @throws NotFoundHttpException if the model cannot be found
+    */
 
 
     protected function findModel($id)
     {
-        if (($model = DropdownsConfig::findOne($id)) !== null) {
+        if (($model = Receipt::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
+        // throw new NotFoundHttpException(BackendModule::t('backend','The requested page does not exist.'));
     }
 }

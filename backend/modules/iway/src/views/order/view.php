@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             : <?= Html::encode($this->title) ?>
         </h4>
         <p>
+            <?= Html::a(Yii::t('backend', 'Tạo phiếu thu'), Url::toRoute(['receipt/create', 'Receipt[order_id]' => $model->primaryKey]), ['class' => 'btn btn-sm btn-success', 'target' => '_blank']) ?>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
@@ -49,13 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper mb-2">
-                <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
+                <div class="d-flex">
+                    <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
+                    <ul class="nav ml-auto">
+                        <li><?= Html::a(Yii::t('backend', 'Phiếu thu'), Url::toRoute(['receipt/index', 'ReceiptSearch[order_id]' => $model->primaryKey]), ['class' => 'btn btn-sm btn-success']) ?></li>
+                    </ul>
+                </div>
+
                 <table class="table table-no-bordered">
                     <tr>
                         <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('title') ?></td>
                         <td class="w-30 border-top-0 py-2 px-3"><?= $model->title ?></td>
                         <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('co_so_id') ?></td>
-                        <td class="w-30 border-top-0 py-2 px-3"><?= Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id]))?></td>
+                        <td class="w-30 border-top-0 py-2 px-3"><?= Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id])) ?></td>
                     </tr>
                     <tr>
                         <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('customer_id') ?></td>
@@ -244,6 +251,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-3 font-18"><?= $model->getAttributeLabel('final_total') ?>:</div>
                     <div class="col-4">
                         <p id="final_total" class="font-weight-bold font-18"><?= Yii::$app->formatter->asCurrency($model->final_total) ?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-end p-1 text-right">
+                    <div class="col-3 font-14"><?= $model->getAttributeLabel('received') ?>:</div>
+                    <div class="col-4">
+                        <p id="final_total" class="font-14"><?= Yii::$app->formatter->asCurrency($model->received) ?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-end p-1 text-right">
+                    <div class="col-3 font-14"><?= $model->getAttributeLabel('balance') ?>:</div>
+                    <div class="col-4">
+                        <p id="final_total" class="font-weight-bold font-14"><?= Yii::$app->formatter->asCurrency($model->balance) ?></p>
                     </div>
                 </div>
             </section>

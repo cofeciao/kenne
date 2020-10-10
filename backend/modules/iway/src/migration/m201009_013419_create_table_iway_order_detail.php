@@ -13,7 +13,7 @@ class m201009_013419_create_table_iway_order_detail extends Migration
     public function safeUp()
     {
         /* check table exists */
-        $check_table_customer = Yii::$app->db->getTableSchema('iway_order_detail_detail');
+        $check_table_customer = Yii::$app->db->getTableSchema('iway_order_detail');
         if ($check_table_customer === null) {
             $tableOptions = null;
             if ($this->db->driverName === 'mysql') {

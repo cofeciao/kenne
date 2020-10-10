@@ -3,19 +3,19 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\iway\components\MyIwayController;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use backend\components\MyController;
 use modava\iway\models\Call;
 use modava\iway\models\search\CallSearch;
 
 /**
  * CallController implements the CRUD actions for Call model.
  */
-class CallController extends MyController
+class CallController extends MyIwayController
 {
     /**
     * {@inheritdoc}

@@ -2,16 +2,17 @@
 
 use backend\widgets\ToastrWidget;
 use common\grid\MyGridView;
+use modava\iway\helpers\Utils;
 use modava\iway\widgets\NavbarWidgets;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modava\iway\models\search\OrderSearch */
+/* @var $searchModel modava\iway\models\search\ReceiptSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Orders');
+$this->title = Yii::t('backend', 'Receipts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="container-fluid px-xxl-15 px-xl-10">
@@ -42,12 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
-                                    {errors}
-                                    <div class="pane-single-table">
-                                        {items}
-                                    </div>
-                                    <div class="pager-wrap clearfix">
-                                        {summary}' .
+                                        {errors}
+                                        <div class="pane-single-table">
+                                            {items}
+                                        </div>
+                                        <div class="pager-wrap clearfix">
+                                            {summary}' .
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageTo',
                                                 [
                                                     'totalPage' => $totalPage,
@@ -57,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize')
                                             .
                                             '{pager}
-                                    </div>
+                                        </div>
                                     ',
                                         'tableOptions' => [
                                             'id' => 'dataTable',
@@ -96,6 +97,83 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'columns' => [
                                             [
+                                                'class' => 'yii\grid\SerialColumn',
+                                                'header' => 'STT',
+                                                'headerOptions' => [
+                                                    'width' => 60,
+                                                    'rowspan' => 2
+                                                ],
+                                                'filterOptions' => [
+                                                    'class' => 'd-none',
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'title',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
+                                                        'title' => $model->title,
+                                                        'data-pjax' => 0,
+                                                    ]);
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'order_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    if (!$model->order_id) return null;
+                                                    return Html::a($model->order->title, Url::toRoute(['order/view', 'id' => $model->order_id]));
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'status',
+                                                'format' => 'raw',
+                                                'value' => function (modava\iway\models\Receipt $model) {
+                                                    $class = '';
+                                                    switch ($model->status) {
+                                                        case 'nhap':
+                                                            $class = 'badge-light';
+                                                            break ;
+                                                        case 'da_thu':
+                                                            $class = 'badge-success';
+                                                            break ;
+                                                        case 'hoan_coc':
+                                                            $class = 'badge-secondary';
+                                                            break ;
+                                                    };
+                                                    return Html::tag('span', $model->getDisplayDropdown($model->status, 'status'), [
+                                                        'class' => 'font-14 badge ' . $class
+                                                    ]);
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'receipt_date',
+                                                'value' => function (modava\iway\models\Receipt $model) {
+                                                    return Utils::convertDateTimeToDisplayFormat($model->receipt_date);
+                                                }
+                                            ],
+                                            [
+                                                    'attribute' => 'amount',
+                                                'format' => 'currency',
+                                                'contentOptions' => [
+                                                        'class' => 'text-right'
+                                                ]
+                                            ],
+                                            [
+                                                'attribute' => 'created_by',
+                                                'value' => 'userCreated.userProfile.fullname',
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
+                                                'attribute' => 'created_at',
+                                                'format' => 'date',
+                                                'headerOptions' => [
+                                                    'width' => 150,
+                                                ],
+                                            ],
+                                            [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
                                                 'template' => '{update} {delete}',
@@ -121,58 +199,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         ]);
                                                     }
                                                 ],
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            [
-                                                'attribute' => 'title',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a($model->title, ['view', 'id' => $model->id], [
-                                                        'title' => $model->title,
-                                                        'data-pjax' => 0,
-                                                    ]);
-                                                }
-                                            ],
-                                            'code',
-                                            [
-                                                'attribute' => 'co_so_id',
-                                                'format' => 'raw',
-                                                'value' => function (modava\iway\models\Order $model) {
-                                                    return Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id]));
-                                                }
-                                            ],
-                                            [
-                                                'attribute' => 'customer_id',
-                                                'format' => 'raw',
-                                                'value' => function (modava\iway\models\Order $model) {
-                                                    return Html::a($model->customer->fullname, Url::toRoute(['co-so/view', 'id' => $model->customer_id]));
-                                                }
-                                            ],
-                                            'order_date:date',
-                                            [
-                                                'attribute' => 'status',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return $model->status === 'hoan_thanh' ? Html::tag('span', $model->getDisplayDropdown($model->status, 'status'), ['class' => 'badge badge-success font-12']) : $model->getDisplayDropdown($model->status, 'status');
-                                                }
-                                            ],
-                                            //'payment_status',
-                                            //'service_status',
-                                            //'total',
-                                            //'discount',
-                                            //'final_total',
-                                            [
-                                                'attribute' => 'created_by',
-                                                'value' => 'userCreated.userProfile.fullname',
-                                                'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
-                                            ],
-                                            [
-                                                'attribute' => 'created_at',
-                                                'format' => 'date',
                                                 'headerOptions' => [
                                                     'width' => 150,
                                                 ],

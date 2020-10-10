@@ -3,7 +3,7 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
-use backend\components\MyController;
+use modava\iway\components\MyIwayController;
 use modava\iway\models\Customer;
 use modava\iway\models\search\CustomerSearch;
 use Yii;
@@ -16,7 +16,7 @@ use yii\web\Response;
 /**
  * CustomerController implements the CRUD actions for Customer model.
  */
-class CustomerController extends MyController
+class CustomerController extends MyIwayController
 {
     /**
      * {@inheritdoc}

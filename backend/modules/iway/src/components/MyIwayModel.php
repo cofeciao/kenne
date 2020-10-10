@@ -4,6 +4,7 @@ namespace modava\iway\components;
 
 use modava\iway\helpers\Utils;
 use modava\iway\models\DropdownsConfig;
+use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 
@@ -19,6 +20,24 @@ use yii\helpers\Html;
 class MyIwayModel extends ActiveRecord
 {
     protected $numberFields = [];
+
+    public function init()
+    {
+        $this->loadDataFormUrlWhenCreate();
+        parent::init();
+    }
+
+    public function loadDataFormUrlWhenCreate ()
+    {
+        if (!$this->primaryKey) {
+            $this->load(Yii::$app->request->get());
+        }
+    }
+    public function convertToDisplayNumber () {
+        foreach ($this->numberFields as $field) {
+            $this->$field = $this->$field === null ? 0 : Yii::$app->formatter->asDecimal($this->$field);
+        }
+    }
 
     public function getDropdowns()
     {
@@ -65,5 +84,20 @@ class MyIwayModel extends ActiveRecord
         }
 
         return parent::beforeValidate();
+    }
+
+    public static function getByKeyWord($keyWord) {
+        $sql = 'SELECT `id`, title AS `text` FROM ' . static::tableName() . ' WHERE title LIKE :q';
+
+        $data = Yii::$app->db->createCommand($sql, [':q' => "%{$keyWord}%"])->queryAll();
+
+        return [
+            'results' => $data
+        ];
+    }
+
+    public function transformValueForRecord()
+    {
+        $this->convertToDisplayNumber();
     }
 }
