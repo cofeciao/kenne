@@ -50,7 +50,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper mb-2">
-                <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
+                <div class="d-flex">
+                    <h5 class="hk-sec-title">Thông tin đơn hàng</h5>
+                    <ul class="nav ml-auto">
+                        <li><?= Html::a(Yii::t('backend', 'Phiếu thu'), Url::toRoute(['receipt/index', 'ReceiptSearch[order_id]' => $model->primaryKey]), ['class' => 'btn btn-sm btn-success']) ?></li>
+                    </ul>
+                </div>
+
                 <table class="table table-no-bordered">
                     <tr>
                         <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('title') ?></td>
