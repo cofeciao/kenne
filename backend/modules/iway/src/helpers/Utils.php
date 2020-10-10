@@ -15,8 +15,10 @@ class Utils
 {
     const DB_DATE_FORMART = 'Y-m-d';
     const DB_DATETIME_FORMART = 'Y-m-d H:i:s';
+    const DB_SHORT_DATETIME_FORMART = 'Y-m-d H:i';
     const DISPLAY_DATE_FORMART = 'd-m-Y';
     const DISPLAY_DATETIME_FORMART = 'd-m-Y H:i:s';
+    const DISPLAY_SHORT_DATETIME_FORMART = 'd-m-Y H:i';
 
     public static function decamelize($string)
     {
@@ -37,16 +39,20 @@ class Utils
         return date(self::DISPLAY_DATE_FORMART, strtotime($date));
     }
 
-    public static function convertDateTimeToDBFormat($datetime)
+    public static function convertDateTimeToDBFormat($datetime, $isShortDateTime = false)
     {
         if ($datetime == '') return null;
+
+        if ($isShortDateTime) return date(self::DB_SHORT_DATETIME_FORMART, strtotime($datetime));
 
         return date(self::DB_DATETIME_FORMART, strtotime($datetime));
     }
 
-    public static function convertDateTimeToDisplayFormat($datetime)
+    public static function convertDateTimeToDisplayFormat($datetime, $isShortDateTime = false)
     {
         if ($datetime == '') return null;
+
+        if ($isShortDateTime) return date(self::DISPLAY_SHORT_DATETIME_FORMART, strtotime($datetime));
 
         return date(self::DISPLAY_DATETIME_FORMART, strtotime($datetime));
     }

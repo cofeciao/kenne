@@ -19,6 +19,9 @@ use yii\widgets\ActiveForm;
  */
 class OrderController extends MyIwayController
 {
+
+    public $model = 'modava\iway\models\Order';
+
     /**
     * {@inheritdoc}
     */

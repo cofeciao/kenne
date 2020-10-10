@@ -3,7 +3,9 @@
 namespace modava\iway\models;
 
 use common\models\User;
+use modava\iway\helpers\Utils;
 use modava\iway\models\table\ReceiptTable;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -30,6 +32,9 @@ use Yii;
 class Receipt extends ReceiptTable
 {
     public $toastr_key = 'receipt';
+
+    protected $numberFields = [ 'amount' ];
+
     public function behaviors()
     {
         return array_merge(
@@ -48,6 +53,16 @@ class Receipt extends ReceiptTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                     ],
                 ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['receipt_date'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['receipt_date'],
+                    ],
+                    'value' => function ($event) {
+                        return Utils::convertDateTimeToDBFormat($this->receipt_date);
+                    },
+                ],
             ]
         );
     }
@@ -58,17 +73,32 @@ class Receipt extends ReceiptTable
     public function rules()
     {
         return [
-			[['title', 'status', 'receipt_date'], 'required'],
+			[['title', 'status', 'receipt_date', 'order_id'], 'required'],
 			[['receipt_date'], 'safe'],
-			[['amount'], 'number'],
 			[['description'], 'string'],
-			[['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['amount'], 'number', 'numberPattern' => '/(\d{0,3},)?(\d{3},)?\d{0,3}/'],
+            [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
 			[['title'], 'string', 'max' => 255],
 			[['status'], 'string', 'max' => 50],
 			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
-			[['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => IwayOrder::class, 'targetAttribute' => ['order_id' => 'id']],
+			[['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
 			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
 		];
+    }
+
+    public function transformValueForRecord ()
+    {
+        // Existed record
+        if ($this->primaryKey) {
+            // Do something
+            $this->receipt_date = Utils::convertDateTimeToDisplayFormat($this->receipt_date);
+            $this->convertToDisplayNumber();
+        }
+        // New Record
+        else {
+            $this->status = 'nhap';
+            $this->receipt_date = date('d-m-Y H:i');
+        }
     }
 
     /**
@@ -79,11 +109,11 @@ class Receipt extends ReceiptTable
         return [
             'id' => Yii::t('backend', 'ID'),
             'title' => Yii::t('backend', 'Title'),
-            'status' => Yii::t('backend', 'Status'),
-            'receipt_date' => Yii::t('backend', 'Receipt Date'),
-            'amount' => Yii::t('backend', 'Amount'),
+            'status' => Yii::t('backend', 'Tình trạng'),
+            'receipt_date' => Yii::t('backend', 'Ngày thu'),
+            'amount' => Yii::t('backend', 'Số tiền'),
             'description' => Yii::t('backend', 'Description'),
-            'order_id' => Yii::t('backend', 'Order ID'),
+            'order_id' => Yii::t('backend', 'Đơn hàng'),
             'created_at' => Yii::t('backend', 'Created At'),
             'created_by' => Yii::t('backend', 'Created By'),
             'updated_at' => Yii::t('backend', 'Updated At'),
@@ -109,5 +139,10 @@ class Receipt extends ReceiptTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getOrder ()
+    {
+        return $this->hasOne(Order::class, ['id' => 'order_id']);
     }
 }
