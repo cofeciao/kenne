@@ -3,7 +3,7 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
-use backend\components\MyController;
+use modava\iway\components\MyIwayController;
 use modava\iway\models\DropdownsConfig;
 use modava\iway\models\search\DropdownsConfigSearch;
 use Yii;
@@ -16,7 +16,7 @@ use yii\web\Response;
 /**
  * DropdownsConfigController implements the CRUD actions for DropdownsConfig model.
  */
-class DropdownsConfigController extends MyController
+class DropdownsConfigController extends MyIwayController
 {
     /**
      * {@inheritdoc}

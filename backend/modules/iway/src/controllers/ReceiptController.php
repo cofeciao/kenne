@@ -3,19 +3,19 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\iway\components\MyIwayController;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use backend\components\MyController;
 use modava\iway\models\Receipt;
 use modava\iway\models\search\ReceiptSearch;
 
 /**
  * ReceiptController implements the CRUD actions for Receipt model.
  */
-class ReceiptController extends MyController
+class ReceiptController extends MyIwayController
 {
     /**
     * {@inheritdoc}

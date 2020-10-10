@@ -3,19 +3,19 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\iway\components\MyIwayController;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use backend\components\MyController;
 use modava\iway\models\AppointmentSchedule;
 use modava\iway\models\search\AppointmentScheduleSearch;
 
 /**
  * AppointmentScheduleController implements the CRUD actions for AppointmentSchedule model.
  */
-class AppointmentScheduleController extends MyController
+class AppointmentScheduleController extends MyIwayController
 {
     /**
     * {@inheritdoc}

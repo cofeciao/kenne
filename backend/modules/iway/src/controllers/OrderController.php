@@ -3,13 +3,12 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
-use modava\iway\models\search\OrderDetailSearch;
+use modava\iway\components\MyIwayController;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use backend\components\MyController;
 use modava\iway\models\Order;
 use modava\iway\models\search\OrderSearch;
 use yii\web\Response;
@@ -18,7 +17,7 @@ use yii\widgets\ActiveForm;
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends MyController
+class OrderController extends MyIwayController
 {
     /**
     * {@inheritdoc}
