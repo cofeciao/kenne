@@ -35,6 +35,11 @@ class Receipt extends ReceiptTable
 
     protected $numberFields = ['amount'];
 
+    public static function getTotalReceivedByOrder($orderId)
+    {
+        return (float) self::getRecordsByOrderWithStatus($orderId, 'da_thu')->sum('amount') - (float) self::getRecordsByOrderWithStatus($orderId, 'hoan_coc')->sum('amount');
+    }
+
     public function behaviors()
     {
         return array_merge(
@@ -94,12 +99,6 @@ class Receipt extends ReceiptTable
         parent::afterSave($insert, $changedAttributes);
     }
 
-    public function afterDelete()
-    {
-        $this->updateOrder();
-        return parent::afterDelete();
-    }
-
     public function updateOrder()
     {
         $totalReceipt = self::getRecordsByOrderWithStatus($this->order_id, 'da_thu')->sum('amount');
@@ -118,11 +117,26 @@ class Receipt extends ReceiptTable
         $order->save();
     }
 
+    public static function getRecordsByOrderWithStatus($orderId, $status = null)
+    {
+        return self::find()->where(['order_id' => $orderId])->andFilterWhere(['status' => $status]);
+    }
+
+    public function afterDelete()
+    {
+        $this->updateOrder();
+        return parent::afterDelete();
+    }
+
     public function validateAmount()
     {
         $order = Order::findOne($this->order_id);
-        if ($order && ($this->amount > (float) $order->balance)) {
+        if ($order && (float) $this->amount > (float) $order->balance) {
             $this->addError('amount', 'Số tiền không được lớn hơn tiền còn lại trong đơn hàng');
+        }
+
+        if ($this->status === 'hoan_coc' && $order && (float) $this->amount > (float) $order->received) {
+            $this->addError('amount', 'Số tiền hoàn cọc không được lớn hơn số tiền đã nhận');
         }
     }
 
@@ -134,11 +148,6 @@ class Receipt extends ReceiptTable
         }
     }
 
-    public function getTotalReceivedByOrder($orderId)
-    {
-        return (float)self::getRecordsByOrderWithStatus($orderId, 'da_thu')->sum('amount') - (float)self::getRecordsByOrderWithStatus($orderId, 'hoan_coc')->sum('amount');
-    }
-
     public function transformValueForRecord()
     {
         parent::transformValueForRecord();
@@ -148,8 +157,8 @@ class Receipt extends ReceiptTable
             $this->receipt_date = Utils::convertDateTimeToDisplayFormat($this->receipt_date);
         } // New Record
         else {
-            $this->status = 'nhap';
-            $this->receipt_date = date('d-m-Y H:i');
+            if (!$this->status) $this->status = 'nhap';
+            if (!$this->receipt_date) $this->receipt_date = date('d-m-Y H:i');
             if ($this->order_id && !Order::findOne($this->order_id)) $this->order_id = null;
         }
     }
@@ -197,10 +206,5 @@ class Receipt extends ReceiptTable
     public function getOrder()
     {
         return $this->hasOne(Order::class, ['id' => 'order_id']);
-    }
-
-    public static function getRecordsByOrderWithStatus($orderId, $status = null)
-    {
-        return self::find()->where(['order_id' => $orderId])->andFilterWhere(['status' => $status]);
     }
 }

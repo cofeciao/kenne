@@ -129,10 +129,23 @@ class Order extends OrderTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['received'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['received'],
+                    ],
+                    'value' => function ($event) {
+                        if (!$this->primaryKey) return 0;
+
+                        return Receipt::getTotalReceivedByOrder($this->primaryKey);
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
                         ActiveRecord::EVENT_BEFORE_INSERT => ['payment_status'],
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['payment_status'],
                     ],
                     'value' => function ($event) {
+                        if ($this->payment_status === 'hoan_coc') return 'hoan_coc'; // Dont remove this line!!!
                         if ($this->balance == 0) return 'thanh_toan_du';
                         if ($this->balance > 0 && $this->balance < $this->final_total) return 'thanh_toan_1_phan';
                         return 'chua_thanh_toan';

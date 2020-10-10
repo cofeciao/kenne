@@ -250,7 +250,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row justify-content-end p-1 text-right">
                     <div class="col-3 font-14"><?= $model->getAttributeLabel('received') ?>:</div>
                     <div class="col-4">
-                        <p id="final_total" class="font-weight-bold font-14"><?= Yii::$app->formatter->asCurrency($model->received) ?></p>
+                        <p id="final_total" class="font-14"><?= Yii::$app->formatter->asCurrency($model->received) ?></p>
                     </div>
                 </div>
                 <div class="row justify-content-end p-1 text-right">
