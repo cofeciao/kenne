@@ -17,22 +17,33 @@ use modava\iway\models\IwayTrayImages;
     'action' => Url::toRoute(['submit-upload'])
 ]); ?>
     <div class="modal-body">
-        <label class="upload-zone<?= $model->image != null ? ' has-image' : '' ?><?= $tray_image != null && in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA]) ? ' disabled' : '' ?>">
-            <div class="preview">
-                <img src="<?= $model->image ?>" alt="Preview">
-            </div>
-            <div class="upload">
-                <div class="icon-upload">
-                    <i class="fa fa-upload"></i>
+        <div class="tray-image-view">
+            <?php if ($tray_image != null) { ?>
+                <div class="tray-image-evaluate">
+                    <?php if ($tray_image->status == IwayTrayImages::DAT) { ?>
+                        <i class="fa fa-check"></i>
+                    <?php } else if ($tray_image->status == IwayTrayImages::CHUA_DAT) { ?>
+                        <i class="fa fa-times"></i>
+                    <?php } ?>
                 </div>
-                <div class="btn-upload">
-                    <?= $form->field($model, 'image')->fileInput([
-                        'data-default' => $model->image,
-                        'onchange' => 'readURL(this, $(this).closest(".upload-zone").find(".preview"))'
-                    ]) ?>
+            <?php } ?>
+            <label class="upload-zone<?= $model->image != null ? ' has-image' : '' ?><?= $tray_image != null && in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::DAT]) ? ' disabled' : '' ?>">
+                <div class="preview">
+                    <img src="<?= $model->image ?>" alt="Preview">
                 </div>
-            </div>
-        </label>
+                <div class="upload">
+                    <div class="icon-upload">
+                        <i class="fa fa-upload"></i>
+                    </div>
+                    <div class="btn-upload">
+                        <?= $form->field($model, 'image')->fileInput([
+                            'data-default' => $model->image,
+                            'onchange' => 'readURL(this, $(this).closest(".upload-zone").find(".preview"))'
+                        ]) ?>
+                    </div>
+                </div>
+            </label>
+        </div>
         <?= $form->field($model, 'tray', [
             'options' => [
                 'tag' => false
@@ -45,8 +56,8 @@ use modava\iway\models\IwayTrayImages;
         ])->hiddenInput()->label(false) ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-        <?php if ($tray_image == null || !in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA])) { ?>
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><?= Yii::t('backend', 'Đóng') ?></button>
+        <?php if ($tray_image == null || !in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::DAT])) { ?>
             <button type="button" class="btn btn-sm btn-success"
                     id="btn-submit-tray-image"><?= Yii::t('backend', 'Save') ?></button>
         <?php } ?>

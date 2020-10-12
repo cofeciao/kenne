@@ -67,6 +67,26 @@ $css = <<< CSS
     box-shadow: none;
     background: rgb(255 255 255 / .7);
 }
+.tray-image-evaluate {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #fff;
+    z-index: 1;
+    border-radius: 0px 3px 0px 0px;
+    font-size: 1.5em;
+    width: 1.7em;
+    height: 1.7em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tray-image-evaluate .fa.fa-times {
+    color: red;
+}
+.tray-image-evaluate .fa.fa-check {
+    color: green;
+}
 /* UPLOAD ZONE */
 .upload-zone {
     width: 100%;
