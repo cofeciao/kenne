@@ -160,6 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'co_so_id',
                                 'value' => function ($model) {
+                                    if ($model->coSo == null) return null;
                                     return $model->coSo->title;
                                 }
                             ],
