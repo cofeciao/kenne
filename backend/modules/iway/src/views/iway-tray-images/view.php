@@ -5,10 +5,11 @@ use yii\helpers\Html;
 use modava\iway\widgets\NavbarWidgets;
 use modava\iway\models\form\FormTrayImages;
 use yii\widgets\Pjax;
+use modava\iway\models\IwayTrayImages;
 
 /* @var $this yii\web\View */
-/* @var $tray modava\iway\models\IwayTrayImages */
-/* @var $model modava\iway\models\IwayTrayImages */
+/* @var $tray IwayTrayImages */
+/* @var $model FormTrayImages */
 /* @var $tray_images array */
 
 $this->title = 'Tray Images';
@@ -161,7 +162,7 @@ $this->registerCss($css);
                             }
                             ?>
                             <div class="col-md-4 col-12">
-                                <span class="tray-images" data-image="<?= $key ?>" data-title="<?= $type ?>">
+                                <span class="tray-images<?= array_key_exists($key, $tray_images) && !in_array($tray_images[$key]->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::CHUA_DAT]) ? ' disabled' : '' ?>" data-image="<?= $key ?>" data-title="<?= $type ?>">
                                     <?php if (array_key_exists($key, $tray_images) && $tray_images[$key]->getImage() != null) { ?>
                                         <span class="preview">
                                             <img src="<?= $tray_images[$key]->getImage() ?>" alt="<?= $type ?>"

@@ -17,7 +17,7 @@ use modava\iway\models\IwayTrayImages;
     'action' => Url::toRoute(['submit-upload'])
 ]); ?>
     <div class="modal-body">
-        <label class="upload-zone<?= $model->image != null ? ' has-image' : '' ?><?= $tray_image != null && $tray_image->status === IwayTrayImages::STATUS_DISABLED ? ' disabled' : '' ?>">
+        <label class="upload-zone<?= $model->image != null ? ' has-image' : '' ?><?= $tray_image != null && in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA]) ? ' disabled' : '' ?>">
             <div class="preview">
                 <img src="<?= $model->image ?>" alt="Preview">
             </div>
@@ -46,7 +46,7 @@ use modava\iway\models\IwayTrayImages;
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-        <?php if ($tray_image == null || $tray_image->status !== IwayTrayImages::STATUS_DISABLED) { ?>
+        <?php if ($tray_image == null || !in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA])) { ?>
             <button type="button" class="btn btn-sm btn-success"
                     id="btn-submit-tray-image"><?= Yii::t('backend', 'Save') ?></button>
         <?php } ?>

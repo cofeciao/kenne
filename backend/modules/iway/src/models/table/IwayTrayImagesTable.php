@@ -9,8 +9,9 @@ use yii\db\ActiveRecord;
 
 class IwayTrayImagesTable extends \yii\db\ActiveRecord
 {
-    const STATUS_DISABLED = 0;
-    const STATUS_PUBLISHED = 1;
+    const CHUA_DANH_GIA = 0;
+    const DAT = 1;
+    const CHUA_DAT = 2;
 
     public $pathUpload;
 
