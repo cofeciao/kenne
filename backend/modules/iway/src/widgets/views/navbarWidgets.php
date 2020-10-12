@@ -37,6 +37,12 @@ $routeInfos = [
     ],
     [
         'module' => 'iway',
+        'controllerId' => 'receipt',
+        'label' => Yii::t('backend', 'Phiếu thu'),
+        'icon' => '<i class="glyphicon glyphicon-cog"></i>',
+    ],
+    [
+        'module' => 'iway',
         'controllerId' => 'co-so',
         'label' => Yii::t('backend', 'Cơ sở'),
         'icon' => '<i class="ion ion-md-contacts"></i>',

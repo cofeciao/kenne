@@ -13,7 +13,7 @@ class m201009_013419_create_table_iway_order_detail extends Migration
     public function safeUp()
     {
         /* check table exists */
-        $check_table_customer = Yii::$app->db->getTableSchema('iway_order_detail_detail');
+        $check_table_customer = Yii::$app->db->getTableSchema('iway_order_detail');
         if ($check_table_customer === null) {
             $tableOptions = null;
             if ($this->db->driverName === 'mysql') {
@@ -30,7 +30,8 @@ class m201009_013419_create_table_iway_order_detail extends Migration
                 'discount_value' => $this->decimal(15)->notNull()->defaultValue(0)->comment('Giá trị giảm giá'),
                 'discount' => $this->decimal(15)->notNull()->defaultValue(0)->comment('Giá trị giảm giá, được tính từ discount_type discount_value'),
                 'description' => $this->string(255)->null()->comment('Mô tả'),
-                'total' => $this->decimal(11)->notNull()->defaultValue(0)->comment('Mô tả'),
+                'total' => $this->decimal(15)->notNull()->defaultValue(0)->comment('Tổng cộng'),
+                'final_total' => $this->decimal(15)->notNull()->defaultValue(0)->comment('Tổng cộng'),
                 'created_at' => $this->integer(11)->null(),
                 'created_by' => $this->integer(11)->null(),
                 'updated_at' => $this->integer(11)->null(),

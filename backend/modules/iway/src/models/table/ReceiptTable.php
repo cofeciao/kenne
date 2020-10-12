@@ -5,13 +5,15 @@ namespace modava\iway\models\table;
 use modava\iway\components\MyIwayModel;
 use Yii;
 
-class OrderDetailTable extends MyIwayModel
+class ReceiptTable extends MyIwayModel
 {
+    const STATUS_DISABLED = 0;
+    const STATUS_PUBLISHED = 1;
+
     public static function tableName()
     {
-        return 'iway_order_detail';
+        return 'iway_receipt';
     }
-
 
     public function afterDelete()
     {

@@ -3,20 +3,25 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\iway\components\MyIwayController;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use backend\components\MyController;
 use modava\iway\models\Order;
 use modava\iway\models\search\OrderSearch;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends MyController
+class OrderController extends MyIwayController
 {
+
+    public $model = 'modava\iway\models\Order';
+
     /**
     * {@inheritdoc}
     */
@@ -73,7 +78,13 @@ class OrderController extends MyController
         $model = new Order();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save()) {
+
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+
+            if ($model->validate() && $model->save() && $model->saveSalesOrderDetail()) {
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
                     'title' => 'Thông báo',
                     'text' => 'Tạo mới thành công',
@@ -110,27 +121,34 @@ class OrderController extends MyController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                        'title' => 'Thông báo',
-                        'text' => 'Cập nhật thành công',
-                        'type' => 'success'
-                    ]);
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+
+            if ($model->validate() && $model->save() && $model->saveSalesOrderDetail()) {
+                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
+                    'title' => 'Thông báo',
+                    'text' => 'Cập nhật thành công',
+                    'type' => 'success',
+                ]);
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 $errors = Html::tag('p', 'Cập nhật thất bại');
                 foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
+                    $error1 = is_array($error[0]) ? implode($error[0], ', ') : $error[0];
+                    $errors .= Html::tag('p', $error1);
                 }
                 Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
                     'title' => 'Thông báo',
                     'text' => $errors,
-                    'type' => 'warning'
+                    'type' => 'warning',
                 ]);
             }
         }
+
+        $model->order_detail = $model->salesOrderDetails;
 
         return $this->render('update', [
             'model' => $model,
