@@ -53,6 +53,12 @@ $routeInfos = [
         'label' => Yii::t('backend', 'View doctor'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
     ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'iway-tray',
+        'label' => Yii::t('backend', 'Tray'),
+        'icon' => '<i class="glyphicon glyphicon-cog"></i>',
+    ],
 ];
 ?>
 

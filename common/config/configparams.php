@@ -128,5 +128,10 @@ return [
             'width' => 150,
             'height' => 150
         ]
+    ],
+    'iway-tray-image' => [
+        'path' => [
+            'folder' => '/uploads/iway-tray-image/'
+        ]
     ]
 ];
