@@ -5,46 +5,45 @@ use yii\widgets\ActiveForm;
 use modava\iway\models\IwayTrayImages;
 
 /* @var $this yii\web\View */
-/* @var $tray modava\iway\models\IwayTray */
-/* @var $model modava\iway\models\form\FormTrayImages */
+/* @var $model IwayTrayImages */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $tray_image IwayTrayImages */
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'form-tray-image',
     'enableAjaxValidation' => true,
-    'validationUrl' => Url::toRoute(['validate-upload']),
-    'action' => Url::toRoute(['submit-upload'])
+    'validationUrl' => Url::toRoute(['validate-upload', 'id' => $model->primaryKey]),
+    'action' => Url::toRoute(['submit-upload', 'id' => $model->primaryKey])
 ]); ?>
     <div class="modal-body">
-        <div class="tray-image-view">
-            <?php if ($tray_image != null) { ?>
+        <div class="tray-image-view tray-image-preview">
+            <?php if ($model->primaryKey != null && $model->status != IwayTrayImages::CHUA_DANH_GIA) { ?>
                 <div class="tray-image-evaluate">
-                    <?php if ($tray_image->status == IwayTrayImages::DAT) { ?>
+                    <?php if ($model->status == IwayTrayImages::DAT) { ?>
                         <i class="fa fa-check"></i>
-                    <?php } else if ($tray_image->status == IwayTrayImages::CHUA_DAT) { ?>
+                    <?php } else if ($model->status == IwayTrayImages::CHUA_DAT) { ?>
                         <i class="fa fa-times"></i>
                     <?php } ?>
                 </div>
             <?php } ?>
-            <label class="upload-zone<?= $model->image != null ? ' has-image' : '' ?><?= $tray_image != null && in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::DAT]) ? ' disabled' : '' ?>">
+            <label class="upload-zone<?= $model->getImage() != null ? ' has-image' : '' ?><?= $model->primaryKey != null && in_array($model->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::DAT]) ? ' disabled' : '' ?>">
                 <div class="preview">
-                    <img src="<?= $model->image ?>" alt="Preview">
+                    <img src="<?= $model->getImage() ?>" alt="Preview">
                 </div>
+                <span class="refresh"><i class="fa fa-history"></i></span>
                 <div class="upload">
                     <div class="icon-upload">
                         <i class="fa fa-upload"></i>
                     </div>
                     <div class="btn-upload">
-                        <?= $form->field($model, 'image')->fileInput([
-                            'data-default' => $model->image,
+                        <?= $form->field($model, 'fileImage')->fileInput([
+                            'data-default' => $model->getImage(),
                             'onchange' => 'readURL(this, $(this).closest(".upload-zone").find(".preview"))'
                         ]) ?>
                     </div>
                 </div>
             </label>
         </div>
-        <?= $form->field($model, 'tray', [
+        <?= $form->field($model, 'tray_id', [
             'options' => [
                 'tag' => false
             ]
@@ -54,13 +53,22 @@ use modava\iway\models\IwayTrayImages;
                 'tag' => false
             ]
         ])->hiddenInput()->label(false) ?>
+        <?php if ($model->primaryKey != null) { ?>
+            <div class="evaluate">
+                <?= $form->field($model, 'evaluate')->textarea() ?>
+                <?php
+                $status = IwayTrayImages::STATUS;
+                unset($status[IwayTrayImages::CHUA_DANH_GIA]);
+                echo $form->field($model, 'status')->radioList($status, []);
+                ?>
+            </div>
+        <?php } ?>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><?= Yii::t('backend', 'Đóng') ?></button>
-        <?php if ($tray_image == null || !in_array($tray_image->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::DAT])) { ?>
-            <button type="button" class="btn btn-sm btn-success"
-                    id="btn-submit-tray-image"><?= Yii::t('backend', 'Save') ?></button>
-        <?php } ?>
+        <button type="button" class="btn btn-sm btn-secondary"
+                data-dismiss="modal"><?= Yii::t('backend', 'Đóng') ?></button>
+        <button type="button" class="btn btn-sm btn-success"
+                id="btn-submit-tray-image"><?= Yii::t('backend', 'Save') ?></button>
     </div>
 <?php ActiveForm::end(); ?>
 <?php
@@ -87,7 +95,7 @@ form.on('beforeSubmit', function(e){
         alert(res.msg);
         if(res.code === 200){
             $.pjax.reload({url: window.location.href, method: 'POST', container: '#pjax-tray-image'});
-            $('#modal-image .modal-header .close').trigger('click');
+            $('#modal-image').modal('hide');
         } else {
             btn_submit.removeAttr('disabled');
         }

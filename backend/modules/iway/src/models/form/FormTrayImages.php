@@ -141,7 +141,7 @@ class FormTrayImages extends Model
             $count = IwayTrayImages::find()->where([
                 IwayTrayImages::tableName() . '.type' => $this->type,
                 IwayTrayImages::tableName() . '.tray_id' => $this->tray,
-                IwayTrayImages::tableName() . '.status' => IwayTrayImages::STATUS_DISABLED
+                IwayTrayImages::tableName() . '.status' => IwayTrayImages::CHUA_DANH_GIA
             ])->count();
             if($count > 0){
                 $this->addError('tray', 'Hình cũ chưa được đánh giá, không thể upload hình mới');

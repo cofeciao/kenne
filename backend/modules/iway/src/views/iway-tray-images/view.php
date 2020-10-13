@@ -58,7 +58,7 @@ $css = <<< CSS
 .tray-images > span:hover {
     box-shadow: 1px 1px 4px #666;
 }
-.tray-images > span.preview + span:hover {
+.tray-images:hover > span.preview + span {
     opacity: 1;
     top: 0;
     left: 0;
@@ -67,6 +67,9 @@ $css = <<< CSS
     box-shadow: none;
     background: rgb(255 255 255 / .7);
 }
+.tray-image-view {
+    position: relative;
+}
 .tray-image-evaluate {
     position: absolute;
     top: 2px;
@@ -74,9 +77,9 @@ $css = <<< CSS
     background: #fff;
     z-index: 1;
     border-radius: 0px 3px 0px 0px;
-    font-size: 1.5em;
-    width: 1.7em;
-    height: 1.7em;
+    font-size: 2em;
+    width: 1.5em;
+    height: 1.5em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +89,28 @@ $css = <<< CSS
 }
 .tray-image-evaluate .fa.fa-check {
     color: green;
+}
+.change-image .evaluate,
+.change-image .tray-image-evaluate {
+    display: none;
+}
+.upload-zone .refresh {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border-radius: 3px 0px 0px 0px;
+    z-index: 2;
+    font-size: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+.change-image .upload-zone:hover .refresh {
+    opacity: 1;
 }
 /* UPLOAD ZONE */
 .upload-zone {
@@ -182,9 +207,19 @@ $this->registerCss($css);
                             }
                             ?>
                             <div class="col-md-4 col-12">
-                                <span class="tray-images<?= array_key_exists($key, $tray_images) && !in_array($tray_images[$key]->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::CHUA_DAT]) ? ' disabled' : '' ?>" data-image="<?= $key ?>" data-title="<?= $type ?>">
+                                <span class="tray-images<?= array_key_exists($key, $tray_images) && !in_array($tray_images[$key]->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::CHUA_DAT]) ? ' disabled' : '' ?>"
+                                      data-load="<?= Url::toRoute(['upload', 'tray_id' => $tray->primaryKey, 'type' => $key, 'id' => (array_key_exists($key, $tray_images) ? $tray_images[$key]->id : null)]) ?>">
                                     <?php if (array_key_exists($key, $tray_images) && $tray_images[$key]->getImage() != null) { ?>
-                                        <span class="preview">
+                                        <span class="preview tray-image-preview">
+                                            <?php if ($tray_images[$key]->primaryKey != null && $tray_images[$key]->status != IwayTrayImages::CHUA_DANH_GIA) { ?>
+                                                <div class="tray-image-evaluate">
+                                                    <?php if ($tray_images[$key]->status == IwayTrayImages::DAT) { ?>
+                                                        <i class="fa fa-check"></i>
+                                                    <?php } else if ($tray_images[$key]->status == IwayTrayImages::CHUA_DAT) { ?>
+                                                        <i class="fa fa-times"></i>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
                                             <img src="<?= $tray_images[$key]->getImage() ?>" alt="<?= $type ?>"
                                                  title="<?= $type ?>"/>
                                         </span>
@@ -212,17 +247,13 @@ $this->registerCss($css);
         </div>
     </div>
 <?php
-$url_tray_images = Url::toRoute(['upload', 'id' => $tray->id, 'image' => '']);
 $script = <<< JS
 function previewImage(preview, src){
-    console.log(preview);
     if(!preview.is('img')){
-        console.log('a');
         var img = preview.children('img');
         if(img.length <= 0) preview.html('<img src="" alt="Preview"/>');
         preview = preview.children('img');
     }
-    console.log(preview);
     preview.attr('src', src);
 }
 function readURL(input, preview) {
@@ -230,25 +261,28 @@ function readURL(input, preview) {
         var reader = new FileReader();
         reader.onload = function (e) {
             previewImage(preview, e.target.result);
-            $(input).closest('.upload-zone').addClass('has-image');
+            $(input).closest('.upload-zone').addClass('has-image').closest('.modal-body').addClass('change-image');
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        var img_default = input.attr('data-default') || null;
+        var img_default = $(input).attr('data-default') || null;
         previewImage(preview, img_default);
-        $(input).closest('.upload-zone').removeClass('has-image');
+        if(img_default == null) {
+            $(input).closest('.upload-zone').removeClass('has-image');
+        }
+        $(input).closest('.modal-body').removeClass('change-image');
     }
 }
 $('body').on('click', '.tray-images', function(){
     var tray_image = $(this),
-        data_image = tray_image.attr('data-image'),
-        data_title = tray_image.attr('data-title');
-    $('#modal-image #trap-image-title').html(data_title);
-    $('#modal-image .modal-content').load('$url_tray_images'+ data_image);
+        url = tray_image.attr('data-load');
+    $('#modal-image .modal-content').load(url);
     $('#modal-image').modal('show');
 }).on('click', '.upload-zone.disabled', function(e){
     e.preventDefault();
     return false;
+}).on('click', '.upload-zone .refresh', function(){
+    $(this).closest('.upload-zone').find('.btn-upload input[type="file"]').val('').trigger('change');
 });
 JS;
 $this->registerJs($script, \yii\web\View::POS_END);

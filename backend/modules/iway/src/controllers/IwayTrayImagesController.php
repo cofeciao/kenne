@@ -55,29 +55,11 @@ class IwayTrayImagesController extends MyController
     {
         $tray = IwayTray::findOne(['id' => $id]);
         if ($tray == null) return $this->redirect(['/iway/iway-tray/index']);
-        $tray_images = IwayTrayImages::find()
-            ->select([
-                IwayTrayImages::tableName() . '.image',
-                IwayTrayImages::tableName() . '.tray_id',
-                IwayTrayImages::tableName() . '.type',
-                IwayTrayImages::tableName() . '.created_at',
-                IwayTrayImages::tableName() . '.evaluate',
-                IwayTrayImages::tableName() . '.evaluate_at',
-                IwayTrayImages::tableName() . '.evaluate_by',
-            ])
+        $query = IwayTrayImages::find()
             ->where(['tray_id' => $id])
-            ->groupBy([
-                'type',
-                'image',
-                'tray_id',
-                'created_at',
-                'evaluate',
-                'evaluate_at',
-                'evaluate_by',
-            ])
-            ->orderBy([IwayTrayImages::tableName() . '.created_at' => SORT_DESC])
-            ->indexBy('type')
-            ->all();
+            ->orderBy([IwayTrayImages::tableName() . '.created_at' => SORT_ASC])
+            ->indexBy('type');
+        $tray_images = $query->all();
         $model = new FormTrayImages();
         return $this->render('view', [
             'tray' => $tray,
@@ -86,70 +68,93 @@ class IwayTrayImagesController extends MyController
         ]);
     }
 
-    public function actionUpload($id = null, $image = null)
+    public function actionUpload($tray_id = null, $type = null, $id = null)
     {
         if (Yii::$app->request->isAjax) {
-            $tray = IwayTray::findOne(['id' => $id]);
+            $tray = IwayTray::findOne(['id' => $tray_id]);
             if ($tray == null) return $this->renderAjax('_error', [
                 'error' => 'Không tìm thấy thông tin tray'
             ]);
-            if (!array_key_exists($image, FormTrayImages::TYPE)) return $this->renderAjax('_error', [
+            if (!array_key_exists($type, IwayTrayImages::TYPE)) return $this->renderAjax('_error', [
                 'error' => 'Hình cần upload không phù hợp'
             ]);
-            $model = new FormTrayImages([
-                'tray' => $id,
-                'type' => $image
+            $model = new IwayTrayImages([
+                'tray_id' => $tray_id,
+                'type' => $type
             ]);
-            $tray_image = IwayTrayImages::find()
-                ->where([
-                    IwayTrayImages::tableName() . '.tray_id' => $id,
-                    IwayTrayImages::tableName() . '.type' => $image,
-                ])
-                ->orderBy([
-                    IwayTrayImages::tableName() . '.created_at' => SORT_DESC
-                ])
-                ->one();
-            if ($tray_image != null && $tray_image->getImage() != null) $model->image = $tray_image->getImage();
+            if ($id != null) {
+                $model = IwayTrayImages::find()->where(['id' => $id])->one();
+                if ($model->tray_id != $tray_id) return $this->renderAjax('_error', [
+                    'error' => 'Thông tin tray không trùng đúng'
+                ]);
+                if ($model->type != $type) return $this->renderAjax('_error', [
+                    'error' => 'Thông tin hình ảnh không đúng'
+                ]);
+            }
             return $this->renderAjax('upload', [
-                'tray' => $tray,
                 'model' => $model,
-                'tray_image' => $tray_image
             ]);
         }
     }
 
-    public function actionValidateUpload()
+    public function actionValidateUpload($id = null)
     {
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $model = new FormTrayImages();
+            $model = new IwayTrayImages();
+            if ($id != null) {
+                $model = IwayTrayImages::find()->where(['id' => $id])->one();
+            }
             if ($model->load(Yii::$app->request->post())) {
                 return ActiveForm::validate($model);
             }
         }
     }
 
-    public function actionSubmitUpload()
+    public function actionSubmitUpload($id = null)
     {
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $model = new FormTrayImages();
-            $model->scenario = FormTrayImages::SCENARIO_SAVE;
-            if (!$model->load(Yii::$app->request->post()) || !$model->validate()) return [
+            $model = new IwayTrayImages();
+            if ($id != null) {
+                $model = IwayTrayImages::find()->where(['id' => $id])->one();
+            }
+            $model->scenario = IwayTrayImages::SCENARIO_SAVE;
+            if (!$model->load(Yii::$app->request->post())) return [
                 'code' => 400,
-                'msg' => 'Có lỗi khi kiểm tra dữ liệu',
+                'msg' => 'Lỗi load dữ liệu',
                 'error' => $model->getErrors()
             ];
-            if (!$model->saveTrayImage()) {
-                $model->deleteTrayImage();
+            $fileImage = UploadedFile::getInstance($model, 'fileImage');
+            if ($model->getOldAttribute('status') == IwayTrayImages::CHUA_DAT && $fileImage != null) {
+                /* Chưa đạt && upload lại hình => tạo model mới để lưu hình */
+                $model = new IwayTrayImages();
+                $model->load(Yii::$app->request->post());
+                $model->setAttributes([
+                    'status' => IwayTrayImages::CHUA_DANH_GIA,
+                    'evaluate' => null,
+                    'evaluate_at' => null,
+                    'evaluate_by' => null
+                ]);
+            }
+            if (!$model->validate()) {
                 return [
                     'code' => 400,
-                    'msg' => 'Upload hình thất bại'
+                    'msg' => 'Có lỗi khi kiểm tra dữ liệu',
+                    'error' => $model->getErrors()
+                ];
+            }
+            if (!$model->save()) {
+                $model->deleteImage();
+                return [
+                    'code' => 400,
+                    'msg' => 'Cập nhật thất bại'
                 ];
             }
             return [
                 'code' => 200,
-                'msg' => 'Upload hình thành công'
+                'msg' => 'Cập nhật thành công',
+                'data' => $model->getAttributes()
             ];
         }
     }
