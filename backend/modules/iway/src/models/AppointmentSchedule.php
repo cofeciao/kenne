@@ -172,6 +172,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
     public function afterSave($insert, $changedAttributes)
     {
         $this->createNewAs();
+        $this->updateCoSoCustomer();
         parent::afterSave($insert, $changedAttributes);
     }
 
@@ -246,5 +247,17 @@ class AppointmentSchedule extends AppointmentScheduleTable
     public function getNewAppointmentSchedule()
     {
         return $this->hasOne(self::class, ['id' => 'new_appointment_schedule_id']);
+    }
+
+    public function updateCoSoCustomer()
+    {
+        // Nếu lịch hẹn là lịch hẹn cuối cùng thì lưu cơ sở cho KH
+        if ($this->co_so_id != $this->customer->co_so_id ) {
+            if (self::find()->where(['customer_id' => $this->customer_id])->orderBy(['id' => SORT_DESC])->one()->primaryKey == $this->primaryKey) {
+                $customer = Customer::findOne($this->customer_id);
+                $customer->co_so_id = $this->co_so_id;
+                $customer->save();
+            }
+        }
     }
 }
