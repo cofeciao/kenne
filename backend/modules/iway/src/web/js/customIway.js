@@ -87,6 +87,52 @@ function formatAsCurrency(number, symbol = '₫') {
     return formatAsDecimal(number) + ' ' + symbol;
 }
 
+function updateRecordAjax (recordId, data, url, confirmMessage = 'Bạn có muốn cập nhật', pAjaxContainerId = '#dt-pjax') {
+    let confimM = confirm(confirmMessage);
+    if (!confimM) return ;
+    $.post(url + '?id=' + recordId, data).done(function (response) {
+        if (response) {
+            if (response.success) {
+                $.toast({
+                    heading: 'Thông báo',
+                    text: 'Thành công',
+                    position: 'top-right',
+                    class: 'jq-toast-success',
+                    hideAfter: 3500,
+                    stack: 6,
+                    showHideTransition: 'fade'
+                });
+                if (pAjaxContainerId) {
+                    $.pjax.reload({container: pAjaxContainerId, url: window.location.href});
+                } else {
+                    window.location.reload();
+                }
+            } else {
+                $.toast({
+                    heading: 'Thông báo',
+                    text: 'Thất bại: ' + response.error.join(', '),
+                    position: 'top-right',
+                    class: 'jq-toast-warning',
+                    hideAfter: 3500,
+                    stack: 6,
+                    showHideTransition: 'fade'
+                });
+            }
+
+        } else {
+            $.toast({
+                heading: 'Thông báo',
+                text: 'Thất bại: Lỗi không xác định',
+                position: 'top-right',
+                class: 'jq-toast-warning',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+            });
+        }
+    });
+}
+
 $(function () {
     "use strict";
 
