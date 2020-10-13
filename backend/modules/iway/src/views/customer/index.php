@@ -205,6 +205,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     return $model->getDisplayDropdown($model->sex, 'sex');
                                                 }
                                             ],
+                                            [
+                                                'attribute' => 'co_so_id',
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return $model->coSo ? Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id])) : '';
+                                                }
+                                            ],
                                             //'birthday',
                                             //'address',
                                             //'province_id',
