@@ -166,7 +166,7 @@ class OrderController extends MyIwayController
     */
     public function actionDelete($id)
     {
-        if (!(Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin') || Yii::$app->user->can('deleteOrder'))) {
+        if (!(Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin') || Yii::$app->user->can('iwayOrderDelete'))) {
             $message = Yii::t('backend', 'Bạn không có quyền xóa');
             if (Yii::$app->request->isAjax) {
                 Yii::$app->session->setFlash('toastr-order-index', [
