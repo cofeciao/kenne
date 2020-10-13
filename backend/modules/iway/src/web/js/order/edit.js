@@ -20,7 +20,7 @@ function calcLineTotal(trDOM) {
 
     trDOM.find('.lineitem-total').html(formatAsDecimal(total)).attr('data-value', total);
 
-    calcGrandTotal();
+    calcTotal();
 
     return total;
 }
@@ -32,10 +32,12 @@ function calcDiscount() {
     if (discountType === GIAM_GIA_TRUC_TIEP) {
         discount = discountValue;
     } else {
-        discount = calcTotal() * discountValue / 100;
+        discount = formatToRawNumber($('#input_total').val()) * discountValue / 100;
     }
 
     $('#discount').html(formatAsCurrency(discount));
+    $('#input_discount').val(discount);
+
     return discount;
 }
 function calcTotal () {
@@ -49,16 +51,21 @@ function calcTotal () {
     });
 
     $('#total').html(formatAsCurrency(total));
+    $('#input_total').val(total);
 
+    calcDiscount();
+    calcGrandTotal();
     return total;
 }
 function calcGrandTotal() {
     let grandTotal = 0,
-        total = calcTotal();
+        total = formatToRawNumber($('#input_total').val());
 
-    grandTotal = total - calcDiscount();
+    grandTotal = total - $('#input_discount').val();
 
     $('#final_total').html(formatAsCurrency(grandTotal));
+    $('#input_final_total').val(formatToRawNumber(grandTotal));
+    updateBalance();
 
     return grandTotal;
 }
@@ -74,6 +81,11 @@ function handleDiscountValue(maxPrice, discountType, self) {
     }
 
     self.val(formatAsDecimal(discountValue));
+}
+function updateBalance() {
+    let balance = formatToRawNumber($('#input_final_total').val()) - formatToRawNumber($('#input_received').val());
+    $('#input_balance').val(balance);
+    $('#balance').html(formatAsCurrency(balance));
 }
 
 $(function () {
@@ -103,10 +115,12 @@ $(function () {
                 trDOM.find('.product-price').val(0).trigger('change');
             }
         }).on('afterDeleteRow', function(){
-            calcGrandTotal();
+            calcTotal();
         })
         .on('change', '#order-discount_type, #order-discount_value', function () {
-            handleDiscountValue(calcTotal(), $('#order-discount_type').val(), $(this));
+            handleDiscountValue(formatToRawNumber($('#input_total').val()), $('#order-discount_type').val(), $(this));
+            debugger;
+            calcDiscount();
             calcGrandTotal();
         })
         .on('change', '.discount-type', function () {
@@ -119,6 +133,7 @@ $(function () {
             $('#order-discount_value').trigger('keyup').trigger('change');
         })
         .on('keyup', '#order-discount_value', function () {
-            handleDiscountValue(calcTotal(), $('#order-discount_type').val(), $(this));
+            debugger;
+            handleDiscountValue(formatToRawNumber($('#input_total').val()), $('#order-discount_type').val(), $(this));
         });
 })

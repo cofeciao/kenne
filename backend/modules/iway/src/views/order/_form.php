@@ -243,6 +243,7 @@ if (!$model->primaryKey) {
                 <div class="col-3 border-top pt-2"><?= $model->getAttributeLabel('total') ?>:</div>
                 <div class="col-4 border-top pt-2">
                     <p id="total"><?= Yii::$app->formatter->asCurrency($model->total) ?></p>
+                    <input type="hidden" id="input_total" name="input_total" value="<?= $model->total ?>">
                 </div>
             </div>
             <div class="row justify-content-end p-1">
@@ -259,12 +260,28 @@ if (!$model->primaryKey) {
                 </div>
                 <div class="col-4">
                     <p id="discount"><?= Yii::$app->formatter->asCurrency($model->discount) ?></p>
+                    <input type="hidden" id="input_discount" name="input_discount" value="<?= $model->discount ?>">
                 </div>
             </div>
             <div class="row justify-content-end p-1">
                 <div class="col-3 font-18"><?= $model->getAttributeLabel('final_total') ?>:</div>
                 <div class="col-4">
                     <p id="final_total" class="font-weight-bold font-18"><?= Yii::$app->formatter->asCurrency($model->final_total) ?></p>
+                    <input type="hidden" id="input_final_total" name="input_final_total" value="<?= $model->final_total ?>">
+                </div>
+            </div>
+            <div class="row justify-content-end p-1 text-right">
+                <div class="col-3 font-14"><?= $model->getAttributeLabel('received') ?>:</div>
+                <div class="col-4">
+                    <p id="received" class="font-14"><?= Yii::$app->formatter->asCurrency($model->received) ?></p>
+                    <input type="hidden" id="input_received" name="input_received" value="<?= $model->received ? $model->received : 0 ?>">
+                </div>
+            </div>
+            <div class="row justify-content-end p-1 text-right">
+                <div class="col-3 font-14"><?= $model->getAttributeLabel('balance') ?>:</div>
+                <div class="col-4">
+                    <p id="balance" class="font-weight-bold font-14"><?= Yii::$app->formatter->asCurrency($model->balance) ?></p>
+                    <input type="hidden" id="input_balance" name="input_balance" value="<?= $model->balance ? $model->balance : 0 ?>">
                 </div>
             </div>
         </section>
