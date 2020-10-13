@@ -98,14 +98,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
                                                 'header' => Yii::t('backend', 'Actions'),
-                                                'template' => '{update} {delete}',
+                                                'template' => '{update} {cancel_order} {delete}',
                                                 'buttons' => [
                                                     'update' => function ($url, $model) {
+                                                        if ($model->status == 'huy') return '';
                                                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                                             'title' => Yii::t('backend', 'Update'),
                                                             'alia-label' => Yii::t('backend', 'Update'),
                                                             'data-pjax' => 0,
                                                             'class' => 'btn btn-info btn-xs'
+                                                        ]);
+                                                    },
+                                                    'cancel_order' => function ($url, $model) {
+                                                        if ($model->status == 'huy') return '';
+                                                        return Html::a('<i class="glyphicon glyphicon-trash"></i>', 'javascript:cancelOrder(' . $model->primaryKey . ')', [
+                                                            'title' => Yii::t('backend', 'Hủy đơn'),
+                                                            'alia-label' => Yii::t('backend', 'Hủy đơn'),
+                                                            'data-pjax' => 0,
+                                                            'class' => 'btn btn-warning btn-xs'
                                                         ]);
                                                     },
                                                     'delete' => function ($url, $model) {
@@ -189,8 +199,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 <?php
-$urlChangePageSize = \yii\helpers\Url::toRoute(['perpage']);
+$urlChangePageSize = Url::toRoute(['perpage']);
+$urlToUpdate = Url::toRoute(['update-ajax']);
 $script = <<< JS
+function cancelOrder(OrderId) {
+    updateRecordAjax(OrderId, {status: 'huy'}, '$urlToUpdate', 'Bạn có muốn hủy đơn');
+}
+
 $('body').on('click', '.success-delete', function(e){
 e.preventDefault();
 var url = $(this).attr('href') || null;
