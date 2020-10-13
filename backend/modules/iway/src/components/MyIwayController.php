@@ -1,10 +1,17 @@
 <?php
+
 namespace modava\iway\components;
 
 use backend\components\MyController;
+use modava\iway\models\Order;
 use Yii;
 use yii\web\Response;
 
+
+/**
+ * @property MyIwayModel $model
+ *
+ */
 class MyIwayController extends MyController
 {
     public $model = null;
@@ -35,5 +42,39 @@ class MyIwayController extends MyController
             }
         }
         return $out;
+    }
+
+    public function actionUpdateAjax($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $response = [
+            'success' => true
+        ];
+
+        $model = $this->model::findOne($id);
+
+        if (!$model) {
+            $response['success'] = false;
+            $response['error'] = ["Record {$id} not found!"];
+        } else {
+            $model->loadWithoutPrefix(Yii::$app->request->post());
+
+            switch ($model->formName()) {
+                case 'Order':
+                    $model->scenario = Order::SCENARIO_NONE_LINE_ITEM;
+                    break;
+                default:
+                    break;
+            }
+
+            if ($model->validate() && $model->save()) {
+                $response['data'] = $model;
+            } else {
+                $response['success'] = false;
+                $response['error'] = $model->getErrors();
+            }
+        }
+
+        return $response;
     }
 }

@@ -100,4 +100,16 @@ class MyIwayModel extends ActiveRecord
     {
         $this->convertToDisplayNumber();
     }
+
+    public function loadWithoutPrefix($params)
+    {
+        $formName = $this->formName();
+        $paramsPrepare = [];
+
+        foreach ($params as $k => $v) {
+            $paramsPrepare[$formName][$k] = $v;
+        }
+
+        return $this->load($paramsPrepare);
+    }
 }
