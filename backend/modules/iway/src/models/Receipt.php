@@ -131,7 +131,7 @@ class Receipt extends ReceiptTable
     public function validateAmount()
     {
         $order = Order::findOne($this->order_id);
-        if ($order && (float) $this->amount > (float) $order->balance) {
+        if ($this->status === 'da_thu' && $order && (float) $this->amount > (float) $order->balance) {
             $this->addError('amount', 'Số tiền không được lớn hơn tiền còn lại trong đơn hàng');
         }
 

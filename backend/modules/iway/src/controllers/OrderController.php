@@ -3,11 +3,13 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\auth\models\User;
 use modava\iway\components\MyIwayController;
 use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
+use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use modava\iway\models\Order;
 use modava\iway\models\search\OrderSearch;
@@ -164,6 +166,20 @@ class OrderController extends MyIwayController
     */
     public function actionDelete($id)
     {
+        if (!(Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin') || Yii::$app->user->can('deleteOrder'))) {
+            $message = Yii::t('backend', 'Bạn không có quyền xóa');
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->session->setFlash('toastr-order-index', [
+                    'title' => 'Thông báo',
+                    'text' => $message,
+                    'type' => 'warning'
+                ]);
+                return $this->redirect(['index']);
+            }
+
+            throw new NotAcceptableHttpException($message);
+        }
+
         $model = $this->findModel($id);
         try {
             if ($model->delete()) {
