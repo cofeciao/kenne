@@ -37,7 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?php if ($model->status != 'huy'):?>
             <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+            <?php endif;?>
             <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
