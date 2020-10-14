@@ -6,9 +6,11 @@ use yii\widgets\DetailView;
 use backend\widgets\ToastrWidget;
 use modava\iway\widgets\NavbarWidgets;
 use modava\iway\models\IwayTray;
+use modava\iway\models\IwayTrayImages;
 
 /* @var $this yii\web\View */
 /* @var $model IwayTray */
+/* @var $tray_images array */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Iway Trays'), 'url' => ['index']];
@@ -28,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <p>
             <?php
             if ($model->status === IwayTray::GIAO_KHACH_HANG) {
-                echo Html::a(Yii::t('backend', 'Hình ảnh'), ['/iway/iway-tray-image/view', 'id' => $model->primaryKey], [
+                echo Html::a(Yii::t('backend', 'Hình ảnh'), ['/iway/iway-tray-images/view', 'id' => $model->primaryKey], [
                     'class' => 'btn btn-success btn-sm'
                 ]);
             }
@@ -90,6 +92,43 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ]) ?>
+            </section>
+            <section class="hk-sec-wrapper">
+                <h5>Tray in progress</h5>
+                <div class="row">
+                    <?php
+                    $i = 0;
+                    foreach (IwayTrayImages::TYPE as $key => $type) {
+                        if ($i > 2) {
+                            $i = 0;
+                            echo '</div><div class="row">';
+                        }
+                        ?>
+                        <div class="col-md-4 col-12">
+                                <span class="tray-images<?= array_key_exists($key, $tray_images) && !in_array($tray_images[$key]->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::CHUA_DAT]) ? ' disabled' : '' ?>">
+                                    <?php if (array_key_exists($key, $tray_images) && $tray_images[$key]->getImage() != null) { ?>
+                                        <span class="preview tray-image-preview">
+                                            <?php if ($tray_images[$key]->primaryKey != null && $tray_images[$key]->status != IwayTrayImages::CHUA_DANH_GIA) { ?>
+                                                <div class="tray-image-evaluate">
+                                                    <?php if ($tray_images[$key]->status == IwayTrayImages::DAT) { ?>
+                                                        <i class="fa fa-check"></i>
+                                                    <?php } else if ($tray_images[$key]->status == IwayTrayImages::CHUA_DAT) { ?>
+                                                        <i class="fa fa-times"></i>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
+                                            <img src="<?= $tray_images[$key]->getImage() ?>" alt="<?= $type ?>"
+                                                 title="<?= $type ?>"/>
+                                        </span>
+                                    <?php } ?>
+                                    <span><?= $type ?></span>
+                                </span>
+                        </div>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                </div>
             </section>
         </div>
     </div>

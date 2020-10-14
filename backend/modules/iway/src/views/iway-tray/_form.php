@@ -132,15 +132,29 @@ foreach (IwayTray::RESULT as $result_key => $tray_result) {
             </div>
         </div>
 
-        <?= $form->field($model, 'status')->dropDownList(IwayTray::STATUS, [
-            'id' => 'tray-status',
-            'options' => $status_options
-        ]) ?>
 
-        <?= $form->field($model, 'result')->dropDownList(IwayTray::RESULT, [
-            'id' => 'tray-result',
-            'options' => $result_options
-        ]) ?>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'status')->dropDownList(IwayTray::STATUS, [
+                    'id' => 'tray-status',
+                    'options' => $status_options
+                ]) ?>
+            </div>
+            <div class="col-md-6 col-12">
+                <?= $form->field($model, 'result')->dropDownList(IwayTray::RESULT, [
+                    'id' => 'tray-result',
+                    'options' => $result_options,
+                    'onchange' => '$(this).val()=="'.IwayTray::CHUA_DANH_GIA.'"?$(".evaluate-content").hide():$(".evaluate-content").show()'
+                ]) ?>
+            </div>
+        </div>
+        <div class="col-12 px-0 evaluate-content"
+             style="display: <?= $model->result == IwayTray::CHUA_DANH_GIA ? 'none' : 'block' ?>">
+            <?= $form->field($model, 'evaluate')->textarea([
+                'rows' => 6
+            ]) ?>
+        </div>
+
         <div class="form-group">
             <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-sm btn-success']) ?>
         </div>

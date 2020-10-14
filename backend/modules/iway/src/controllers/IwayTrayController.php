@@ -3,6 +3,7 @@
 namespace modava\iway\controllers;
 
 use backend\components\MyComponent;
+use modava\iway\models\IwayTrayImages;
 use Mpdf\Tag\P;
 use yii\db\Exception;
 use Yii;
@@ -61,8 +62,15 @@ class IwayTrayController extends MyController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $query = IwayTrayImages::find()
+            ->where(['tray_id' => $id])
+            ->orderBy([IwayTrayImages::tableName() . '.created_at' => SORT_ASC])
+            ->indexBy('type');
+        $tray_images = $query->all();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'tray_images' => $tray_images
         ]);
     }
 

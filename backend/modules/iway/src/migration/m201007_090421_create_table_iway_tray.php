@@ -32,6 +32,7 @@ class m201007_090421_create_table_iway_tray extends Migration
                 'date_begin' => $this->integer(11)->null()->comment('Ngày bắt đầu đeo tray thực tế'),
                 'date_end' => $this->integer(11)->null()->comment('Ngày kết thúc đeo tray thực tế'),
                 'result' => $this->integer(11)->null()->defaultValue(0)->comment('Trạng thái đánh giá: 0 - chưa đánh giá, 1 - đạt, 2 - chưa đạt'),
+                'evaluate' => $this->text()->null()->comment('Nội dung đánh giá tray'),
                 'date_result' => $this->integer(11)->null()->comment('Thời gian đánh giá'),
                 'user_result' => $this->integer(11)->null()->comment('Người đánh giá'),
                 'status' => $this->integer(11)->null()->comment('Ép khay, Đóng hộp, Bàn giao phòng khám, Cắt viền khay'),

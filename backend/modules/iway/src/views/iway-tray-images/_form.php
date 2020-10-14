@@ -43,6 +43,11 @@ use modava\iway\models\IwayTrayImages;
                 </div>
             </label>
         </div>
+        <?= $form->field($model, 'fileImageBase64', [
+            'options' => [
+                'tag' => false
+            ]
+        ])->hiddenInput()->label(false) ?>
         <?= $form->field($model, 'tray_id', [
             'options' => [
                 'tag' => false
@@ -68,7 +73,7 @@ use modava\iway\models\IwayTrayImages;
         <button type="button" class="btn btn-sm btn-secondary"
                 data-dismiss="modal"><?= Yii::t('backend', 'Đóng') ?></button>
         <button type="button" class="btn btn-sm btn-success"
-                id="btn-submit-tray-image"><?= Yii::t('backend', 'Save') ?></button>
+                id="btn-submit-tray-image"><?= Yii::t('backend', $model->primaryKey == null ? 'Save' : 'Update') ?></button>
     </div>
 <?php ActiveForm::end(); ?>
 <?php
@@ -79,18 +84,31 @@ btn_submit.on('click', function(){
     $(this).attr('disabled', 'disabled');
     form.submit();
 });
+function getFormData(form){
+    var form_data = new FormData(form[0]);
+    return form_data;
+}
+function getData(form){
+    return {
+        IwayTrayImages: {
+            tray_id: $('input[name="IwayTrayImages[tray_id]"]').val() || null,
+            type: $('input[name="IwayTrayImages[type]"]').val() || null,
+            fileImageBase64: $('input[name="IwayTrayImages[fileImageBase64]"]').val() || null,
+            evaluate: $('textarea[name="IwayTrayImages[evaluate]"]').val() || null,
+            status: $('input[name="IwayTrayImages[status]"]:checked').val() || null,
+        }
+    };
+}
 form.on('beforeSubmit', function(e){
     e.preventDefault();
-    var form_data = new FormData(form[0]),
+    var form_data = getData(form),
         url = form.attr('action');
+    console.log(form_data);
     $.ajax({
         type: 'POST',
         url: url,
         dataType: 'json',
         data: form_data,
-        cache: false,
-        contentType: false,
-        processData: false
     }).done(res => {
         alert(res.msg);
         if(res.code === 200){

@@ -85,7 +85,7 @@ class IwayTrayImagesController extends MyController
             if ($id != null) {
                 $model = IwayTrayImages::find()->where(['id' => $id])->one();
                 if ($model->tray_id != $tray_id) return $this->renderAjax('_error', [
-                    'error' => 'Thông tin tray không trùng đúng'
+                    'error' => 'Thông tin tray không đúng'
                 ]);
                 if ($model->type != $type) return $this->renderAjax('_error', [
                     'error' => 'Thông tin hình ảnh không đúng'
@@ -123,12 +123,15 @@ class IwayTrayImagesController extends MyController
             if (!$model->load(Yii::$app->request->post())) return [
                 'code' => 400,
                 'msg' => 'Lỗi load dữ liệu',
-                'error' => $model->getErrors()
+                'error' => $model->getErrors(),
+                'data' => Yii::$app->request->post()
             ];
             $fileImage = UploadedFile::getInstance($model, 'fileImage');
-            if ($model->getOldAttribute('status') == IwayTrayImages::CHUA_DAT && $fileImage != null) {
+            $fileImageBase64 = $model->fileImageBase64;
+            if ($model->getOldAttribute('status') == IwayTrayImages::CHUA_DAT && ($fileImage != null || $fileImageBase64 != null)) {
                 /* Chưa đạt && upload lại hình => tạo model mới để lưu hình */
                 $model = new IwayTrayImages();
+                $model->scenario = IwayTrayImages::SCENARIO_SAVE;
                 $model->load(Yii::$app->request->post());
                 $model->setAttributes([
                     'status' => IwayTrayImages::CHUA_DANH_GIA,
@@ -141,11 +144,11 @@ class IwayTrayImagesController extends MyController
                 return [
                     'code' => 400,
                     'msg' => 'Có lỗi khi kiểm tra dữ liệu',
-                    'error' => $model->getErrors()
+                    'error' => $model->getErrors(),
+                    'data' => Yii::$app->request->post()
                 ];
             }
             if (!$model->save()) {
-                $model->deleteImage();
                 return [
                     'code' => 400,
                     'msg' => 'Cập nhật thất bại'

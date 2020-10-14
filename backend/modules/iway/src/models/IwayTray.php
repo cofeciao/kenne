@@ -23,6 +23,7 @@ use Yii;
  * @property int $date_begin Ngày bắt đầu đeo tray thực tế
  * @property int $date_end Ngày kết thúc đeo tray thực tế
  * @property int $result Trạng thái đánh giá: 0 - chưa đánh giá, 1 - đạt, 2 - chưa đạt
+ * @property int $evaluate Nội dung đánh giá
  * @property int $date_result Thời gian đánh giá
  * @property int $user_result Người đánh giá
  * @property int $status Ép khay, Đóng hộp, Bàn giao phòng khám, Cắt viền khay
@@ -111,7 +112,7 @@ class IwayTray extends IwayTrayTable
     {
         return [
             [['name', 'code'], 'required'],
-            [['note'], 'string'],
+            [['note', 'evaluate'], 'string'],
             [['date_delivery', 'user_delivery', 'treatment_schedule_id', 'espect_date_begin', 'espect_date_end', 'date_begin', 'date_end', 'result', 'date_result', 'user_result', 'status'], 'integer'],
             [['name', 'code'], 'string', 'max' => 255],
             [['status'], 'validateStatus'],
@@ -137,6 +138,7 @@ class IwayTray extends IwayTrayTable
             'date_begin' => Yii::t('backend', 'Ngày bắt đầu'),
             'date_end' => Yii::t('backend', 'Ngày kết thúc'),
             'result' => Yii::t('backend', 'Đánh giá'),
+            'evaluate' => Yii::t('backend', 'Nội dung đánh giá'),
             'date_result' => Yii::t('backend', 'Thời gian đánh giá'),
             'user_result' => Yii::t('backend', 'Người đánh giá'),
             'status' => Yii::t('backend', 'Trạng thái'),
@@ -206,11 +208,11 @@ class IwayTray extends IwayTrayTable
         if ($roleName !== User::DEV) {
             $results = [];
             foreach (self::RESULT as $result_key => $tray_result) {
-                if($this->status != self::GIAO_KHACH_HANG && $result_key === self::CHUA_DANH_GIA) {
+                if ($this->status != self::GIAO_KHACH_HANG && $result_key === self::CHUA_DANH_GIA) {
                     $results[$result_key] = $tray_result;
                 } else {
                     if ($this->status == self::GIAO_KHACH_HANG && ($result === self::CHUA_DANH_GIA ||
-                        ($result !== self::CHUA_DANH_GIA && $result === $result_key))) {
+                            ($result !== self::CHUA_DANH_GIA && $result === $result_key))) {
                         $results[$result_key] = $tray_result;
                     }
                 }

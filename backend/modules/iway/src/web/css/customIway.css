@@ -323,3 +323,162 @@ form div.required label.control-label:after {
 .select2-container .select2-selection--single .select2-selection__clear:hover {
     cursor: pointer !important;
 }
+
+.tray-images {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 100%;
+    height: 0;
+    position: relative;
+}
+.tray-images > span {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    color: #000;
+}
+.tray-images > span.preview img {
+    max-width: 98%;
+    max-height: 98%;
+}
+.tray-images > span.preview + span {
+    top: unset;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(255 255 255 / 0.7);
+    box-shadow: unset;
+    line-height: 40px;
+}
+.tray-images > span:hover {
+    box-shadow: 1px 1px 4px #666;
+}
+.tray-images:hover > span.preview + span {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: none;
+    background: rgb(255 255 255 / .7);
+}
+.tray-image-view {
+    position: relative;
+}
+.tray-image-evaluate {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #fff;
+    z-index: 1;
+    border-radius: 0px 3px 0px 0px;
+    font-size: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tray-image-evaluate .fa.fa-times {
+    color: red;
+}
+.tray-image-evaluate .fa.fa-check {
+    color: green;
+}
+.change-image .evaluate,
+.change-image .tray-image-evaluate {
+    display: none;
+}
+.upload-zone .refresh {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border-radius: 3px 0px 0px 0px;
+    z-index: 2;
+    font-size: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+.change-image .upload-zone:hover .refresh {
+    opacity: 1;
+}
+/* UPLOAD ZONE */
+.upload-zone {
+    width: 100%;
+    position: relative;
+    height: 0;
+    padding-bottom: 64%;
+    cursor: pointer;
+    margin: 0;
+}
+.upload-zone .preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.upload-zone.has-image .preview {
+    border: solid 2px #ccc;
+}
+.upload-zone .preview,
+.upload-zone.has-image:not(.disabled):hover .preview {
+    border: dashed 2px #ccc;
+}
+.upload-zone .preview img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 5px;
+}
+.upload-zone .preview img,
+.upload-zone.has-image > .upload {
+    opacity: 0;
+}
+.upload-zone.has-image .preview img,
+.upload-zone.has-image:not(.disabled):hover > .upload {
+    opacity: 1;
+}
+.upload-zone > .upload {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(255 255 255 / 0.7);
+    transition: all 0.3s ease-in-out;
+}
+.upload-zone > .upload .btn-upload {
+    display: none;
+}
+.upload-zone > .upload .icon-upload i {
+    font-size: 2em;
+    color: #999;
+}
+.upload-zone:hover > .upload .icon-upload i {
+    color: #333;
+}
+/* UPLOAD ZONE */
