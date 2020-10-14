@@ -143,6 +143,7 @@ class Order extends OrderTable
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['status'],
                     ],
                     'value' => function ($event) {
+                        if ($this->status === 'huy') return 'huy'; // Dont remove this line!!!
                         if ($this->isNewRecord || ($this->service_status === 'chua_dieu_tri' && $this->payment_status === 'chua_thanh_toan')) return 'moi';
                         if ($this->payment_status === 'thanh_toan_du' && $this->service_status === 'hoan_thanh') return 'hoan_thanh';
                         if ($this->payment_status === 'hoan_coc') return 'huy';

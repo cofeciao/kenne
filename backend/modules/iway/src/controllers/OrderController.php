@@ -2,13 +2,10 @@
 
 namespace modava\iway\controllers;
 
-use backend\components\MyComponent;
 use modava\auth\models\User;
 use modava\iway\components\MyIwayController;
-use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
-use yii\filters\VerbFilter;
 use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use modava\iway\models\Order;
