@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Url;
-use modava\iway\IwayModule;
 
 // Define route info
 $routeInfos = [
@@ -39,6 +38,12 @@ $routeInfos = [
         'module' => 'iway',
         'controllerId' => 'receipt',
         'label' => Yii::t('backend', 'Phiếu thu'),
+        'icon' => '<i class="glyphicon glyphicon-cog"></i>',
+    ],
+    [
+        'module' => 'iway',
+        'controllerId' => 'treatment-schedule',
+        'label' => Yii::t('backend', 'Lịch trình điều trị'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
     ],
     [
