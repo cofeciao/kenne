@@ -38,12 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'initValueText' => $model->order_id ? Order::findOne($model->order_id)->title : '',
                                 'options' => [
                                     'class' => 'load-data-on-change',
-                                    'placeholder' => Yii::t('backend', 'Chọn một giá trị ...'),
+                                    'placeholder' => Yii::t('backend', 'Chọn đơn hàng ...'),
                                     'load-data-element' => '#treatment_id',
                                     'load-data-url' => Url::toRoute(['treatment-schedule/get-records-by-order']),
                                     'load-data-key' => 'order_id',
                                     'load-data-data' => json_encode(['option_tag' => 'true']),
                                     'load-data-method' => 'GET',
+                                    'load-data-removeemptyoption' => 'true',
                                 ],
                                 'pluginOptions' => [
                                     'allowClear' => true,
@@ -65,6 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-lg-3 col-md-3">
                             <select class="form-control" id="treatment_id">
+                                <option value=""><?=Yii::t('backend', 'Không có liệu trình')?></option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-3">
@@ -136,13 +138,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-body">
                     <ul class="nav nav-pills justify-content-center custom-tab-button mb-3">
                         <li class="nav-item">
-                            <a class="nav-link" id="pills-1-tab-button" data-toggle="pill" href="#pills-1-button"
+                            <a class="nav-link active" id="pills-1-tab-button" data-toggle="pill" href="#pills-1-button"
                                role="tab" aria-controls="pills-1-button" aria-selected="true"><span
                                         class="tab-btn-icon"><i class="icon-book-open"></i></span>Hồ sơ khám
                                 bệnh</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="pills-2-tab-button" data-toggle="pill"
+                            <a class="nav-link" id="pills-2-tab-button" data-toggle="pill"
                                href="#pills-2-button" role="tab" aria-controls="pills-2-button"
                                aria-selected="false"><span class="tab-btn-icon"><i
                                             class="icon-book-open"></i></span>Hồ sơ thiết kế</a>
@@ -167,13 +169,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent-button">
-                        <div class="tab-pane fade" id="pills-1-button" role="tabpanel"
+                        <div class="tab-pane fade active show" id="pills-1-button" role="tabpanel"
                              aria-labelledby="pills-1-tab-button">
                             <div class="card-body">
                                 <?= $this->render('ho-so-kham-benh/index') ?>
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="pills-2-button" role="tabpanel"
+                        <div class="tab-pane fade" id="pills-2-button" role="tabpanel"
                              aria-labelledby="pills-2-tab-button">
                             <div class="card-body">
                                 <?= $this->render('ho-so-thiet-ke/index') ?>

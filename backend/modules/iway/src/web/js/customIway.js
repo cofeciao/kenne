@@ -195,6 +195,7 @@ $(function () {
             element_load_data = el.attr('load-data-element') || null,
             self_key = el.attr('load-data-key') || null,
             data_add = el.attr('load-data-data') || '{}',
+            removeEmptyOption = el.attr('load-data-removeemptyoption') || null,
             callback = el.attr('load-data-callback') || null,
             method_load = el.attr('load-data-method') || 'POST';
         if (url_load_data === null) {
@@ -217,7 +218,11 @@ $(function () {
         data[self_key] = el.val();
         data = Object.assign(JSON.parse(data_add), data);
         console.log(data_add, JSON.parse(data_add), data);
-        $(element_load_data).find('option[value!=""]').remove();
+        if (removeEmptyOption) {
+            $(element_load_data).html('');
+        } else {
+            $(element_load_data).find('option[value!=""]').remove();
+        }
         $.ajax({
             type: method_load,
             url: url_load_data,
