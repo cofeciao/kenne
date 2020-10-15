@@ -472,7 +472,23 @@ form div.required label.control-label:after {
     transition: all 0.3s ease-in-out;
 }
 .upload-zone > .upload .btn-upload {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+}
+.upload-zone > .upload .btn-upload input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+}
+.upload-zone > .upload .icon-upload {
+    text-align: center;
 }
 .upload-zone > .upload .icon-upload i {
     font-size: 2em;

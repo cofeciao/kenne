@@ -60,7 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         'name',
                         'code',
-                        'note:ntext',
+                        [
+                            'attribute' => 'note',
+                            'format' => 'raw'
+                        ],
                         'date_delivery',
                         'user_delivery',
                         'treatment_schedule_id',

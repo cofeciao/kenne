@@ -117,7 +117,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             'name',
                                             'code',
-                                            'note:ntext',
+                                            [
+                                                'attribute' => 'note',
+                                                'format' => 'raw'
+                                            ],
                                             [
                                                 'attribute' => 'status',
                                                 'value' => function ($model) {

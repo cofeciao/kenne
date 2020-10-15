@@ -29,13 +29,18 @@ use modava\iway\models\IwayTrayImages;
                 <div class="preview">
                     <img src="<?= $model->getImage() ?>" alt="Preview">
                 </div>
-                <span class="refresh"><i class="fa fa-history"></i></span>
+                <span class="refresh"><i class="fa fa-undo"></i></span>
                 <div class="upload">
                     <div class="icon-upload">
                         <i class="fa fa-upload"></i>
+                        <div>Click or drag picture here</div>
                     </div>
                     <div class="btn-upload">
-                        <?= $form->field($model, 'fileImage')->fileInput([
+                        <?= $form->field($model, 'fileImage', [
+                            'options' => [
+                                'tag' => false
+                            ]
+                        ])->fileInput([
                             'data-default' => $model->getImage(),
                             'onchange' => 'readURL(this, $(this).closest(".upload-zone").find(".preview"))'
                         ]) ?>
@@ -85,8 +90,7 @@ btn_submit.on('click', function(){
     form.submit();
 });
 function getFormData(form){
-    var form_data = new FormData(form[0]);
-    return form_data;
+    return new FormData(form[0]);
 }
 function getData(form){
     return {
@@ -101,7 +105,7 @@ function getData(form){
 }
 form.on('beforeSubmit', function(e){
     e.preventDefault();
-    var form_data = getData(form),
+    var form_data = getFormData(form),
         url = form.attr('action');
     console.log(form_data);
     $.ajax({
