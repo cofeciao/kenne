@@ -15,8 +15,8 @@ class IwayController extends MyIwayController
         return $this->redirect(Url::toRoute(['/iway/customer']));
     }
 
-    public function actionView()
+    public function actionDoctorView()
     {
-        return $this->render('view');
+        return $this->render('doctor-view');
     }
 }

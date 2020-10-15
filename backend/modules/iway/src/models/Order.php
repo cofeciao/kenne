@@ -104,21 +104,6 @@ class Order extends OrderTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
-                        ActiveRecord::EVENT_BEFORE_INSERT => ['status'],
-                        ActiveRecord::EVENT_BEFORE_UPDATE => ['status'],
-                    ],
-                    'value' => function ($event) {
-                        if ($this->isNewRecord) return 'moi';
-                        if ($this->payment_status === 'thanh_toan_du' && $this->service_status === 'hoan_thanh') return 'hoan_thanh';
-                        if ($this->payment_status === 'hoan_coc') return 'huy';
-                        if ($this->service_status === 'dang_thuc_hien' || $this->payment_status === 'thanh_toan_1_phan') return 'dang_thuc_hien';
-
-                        return $this->status;
-                    },
-                ],
-                [
-                    'class' => AttributeBehavior::class,
-                    'attributes' => [
                         ActiveRecord::EVENT_BEFORE_INSERT => ['balance'],
                         ActiveRecord::EVENT_BEFORE_UPDATE => ['balance'],
                     ],
@@ -149,6 +134,22 @@ class Order extends OrderTable
                         if ($this->balance == 0) return 'thanh_toan_du';
                         if ($this->balance > 0 && $this->balance < $this->final_total) return 'thanh_toan_1_phan';
                         return 'chua_thanh_toan';
+                    },
+                ],
+                [
+                    'class' => AttributeBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['status'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['status'],
+                    ],
+                    'value' => function ($event) {
+                        if ($this->status === 'huy') return 'huy'; // Dont remove this line!!!
+                        if ($this->isNewRecord || ($this->service_status === 'chua_dieu_tri' && $this->payment_status === 'chua_thanh_toan')) return 'moi';
+                        if ($this->payment_status === 'thanh_toan_du' && $this->service_status === 'hoan_thanh') return 'hoan_thanh';
+                        if ($this->payment_status === 'hoan_coc') return 'huy';
+                        if (in_array($this->service_status, ['dang_thuc_hien', 'thanh_toan_du']) || $this->payment_status !== 'chua_dieu_tri') return 'dang_thuc_hien';
+
+                        return $this->status;
                     },
                 ],
             ]

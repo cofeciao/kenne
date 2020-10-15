@@ -8,134 +8,20 @@ use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\filters\VerbFilter;
+use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use modava\iway\models\Receipt;
 use modava\iway\models\search\ReceiptSearch;
 
 /**
  * ReceiptController implements the CRUD actions for Receipt model.
+ * @property Receipt $model
+ * @property ReceiptSearch $searchModel
  */
 class ReceiptController extends MyIwayController
 {
-    /**
-    * {@inheritdoc}
-    */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    /**
-    * Lists all Receipt models.
-    * @return mixed
-    */
-    public function actionIndex()
-    {
-        $searchModel = new ReceiptSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $totalPage = $this->getTotalPage($dataProvider);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'totalPage'    => $totalPage,
-        ]);
-            }
-
-    /**
-    * Displays a single Receipt model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-    * Creates a new Receipt model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    * @return mixed
-    */
-    public function actionCreate()
-    {
-        $model = new Receipt();
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->save()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                    'title' => 'Thông báo',
-                    'text' => 'Tạo mới thành công',
-                    'type' => 'success'
-                ]);
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                $errors = Html::tag('p', 'Tạo mới thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
-            }
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-    * Updates an existing Receipt model.
-    * If update is successful, the browser will be redirected to the 'view' page.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()) {
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-view', [
-                        'title' => 'Thông báo',
-                        'text' => 'Cập nhật thành công',
-                        'type' => 'success'
-                    ]);
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            } else {
-                $errors = Html::tag('p', 'Cập nhật thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-form', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
-            }
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+    public $model = 'modava\iway\models\Receipt';
+    public $searchModel = 'modava\iway\models\search\ReceiptSearch';
 
     /**
     * Deletes an existing Receipt model.
@@ -146,78 +32,21 @@ class ReceiptController extends MyIwayController
     */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        try {
-            if ($model->delete()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => 'Xoá thành công',
-                    'type' => 'success'
-                ]);
-            } else {
-                $errors = Html::tag('p', 'Xoá thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
+        if ($model = $this->findModel($id)) {
+            if ($model->order->status === 'huy') {
+                $message = Yii::t('backend', 'Không thể xóa phiếu thu của đơn hàng đã hủy');
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+                        'title' => 'Thông báo',
+                        'text' => $message,
+                        'type' => 'warning'
+                    ]);
+                    return $this->redirect(['index']);
                 }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
-                    'type' => 'warning'
-                ]);
+
+                throw new NotAcceptableHttpException($message);
             }
-        } catch (Exception $ex) {
-            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                'title' => 'Thông báo',
-                'text' => Html::tag('p', 'Xoá thất bại: ' . $ex->getMessage()),
-                'type' => 'warning'
-            ]);
         }
-        return $this->redirect(['index']);
-    }
-
-    /**
-    * @param $perpage
-    */
-    public function actionPerpage($perpage)
-    {
-        MyComponent::setCookies('pageSize', $perpage);
-    }
-
-    /**
-    * @param $dataProvider
-    * @return float|int
-    */
-    public function getTotalPage($dataProvider)
-    {
-        if (MyComponent::hasCookies('pageSize')) {
-            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
-        } else {
-            $dataProvider->pagination->pageSize = 10;
-        }
-
-        $pageSize   = $dataProvider->pagination->pageSize;
-        $totalCount = $dataProvider->totalCount;
-        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
-
-        return $totalPage;
-    }
-
-    /**
-    * Finds the Receipt model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Receipt the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-
-
-    protected function findModel($id)
-    {
-        if (($model = Receipt::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
-        // throw new NotFoundHttpException(BackendModule::t('backend','The requested page does not exist.'));
+        return parent::actionDelete($id);
     }
 }

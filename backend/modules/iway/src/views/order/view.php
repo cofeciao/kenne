@@ -31,10 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
         </h4>
         <p>
             <?= Html::a(Yii::t('backend', 'Tạo phiếu thu'), Url::toRoute(['receipt/create', 'Receipt[order_id]' => $model->primaryKey]), ['class' => 'btn btn-sm btn-success', 'target' => '_blank']) ?>
+            <?php if ($model->status != 'huy'):?>
+            <?= Html::a(Yii::t('backend', 'Hủy đơn'), 'javascript:updateRecordAjax(' . $model->primaryKey . ', ' . json_encode(['status' => 'huy']) . ', "'  . Url::toRoute(['update-ajax']) .'", "Bạn muốn hủy đơn", "")', ['class' => 'btn btn-sm btn-warning']) ?>
+            <?php endif;?>
             <a class="btn btn-outline-light btn-sm" href="<?= Url::to(['create']); ?>"
                title="<?= Yii::t('backend', 'Create'); ?>">
                 <i class="fa fa-plus"></i> <?= Yii::t('backend', 'Create'); ?></a>
+            <?php if ($model->status != 'huy'):?>
             <?= Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
+            <?php endif;?>
             <?= Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger btn-sm',
                 'data' => [
@@ -256,13 +261,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row justify-content-end p-1 text-right">
                     <div class="col-3 font-14"><?= $model->getAttributeLabel('received') ?>:</div>
                     <div class="col-4">
-                        <p id="final_total" class="font-14"><?= Yii::$app->formatter->asCurrency($model->received) ?></p>
+                        <p id="received" class="font-14"><?= Yii::$app->formatter->asCurrency($model->received) ?></p>
                     </div>
                 </div>
                 <div class="row justify-content-end p-1 text-right">
                     <div class="col-3 font-14"><?= $model->getAttributeLabel('balance') ?>:</div>
                     <div class="col-4">
-                        <p id="final_total" class="font-weight-bold font-14"><?= Yii::$app->formatter->asCurrency($model->balance) ?></p>
+                        <p id="balance" class="font-weight-bold font-14"><?= Yii::$app->formatter->asCurrency($model->balance) ?></p>
                     </div>
                 </div>
             </section>

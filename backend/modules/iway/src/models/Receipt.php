@@ -117,9 +117,16 @@ class Receipt extends ReceiptTable
         $order->save();
     }
 
-    public static function getRecordsByOrderWithStatus($orderId, $status = null)
+    public static function getRecordsByOrderWithStatus($orderId, $status = null, $ignoreId = null)
     {
-        return self::find()->where(['order_id' => $orderId])->andFilterWhere(['status' => $status]);
+        $query = self::find()->where(['order_id' => $orderId])->andFilterWhere(['status' => $status]);
+
+        if ($ignoreId) {
+            $condition = is_array($ignoreId) ? 'NOT IN' : '!=';
+            $query->andWhere([$condition, 'id', $ignoreId]);
+        }
+
+        return $query;
     }
 
     public function afterDelete()
@@ -131,7 +138,10 @@ class Receipt extends ReceiptTable
     public function validateAmount()
     {
         $order = Order::findOne($this->order_id);
-        if ($order && (float) $this->amount > (float) $order->balance) {
+        $received = (float) self::getRecordsByOrderWithStatus($this->order_id, 'da_thu', $this->primaryKey)->sum('amount');
+        $balance = ((float) $order->final_total) - $received;
+
+        if ($this->status === 'da_thu' && $order && (float) $this->amount > $balance) {
             $this->addError('amount', 'Số tiền không được lớn hơn tiền còn lại trong đơn hàng');
         }
 
@@ -144,7 +154,7 @@ class Receipt extends ReceiptTable
     {
         $order = Order::findOne($this->order_id);
         if ($order && $order->status === 'huy') {
-            $this->addError('order_id', 'Đơn hàng đã hủy không thể tạo phiếu thu');
+            $this->addError('order_id', 'Đơn hàng đã hủy không thể tạo hoặc cập nhật phiếu thu');
         }
     }
 

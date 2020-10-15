@@ -2,12 +2,11 @@
 
 namespace modava\iway\controllers;
 
-use backend\components\MyComponent;
+use modava\auth\models\User;
 use modava\iway\components\MyIwayController;
-use yii\db\Exception;
 use Yii;
 use yii\helpers\Html;
-use yii\filters\VerbFilter;
+use yii\web\NotAcceptableHttpException;
 use yii\web\NotFoundHttpException;
 use modava\iway\models\Order;
 use modava\iway\models\search\OrderSearch;
@@ -16,57 +15,13 @@ use yii\widgets\ActiveForm;
 
 /**
  * OrderController implements the CRUD actions for Order model.
+ * @property Order $model
+ * @property OrderSearch $searchModel
  */
 class OrderController extends MyIwayController
 {
-
     public $model = 'modava\iway\models\Order';
-
-    /**
-    * {@inheritdoc}
-    */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    /**
-    * Lists all Order models.
-    * @return mixed
-    */
-    public function actionIndex()
-    {
-        $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $totalPage = $this->getTotalPage($dataProvider);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'totalPage'    => $totalPage,
-        ]);
-            }
-
-    /**
-    * Displays a single Order model.
-    * @param integer $id
-    * @return mixed
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+    public $searchModel = 'modava\iway\models\search\OrderSearch';
 
     /**
     * Creates a new Order model.
@@ -164,78 +119,20 @@ class OrderController extends MyIwayController
     */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        try {
-            if ($model->delete()) {
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
+        if (!(Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin') || Yii::$app->user->can('iwayOrderDelete'))) {
+            $message = Yii::t('backend', 'Bạn không có quyền xóa');
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->session->setFlash('toastr-order-index', [
                     'title' => 'Thông báo',
-                    'text' => 'Xoá thành công',
-                    'type' => 'success'
-                ]);
-            } else {
-                $errors = Html::tag('p', 'Xoá thất bại');
-                foreach ($model->getErrors() as $error) {
-                    $errors .= Html::tag('p', $error[0]);
-                }
-                Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                    'title' => 'Thông báo',
-                    'text' => $errors,
+                    'text' => $message,
                     'type' => 'warning'
                 ]);
+                return $this->redirect(['index']);
             }
-        } catch (Exception $ex) {
-            Yii::$app->session->setFlash('toastr-' . $model->toastr_key . '-index', [
-                'title' => 'Thông báo',
-                'text' => Html::tag('p', 'Xoá thất bại: ' . $ex->getMessage()),
-                'type' => 'warning'
-            ]);
-        }
-        return $this->redirect(['index']);
-    }
 
-    /**
-    * @param $perpage
-    */
-    public function actionPerpage($perpage)
-    {
-        MyComponent::setCookies('pageSize', $perpage);
-    }
-
-    /**
-    * @param $dataProvider
-    * @return float|int
-    */
-    public function getTotalPage($dataProvider)
-    {
-        if (MyComponent::hasCookies('pageSize')) {
-            $dataProvider->pagination->pageSize = MyComponent::getCookies('pageSize');
-        } else {
-            $dataProvider->pagination->pageSize = 10;
+            throw new NotAcceptableHttpException($message);
         }
 
-        $pageSize   = $dataProvider->pagination->pageSize;
-        $totalCount = $dataProvider->totalCount;
-        $totalPage  = (($totalCount + $pageSize - 1) / $pageSize);
-
-        return $totalPage;
-    }
-
-    /**
-    * Finds the Order model based on its primary key value.
-    * If the model is not found, a 404 HTTP exception will be thrown.
-    * @param integer $id
-    * @return Order the loaded model
-    * @throws NotFoundHttpException if the model cannot be found
-    */
-
-
-    protected function findModel($id)
-    {
-        if (($model = Order::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('backend', 'The requested page does not exist.'));
-        // throw new NotFoundHttpException(BackendModule::t('backend','The requested page does not exist.'));
+        return parent::actionDelete($id);
     }
 }
