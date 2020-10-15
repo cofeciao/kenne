@@ -1,7 +1,12 @@
 <?php
 
 use backend\widgets\ToastrWidget;
+use kartik\select2\Select2;
+use modava\iway\models\Order;
+use modava\tiny\TinyMce;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -11,24 +16,46 @@ use yii\widgets\ActiveForm;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="treatment-schedule-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'status')->dropDownList($model->getDropdown('status'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị')
+            ]) ?>
+        </div>
+        <div class="col-6">
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'order_id')->widget(Select2::class, [
+                'value' => $model->order_id,
+                'initValueText' => $model->order_id ? Order::findOne($model->order_id)->title : '',
+                'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'minimumInputLength' => 3,
+                    'language' => [
+                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                    ],
+                    'ajax' => [
+                        'url' => Url::toRoute(['/iway/order/get-by-key-word']),
+                        'dataType' => 'json',
+                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                    ],
+                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                    'templateResult' => new JsExpression('function(model) { return model.text; }'),
+                    'templateSelection' => new JsExpression('function (model) { return model.text; }'),
+                ],
+            ]); ?>
+        </div>
+        <div class="col-12">
+            <?= $form->field($model, 'description')->widget(TinyMce::class, [
+                'options' => ['rows' => 12],
+                'type' => 'content'
+            ]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'order_id')->textInput() ?>
-
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
-    <?= $form->field($model, 'status')->checkbox() ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-sm btn-success']) ?>
     </div>

@@ -52,9 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'order_id',
                             'format' => 'raw',
-                            'value' => function ($model) {
-                                if (!$model->order_id) return null;
-                                return Html::a($model->order->title, Url::toRoute(['order/view', 'id' => $model->order_id]));
+                            'value' => function (\modava\iway\models\Receipt $model) {
+                                return $model->getDisplayRelatedField('order_id', 'order', 'order');
                             }
                         ],
                         [

@@ -47,18 +47,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'id',
                         'title',
                         [
-                            'attribute' => 'status',
-                            'value' => function ($model) {
-                                return Yii::$app->params['status'][$model->status];
+                            'attribute' => 'order_id',
+                            'format' => 'raw',
+                            'value' => function (\modava\iway\models\TreatmentSchedule $model) {
+                                return $model->getDisplayRelatedField('order_id', 'order', 'order');
                             }
                         ],
-                        'order_id',
-                        'description:ntext',
-                        'created_at',
-                        'updated_at',
+                        [
+                            'attribute' => 'status',
+                            'value' => function (\modava\iway\models\TreatmentSchedule $model) {
+                                $model->getDisplayDropdown($model->status, 'status');
+                            }
+                        ],
+                        'description:raw',
+                        'created_at:datetime',
+                        'updated_at:datetime',
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => Yii::t('backend', 'Created By')

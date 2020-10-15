@@ -7,6 +7,7 @@ use modava\iway\models\DropdownsConfig;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 
 /**
@@ -27,13 +28,15 @@ class MyIwayModel extends ActiveRecord
         parent::init();
     }
 
-    public function loadDataFormUrlWhenCreate ()
+    public function loadDataFormUrlWhenCreate()
     {
         if (!$this->primaryKey) {
             $this->load(Yii::$app->request->get());
         }
     }
-    public function convertToDisplayNumber () {
+
+    public function convertToDisplayNumber()
+    {
         foreach ($this->numberFields as $field) {
             $this->$field = $this->$field === null ? 0 : Yii::$app->formatter->asDecimal($this->$field);
         }
@@ -44,7 +47,8 @@ class MyIwayModel extends ActiveRecord
         return DropdownsConfig::getDropdowns(get_class($this)::tableName());
     }
 
-    public function getDropdown($fieldName) {
+    public function getDropdown($fieldName)
+    {
         if (!$fieldName) return null;
 
         $dropdowns = $this->getDropdowns();
@@ -52,13 +56,20 @@ class MyIwayModel extends ActiveRecord
         return isset($dropdowns[$fieldName]) ? $dropdowns[$fieldName] : null;
     }
 
-    public function getDisplayDropdown($value, $fieldName) {
+    public function getDisplayDropdown($value, $fieldName)
+    {
         $dropDown = $this->getDropdown($fieldName);
         if ($dropDown === null) return null;
         if (array_key_exists($value, $dropDown)) {
             return $dropDown[$value];
         }
         return null;
+    }
+
+    public function getDisplayRelatedField($fieldName, $hasOneName, $controllerId, $showField = 'title', $options = [])
+    {
+        if (!$this->$fieldName) return null;
+        return Html::a($this->$hasOneName->$showField, Url::toRoute(["{$controllerId}/view", 'id' => $this->$fieldName]), $options);
     }
 
     public function getPhone()
@@ -86,7 +97,8 @@ class MyIwayModel extends ActiveRecord
         return parent::beforeValidate();
     }
 
-    public static function getByKeyWord($keyWord) {
+    public static function getByKeyWord($keyWord)
+    {
         $sql = 'SELECT `id`, title AS `text` FROM ' . static::tableName() . ' WHERE title LIKE :q';
 
         $data = Yii::$app->db->createCommand($sql, [':q' => "%{$keyWord}%"])->queryAll();

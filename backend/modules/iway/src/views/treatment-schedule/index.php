@@ -115,10 +115,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ]);
                                                 }
                                             ],
-
-                                            'title',
-                                            'order_id',
-                                            'description:ntext',
+                                            [
+                                                'attribute' => 'order_id',
+                                                'format' => 'raw',
+                                                'value' => function (\modava\iway\models\TreatmentSchedule $model) {
+                                                    return $model->getDisplayRelatedField('order_id', 'order', 'order');
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'status',
+                                                'value' => function (\modava\iway\models\TreatmentSchedule $model) {
+                                                    return $model->getDisplayDropdown($model->status, 'status');
+                                                }
+                                            ],
                                             [
                                                 'attribute' => 'created_by',
                                                 'value' => 'userCreated.userProfile.fullname',

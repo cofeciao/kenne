@@ -67,11 +67,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('title') ?></td>
                         <td class="w-30 border-top-0 py-2 px-3"><?= $model->title ?></td>
                         <td class="w-20 border-top-0 py-2 px-3"><?= $model->getAttributeLabel('co_so_id') ?></td>
-                        <td class="w-30 border-top-0 py-2 px-3"><?= Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id])) ?></td>
+                        <td class="w-30 border-top-0 py-2 px-3"><?= $model->getDisplayRelatedField('co_so_id', 'coSo', 'co-so') ?></td>
                     </tr>
                     <tr>
                         <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('customer_id') ?></td>
-                        <td class="w-30 py-2 px-3"><?= Html::a($model->customer->fullname, Url::toRoute(['customer/view', 'id' => $model->customer_id])) ?></td>
+                        <td class="w-30 py-2 px-3"><?= $model->getDisplayRelatedField('customer_id', 'customer', 'customer', 'fullname') ?></td>
                         <td class="w-20 py-2 px-3"><?= $model->getAttributeLabel('order_date') ?></td>
                         <td class="w-30 py-2 px-3"><?= Yii::$app->formatter->asDate($model->order_date) ?></td>
                     </tr>
@@ -175,7 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'attribute' => 'product_id',
                                             'format' => 'raw',
                                             'value' => function ($model) {
-                                                return Html::a($model->product->title, ['/product/product/view', 'id' => $model->product->id], ['target' => '_blank', 'data-pjax' => 0]);
+                                                return $model->getDisplayRelatedField('product_id', 'product', '/product/product');
                                             }
                                         ],
                                         [

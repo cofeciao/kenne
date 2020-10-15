@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="dataTables_wrapper dt-bootstrap4 table-responsive">
                                     <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
+                                        'filterModel' => $searchModel,
                                         'layout' => '
                                             {errors}
                                             <div class="pane-single-table">

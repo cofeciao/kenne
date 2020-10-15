@@ -140,14 +140,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'customer_id',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->customer->fullname, Url::toRoute(['/iway/customer/view', 'id' => $model->customer_id]));
+                                                    return $model->getDisplayRelatedField('customer_id', 'customer', 'customer', 'fullname');
                                                 }
                                             ],
                                             [
                                                 'attribute' => 'co_so_id',
                                                 'format' => 'raw',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->coSo->title, Url::toRoute(['/iway/co-so/view', 'id' => $model->customer_id]));
+                                                    return $model->getDisplayRelatedField('co_so_id', 'coSo', 'co-so');
                                                 }
                                             ],
                                             'start_time:datetime',

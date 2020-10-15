@@ -150,14 +150,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'attribute' => 'co_so_id',
                                                 'format' => 'raw',
                                                 'value' => function (modava\iway\models\Order $model) {
-                                                    return Html::a($model->coSo->title, Url::toRoute(['co-so/view', 'id' => $model->co_so_id]));
+                                                    return $model->getDisplayRelatedField('co_so_id', 'coSo', 'co-so');
                                                 }
                                             ],
                                             [
                                                 'attribute' => 'customer_id',
                                                 'format' => 'raw',
                                                 'value' => function (modava\iway\models\Order $model) {
-                                                    return Html::a($model->customer->fullname, Url::toRoute(['co-so/view', 'id' => $model->customer_id]));
+                                                    return $model->getDisplayRelatedField('customer_id', 'customer', 'customer', 'fullname');
                                                 }
                                             ],
                                             'order_date:date',

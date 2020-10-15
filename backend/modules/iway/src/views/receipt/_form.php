@@ -3,6 +3,7 @@
 use backend\widgets\ToastrWidget;
 use kartik\select2\Select2;
 use modava\datetime\DateTimePicker;
+use modava\iway\models\Order;
 use modava\tiny\TinyMce;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -46,7 +47,7 @@ $model->transformValueForRecord();
         <div class="col-6">
             <?= $form->field($model, 'order_id')->widget(Select2::class, [
                 'value' => $model->order_id,
-                'initValueText' => $model->order_id ? $model->order->title : '',
+                'initValueText' => $model->order_id ? Order::findOne($model->order_id)->title : '',
                 'options' => ['placeholder' => Yii::t('backend', 'Chọn một giá trị ...')],
                 'pluginOptions' => [
                     'allowClear' => true,

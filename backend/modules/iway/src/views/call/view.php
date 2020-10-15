@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'customer_id',
                             'format' => 'raw',
                             'value' => function ($model) {
-                                return Html::a($model->customer->fullname, Url::toRoute(['customer/view', 'id' => $model->customer_id]));
+                                return $model->getDisplayRelatedField('customer_id', 'customer', 'customer', 'fullname');
                             }
                         ],
                         [
