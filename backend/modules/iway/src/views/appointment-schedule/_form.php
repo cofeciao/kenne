@@ -109,11 +109,7 @@ if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) 
                         'todayHighLight' => true,
                     ],
                 ]) ?>
-            </div>
-            <div class="col-6">
-                <?= $form->field($model, 'reason_fail')->dropDownList($model->getDropdown('reason_fail'), [
-                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
-                ]) ?>
+
                 <?= $form->field($model, 'accept_for_service')->dropDownList($model->getDropdown('accept_for_service'), [
                     'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                 ]) ?>
@@ -130,12 +126,13 @@ if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) 
                     ]
                 ]) ?>
             </div>
-
-            <div class="col-12">
-                <?= $form->field($model, 'description')->widget(TinyMce::class, [
-                    'options' => ['rows' => 12],
-                    'type' => 'content'
+            <div class="col-6">
+                <?= $form->field($model, 'reason_fail')->dropDownList($model->getDropdown('reason_fail'), [
+                    'prompt' => Yii::t('backend', 'Chọn một giá trị ...')
                 ]) ?>
+            </div>
+            <div class="col-12">
+                <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
             </div>
 
         </div>
@@ -168,10 +165,7 @@ if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) 
 
             <?php if ($user->getRoleName($user->id) === 'direct_sales' || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-12">
-                    <?= $form->field($model, 'direct_sales_note')->widget(TinyMce::class, [
-                        'options' => ['rows' => 12],
-                        'type' => 'content'
-                    ]) ?>
+                    <?= $form->field($model, 'direct_sales_note')->textarea(['rows' => 6]) ?>
                 </div>
             <?php else: ?>
                 <div class="col-12">
@@ -210,10 +204,7 @@ if ($userRoleName == Yii::$app->getModule('iway')->params['role_online_sales']) 
 
             <?php if ($user->getRoleName($user->id) === Yii::$app->getModule('iway')->params['role_doctor_thamkham'] || Yii::$app->user->can(User::DEV) || Yii::$app->user->can('admin')): ?>
                 <div class="col-12">
-                    <?= $form->field($model, 'doctor_thamkham_note')->widget(TinyMce::class, [
-                        'options' => ['rows' => 12],
-                        'type' => 'content'
-                    ]) ?>
+                    <?= $form->field($model, 'doctor_thamkham_note')->textarea(['rows' => 6]) ?>
                 </div>
             <?php else: ?>
                 <div class="col-12">
@@ -249,30 +240,29 @@ $statusDoiLich = AppointmentSchedule::STATUS_DOI_LICH;
 $script = <<<JS
 function handleReasonFail() {
     let reasonFail = $('#appointmentschedule-reason_fail'),
-        acceptForService = $('#appointmentschedule-accept_for_service'),
         statusService = $('#appointmentschedule-status_service');
     
     if (statusService.val() === '$serviceStatusDenKhongDongY') {
         reasonFail.closest('.form-group').show(300);
-        acceptForService.val('').trigger('change').closest('.form-group').hide(300);
     } else if (statusService.val() === '$serviceStatusDenDongY') {
-        acceptForService.closest('.form-group').show(300);
         reasonFail.val('').trigger('change').closest('.form-group').hide(300);
     } else {
         reasonFail.val('').trigger('change').closest('.form-group').hide(300);
-        acceptForService.val('').trigger('change').closest('.form-group').hide(300);
     }
 }
 function handleServiceStatus() {
     let serviceStatus = $('#appointmentschedule-status_service'),
+        acceptForService = $('#appointmentschedule-accept_for_service'),
         checkinTime = $('#appointmentschedule-check_in_time');
     
   if ($('#appointmentschedule-status').val() !== '$statusDen') {
       serviceStatus.val('').trigger('change').closest('.form-group').hide(300);
       checkinTime.val('').trigger('change').closest('.form-group').hide(300);
+      acceptForService.val('').trigger('change').closest('.form-group').hide(300);
   } else {
       serviceStatus.closest('.form-group').show(300);
       checkinTime.closest('.form-group').show(300);
+      acceptForService.closest('.form-group').show(300);
   }
 }
 

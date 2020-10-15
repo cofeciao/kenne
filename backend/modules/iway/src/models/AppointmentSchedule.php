@@ -104,7 +104,7 @@ class AppointmentSchedule extends AppointmentScheduleTable
             [['description', 'direct_sales_note'], 'string'],
             [['title', 'accept_for_service', 'reason_fail'], 'string', 'max' => 255],
             [['status', 'status_service'], 'string', 'max' => 50],
-            [['status_service', 'check_in_time'], 'required', 'when' => function () {
+            [['status_service', 'check_in_time', 'accept_for_service'], 'required', 'when' => function () {
                 return $this->status === self::STATUS_DEN;
             }, 'whenClient' => "function() {
 			    return $('#appointmentschedule-status').val() === '" . self::STATUS_DEN . "';
@@ -113,11 +113,6 @@ class AppointmentSchedule extends AppointmentScheduleTable
                 return $this->status_service === self::SERVICE_STATUS_KHONG_DONG_Y_LAM;
             }, 'whenClient' => "function() {
 			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_KHONG_DONG_Y_LAM . "';
-			}"],
-            ['accept_for_service', 'required', 'when' => function () {
-                return $this->status_service === self::SERVICE_STATUS_DONG_Y_LAM;
-            }, 'whenClient' => "function() {
-			    return $('#appointmentschedule-status_service').val() === '" . self::SERVICE_STATUS_DONG_Y_LAM . "';
 			}"],
             [['direct_sales_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['direct_sales_id' => 'id']],
             [['co_so_id'], 'exist', 'skipOnError' => true, 'targetClass' => CoSo::class, 'targetAttribute' => ['co_so_id' => 'id']],
@@ -147,14 +142,14 @@ class AppointmentSchedule extends AppointmentScheduleTable
             'start_time' => Yii::t('backend', 'Ngày hẹn'),
             'status' => Yii::t('backend', 'Tình trạng'),
             'status_service' => Yii::t('backend', 'Tình trạng dịch vụ'),
-            'accept_for_service' => Yii::t('backend', 'Đồng ý dịch vụ nào'),
+            'accept_for_service' => Yii::t('backend', 'Dịch vụ quan tâm'),
             'reason_fail' => Yii::t('backend', 'Lý do Fail dù đã đến'),
             'direct_sales_note' => Yii::t('backend', 'Ghi chú của Direct Sales'),
             'direct_sales_id' => Yii::t('backend', 'Direct Sales'),
             'doctor_thamkham_id' => Yii::t('backend', 'Bác sĩ thăm khám'),
             'doctor_thamkham_note' => Yii::t('backend', 'Ghi chú của Bác sĩ thăm khám'),
             'check_in_time' => Yii::t('backend', 'Ngày đến'),
-            'description' => Yii::t('backend', 'Description'),
+            'description' => Yii::t('backend', 'Ghi chú của Online Sales'),
             'created_at' => Yii::t('backend', 'Created At'),
             'created_by' => Yii::t('backend', 'Created By'),
             'updated_at' => Yii::t('backend', 'Updated At'),
