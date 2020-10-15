@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\iway\models\search\TreatmentScheduleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Treatment Schedules');
+$this->title = Yii::t('backend', 'Liệu trình điều trị');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="container-fluid px-xxl-15 px-xl-10">

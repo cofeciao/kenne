@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\iway\models\search\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Orders');
+$this->title = Yii::t('backend', 'Đơn hàng');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="container-fluid px-xxl-15 px-xl-10">

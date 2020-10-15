@@ -18,7 +18,7 @@ class TreatmentScheduleSearch extends TreatmentSchedule
     {
         return [
             [['id', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['title', 'status', 'receipt_date', 'description'], 'safe'],
+            [['title', 'status', 'description'], 'safe'],
         ];
     }
 
@@ -60,7 +60,6 @@ class TreatmentScheduleSearch extends TreatmentSchedule
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'receipt_date' => $this->receipt_date,
             'order_id' => $this->order_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

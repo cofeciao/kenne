@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel modava\iway\models\search\ReceiptSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Receipts');
+$this->title = Yii::t('backend', 'Phiếu thu');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="container-fluid px-xxl-15 px-xl-10">

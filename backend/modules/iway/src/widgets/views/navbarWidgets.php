@@ -43,7 +43,7 @@ $routeInfos = [
     [
         'module' => 'iway',
         'controllerId' => 'treatment-schedule',
-        'label' => Yii::t('backend', 'Lịch trình điều trị'),
+        'label' => Yii::t('backend', 'Liệu trình điều trị'),
         'icon' => '<i class="glyphicon glyphicon-cog"></i>',
     ],
     [
