@@ -2,6 +2,7 @@
 
 namespace modava\iway\models\search;
 
+use modava\iway\helpers\Utils;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -64,7 +65,6 @@ class AppointmentScheduleSearch extends AppointmentSchedule
             'customer_id' => $this->customer_id,
             'co_so_id' => $this->co_so_id,
             'doctor_thamkham_id' => $this->doctor_thamkham_id,
-            'start_time' => $this->start_time,
             'check_in_time' => $this->check_in_time,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -78,6 +78,16 @@ class AppointmentScheduleSearch extends AppointmentSchedule
             ->andFilterWhere(['like', 'accept_for_service', $this->accept_for_service])
             ->andFilterWhere(['like', 'reason_fail', $this->reason_fail])
             ->andFilterWhere(['like', 'description', $this->description]);
+
+        if ($this->created_at) {
+            $created_at = explode(' - ', $this->created_at);
+            $query->andFilterWhere(['between', 'created_at', strtotime($created_at[0]), strtotime($created_at[1] . ' 23:59:59')]);
+        }
+
+        if ($this->start_time) {
+            $start_time = explode(' - ', $this->start_time);
+            $query->andFilterWhere(['between', 'date(start_time)', Utils::convertDateToDBFormat($start_time[0]), Utils::convertDateToDBFormat($start_time[1])]);
+        }
 
         return $dataProvider;
     }

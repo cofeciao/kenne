@@ -137,10 +137,7 @@ $templateStatus = '
                     <? /*= $form->field($model, 'avatar')->textInput(['maxlength' => true]) */ ?>
                 </div>-->
                 <div class="col-12">
-                    <?= $form->field($model, 'description')->widget(\modava\tiny\TinyMce::class, [
-                        'options' => ['rows' => 12],
-                        'type' => 'content'
-                    ]) ?>
+                    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
                 </div>
             </div>
         </section>

@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'phone',
                                 'format' => 'raw',
                                 'value' => function ($model) {
-                                    return $model->phone . ' ' . $model->getPhone();
+                                    return $model->getPhone();
                                 }
                             ],
                             [

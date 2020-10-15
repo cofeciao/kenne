@@ -58,7 +58,7 @@ use yii\db\ActiveRecord;
  */
 class Customer extends CustomerTable
 {
-    const PREFIX_CODE = 'iway';
+    const PREFIX_CODE = 'IWAY';
     public $toastr_key = 'customer';
 
     public $none_db_ac_is_create = 0;
@@ -222,14 +222,19 @@ class Customer extends CustomerTable
 
     public function afterSave($insert, $changedAttributes)
     {
-        $this->updateAttributes([
-            'code' => self::PREFIX_CODE . $this->primaryKey
-        ]);
-
+        $this->createCustomerCode();
         $this->createAppointmentSchedule();
         $this->createCall();
-
         parent::afterSave($insert, $changedAttributes);
+    }
+
+    /* Nếu KH chuyển cơ sở thì vẫn giữ cơ sở cũ của KH cho code */
+    public function createCustomerCode() {
+        if (!$this->code && $this->co_so_id) {
+            $this->updateAttributes([
+                'code' => self::PREFIX_CODE . str_pad($this->coSo->primaryKey, 2, 0, STR_PAD_LEFT) . '-' . $this->primaryKey
+            ]);
+        }
     }
 
     public function createAppointmentSchedule()
@@ -277,6 +282,10 @@ class Customer extends CustomerTable
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+    public function getOnlineSales()
+    {
+        return $this->hasOne(User::class, ['id' => 'online_sales_id']);
     }
 
     public function getCoSo()

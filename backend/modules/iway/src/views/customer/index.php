@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'title' => Yii::t('backend', 'Hành động'),
                                                     'isCustomItem' => true,
                                                     'options' => [
-                                                            'class' => 'btn-info btn-sm'
+                                                        'class' => 'btn-info btn-sm'
                                                     ],
                                                     'dropdowns' => [
                                                         '{create-call}',
@@ -182,66 +182,76 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ],
                                             ],
                                             [
-                                                'attribute' => 'fullname',
+                                                'label' => Yii::t('backend', 'Thông tin'),
                                                 'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return Html::a($model->fullname, ['view', 'id' => $model->id], [
-                                                        'title' => $model->fullname,
-                                                        'data-pjax' => 0,
-                                                    ]);
-                                                }
-                                            ],
-                                            'code',
-                                            [
-                                                'attribute' => 'phone',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return $model->getPhone();
-                                                }
-                                            ],
-                                            [
-                                                'attribute' => 'sex',
-                                                'value' => function ($model) {
-                                                    return $model->getDisplayDropdown($model->sex, 'sex');
-                                                }
-                                            ],
-                                            [
-                                                'attribute' => 'co_so_id',
-                                                'format' => 'raw',
-                                                'value' => function ($model) {
-                                                    return $model->getDisplayRelatedField('co_so_id', 'coSo', 'co-so');
-                                                }
-                                            ],
-                                            //'birthday',
-                                            //'address',
-                                            //'province_id',
-                                            //'district_id',
-                                            //'ward_id',
-                                            //'online_source',
-                                            //'fb_fanpage',
-                                            //'fb_customer',
-                                            //'online_sales_id',
-                                            //'online_sales_note:ntext',
-                                            //'direct_sales_id',
-                                            //'direct_sales_note:ntext',
-                                            //'status_customer',
-                                            //'co_so_id',
-                                            //'reason_fail',
-                                            //'who_created',
-                                            //'description:ntext',
-                                            [
-                                                'attribute' => 'created_by',
-                                                'value' => 'userCreated.userProfile.fullname',
+                                                'value' => function (\modava\iway\models\Customer $model) {
+                                                    $content = Html::a($model->fullname, ['view', 'id' => $model->id], ['title' => $model->fullname, 'data-pjax' => 0,]);
+                                                    $content .= $model->sex ? ' (' . $model->getDisplayDropdown($model->sex, 'sex') . ')' : '';
+                                                    $content .= ' - <strong>' . $model->code . ' </strong>' . $model->getPhone() . '<br/>';
+                                                    $content .= '<i class="font-italic">Tạo bởi: ' . $model->userCreated->userProfile->fullname . ' (' . Yii::$app->formatter->asDatetime($model->created_at) . ')</i><br/>';
+                                                    $content .= '<i class="font-italic">Sales Online: ' . $model->onlineSales->userProfile->fullname . '</i><br/>';
+                                                    $content .= '<i class="font-italic">Cơ sở hiện tại: ' . $model->getDisplayRelatedField('co_so_id', 'coSo', 'co-so') . '</i><br/>';
+                                                    return $content;
+                                                },
                                                 'headerOptions' => [
-                                                    'width' => 150,
-                                                ],
+                                                    'class' => 'header-300'
+                                                ]
                                             ],
                                             [
-                                                'attribute' => 'created_at',
-                                                'format' => 'date',
+                                                'attribute' => 'status_customer',
+                                                'format' => 'raw',
+                                                'value' => function (\modava\iway\models\Customer $model) {
+                                                    $class = '';
+                                                    $moreInfo = '';
+                                                    switch ($model->status_customer) {
+                                                        case 'dat_hen':
+                                                            $class = 'badge-success';
+                                                            break;
+                                                        case 'cho_cham_soc_lai':
+                                                            $class = 'badge-primary';
+                                                            break;
+                                                        case 'fail':
+                                                            $class = 'badge-danger';
+                                                            $moreInfo = 'Lý do: ' . $model->reason_fail;
+                                                            break;
+                                                    };
+                                                    $content = Html::tag('span', $model->getDisplayDropdown($model->status_customer, 'status_customer'), [
+                                                            'class' => 'font-14 badge ' . $class
+                                                        ]) . '<br>';
+                                                    return $content . $moreInfo;
+                                                }
+                                            ],
+                                            [
+                                                'attribute' => 'description',
+                                                'format' => 'raw',
+                                                'headerOptions' => ['class' => 'header-200']
+                                            ],
+                                            [
+                                                'attribute' => 'online_sales_note',
+                                                'format' => 'raw',
+                                                'headerOptions' => ['class' => 'header-200']
+                                            ],
+                                            [
+                                                'attribute' => 'online_source',
+                                                'format' => 'raw',
                                                 'headerOptions' => [
-                                                    'width' => 150,
+                                                    'class' => 'header-200'
                                                 ],
+                                                'contentOptions' => [
+                                                    'class' => 'text-center'
+                                                ],
+                                                'value' => function (\modava\iway\models\Customer $model) {
+                                                    $moreInfo = '';
+                                                    if ($model->online_source === 'facebook') {
+                                                        $moreInfo .= '<br/>';
+                                                        $moreInfo .= '<span class="text-primary">' . $model->getDisplayDropdown($model->fb_fanpage, 'fb_fanpage') . '</span>';
+                                                        if ($model->fb_customer) {
+                                                            $moreInfo .= '<br/>';
+                                                            $moreInfo .= 'FB KH: ' . $model->fb_customer;
+                                                        }
+                                                    }
+                                                    return $model->getDisplayDropdown($model->online_source, 'online_source') . $moreInfo;
+                                                }
                                             ],
                                         ],
                                     ]); ?>

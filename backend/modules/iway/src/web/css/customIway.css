@@ -323,3 +323,31 @@ form div.required label.control-label:after {
 .select2-container .select2-selection--single .select2-selection__clear:hover {
     cursor: pointer !important;
 }
+
+.header-100 {
+    width: 100px !important;
+    min-width: 100px !important;
+    max-width: 200px !important;
+    overflow: auto;
+}
+
+.header-200 {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 300px !important;
+    overflow: auto;
+}
+
+.header-300 {
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 400px !important;
+    overflow: auto;
+}
+
+.header-400 {
+    width: 400px !important;
+    min-width: 400px !important;
+    max-width: 500px !important;
+    overflow: auto;
+}
