@@ -6,11 +6,17 @@
  * Time: 08:58
  */
 
+use kartik\select2\Select2;
+use modava\iway\models\Order;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 
 $this->title = 'iWay';
 $this->title = Yii::t('backend', 'iWay');
 $this->params['breadcrumbs'][] = $this->title;
+
+/* @var $model modava\iway\models\Order */
 ?>
 <div class="container-fluid px-xxl-25 px-xl-10">
     <!-- Title -->
@@ -24,16 +30,48 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card mb-30">
                 <div class="card-header">
                     <div class="row align-items-center">
-                        <div class="col-lg-1"></div>
-                        <div class="col-lg-3 col-md-4">
-                            <select class="form-control" id="formControlSelect">
-                                <option>Liệu trình số 1</option>
-                                <option checked="">Liệu trình số 2</option>
+                        <div class="col-lg-3 col-md-3">
+                            <?= Select2::widget([
+                                'model' => $model,
+                                'attribute' => 'order_id',
+                                'value' => $model->order_id,
+                                'initValueText' => $model->order_id ? Order::findOne($model->order_id)->title : '',
+                                'options' => [
+                                    'class' => 'load-data-on-change',
+                                    'placeholder' => Yii::t('backend', 'Chọn một giá trị ...'),
+                                    'load-data-element' => '#treatment_id',
+                                    'load-data-url' => Url::toRoute(['treatment-schedule/get-records-by-order']),
+                                    'load-data-key' => 'order_id',
+                                    'load-data-data' => json_encode(['option_tag' => 'true']),
+                                    'load-data-method' => 'GET',
+                                ],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                    'minimumInputLength' => 3,
+                                    'language' => [
+                                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                    ],
+                                    'ajax' => [
+                                        'url' => Url::toRoute(['/iway/order/get-by-key-word']),
+                                        'dataType' => 'json',
+                                        'delay' => 250,
+                                        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                                    ],
+                                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                    'templateResult' => new JsExpression('function(model) { return model.text; }'),
+                                    'templateSelection' => new JsExpression('function (model) { return model.text; }'),
+                                ],
+                            ]); ?>
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                            <select class="form-control" id="treatment_id">
                             </select>
                         </div>
-                        <div class="col-lg-3 col-md-4">
+                        <div class="col-lg-3 col-md-3">
                             <div class="widgetbar">
-                                <button class="btn btn-primary md-full" data-toggle="modal" data-target=".bd-example-modal-add-lt"><i class="feather icon-plus mr-2"></i>Thêm liệu trình</button>
+                                <button class="btn btn-primary md-full" data-toggle="modal" data-target=".bd-example-modal-add-lt">
+                                    <i class="feather icon-plus mr-2"></i>Thêm liệu trình
+                                </button>
                                 <div class="modal fade bd-example-modal-add-lt" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -51,7 +89,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Hủy
+                                                </button>
                                                 <button type="button" class="btn btn-primary">Thêm liệu trình</button>
                                             </div>
                                         </div>
@@ -59,9 +99,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-4">
+                        <div class="col-lg-3 col-md-3">
                             <div class="widgetbar">
-                                <button class="btn btn-primary md-full" data-toggle="modal" data-target=".bd-example-modal-save-lt"><i class="feather icon-plus mr-2"></i>Lưu liệu trình</button>
+                                <button class="btn btn-primary md-full" data-toggle="modal" data-target=".bd-example-modal-save-lt">
+                                    <i class="feather icon-plus mr-2"></i>Lưu liệu trình
+                                </button>
                                 <div class="modal fade bd-example-modal-save-lt" tabindex="-1" role="dialog" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -79,7 +121,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Hủy
+                                                </button>
                                                 <button type="button" class="btn btn-primary">Lưu liệu trình</button>
                                             </div>
                                         </div>

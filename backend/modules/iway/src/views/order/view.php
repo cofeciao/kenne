@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             : <?= Html::encode($this->title) ?>
         </h4>
         <p>
+            <?= Html::a(Yii::t('backend', 'Tạo lịch trình điều trị'), Url::toRoute(['iway/doctor-view', 'AppointmentSchedule[order_id]' => $model->primaryKey]), ['class' => 'btn btn-sm btn-primary', 'target' => '_blank']) ?>
             <?= Html::a(Yii::t('backend', 'Tạo phiếu thu'), Url::toRoute(['receipt/create', 'Receipt[order_id]' => $model->primaryKey]), ['class' => 'btn btn-sm btn-success', 'target' => '_blank']) ?>
             <?php if ($model->status != 'huy'):?>
             <?= Html::a(Yii::t('backend', 'Hủy đơn'), 'javascript:updateRecordAjax(' . $model->primaryKey . ', ' . json_encode(['status' => 'huy']) . ', "'  . Url::toRoute(['update-ajax']) .'", "Bạn muốn hủy đơn", "")', ['class' => 'btn btn-sm btn-warning']) ?>

@@ -61,6 +61,7 @@ if (!$model->primaryKey) {
                             'ajax' => [
                                 'url' => Url::toRoute(['/iway/customer/get-customer-by-key-word']),
                                 'dataType' => 'json',
+                                'delay' => 250,
                                 'data' => new JsExpression('function(params) { return {q:params.term}; }')
                             ],
                             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
