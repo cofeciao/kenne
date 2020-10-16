@@ -14,7 +14,11 @@ class DocumentTable extends \yii\db\ActiveRecord
 
     public static function tableName()
     {
+<<<<<<< HEAD
+        return 'document';
+=======
         return 'pages_document';
+>>>>>>> master
     }
 
     public static function find()

@@ -29,6 +29,7 @@
     "yiisoft/yii2-httpclient": "~2.0.0",
     "yiisoft/yii2-apidoc": "~2.1.0",
     "yiisoft/yii2-redis": "~2.0.0",
+    "yiisoft/yii2-elasticsearch": "2.1.x-dev",
     "trntv/cheatsheet": "^0.1@dev",
     "kartik-v/yii2-export": "dev-master",
     "kartik-v/yii2-social": "dev-master",

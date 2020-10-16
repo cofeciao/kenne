@@ -8,6 +8,7 @@ class Component
 {
     public static function setCookies($name, $value, $time = null)
     {
+        //Yii::$app->request->enableCookieValidation = true;
         $cookies = Yii::$app->response->cookies;
         if ($time == null) {
             $time = time() + 86400 * 365;
@@ -32,5 +33,11 @@ class Component
     {
         $cookies = Yii::$app->request->cookies;
         return $cookies->has($name);
+    }
+
+    public static function removeCookies($name){
+        $cookies = Yii::$app->response->cookies;
+        $cookies->remove($name);
+        return $cookies;
     }
 }

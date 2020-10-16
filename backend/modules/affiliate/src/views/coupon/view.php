@@ -59,6 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     : '';
                             }
                         ],
+<<<<<<< HEAD
+						'customer_id', // Todo handle this
+=======
                         [
                             'attribute' => 'customer_id',
                             'format' => 'raw',
@@ -66,6 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->customer_id ? Html::a($model->customer->full_name, Url::toRoute(['/affiliate/customer/view', 'id' => $model->customer_id])) : '';
                             }
                         ],
+>>>>>>> master
 						[
 						    'attribute'   => 'coupon_type_id',
                             'format' => 'raw',

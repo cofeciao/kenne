@@ -39,7 +39,6 @@ class User extends ActiveRecord implements IdentityInterface
         self::STATUS_DELETED => 'Deleted',
         self::STATUS_INACTIVE => 'Inactive',
     ];
-
     const DEV = 'develop';
     const USERS = 'users'; //user frontend
 
@@ -87,7 +86,6 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
-
 
     /**
      * {@inheritdoc}

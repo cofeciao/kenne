@@ -3,6 +3,14 @@
 use modava\location\LocationModule;
 
 return [
+<<<<<<< HEAD
+    'availableLocales' => [
+        'vi' => 'Tiếng Việt',
+        'en' => 'English',
+        'jp' => 'Japan',
+    ],
+=======
+>>>>>>> master
     'locationName' => 'Location',
     'locationVersion' => '1.0',
     'status' => [

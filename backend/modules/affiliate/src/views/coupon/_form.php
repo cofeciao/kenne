@@ -143,28 +143,10 @@ if ($model->primaryKey === null) {
         <?php ActiveForm::end(); ?>
     </div>
 
-<?= JsCreateModalWidget::widget(['formClassName' => 'coupon_form', 'modelName' => 'Coupon']) ?>
-
 <?php
-$controllerURL = Url::toRoute(['/affiliate/coupon/generate-code']);
 $script = <<< JS
-function generateCouponCode(customerId, upperCase = false) {
-    return new Promise((resolve, reject) => {
-        $.get('$controllerURL?customer_id=' + customerId, function(result, status, xhr) {
-            debugger;
-            if (status === 'success') {
-                if (result.success) {
-                    resolve(result.data);
-                }
-            }
-            reject();
-        });
-    });
-}
-
-function generateCouponCodeRandom(upperCase = false) {
-    let code = Math.random(10).toString(36).substring(2,12);
-    return upperCase ? code.toUpperCase() : code;
+function generateCouponCode() {
+    return Math.random(10).toString(36).substr(2);
 }
 
 $('#coupon_form #js-generate-coupon-code').on('click', function() {

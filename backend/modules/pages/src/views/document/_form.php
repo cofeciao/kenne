@@ -13,6 +13,35 @@ use modava\pages\PagesModule;
 <?= ToastrWidget::widget(['key' => 'toastr-' . $model->toastr_key . '-form']) ?>
 <div class="document-form">
     <?php $form = ActiveForm::begin(); ?>
+<<<<<<< HEAD
+		<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+		<?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
+
+		<?= $form->field($model, 'status')->textInput() ?>
+
+		<?= $form->field($model, 'language')->dropDownList([ '' => '', 'vi' => 'Vi', 'en' => 'En', 'jp' => 'Jp', ], ['prompt' => '']) ?>
+
+		<?= $form->field($model, 'created_at')->textInput() ?>
+
+		<?= $form->field($model, 'updated_at')->textInput() ?>
+
+		<?= $form->field($model, 'created_by')->textInput() ?>
+
+		<?= $form->field($model, 'updated_by')->textInput() ?>
+
+		<?php if (Yii::$app->controller->action->id == 'create') $model->status = 1; ?>
+		<?= $form->field($model, 'status')->checkbox() ?>
+        <div class="form-group">
+            <?= Html::submitButton(PagesModule::t('pages', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
+=======
 
     <div class="row">
         <div class="col-8">
@@ -57,6 +86,7 @@ use modava\pages\PagesModule;
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
+>>>>>>> master
 
     <?php ActiveForm::end(); ?>
 </div>

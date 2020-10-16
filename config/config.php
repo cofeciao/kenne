@@ -25,6 +25,7 @@ define('FRONTEND_COOKIE_VALIDATION_KEY', 'CU9aseEPkKKG4TpJN5gySlVpV7pco-2P');
 define('BACKEND_COOKIE_VALIDATION_KEY', 'hXxYdJJVHPJjqDfFvY0DW4_FDYIa5RcS');
 define('INFORMATION_EMAIL', 'mongdaovan86@yahoo.com || mongdaovan86.wd@gmail.com');
 define('INFORMATION_PHONE', '0906.904.884');
+define('NOIMAGE', 'no-image.png');
 
 define('NOIMAGE', 'no-image.png');
 

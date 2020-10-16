@@ -57,7 +57,11 @@ use modava\location\LocationModule;
             <?= $form->field($model, 'SortOrder')->textInput() ?>
         </div>
         <div class="col-6">
+<<<<<<< HEAD
+            <?= $form->field($model, 'language')->dropDownList(Yii::$app->getModule('location')->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
+=======
             <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['availableLocales'], ['prompt' => 'Chọn ngôn ngữ...']) ?>
+>>>>>>> master
         </div>
     </div>
 

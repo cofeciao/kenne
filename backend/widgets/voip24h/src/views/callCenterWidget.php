@@ -2,8 +2,11 @@
 
 /* @var $pathAsset string */
 /* @var $user string */
+<<<<<<< HEAD
+=======
 /* @var $userInfo string */
 /* @var $urlGetUserInfo string */
+>>>>>>> master
 
 ?>
     <div id="sipClient">
@@ -92,10 +95,16 @@
 <?php
 $script = <<< JS
 try{
+<<<<<<< HEAD
+var user = $user;
+} catch (e) {
+}
+=======
 var urlGetUserInfo = '$urlGetUserInfo',
     user = $user;
 } catch (e) {
 }
 console.log(urlGetUserInfo);
+>>>>>>> master
 JS;
 $this->registerJs($script, \yii\web\View::POS_HEAD);

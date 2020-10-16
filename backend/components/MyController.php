@@ -20,6 +20,7 @@ class MyController extends Controller
         $user = new User();
         $userRoleName = $user->getRoleName(Yii::$app->user->id);
         $this->view->params['userRoleName'] = $userRoleName;
+
     }
 
     public function behaviors()

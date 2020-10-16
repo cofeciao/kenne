@@ -15,7 +15,6 @@ use yii\db\ActiveRecord;
 class ProductCategory extends ProductCategoryTable
 {
     public $toastr_key = 'product-category';
-
     public function behaviors()
     {
 

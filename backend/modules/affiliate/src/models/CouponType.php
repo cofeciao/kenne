@@ -37,9 +37,13 @@ class CouponType extends CouponTypeTable
                     'class' => SluggableBehavior::class,
                     'immutable' => false,
                     'ensureUnique' => true,
+<<<<<<< HEAD
+                    'value' => MyHelper::createAlias($this->title),
+=======
                     'value' => function () {
                         return MyHelper::createAlias($this->title);
                     }
+>>>>>>> master
                 ],
                 [
                     'class' => BlameableBehavior::class,

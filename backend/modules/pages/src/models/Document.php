@@ -10,6 +10,31 @@ use yii\behaviors\SluggableBehavior;
 use common\helpers\MyHelper;
 use yii\db\ActiveRecord;
 use Yii;
+<<<<<<< HEAD
+
+/**
+* This is the model class for table "document".
+*
+    * @property int $id
+    * @property string $title
+    * @property string $slug
+    * @property string $description
+    * @property string $image
+    * @property string $file
+    * @property int $status
+    * @property string $language Language
+    * @property int $created_at
+    * @property int $updated_at
+    * @property int $created_by
+    * @property int $updated_by
+    *
+            * @property User $createdBy
+            * @property User $updatedBy
+    */
+class Document extends DocumentTable
+{
+    public $toastr_key = 'document';
+=======
 use yii\web\UploadedFile;
 
 /**
@@ -35,6 +60,7 @@ class Document extends DocumentTable
 {
     public $toastr_key = 'pages_document';
 
+>>>>>>> master
     public function behaviors()
     {
         return array_merge(
@@ -66,6 +92,25 @@ class Document extends DocumentTable
     }
 
     /**
+<<<<<<< HEAD
+    * {@inheritdoc}
+    */
+    public function rules()
+    {
+        return [
+			[['title', 'slug', 'file'], 'required'],
+			[['description', 'language'], 'string'],
+			[['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+			[['title', 'slug', 'image', 'file'], 'string', 'max' => 255],
+			[['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+			[['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+		];
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+=======
      * {@inheritdoc}
      */
     public function rules()
@@ -87,6 +132,7 @@ class Document extends DocumentTable
     /**
      * {@inheritdoc}
      */
+>>>>>>> master
     public function attributeLabels()
     {
         return [
@@ -106,20 +152,34 @@ class Document extends DocumentTable
     }
 
     /**
+<<<<<<< HEAD
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+=======
      * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
+>>>>>>> master
     public function getUserCreated()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
+<<<<<<< HEAD
+    * Gets query for [[User]].
+    *
+    * @return \yii\db\ActiveQuery
+    */
+=======
      * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
+>>>>>>> master
     public function getUserUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'updated_by']);

@@ -2,6 +2,8 @@
 
 namespace modava\pages\controllers;
 
+namespace modava\pages\controllers;
+
 use backend\components\MyComponent;
 use modava\imagick\Helper;
 use modava\pages\components\MyPagesController;
@@ -22,8 +24,8 @@ use yii\web\UploadedFile;
 class DocumentController extends MyPagesController
 {
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function behaviors()
     {
         return [
@@ -37,9 +39,9 @@ class DocumentController extends MyPagesController
     }
 
     /**
-     * Lists all Document models.
-     * @return mixed
-     */
+    * Lists all Document models.
+    * @return mixed
+    */
     public function actionIndex()
     {
         $searchModel = new DocumentSearch();
@@ -282,7 +284,6 @@ class DocumentController extends MyPagesController
      * @return Document the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-
 
     protected function findModel($id)
     {
