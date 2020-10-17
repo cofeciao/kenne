@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m201007_090435_create_table_iway_tray_images
+ * Class m201007_090435_create_table_iway_images
  */
-class m201007_090435_create_table_iway_tray_images extends Migration
+class m201007_090435_create_table_iway_images extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $table_name = 'iway_tray_images';
+        $table_name = 'iway_images';
         $check_table = Yii::$app->db->getTableSchema($table_name);
         if ($check_table === null) {
             $tableOptions = null;
@@ -22,9 +22,10 @@ class m201007_090435_create_table_iway_tray_images extends Migration
             }
             $this->createTable($table_name, [
                 'id' => $this->primaryKey(),
-                'tray_id' => $this->integer(11)->notNull()->comment('ID tray'),
-                'image' => $this->string(255)->notNull()->comment('Hình ảnh tray'),
-                'type' => $this->integer(11)->notNull()->comment('Loại hình ảnh: chụp thẳng, chụp trái, chụp phải,...'),
+                'parent_table' => $this->integer(11)->notNull()->comment('Parent table'),
+                'parent_id' => $this->integer(11)->notNull()->comment('Parent ID'),
+                'image' => $this->string(255)->notNull()->comment('Hình ảnh'),
+                'type' => $this->integer(11)->null()->comment('Loại hình ảnh: chụp thẳng, chụp trái, chụp phải,...'),
                 'status' => $this->tinyInteger(2)->null()->defaultValue(0)->comment('Trạng thái đánh giá: 0 - chưa đánh giá, 1 - chưa đạt, 2 - đạt'),
                 'created_at' => $this->integer(11)->null()->comment('Thời gian chụp'),
                 'evaluate' => $this->text()->null()->comment('Đánh giá của bác sĩ'),
@@ -39,7 +40,7 @@ class m201007_090435_create_table_iway_tray_images extends Migration
      */
     public function safeDown()
     {
-        echo "m201007_090435_create_table_iway_tray_images cannot be reverted.\n";
+        echo "m201007_090435_create_table_iway_images cannot be reverted.\n";
 
         return false;
     }
@@ -53,7 +54,7 @@ class m201007_090435_create_table_iway_tray_images extends Migration
 
     public function down()
     {
-        echo "m201007_090435_create_table_iway_tray_images cannot be reverted.\n";
+        echo "m201007_090435_create_table_iway_images cannot be reverted.\n";
 
         return false;
     }

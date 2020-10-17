@@ -2,30 +2,30 @@
 
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use modava\iway\models\IwayTrayImages;
+use modava\iway\models\IwayImages;
 
 /* @var $this yii\web\View */
-/* @var $model IwayTrayImages */
+/* @var $model IwayImages */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <?php $form = ActiveForm::begin([
-    'id' => 'form-tray-image',
+    'id' => 'form-image',
     'enableAjaxValidation' => true,
     'validationUrl' => Url::toRoute(['validate-upload', 'id' => $model->primaryKey]),
     'action' => Url::toRoute(['submit-upload', 'id' => $model->primaryKey])
 ]); ?>
     <div class="modal-body">
         <div class="tray-image-view tray-image-preview">
-            <?php if ($model->primaryKey != null && $model->status != IwayTrayImages::CHUA_DANH_GIA) { ?>
+            <?php if ($model->primaryKey != null && $model->status != IwayImages::CHUA_DANH_GIA) { ?>
                 <div class="tray-image-evaluate">
-                    <?php if ($model->status == IwayTrayImages::DAT) { ?>
+                    <?php if ($model->status == IwayImages::DAT) { ?>
                         <i class="fa fa-check"></i>
-                    <?php } else if ($model->status == IwayTrayImages::CHUA_DAT) { ?>
+                    <?php } else if ($model->status == IwayImages::CHUA_DAT) { ?>
                         <i class="fa fa-times"></i>
                     <?php } ?>
                 </div>
             <?php } ?>
-            <label class="upload-zone<?= $model->getImage() != null ? ' has-image' : '' ?><?= $model->primaryKey != null && in_array($model->status, [IwayTrayImages::CHUA_DANH_GIA, IwayTrayImages::DAT]) ? ' disabled' : '' ?>">
+            <label class="upload-zone<?= $model->getImage() != null ? ' has-image' : '' ?><?= $model->primaryKey != null && in_array($model->status, [IwayImages::CHUA_DANH_GIA, IwayImages::DAT]) ? ' disabled' : '' ?>">
                 <div class="preview">
                     <img src="<?= $model->getImage() ?>" alt="Preview">
                 </div>
@@ -53,7 +53,12 @@ use modava\iway\models\IwayTrayImages;
                 'tag' => false
             ]
         ])->hiddenInput()->label(false) ?>
-        <?= $form->field($model, 'tray_id', [
+        <?= $form->field($model, 'parent_table', [
+            'options' => [
+                'tag' => false
+            ]
+        ])->hiddenInput()->label(false) ?>
+        <?= $form->field($model, 'parent_id', [
             'options' => [
                 'tag' => false
             ]
@@ -67,8 +72,8 @@ use modava\iway\models\IwayTrayImages;
             <div class="evaluate">
                 <?= $form->field($model, 'evaluate')->textarea() ?>
                 <?php
-                $status = IwayTrayImages::STATUS;
-                unset($status[IwayTrayImages::CHUA_DANH_GIA]);
+                $status = IwayImages::STATUS;
+                unset($status[IwayImages::CHUA_DANH_GIA]);
                 echo $form->field($model, 'status')->radioList($status, []);
                 ?>
             </div>
@@ -78,13 +83,13 @@ use modava\iway\models\IwayTrayImages;
         <button type="button" class="btn btn-sm btn-secondary"
                 data-dismiss="modal"><?= Yii::t('backend', 'Đóng') ?></button>
         <button type="button" class="btn btn-sm btn-success"
-                id="btn-submit-tray-image"><?= Yii::t('backend', $model->primaryKey == null ? 'Save' : 'Update') ?></button>
+                id="btn-submit-image"><?= Yii::t('backend', $model->primaryKey == null ? 'Save' : 'Update') ?></button>
     </div>
 <?php ActiveForm::end(); ?>
 <?php
 $script = <<< JS
-var form = $('#form-tray-image'),
-    btn_submit = $('#btn-submit-tray-image');
+var form = $('#form-image'),
+    btn_submit = $('#btn-submit-image');
 btn_submit.on('click', function(){
     $(this).attr('disabled', 'disabled');
     form.submit();
@@ -94,12 +99,12 @@ function getFormData(form){
 }
 function getData(form){
     return {
-        IwayTrayImages: {
-            tray_id: $('input[name="IwayTrayImages[tray_id]"]').val() || null,
-            type: $('input[name="IwayTrayImages[type]"]').val() || null,
-            fileImageBase64: $('input[name="IwayTrayImages[fileImageBase64]"]').val() || null,
-            evaluate: $('textarea[name="IwayTrayImages[evaluate]"]').val() || null,
-            status: $('input[name="IwayTrayImages[status]"]:checked').val() || null,
+        IwayImages: {
+            parent_id: $('input[name="IwayImages[parent_id]"]').val() || null,
+            type: $('input[name="IwayImages[type]"]').val() || null,
+            fileImageBase64: $('input[name="IwayImages[fileImageBase64]"]').val() || null,
+            evaluate: $('textarea[name="IwayImages[evaluate]"]').val() || null,
+            status: $('input[name="IwayImages[status]"]:checked').val() || null,
         }
     };
 }
@@ -113,10 +118,13 @@ form.on('beforeSubmit', function(e){
         url: url,
         dataType: 'json',
         data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false
     }).done(res => {
         alert(res.msg);
         if(res.code === 200){
-            $.pjax.reload({url: window.location.href, method: 'POST', container: '#pjax-tray-image'});
+            if($('#pjax-images').length > 0) $.pjax.reload({url: window.location.href, method: 'POST', container: '#pjax-images'});
             $('#modal-image').modal('hide');
         } else {
             btn_submit.removeAttr('disabled');
