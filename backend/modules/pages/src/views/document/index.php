@@ -41,8 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= MyGridView::widget([
                                         'dataProvider' => $dataProvider,
                                         'layout' => '
-                                            {errors} 
-                                            <div class="pane-single-table">
+                                        {errors}
+                                        <div class="row">
+                                            <div class="col-sm-12">
                                                 {items}
                                             </div>
                                             <div class="pager-wrap clearfix">
@@ -54,18 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                             Yii::$app->controller->renderPartial('@backend/views/layouts/my-gridview/_pageSize') .
                                             '{pager}
                                             </div>
-                                        ',
-                                        'tableOptions' => [
-                                            'id' => 'dataTable',
-                                            'class' => 'dt-grid dt-widget pane-hScroll',
-                                        ],
-                                        'myOptions' => [
-                                            'class' => 'dt-grid-content my-content pane-vScroll',
-                                            'data-minus' => '{"0":95,"1":".hk-navbar","2":".nav-tabs","3":".hk-pg-header","4":".hk-footer-wrap"}'
-                                        ],
-                                        'summaryOptions' => [
-                                            'class' => 'summary pull-right',
-                                        ],
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    {summary}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ',
                                         'pager' => [
                                             'firstPageLabel' => Yii::t('backend', 'First'),
                                             'lastPageLabel' => Yii::t('backend', 'Last'),

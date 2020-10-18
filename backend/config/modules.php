@@ -47,26 +47,26 @@ return [
     'comment' => [
         'class' => 'modava\comment\CommentModule',
     ],
-    'affiliate' => [
-        'class' => 'modava\affiliate\AffiliateModule',
+    'test' => [
+        'class' => 'modava\test\TestModule',
     ],
-    'iway' => [
-        'class' => 'modava\iway\IwayModule',
+    'products' => [
+        'class' => 'modava\products\ProductsModule',
     ],
-    'pages' => [
-        'class' => 'modava\pages\PagesModule',
+    'transactions' => [
+            'class' => 'modava\transactions\TransactionsModule',
+        ],
+    'orders' => [
+        'class' => 'modava\orders\OrdersModule',
     ],
-    'video' => [
-        'class' => 'modava\video\VideoModule',
+    'categories' => [
+        'class' => 'modava\categories\CategoriesModule',
     ],
-    'slide' => [
-        'class' => 'modava\slide\SlideModule',
+    'blogs' => [
+        'class' => 'modava\blogs\BlogsModule',
     ],
-    'faq' => [
-        'class' => 'modava\faq\FaqModule',
-    ],
-    'api' => [
-        'class' => 'backend\modules\api\Api',
+    'kenne' => [
+        'class' => 'modava\kenne\KenneModule',
     ],
     'test' => [
         'class' => 'modava\test\TestModule',

@@ -1,0 +1,45 @@
+a#chooseQuantity {
+    cursor: pointer;
+}
+
+.alert-success{
+    background-color: white !important;
+    border: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0;
+}
+.alert-danger{
+    background-color: white !important;
+    border: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0;
+}
+.delete-cart{
+    background-color: #242424;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white !important;
+    padding: 20px;
+    line-height: 42px
+}
+.cart-div:hover .delete-cart{
+    background-color: #a8741a;
+}
+
+.cart-div{
+    margin-bottom: 2%;
+}
+button.close-modal {
+    background-color: grey;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+
+a.modal-cart {
+    background-color: green;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+}

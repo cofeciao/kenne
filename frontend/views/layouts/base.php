@@ -23,7 +23,7 @@ $bundle = AppAsset::register($this);
         <title><?php echo Html::encode($this->title) ?></title>
         <link rel="canonical" href="<?= \Yii::$app->request->absoluteUrl; ?>"/>
         <?= Html::csrfMetaTags(); ?>
-
+        <link rel="shortcut icon" type="image/x-icon" href="<?= \yii\helpers\Url::to('/images/favicon.ico')?>">
         <meta content="INDEX,FOLLOW" name="robots"/>
         <meta name="resource-type" content="Document"/>
         <meta name="distribution" content="Global"/>
@@ -35,10 +35,20 @@ $bundle = AppAsset::register($this);
         <?php $this->head() ?>
 
     </head>
-    <body>
+    <body class="template-color-1">
+
     <?php $this->beginBody() ?>
     <?= $content ?>
+
     <?php $this->endBody() ?>
+    <script>
+        function addCart(id) {
+            $.get('<?= Yii::$app->homeUrl.'shop/addCart' ?>',{'id':id},function (data) {
+                alert("as");
+            });
+        }
+    </script>
+
     </body>
     </html>
 <?php $this->endPage() ?>

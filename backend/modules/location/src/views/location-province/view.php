@@ -69,7 +69,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
+<<<<<<< HEAD
+                                return Yii::$app->getModule('location')->params['availableLocales'][$model->language];
+=======
                                 return Yii::$app->params['availableLocales'][$model->language];
+>>>>>>> master
                             },
                         ],
                         'IsDeleted',

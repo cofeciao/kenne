@@ -79,8 +79,8 @@ class Coupon extends CouponTable
                 [
                     'class' => AttributeBehavior::class,
                     'attributes' => [
-                        ActiveRecord::EVENT_BEFORE_INSERT => ['expired_date'],
-                        ActiveRecord::EVENT_BEFORE_UPDATE => ['expired_date'],
+                        ActiveRecord::EVENT_BEFORE_INSERT => ['expired_date','expired_date'],
+                        ActiveRecord::EVENT_BEFORE_UPDATE => ['expired_date','expired_date'],
                     ],
                     'value' => function ($event) {
                         return date('Y-m-d', strtotime($this->expired_date));

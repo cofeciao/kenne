@@ -37,13 +37,13 @@ return [
 
     'user' => [
         'class' => yii\web\User::class,
-        'identityClass' => common\models\User::class,
+        'identityClass' => frontend\models\Account::class,
         'loginUrl' => ['auth/login'],
         'enableAutoLogin' => true,
         'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
     ],
 
-    'mailer' => [
+    /*'mailer' => [
         'class' => 'yii\swiftmailer\Mailer',
         'viewPath' => '@frontend/mail',
         'useFileTransport' => false,
@@ -61,7 +61,7 @@ return [
                 ],
             ]
         ],
-    ],
+    ],*/
     'urlManager' => require(__DIR__ . '/_urlManager.php'),
     'cache' => require(__DIR__ . '/_cache.php'),
 ];

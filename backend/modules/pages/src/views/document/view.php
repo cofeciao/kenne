@@ -50,6 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						'id',
 						'title',
 						'slug',
+<<<<<<< HEAD
+						'description:ntext',
+						'image',
+						'file',
+=======
 						'description:html',
                         [
                             'attribute' => 'image',
@@ -73,6 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             },
                         ],
+>>>>>>> master
                         [
                             'attribute' => 'status',
                             'value' => function ($model) {
@@ -82,6 +88,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'language',
                             'value' => function ($model) {
+<<<<<<< HEAD
+                                return Yii::$app->getModule('pages')->params['availableLocales'][$model->language];
+                            },
+                        ],
+						'created_at',
+						'updated_at',
+=======
                                 if ($model->language == null)
                                     return null;
                                 return Yii::$app->params['availableLocales'][$model->language];
@@ -89,6 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 						'created_at:datetime',
 						'updated_at:datetime',
+>>>>>>> master
                         [
                             'attribute' => 'userCreated.userProfile.fullname',
                             'label' => Yii::t('backend', 'Created By')

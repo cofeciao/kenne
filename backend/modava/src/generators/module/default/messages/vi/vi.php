@@ -13,6 +13,9 @@ return [
     'Next' => 'Tiếp',
     'Status' => 'Trạng thái',
     'Created At' => 'Ngày tạo',
+<<<<<<< HEAD
+    'Actions' => 'Hành động'
+=======
     'Actions' => 'Hành động',
     'Updated At' => 'Thời gian cập nhật',
     'Created By' => 'Người tạo',
@@ -23,4 +26,5 @@ return [
     'Language' => 'Ngôn ngữ',
     'Name' => 'Tên',
 
+>>>>>>> master
 ];
