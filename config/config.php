@@ -10,8 +10,8 @@ define('YII2_LOG', true);
 define('LINK_ASSETS', true);
 define('SITE_ADMIN', 'Dashboard');
 define('WEB_ADMIN', 'Administrator');
-define('ADMIN_EMAIL', 'mongdaovan86.wd@gmail.com');
-define('ROBOT_EMAIL', 'mongdao.wd@gmail.com');
+define('ADMIN_EMAIL', 'minzbii2@gmail.com');
+define('ROBOT_EMAIL', 'minzbii2@gmail.com');
 define('FRONTEND_HOST_INFO', $domain);
 define('FRONTEND_BASE_URL', '/');
 define('BACKEND_HOST_INFO', $domain . '/backend');
@@ -68,8 +68,8 @@ if (YII2_MAIL) {
         'transport' => [
             'class' => 'Swift_SmtpTransport',
             'host' => 'smtp.gmail.com',
-            'username' => 'mongdao.wd@gmail.com',
-            'password' => 'qtlqfvknyclgfwbv',
+            'username' => 'minzbii2@gmail.com',
+            'password' => '',
             'port' => '587',
             'encryption' => 'tls',
             'streamOptions' => [
@@ -98,8 +98,8 @@ if (YII2_MAIL) {
                 'class' => 'yii\log\EmailTarget',
                 'levels' => ['error'],
                 'message' => [
-                    'from' => 'mongdao.wd@gmail.com',
-                    'to' => 'mongdao.wd@gmail.com',
+                    'from' => 'minzbii2@gmail.com',
+                    'to' => 'minzbii2@gmail.com',
                     'subject' => 'Log project',
                 ],
             ],
