@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
 
 /**
  * User model
@@ -376,5 +377,21 @@ class User extends ActiveRecord implements IdentityInterface
         if ($select != null) $query->select($select);
         if ($active === true) $query->andWhere([self::tableName() . '.status' => self::STATUS_ACTIVE]);
         return $query->all();
+    }
+
+    public function loadWithoutPrefix($params)
+    {
+        $this->_load_without_prefix = true;
+        $formName = $this->formName();
+        $paramsPrepare = [];
+
+        foreach ($params as $k => $v) {
+            if(in_array($k, $this->fileFields)) {
+                $paramsPrepare[$formName][$k] = UploadedFile::getInstances($this, $k);
+            }
+            else $paramsPrepare[$formName][$k] = $v;
+        }
+
+        return $this->load($paramsPrepare);
     }
 }

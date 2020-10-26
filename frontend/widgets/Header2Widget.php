@@ -17,8 +17,6 @@ class Header2Widget extends Widget
         $data = Categories::find()->all();
         $cookies  = unserialize(serialize(Component::getCookies('cart')));
 
-
-
         if (empty($cookies)){
             $total = 0;
         }else{

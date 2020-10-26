@@ -2,7 +2,10 @@
 
 namespace frontend\models;
 
+use cheatsheet\Time;
+use Codeception\Lib\Interfaces\ActiveRecord;
 use yii\base\Model;
+use Yii;
 
 class LoginForm extends Model
 {
@@ -13,12 +16,12 @@ class LoginForm extends Model
 
     private $_user;
 
+
     public function rules()
     {
         return [
             ['username', 'required'],
             ['username', 'string', 'min' => 2, 'max' => 255],
-
             ['password', 'validatePassword'],
             ['password', 'required'],
         ];
@@ -37,15 +40,19 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = Account::findByUsername($this->username);
+            $this->_user = User::findByUsername($this->username);
         }
         return $this->_user;
     }
 
     public function login()
     {
-        if ($this->validate()) {
-            return \Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        if (!$this->validate()) {
+            return false;
+        }
+        $duration = $this->rememberMe ? Time::SECONDS_IN_A_MONTH : 0;
+        if (Yii::$app->user->login($this->getUser(), $duration)) {
+            return true;
         }
         return false;
     }

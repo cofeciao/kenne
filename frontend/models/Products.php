@@ -34,7 +34,6 @@ class Products extends ProductsTable
 
     public function getProductsByCategories($id = null){
         $query = self::find()->where(['cat_id' => $id]);
-
         return $query->all();
     }
 
@@ -72,7 +71,7 @@ class Products extends ProductsTable
         return $data;
     }
 
-    public function sortProduct($query='', $sort = 1){
+    public function sortProduct($query, $sort){
         switch ($sort){
             case 1:
                 return $query;

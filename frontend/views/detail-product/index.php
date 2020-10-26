@@ -341,7 +341,7 @@ use kartik\social\FacebookPlugin;
                     <div class="product-item">
                         <div class="single-product">
                             <div class="product-img">
-                                <a href="<?= \yii\helpers\Url::toRoute(['detail-product','slug'=>$item->pro_slug])?>">
+                                <a href="<?= \yii\helpers\Url::toRoute(['/detail-product','slug'=>$item->pro_slug])?>">
                                     <img class="primary-img" src="<?= \yii\helpers\Url::to($item->pro_image)?>" alt="Kenne's Product Image">
                                     <img class="secondary-img" src="/images/product/1-2.jpg" alt="Kenne's Product Image">
                                 </a>
@@ -362,7 +362,7 @@ use kartik\social\FacebookPlugin;
                             </div>
                             <div class="product-content">
                                 <div class="product-desc_info">
-                                    <h3 class="product-name"><a href="<?= \yii\helpers\Url::toRoute(['detail-product','slug'=>$item->pro_slug])?>"><?= $item->pro_name?></a></h3>
+                                    <h3 class="product-name"><a href="<?= \yii\helpers\Url::toRoute(['/detail-product','slug'=>$item->pro_slug])?>"><?= $item->pro_name?></a></h3>
                                     <div class="price-box">
                                         <span class="new-price"><?= number_format($item->pro_price*(100-$item->pro_sale)/100,0,',','.')?> đ</span>
                                         <span class="old-price"><?= number_format($item->pro_price,0,',','.')?> đ</span>

@@ -79,7 +79,6 @@ $('a.add-wishlist').click(function (event){
        data : {},
        success:function (data){
            if(data === 'fail'){
-               $('.modal-title').html('<span style="color:#d88f17">Thông báo</span>');
                $('.modal-body').html('Sản phẩm <b>'+ name+ '</b> đã có trong danh sách yêu thích ');
                $('#myModal').modal('show');
            } else {

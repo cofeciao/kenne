@@ -37,8 +37,8 @@ return [
 
     'user' => [
         'class' => yii\web\User::class,
-        'identityClass' => frontend\models\Account::class,
-        'loginUrl' => ['auth/login'],
+        'identityClass' => frontend\models\User::class,
+        'loginUrl' => ['site/login'],
         'enableAutoLogin' => true,
         'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
     ],

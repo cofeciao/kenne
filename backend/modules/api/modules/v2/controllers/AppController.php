@@ -38,6 +38,7 @@ use common\commands\DeleteImageCommand;
 use common\commands\ImageCommand;
 use common\helpers\MyHelper;
 use GuzzleHttp\Client;
+use modava\auth\models\User;
 use Yii;
 use yii\db\Transaction;
 use yii\helpers\ArrayHelper;
@@ -678,4 +679,15 @@ class AppController extends RestfullController
         // }
         return true;
     }
+
+//    public function actionChangePassword(){
+//        $user = new User(Yii::$app->user->identity->getId());
+//        echo "<pre>";
+//        print_r($user);die;
+//        echo "<pre>";
+//        $post = $user->loadWithoutPrefix(Yii::$app->request->post());
+//        if($post['new_password'] == $post['repeat_password']){
+//            $user->updateAttributes(['password' => $post['new_password']]);
+//        };
+//    }
 }

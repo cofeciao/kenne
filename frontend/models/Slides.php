@@ -1,8 +1,6 @@
 <?php
 
-
 namespace frontend\models;
-
 
 use modava\kenne\models\table\SlidesTable;
 

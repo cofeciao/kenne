@@ -17,5 +17,4 @@ class Categories extends ActiveRecord
     public function getProducts(){
         return $this->hasMany(Products::class,['cat_id'=> 'id']);
     }
-
 }

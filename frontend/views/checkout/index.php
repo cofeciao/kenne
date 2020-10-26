@@ -84,10 +84,10 @@ $this->title = "Thanh toán";
                                     <label for="city">Tỉnh/Thành phố <span class="required">*</span></label>
                                     <select class="form-control" id="city" name="city" required>
                                         <option>-- Chọn thành phố ---</option>
-                                        <?php if (isset($provinceNames)){?>
-                                        <?php foreach ($provinceNames as $provinceName){?>
-                                        <option value="<?= $provinceName->id?>"><?= $provinceName->name?></option>
-                                        <?php }}?>
+                                        <?php if (isset($provinceNames)) { ?>
+                                        <?php foreach ($provinceNames as $provinceName) { ?>
+                                        <option value="<?= $provinceName->id ?>"><?= $provinceName->name?></option>
+                                        <?php }} ?>
                                     </select>
                                 </div>
                             </div>
@@ -234,18 +234,18 @@ $this->title = "Thanh toán";
 </div>
 <!-- Kenne's Checkout Area End Here -->
 <?php $script = <<<JS
+
     $("#city").change(function () {
-        var template1 = "";
+        var temp = "";
         var id = $(this).val();
-        $.get('/checkout/get-district',{
-          id : id  ,
-        },function(data) {
-          var data = JSON.parse(data);
-          var i;
-          for (i = 0; i < data.length; i++) {
-              template1 += '<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>';
-          }
-          document.getElementById("district").innerHTML = template1;
+        $.get('/checkout/get-district',{ id : id
+         },function (data) {
+            var data = JSON.parse(data);
+            var i;
+            for (i = 0; i < data.length; i++){
+                temp += '<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>';
+            }
+            document.getElementById("district").innerHTML = temp;
         });
     });
 JS;

@@ -36,7 +36,7 @@ use yii\helpers\Url;
                             <ul>
                                 <?php if (!Yii::$app->user->isGuest) { ?>
                                     <li>
-                                        <a href="<?= Url::toRoute('/account') ?>">My Account</a>
+                                        <a href="<?= Url::toRoute('/account') ?>"><?= Yii::$app->user->identity->username ?></a>
                                     </li>
                                     <li>
                                         <a href="<?= Url::toRoute('/wishlist') ?>">Wishlist</a>
@@ -44,12 +44,15 @@ use yii\helpers\Url;
                                     <li>
                                         <a href="<?= Url::toRoute('/checkout') ?>">Checkout</a>
                                     </li>
+                                    <li>
+                                        <a href="<?= Url::toRoute('/site/logout') ?>">Logout</a>
+                                    </li>
                                 <?php } else { ?>
                                     <li>
                                         <a href="<?= Url::toRoute('/checkout') ?>">Checkout</a>
                                     </li>
                                     <li>
-                                        <a href="<?= Url::toRoute('/site/singup') ?>">Register</a>
+                                        <a href="<?= Url::toRoute('/site/signup') ?>">Register</a>
                                     </li>
                                     <li>
                                         <a href="<?= Url::toRoute('/site/login') ?>">Sign in</a>

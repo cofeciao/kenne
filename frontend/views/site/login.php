@@ -19,9 +19,12 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 </div>
-<?php if(Yii::$app->session->hasFlash('success')){?>
-    <div class="alert alert-success text-center"><b>Đăng ký thành công</b></div>
+<?php if(Yii::$app->session->hasFlash('login-successful')){?>
+    <div class="alert alert-success text-center"><b>Đăng nhập thành công</b></div>
+<?php } if(Yii::$app->session->hasFlash('login-fail')) {?>
+<div class="alert alert-success text-center"><b>Đăng nhập thất bại</b></div>
 <?php } ?>
+
 <!-- Kenne's Breadcrumb Area End Here -->
 <div class="kenne-login-register_area">
     <div class="container">

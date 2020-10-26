@@ -23,7 +23,7 @@ class Cart
                 'image' => $data->pro_image,
                 'name' => $data->pro_name,
             ];
-        }else {
+        }else{
             if (array_key_exists($id, $cartstore)) {
                 $cartstore[$id] = [
                     'slug' => $data->pro_slug,
@@ -43,19 +43,10 @@ class Cart
             }
         }
         Component::setCookies('cart',$cartstore);
-        /*//$this->cartstore = unserialize (serialize (Component::getCookies('cart')));*/
-        /*if(!Component::hasCookies('cart')){
-                  Component::setCookies('cart',$this->cartstore);
-        }else{
-            $this->cartstore = unserialize (serialize (Component::getCookies('cart')));
-        }*/
-//        $cookies = \Yii::$app->response->cookies;
-//        $cookies->remove('cart');*/
     }
-    //Xóa 1 sản phẩm trong giỏ h
+    //Xóa 1 sản phẩm trong giỏ hàng
     public static function delete($id){
         $data = unserialize(serialize(Component::getCookies('cart')));
-
         if (array_key_exists($id,$data)){
             unset($data[$id]);
         }
@@ -77,7 +68,7 @@ class Cart
         if(!Component::hasCookies('cartWishlist')){
             Component::setCookies('cartWishlist',$data1);
         }
-        $cartstore = unserialize (serialize (Component::getCookies('cartWishlist')));
+        $cartstore = Component::getCookies('cartWishlist');
         if (empty($cartstore)){
             $cartstore[$id] = [
                 'slug' => $data->pro_slug,
@@ -86,10 +77,15 @@ class Cart
                 'name' => $data->pro_name,
             ];
             $notification = "success";
+//            echo "<pre>";
+//            print_r($cartstore);die;
+//            echo "<pre>";
         }else {
             if (array_key_exists($id, $cartstore)) {
+//                echo "<pre>";
+//                print_r($cartstore);die;
+//                echo "<pre>";
                 $notification = "fail";
-
             } else {
                 $cartstore[$id] = [
                     'slug' => $data->pro_slug,
@@ -103,14 +99,6 @@ class Cart
         }
         Component::setCookies('cartWishlist',$cartstore);
         return $notification;
-        /*//$this->cartstore = unserialize (serialize (Component::getCookies('cart')));*/
-        /*if(!Component::hasCookies('cart')){
-                  Component::setCookies('cart',$this->cartstore);
-        }else{
-            $this->cartstore = unserialize (serialize (Component::getCookies('cart')));
-        }*/
-//        $cookies = \Yii::$app->response->cookies;
-//        $cookies->remove('cart');*/
     }
 
     public static function deleteWishlist($id){
